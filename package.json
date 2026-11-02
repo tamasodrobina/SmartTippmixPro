@@ -1,0 +1,20 @@
+{
+  "name": "tippmix-ai-elemzo",
+  "version": "1.0.0",
+  "description": "AI-alapú Tippmix/TippmixPro sportfogadás elemző (1-24 órás intervallum és egyedi mérkőzés kereső, 1.30-2.00 odds szűrővel)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
+

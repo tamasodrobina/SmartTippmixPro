@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="hu" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>TippmixPro AI Elemző | Minden Sportág &amp; E-Sport</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.10) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.90);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .tip-card {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tip-card:hover {
+      border-color: rgba(16, 185, 129, 0.45);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
+
+  <!-- TOP NAVBAR -->
+  <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/95 backdrop-blur-md">
+    <!-- Felső sor: Logó és API Kulcs gomb (mobilra optimalizált helykihasználással) -->
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 h-14 sm:h-16 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-md shadow-emerald-500/20 shrink-0">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-sm sm:text-lg tracking-tight text-white truncate">
+              TippmixPro <span class="text-emerald-400">AI Elemző</span>
+            </h1>
+            <span id="headerOddsBadge" class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shrink-0">
+              1.30 – 2.00 Odds • Top 3
+            </span>
+          </div>
+          <p id="catalogStatusText" class="text-[11px] sm:text-xs text-slate-400 flex items-center gap-1.5 truncate mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <span class="truncate">Minden sportág betöltése...</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Alsó sor: Sportág-választó sáv (Eredmények.com stílus, érintőképernyőn húzható) -->
+    <div class="border-t border-slate-800/80 bg-slate-900/90 relative">
+      <div class="max-w-6xl mx-auto px-3 sm:px-4 h-11 sm:h-12 flex items-center justify-between gap-2">
+        <div id="featuredSportsBar" class="flex-1 min-w-0 flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-1 pr-1">
+          <!-- JS tölti fel -->
+        </div>
+
+        <!-- EGYÉB SPORTÁGAK GOMB -->
+        <button id="toggleMoreSportsBtn" type="button"
+          class="shrink-0 h-8 px-2.5 sm:px-3 rounded-lg text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 transition cursor-pointer">
+          <span class="sm:hidden">EGYÉB</span>
+          <span class="hidden sm:inline">EGYÉB (25+)</span>
+          <svg id="moreSportsChevron" class="w-3.5 h-3.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- LEBEGŐ "EGYÉB SPORTÁGAK" MEGA-MENÜ -->
+      <div id="moreSportsPanel" class="hidden absolute left-0 right-0 top-full z-50 bg-slate-950/95 backdrop-blur-xl border-b border-slate-700 shadow-2xl max-h-[72vh] overflow-y-auto">
+        <div class="max-w-6xl mx-auto px-3 sm:px-4 py-3.5 sm:py-4">
+          <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800 gap-2">
+            <span class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
+              Összes további sportág (Koppints bármelyikre)
+            </span>
+            <button id="closeMoreSportsBtn" type="button" class="text-xs font-semibold text-slate-300 hover:text-white px-2.5 py-1 rounded-lg bg-slate-800 shrink-0">
+              Bezárás ✕
+            </button>
+          </div>
+          <div id="moreSportsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1.5 sm:gap-2"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-5">
+
+    <!-- 1. GLOBÁLIS SZŰRŐ SÁV (Mobilon a Min és Max Odds egymás mellett, 50-50%-ban!) -->
+    <section class="glass-card rounded-2xl p-3.5 sm:p-5 shadow-lg">
+      <div class="grid grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4 items-end">
+
+        <!-- Min Odds (mobilon bal fél, gépen 2 oszlop) -->
+        <div class="col-span-1 lg:col-span-2">
+          <label for="minOddsInput" class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            Min. Odds
+          </label>
+          <input id="minOddsInput" type="number" step="0.05" min="1.05" max="20.00" value="1.30"
+            class="h-11 w-full rounded-xl bg-slate-900 border border-slate-700 px-3 text-base sm:text-sm text-white font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+
+        <!-- Max Odds (mobilon jobb fél, gépen 2 oszlop) -->
+        <div class="col-span-1 lg:col-span-2">
+          <label for="maxOddsInput" class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            Max. Odds
+          </label>
+          <input id="maxOddsInput" type="number" step="0.05" min="1.10" max="50.00" value="2.00"
+            class="h-11 w-full rounded-xl bg-slate-900 border border-slate-700 px-3 text-base sm:text-sm text-white font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+
+        <!-- Odds Profil Gyorsválasztó (mobilon teljes sor, gépen 4 oszlop) -->
+        <div class="col-span-2 lg:col-span-4">
+          <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            Gyors Odds Profilok
+          </label>
+          <div class="h-11 grid grid-cols-3 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-700">
+            <button type="button" data-min="1.20" data-max="1.55"
+              class="odds-preset-btn rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition truncate px-1">
+              1.20–1.55
+            </button>
+            <button type="button" data-min="1.30" data-max="2.00"
+              class="odds-preset-btn rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition truncate px-1">
+              1.30–2.00
+            </button>
+            <button type="button" data-min="1.70" data-max="3.00"
+              class="odds-preset-btn rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition truncate px-1">
+              1.70–3.00
+            </button>
+          </div>
+        </div>
+
+        <!-- Kért Tippek Száma 1-10 (mobilon teljes sor, gépen 4 oszlop) -->
+        <div class="col-span-2 lg:col-span-4">
+          <label for="tipsCountSelect" class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1.5">
+            Hány tippet adjon vissza? (1 – 10 db)
+          </label>
+          <select id="tipsCountSelect"
+            class="h-11 w-full rounded-xl bg-slate-900 border border-slate-700 px-3 text-base sm:text-sm text-white font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+          </select>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. KÉT FŐ ELEMZŐ PANEL -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-stretch">
+
+      <!-- BAL PANEL: IDŐINTERVALLUM ELEMZŐ (1-24 ÓRA) -->
+      <div class="lg:col-span-6 glass-card rounded-2xl p-4 sm:p-6 shadow-xl flex flex-col justify-between gap-4 sm:gap-5">
+        <div class="space-y-3.5 sm:space-y-4">
+          <!-- Kártya fejléc -->
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <h2 class="font-bold text-base sm:text-lg text-white leading-tight">
+                Időintervallum Elemzés (1 – 24 óra)
+              </h2>
+              <p class="text-xs text-slate-400 mt-0.5 leading-snug">
+                Megkeresi a kiválasztott órán belül induló legvalószínűbb lehetőségeket
+              </p>
+            </div>
+          </div>
+
+          <!-- 2 oszlopos bemenet: Óra és Sportág -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="min-w-0">
+              <label for="hoursSelect" class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                Időablak (1 – 24 óra)
+              </label>
+              <select id="hoursSelect"
+                class="h-11 w-full rounded-xl bg-slate-900 border border-slate-700 px-3 text-base sm:text-sm text-white font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+              </select>
+            </div>
+
+            <div class="min-w-0">
+              <label for="sportSelect" class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                Sportág szűrő
+              </label>
+              <select id="sportSelect"
+                class="h-11 w-full rounded-xl bg-slate-900 border border-slate-700 px-3 text-base sm:text-sm text-white font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                <option value="all">🌐 Összes sportág (Minden)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Gyors óra gombok (mobilon 5 oszlopos egyenletes elosztás!) -->
+          <div class="space-y-1.5">
+            <span class="block text-[11px] text-slate-400 sm:hidden">Gyors időablak választás:</span>
+            <div class="grid grid-cols-5 sm:flex sm:flex-wrap items-center gap-1.5">
+              <span class="hidden sm:inline text-xs text-slate-400 mr-1">Gyors időablak:</span>
+              <button type="button" data-quick-hours="2" class="quick-hour-btn h-8 sm:h-7 px-2 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition text-center">2 óra</button>
+              <button type="button" data-quick-hours="4" class="quick-hour-btn h-8 sm:h-7 px-2 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition text-center">4 óra</button>
+              <button type="button" data-quick-hours="6" class="quick-hour-btn h-8 sm:h-7 px-2 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition text-center">6 óra</button>
+              <button type="button" data-quick-hours="12" class="quick-hour-btn h-8 sm:h-7 px-2 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition text-center">12 óra</button>
+              <button type="button" data-quick-hours="24" class="quick-hour-btn h-8 sm:h-7 px-2 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition text-center">24 óra</button>
+            </div>
+          </div>
+        </div>
+
+        <button id="analyzeIntervalBtn" type="button"
+          class="h-12 w-full px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-extrabold text-sm sm:text-base shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 transition cursor-pointer active:scale-[0.99]">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span id="analyzeIntervalBtnLabel" class="truncate">Időintervallum Elemzése</span>
+        </button>
+      </div>
+
+      <!-- JOBB PANEL: EGYEDI MÉRKŐZÉS / CSAPAT KERESŐ -->
+      <div class="lg:col-span-6 glass-card rounded-2xl p-4 sm:p-6 shadow-xl flex flex-col justify-between gap-4 sm:gap-5">
+        <div class="space-y-3.5 sm:space-y-4">
+          <!-- Kártya fejléc -->
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <h2 class="font-bold text-base sm:text-lg text-white leading-tight">
+                Konkrét Mérkőzés / Csapat / E-Sport
+              </h2>
+              <p class="text-xs text-slate-400 mt-0.5 leading-snug">
+                Írj be egy konkrét mérkőzést, csapatot, teniszezőt vagy bajnokságot
+              </p>
+            </div>
+          </div>
+
+          <!-- Szöveges keresőmező (text-base mobilon megakadályozza az iOS/Android képernyő-belenagyítást!) -->
+          <div class="relative">
+            <label for="customMatchInput" class="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              Mérkőzés, csapat vagy torna neve
+            </label>
+            <div class="relative">
+              <input id="customMatchInput" type="text" autocomplete="off"
+                placeholder="Pl. Newcastle - Everton, Real Madrid, NBA, Tenisz..."
+                class="h-11 w-full rounded-xl bg-slate-900 border border-slate-700 pl-3.5 pr-9 text-base sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+              <button id="clearCustomInputBtn" type="button" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Autocomplete találatok a Tippmix kínálatból -->
+            <div id="autocompleteDropdown"
+              class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-60 overflow-y-auto z-30 divide-y divide-slate-800">
+            </div>
+          </div>
+
+          <!-- Info sáv -->
+          <div class="flex items-start sm:items-center gap-2 pt-0.5 text-xs text-slate-400">
+            <span class="inline-flex items-center px-2 py-0.5 rounded bg-slate-800 text-emerald-400 font-semibold border border-slate-700 shrink-0 text-[11px]">
+              ⚡ Smart Cache
+            </span>
+            <span class="leading-snug">
+              Automatikus kiegészítés az élő Tippmix kínálatból + szabad szöveges netes keresés
+            </span>
+          </div>
+        </div>
+
+        <button id="analyzeCustomBtn" type="button"
+          class="h-12 w-full px-4 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white font-extrabold text-sm sm:text-base shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 transition cursor-pointer active:scale-[0.99]">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span id="analyzeCustomBtnLabel" class="truncate">Mérkőzés Elemzése (Top 3 Tipp)</span>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- LOADING / RESEARCH PROGRESS SECTION -->
+    <section id="loadingSection" class="hidden glass-card rounded-2xl p-5 sm:p-8 text-center space-y-4 border border-emerald-500/30">
+      <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
+        <svg class="w-7 h-7 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+      </div>
+
+      <div class="space-y-1.5 max-w-lg mx-auto">
+        <h3 id="loadingTitle" class="text-base sm:text-lg font-bold text-white break-words">
+          Barangolás az interneten és elemző oldalak átvizsgálása...
+        </h3>
+        <p id="loadingStepText" class="text-xs sm:text-sm text-emerald-400 font-medium">
+          1/4: Mérkőzések és szorzók szűrése...
+        </p>
+        <p class="text-xs text-slate-400">
+          Ha a keresett időablakban nem változtak a mérkőzések, az eredmény azonnal betöltődik a gyorsítótárból.
+        </p>
+      </div>
+
+      <div class="max-w-md mx-auto w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+        <div id="loadingProgressBar" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-700" style="width: 25%"></div>
+      </div>
+    </section>
+
+    <!-- ERROR MESSAGE BOX -->
+    <section id="errorSection" class="hidden rounded-2xl bg-rose-950/70 border border-rose-500/40 p-4 sm:p-5 text-rose-200 flex items-start gap-3">
+      <svg class="w-6 h-6 text-rose-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <div class="space-y-1 text-sm min-w-0">
+        <h4 class="font-bold text-rose-300">Az elemzés nem sikerült</h4>
+        <p id="errorMessageText" class="break-words"></p>
+      </div>
+    </section>
+
+    <!-- RESULTS SECTION -->
+    <section id="resultsSection" class="hidden space-y-4 sm:space-y-5">
+
+      <!-- Overview Banner -->
+      <div class="glass-card rounded-2xl p-4 sm:p-5 border-l-4 border-l-emerald-500 space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              AI Kutatási Összefoglaló
+            </span>
+            <span id="resultsMetaBadge" class="text-xs text-slate-300 font-medium"></span>
+            <span id="cacheStatusBadge" class="hidden px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30"></span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <button id="forceRefreshBtn" type="button"
+              class="hidden w-full sm:w-auto justify-center text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition cursor-pointer flex items-center gap-1">
+              <span>🔄 Friss AI elemzés kényszerítése</span>
+            </button>
+          </div>
+        </div>
+        <p id="analysisOverviewText" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
+      </div>
+
+      <!-- TIPS CONTAINER -->
+      <div id="tipsContainer" class="space-y-3.5 sm:space-y-4"></div>
+
+      <!-- GROUNDING SOURCES -->
+      <div id="groundingFooter" class="hidden glass-card rounded-2xl p-4 sm:p-5 space-y-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+          <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          </svg>
+          <span>Átvizsgált internetes elemző és statisztikai oldalak</span>
+        </h4>
+        <div id="webSourcesList" class="flex flex-wrap gap-2"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/70 py-5 mt-8 text-center text-xs text-slate-500 px-4">
+    TippmixPro AI Elemző &bull; Összes sportág (Foci, Tenisz, Kosárlabda, E-Sport és 25+ egyéb kategória) &bull; Egyedi Odds és Tippszám (1–10)
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
