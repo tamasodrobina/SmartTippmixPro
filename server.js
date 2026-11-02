@@ -912,7 +912,9 @@ app.post('/api/analyze/custom', async (req, res) => {
       ? await enrichCandidateEvents(matchedEvents, minOdds, maxOdds, forceRefresh)
       : [];
 
+    console.log(`   🌐 Internetes keresés indítása elemző és statisztikai oldalakon...`);
     const webResearch = await gatherWebResearchForMatches(enrichedEvents, query);
+    console.log(`   ✅ Internetes kutatás kész, AI elemzés generálása...`);
 
     let tippmixContextText = '';
     if (enrichedEvents.length > 0) {
