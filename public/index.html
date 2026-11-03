@@ -475,59 +475,15 @@
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
           </svg>
         </div>
-        <h4 class="text-sm sm:text-base font-bold text-white">AI Mélyelemzés és Kutatás folyamatban...</h4>
+        <h4 class="text-sm sm:text-base font-bold text-white">AI Elemzés folyamatban...</h4>
         <p class="text-xs text-emerald-400 max-w-md mx-auto">
-          Játékvezetői vizsgálat (lapátlagok, büntetők), szögletek, H2H forma és Top 3 tipp összegyűjtése...
+          Releváns statisztikák, forma és Top 3 tipp összegyűjtése...
         </p>
       </div>
 
       <!-- Modal Tartalom (ha kész) -->
-      <div id="modalContent" class="hidden space-y-4 sm:space-y-5">
+      <div id="modalContent" class="hidden space-y-4">
 
-        <!-- JÁTÉKVEZETŐ & LAPOK/SZÖGLETEK ELEMZŐ BLOKK -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-          <!-- Játékvezető Kártya -->
-          <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5 sm:p-4 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                <span>👨‍⚖️</span>
-                <span>Játékvezetői Vizsgálat</span>
-              </span>
-              <span id="modalRefereeName" class="text-xs font-bold text-white bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-lg truncate max-w-[180px]"></span>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
-                <span class="text-[10px] text-slate-400 uppercase block">Lapátlag</span>
-                <span id="modalRefereeCards" class="font-bold text-amber-300"></span>
-              </div>
-              <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
-                <span class="text-[10px] text-slate-400 uppercase block">Büntető hajlam</span>
-                <span id="modalRefereePenalties" class="font-bold text-amber-300"></span>
-              </div>
-            </div>
-            <p id="modalRefereeSummary" class="text-xs text-slate-300 leading-relaxed"></p>
-          </div>
-
-          <!-- Szögletek & Sárga lapok Kártya -->
-          <div class="rounded-xl bg-slate-900/90 border border-teal-500/30 p-3.5 sm:p-4 space-y-2">
-            <span class="text-xs font-black uppercase tracking-wider text-teal-400 flex items-center gap-1.5">
-              <span>🚩</span>
-              <span>Szögletek &amp; Büntetőlapok</span>
-            </span>
-            <div class="space-y-2 text-xs">
-              <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
-                <span class="text-[10px] text-teal-300 font-bold uppercase block">Szöglet előrejelzés:</span>
-                <span id="modalCornerText" class="text-slate-300 leading-relaxed"></span>
-              </div>
-              <div class="bg-slate-950/60 p-2 rounded-lg border border-slate-800">
-                <span class="text-[10px] text-yellow-300 font-bold uppercase block">Sárga lapok határok:</span>
-                <span id="modalCardText" class="text-slate-300 leading-relaxed"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TOP 3 TIPP -->
         <div class="space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">

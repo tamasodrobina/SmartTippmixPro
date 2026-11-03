@@ -80,12 +80,6 @@ const modalTimeBadge = document.getElementById('modalTimeBadge');
 const modalMatchTitle = document.getElementById('modalMatchTitle');
 const modalLoading = document.getElementById('modalLoading');
 const modalContent = document.getElementById('modalContent');
-const modalRefereeName = document.getElementById('modalRefereeName');
-const modalRefereeCards = document.getElementById('modalRefereeCards');
-const modalRefereePenalties = document.getElementById('modalRefereePenalties');
-const modalRefereeSummary = document.getElementById('modalRefereeSummary');
-const modalCornerText = document.getElementById('modalCornerText');
-const modalCardText = document.getElementById('modalCardText');
 const modalTipsList = document.getElementById('modalTipsList');
 
 // ============================================================================
@@ -934,25 +928,14 @@ function renderModalContent(result = {}) {
   modalLoading.classList.add('hidden');
   modalContent.classList.remove('hidden');
 
-  // 1. Játékvezetői vizsgálat
-  const ref = result.refereeAnalysis || {};
-  modalRefereeName.textContent = ref.refereeName || 'Nem ismert / Információ alatt';
-  modalRefereeCards.textContent = ref.cardAverage || 'Átlagos lapmutató';
-  modalRefereePenalties.textContent = ref.penaltyTendency || 'Közepes tendencia';
-  modalRefereeSummary.textContent = ref.summary || 'A játékvezetői stílus nem befolyásolja drasztikusan a mérkőzés ritmusát.';
-
-  // 2. Szögletek & Sárga lapok
-  const cc = result.cornersAndCards || {};
-  modalCornerText.textContent = cc.cornerAnalysis || 'Kiegyensúlyozott szélsőjáték és mezőnyharc várható.';
-  modalCardText.textContent = cc.cardAnalysis || 'Fegyelmezett játék várható, közepes lapos határokkal.';
-
-  // 3. Top 3 Tippek
+  // Top 3 Tippek - Csak a releváns információk megjelenítése
   const tips = result.tips || [];
   modalTipsList.innerHTML = tips.map((t, idx) => {
     const rank = t.rank || idx + 1;
     const reasoning = t.detailedReasoning || {};
     const risk = t.riskAssessment || {};
     const prob = t.estimatedProbability || 75;
+    const factors = Array.isArray(reasoning.keyFactors) ? reasoning.keyFactors : [];
 
     return `
       <div class="rounded-xl bg-slate-900 border border-slate-800 p-4 space-y-3">
@@ -978,6 +961,15 @@ function renderModalContent(result = {}) {
         <p class="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
           ${escapeHtml(reasoning.mainThesis || t.shortSummary || '')}
         </p>
+
+        ${factors.length > 0 ? `
+          <div class="space-y-1">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Releváns kulcsérvek:</span>
+            <ul class="text-xs text-slate-300 space-y-0.5 list-disc list-inside">
+              ${factors.map(f => `<li>${escapeHtml(f)}</li>`).join('')}
+            </ul>
+          </div>
+        ` : ''}
 
         <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
           <span>Kockázati szint: <strong class="text-amber-400">${escapeHtml(risk.level || 'Alacsony-Közepes')} (${risk.score || 3}/10)</strong></span>

@@ -895,9 +895,8 @@ A felhasználó a következő ${hours} órában keresi a **${tipsCount} LEGVALÓ
 Kiválasztott sportág: ${selectedSportMeta ? selectedSportMeta.name : 'Foci, Tenisz vagy NFL'}.
 
 KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
-1. JÁTÉKVEZETŐI ELEMZÉS: Focinál és NFL-nél vedd figyelembe a játékvezető (referee) lapátlagát, büntetőit és stílusát!
-2. SAROKRÚGÁSOK ÉS SÁRGA LAPOK: Focinál alaposan elemezd a szögleteket (corners) és sárga lapokat (cards) is, ha azok a legvalószínűbb opciók között szerepelnek!
-3. Pontosan ${tipsCount} tippet adj vissza, szakmai indoklással és kockázati besorolással!
+1. RELEVANCIA-SZABÁLY: Nem kell kiemelni a játékvezetőt, sem a szögleteket vagy lapokat, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából! Minden információt (bíró, lapok, szögletek, forma, hiányzók) KIZÁRÓLAG AKKOR adj a részletes leírásba, ha azok közvetlenül relevánsak a kiválasztott tipp alátámasztásához. Ha nem relevánsak, ne említsd őket!
+2. Pontosan ${tipsCount} tippet adj vissza, szakmai indoklással és kockázati besorolással!
 
 ${matchesContextBlock}
 
@@ -921,10 +920,8 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       "estimatedProbability": 75,
       "shortSummary": "1-2 mondatos lényegretörő összegzés.",
       "detailedReasoning": {
-        "mainThesis": "Részletes, 4-6 mondatos fő szakmai indoklás.",
-        "formAndStats": "Statisztikák, H2H mérleg, forma.",
-        "refereeAndDiscipline": "Játékvezetői és fegyelmi (sárga lap, szöglet, büntető) észrevételek.",
-        "keyFactors": ["1. érv", "2. érv", "3. érv"]
+        "mainThesis": "Részletes, lényegretörő szakmai indoklás a tipp valószínűsége mellett. Csak a tipp szempontjából releváns tényezőket fejtsd ki!",
+        "keyFactors": ["1. releváns érv", "2. releváns érv", "3. releváns érv"]
       },
       "riskAssessment": {
         "level": "Alacsony | Alacsony-Közepes | Közepes | Magas",
@@ -1054,36 +1051,24 @@ app.post('/api/analyze/custom', async (req, res) => {
 A felhasználó az alábbi konkrét mérkőzés mélyreható szakmai elemzését kéri: "${query}".
 
 KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG):
-1. **JÁTÉKVEZETŐ / BÍRÓ (REFEREE) VIZSGÁLAT**:
-   - Labdarúgásnál: Keresd meg a kijelölt játékvezetőt! Milyen a lapátlaga (sárga lap / mérkőzés, piros lap)? Gyakran fúj-e tizenegyest? Engedi a folyamatos játékot vagy sokat aprítja a mezőnyt?
-   - NFL-nél: Ki a vezetőbíró (lead referee)? Hány büntetőt (penalties per game) és büntetőyardot dobnak átlagosan, melyik csapat stílusának kedvez?
-2. **SZÖGLETEK ÉS SÁRGA LAPOK (CORNERS & CARDS)**:
-   - Labdarúgásnál elemezd a várható szögletszámot (csapatok szélsőjátéka, lövések száma, blokkolt beadások) és a lapos határokat (derbi hangulat, tét, feszültség)!
-3. **TOP 3 LEGVALÓSZÍNŰBB TIPP**:
+1. **RELEVANCIA-SZABÁLY**:
+   - Nem kell külön kiemelni a játékvezetőt, sem a szögleteket vagy lapokat, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. ha lap/szöglet piacon van a tipp, vagy a bíró személye közvetlenül befolyásolja az adott piacot)!
+   - Minden információt (bíró, lapok, szögletek, sérülések, statisztikák) CSAK AKKOR adj a részletes leírásba, ha azok közvetlenül relevánsak a tippek szempontjából. Ha nem relevánsak, ne említsd őket!
+2. **TOP 3 LEGVALÓSZÍNŰBB TIPP**:
    - Válassz ki pontosan **3 darab különböző piaci tippet** a mérkőzésre, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**!
    - Ha a fenti TippmixPro adatokban szerepelnek opciók, KÖTELEZŐEN az ott lévő valós piacneveket és oddsokat válaszd ki!
-4. **KOCKÁZATI ÉRTÉKELÉS (1-10)**:
+3. **KOCKÁZATI ÉRTÉKELÉS (1-10)**:
    - Részletesen indokold meg a kockázat mértékét és a váratlan forgatókönyveket!
 
 TIPPMIXPRO ADATOK:
 ${tippmixContextText}
 
-INTERNETES ELEMZŐ, BÍRÓI ÉS STATISZTIKAI TALÁLATOK:
+INTERNETES ELEMZŐ ÉS STATISZTIKAI TALÁLATOK:
 ${webResearch.researchText}
 
 VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
 {
   "analysisOverview": "2-3 mondatos professzionális összegzés a mérkőzésről.",
-  "refereeAnalysis": {
-    "refereeName": "A játékvezető neve (pl. Anthony Taylor / Nem ismert)",
-    "cardAverage": "pl. 4.1 sárga lap / meccs, 0.15 piros lap",
-    "penaltyTendency": "pl. Átlagosnál gyakoribb büntetők",
-    "summary": "3-4 mondat a bírói stílusról, a lapok várhatóságáról és a játék ritmusára gyakorolt hatásáról."
-  },
-  "cornersAndCards": {
-    "cornerAnalysis": "Részletes elemzés a szögletekről: melyik csapat dominálhat a széleken, várható sarokrúgások száma és határok.",
-    "cardAnalysis": "Részletes elemzés a sárga lapokról: feszültség, tét, játékosok habitusa, büntetőlap-szám előrejelzés."
-  },
   "tips": [
     {
       "rank": 1,
@@ -1097,10 +1082,8 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       "estimatedProbability": 76,
       "shortSummary": "1-2 mondatos összegzés a kártyához.",
       "detailedReasoning": {
-        "mainThesis": "Részletes fő indoklás: miért ez a legvalószínűbb tipp a mérkőzésre.",
-        "formAndStats": "Konkrét statisztikák, gól/pont átlagok, H2H forma.",
-        "refereeAndDisciplineInsight": "Hogyan támasztja alá ezt a bírói és a fegyelmi (lap/szöglet) kép.",
-        "keyFactors": ["1. kulcsérv", "2. kulcsérv", "3. kulcsérv"]
+        "mainThesis": "Részletes fő indoklás: miért ez a legvalószínűbb tipp a mérkőzésre (kizárólag a tipp szempontjából releváns tényezőkkel!).",
+        "keyFactors": ["1. releváns kulcsérv", "2. releváns kulcsérv", "3. releváns kulcsérv"]
       },
       "riskAssessment": {
         "level": "Alacsony | Alacsony-Közepes | Közepes | Magas",
