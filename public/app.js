@@ -1,32 +1,67 @@
 // ============================================================================
-// SmartTippmixPro - Frontend Alkalmazás (NFL, Foci, Tenisz)
+// SmartTippmixPro - Frontend Alkalmazás (Összes Főoldal + Sportág Nézet)
 // ============================================================================
 
 // Állapot (State)
-let selectedSportIds = new Set([1]); // Alapértelmezett: Foci (1), de tenisz (5) és NFL (16) is hozzáadható
+let activeNav = 'all'; // 'all' (főoldal) | '1' (foci) | '5' (tenisz) | '16' (nfl)
 let selectedCompetitionKeys = new Set();
 let allCompetitions = [];
-let currentMatches = [];
-let activeDetailedEvent = null;
+let currentLeagueMatches = [];
+let loadingTimer = null;
+let lastExecutedMode = 'interval';
 
-// DOM elemek
-const sportBtn1 = document.getElementById('sportBtn1');
-const sportBtn5 = document.getElementById('sportBtn5');
-const sportBtn16 = document.getElementById('sportBtn16');
+// Navigációs elemek
+const navBtnAll = document.getElementById('navBtnAll');
+const navBtn1 = document.getElementById('navBtn1');
+const navBtn5 = document.getElementById('navBtn5');
+const navBtn16 = document.getElementById('navBtn16');
 const sportCount1 = document.getElementById('sportCount1');
 const sportCount5 = document.getElementById('sportCount5');
 const sportCount16 = document.getElementById('sportCount16');
 
-const catalogStatusText = document.getElementById('catalogStatusText');
+// Nézet szekciók
+const mainHomeView = document.getElementById('mainHomeView');
+const sportLeagueView = document.getElementById('sportLeagueView');
+
+// Globális szűrők
+const headerOddsBadge = document.getElementById('headerOddsBadge');
 const minOddsInput = document.getElementById('minOddsInput');
 const maxOddsInput = document.getElementById('maxOddsInput');
-const oddsFilterBadge = document.getElementById('oddsFilterBadge');
+const tipsCountSelect = document.getElementById('tipsCountSelect');
 const oddsPresetBtns = document.querySelectorAll('.odds-preset-btn');
+const catalogStatusText = document.getElementById('catalogStatusText');
 
-const customSearchInput = document.getElementById('customSearchInput');
-const customSearchSubmitBtn = document.getElementById('customSearchSubmitBtn');
-const searchDropdown = document.getElementById('searchDropdown');
+// Főoldal elemek (Intervallum + Egyedi meccskereső)
+const hoursSelect = document.getElementById('hoursSelect');
+const homeSportSelect = document.getElementById('homeSportSelect');
+const analyzeIntervalBtn = document.getElementById('analyzeIntervalBtn');
+const analyzeIntervalBtnLabel = document.getElementById('analyzeIntervalBtnLabel');
+const quickHourBtns = document.querySelectorAll('.quick-hour-btn');
 
+const customMatchInput = document.getElementById('customMatchInput');
+const clearCustomInputBtn = document.getElementById('clearCustomInputBtn');
+const autocompleteDropdown = document.getElementById('autocompleteDropdown');
+const analyzeCustomBtn = document.getElementById('analyzeCustomBtn');
+const analyzeCustomBtnLabel = document.getElementById('analyzeCustomBtnLabel');
+let selectedAutocompleteEventId = null;
+
+const loadingSection = document.getElementById('loadingSection');
+const loadingTitle = document.getElementById('loadingTitle');
+const loadingStepText = document.getElementById('loadingStepText');
+const loadingProgressBar = document.getElementById('loadingProgressBar');
+
+const errorSection = document.getElementById('errorSection');
+const errorMessageText = document.getElementById('errorMessageText');
+
+const resultsSection = document.getElementById('resultsSection');
+const resultsMetaBadge = document.getElementById('resultsMetaBadge');
+const cacheStatusBadge = document.getElementById('cacheStatusBadge');
+const forceRefreshBtn = document.getElementById('forceRefreshBtn');
+const analysisOverviewText = document.getElementById('analysisOverviewText');
+const tipsContainer = document.getElementById('tipsContainer');
+
+// Bajnokság & Meccs táblázat elemek (Sportág nézet)
+const leagueSectionHeading = document.getElementById('leagueSectionHeading');
 const selectAllLeaguesBtn = document.getElementById('selectAllLeaguesBtn');
 const selectTopLeaguesBtn = document.getElementById('selectTopLeaguesBtn');
 const prestigiousBadgesContainer = document.getElementById('prestigiousBadgesContainer');
@@ -57,7 +92,7 @@ const modalCardText = document.getElementById('modalCardText');
 const modalTipsList = document.getElementById('modalTipsList');
 
 // ============================================================================
-// 1. SEGÉDFÜGGVÉNYEK
+// 1. SEGÉDFÜGGVÉNYEK & FORMÁZÓK
 // ============================================================================
 
 function escapeHtml(str = '') {
@@ -98,64 +133,429 @@ function getSportIcon(sportId) {
 function getFilterSettings() {
   const rawMin = Number(minOddsInput.value) || 1.30;
   const rawMax = Number(maxOddsInput.value) || 2.00;
+  const tipsCount = Math.min(10, Math.max(1, Number(tipsCountSelect.value) || 3));
   return {
     minOdds: Math.min(rawMin, rawMax),
-    maxOdds: Math.max(rawMin, rawMax)
+    maxOdds: Math.max(rawMin, rawMax),
+    tipsCount
   };
 }
 
 // ============================================================================
-// 2. SPORTÁG MULTI-SELECT KEZELÉS
+// 2. NÉZETVÁLTÁS: FŐOLDAL ("ÖSSZES") vs SPORTÁG TÁBLÁZAT NÉZET
 // ============================================================================
 
-function updateSportButtonStyles() {
-  const btns = [
-    { id: 1, btn: sportBtn1 },
-    { id: 5, btn: sportBtn5 },
-    { id: 16, btn: sportBtn16 }
+function switchNav(navKey) {
+  activeNav = navKey;
+
+  const tabs = [
+    { key: 'all', btn: navBtnAll },
+    { key: '1', btn: navBtn1 },
+    { key: '5', btn: navBtn5 },
+    { key: '16', btn: navBtn16 }
   ];
 
-  btns.forEach(({ id, btn }) => {
-    const active = selectedSportIds.has(id);
-    if (active) {
-      btn.className = 'sport-multi-btn h-9 px-3.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition cursor-pointer bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20 border border-emerald-400';
+  tabs.forEach(({ key, btn }) => {
+    if (key === activeNav) {
+      if (key === 'all') {
+        btn.className = 'nav-tab-btn shrink-0 h-8 sm:h-8.5 px-3 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition cursor-pointer bg-rose-600 text-white shadow-sm';
+      } else {
+        btn.className = 'nav-tab-btn shrink-0 h-8 sm:h-8.5 px-3 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition cursor-pointer bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20';
+      }
     } else {
-      btn.className = 'sport-multi-btn h-9 px-3.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 transition cursor-pointer bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700';
+      btn.className = 'nav-tab-btn shrink-0 h-8 sm:h-8.5 px-3 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition cursor-pointer text-slate-300 hover:text-white hover:bg-slate-800';
     }
   });
-}
 
-function toggleSport(sportId) {
-  const id = Number(sportId);
-  if (selectedSportIds.has(id)) {
-    // Ne engedjük, hogy 0 sportág legyen kiválasztva
-    if (selectedSportIds.size > 1) {
-      selectedSportIds.delete(id);
-    }
+  if (activeNav === 'all') {
+    // Főoldal: Intervallum és Egyedi Meccskereső megjelenítése, Bajnokság táblázat elrejtése
+    mainHomeView.classList.remove('hidden');
+    sportLeagueView.classList.add('hidden');
   } else {
-    selectedSportIds.add(id);
+    // Sportág nézet: Bajnokság választó és Aznapi Meccsek táblázat megjelenítése
+    mainHomeView.classList.add('hidden');
+    sportLeagueView.classList.remove('hidden');
+
+    let sportName = 'Labdarúgás (Foci)';
+    if (activeNav === '5') sportName = 'Tenisz (ATP / WTA)';
+    if (activeNav === '16') sportName = 'Amerikai futball (NFL)';
+
+    leagueSectionHeading.textContent = `${sportName} – Bajnokság & Sorozat (Rangsorolt Prioritás)`;
+    loadSportCompetitions(activeNav, true);
   }
-  updateSportButtonStyles();
-  loadCompetitions(true);
 }
 
-sportBtn1.addEventListener('click', () => toggleSport(1));
-sportBtn5.addEventListener('click', () => toggleSport(5));
-sportBtn16.addEventListener('click', () => toggleSport(16));
+navBtnAll.addEventListener('click', () => switchNav('all'));
+navBtn1.addEventListener('click', () => switchNav('1'));
+navBtn5.addEventListener('click', () => switchNav('5'));
+navBtn16.addEventListener('click', () => switchNav('16'));
 
 // ============================================================================
-// 3. BAJNOKSÁGOK ÉS RANGSOROK BETÖLTÉSE (PRESTIGE SCORING)
+// 3. FŐOLDAL VEZÉRLŐK: IDŐINTERVALLUM ÉS EGYEDI KERESŐ
 // ============================================================================
 
-async function loadCompetitions(resetSelection = false) {
+function initHomeControls() {
+  hoursSelect.innerHTML = '';
+  for (let h = 1; h <= 24; h++) {
+    const opt = document.createElement('option');
+    opt.value = String(h);
+    opt.textContent = `Következő ${h} órában (${h} óra)`;
+    if (h === 6) opt.selected = true;
+    hoursSelect.appendChild(opt);
+  }
+
+  tipsCountSelect.innerHTML = '';
+  for (let c = 1; c <= 10; c++) {
+    const opt = document.createElement('option');
+    opt.value = String(c);
+    opt.textContent = `Top ${c} legvalószínűbb tipp (${c} db)`;
+    if (c === 3) opt.selected = true;
+    tipsCountSelect.appendChild(opt);
+  }
+
+  function syncLabels() {
+    const { minOdds, maxOdds, tipsCount } = getFilterSettings();
+    headerOddsBadge.textContent = `${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} Odds • Top ${tipsCount}`;
+    analyzeIntervalBtnLabel.textContent = `Időintervallum Elemzése (Top ${tipsCount} • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)})`;
+    analyzeCustomBtnLabel.textContent = `Mérkőzés Elemzése (Top ${tipsCount} Tipp)`;
+  }
+
+  tipsCountSelect.addEventListener('change', syncLabels);
+  minOddsInput.addEventListener('input', syncLabels);
+  maxOddsInput.addEventListener('input', syncLabels);
+
+  oddsPresetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      minOddsInput.value = btn.dataset.min;
+      maxOddsInput.value = btn.dataset.max;
+      oddsPresetBtns.forEach(b => {
+        b.className = (b === btn)
+          ? 'odds-preset-btn rounded-lg text-xs font-black bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 transition truncate px-1'
+          : 'odds-preset-btn rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition truncate px-1';
+      });
+      syncLabels();
+      if (activeNav !== 'all') {
+        loadLeagueMatches();
+      }
+    });
+  });
+
+  quickHourBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      hoursSelect.value = btn.dataset.quickHours;
+      quickHourBtns.forEach(b => {
+        b.className = (b === btn)
+          ? 'quick-hour-btn h-8 sm:h-7 px-2 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition text-center'
+          : 'quick-hour-btn h-8 sm:h-7 px-2 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition text-center';
+      });
+    });
+  });
+
+  syncLabels();
+}
+
+// Intervallum elemzés indítása
+async function runIntervalAnalysis(forceRefresh = false) {
+  lastExecutedMode = 'interval';
+  const hours = Number(hoursSelect.value) || 6;
+  const sportId = homeSportSelect.value || 'all';
+  const { minOdds, maxOdds, tipsCount } = getFilterSettings();
+  const sportLabel = homeSportSelect.options[homeSportSelect.selectedIndex]?.textContent || 'Összes sportág';
+
+  startLoadingAnimation('interval', `Következő ${hours} óra elemzése (${sportLabel})...`);
+  analyzeIntervalBtn.disabled = true;
+  analyzeCustomBtn.disabled = true;
+
+  try {
+    const res = await fetch('/api/analyze/interval', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        hours,
+        sportId,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        forceRefresh: Boolean(forceRefresh)
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.error || 'Hiba az elemzés során.');
+
+    stopLoadingAnimation();
+    renderAnalysisResults(
+      data,
+      `Következő ${hours} óra • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds • Top ${tipsCount} tipp`
+    );
+  } catch (err) {
+    showError(err.message);
+  } finally {
+    analyzeIntervalBtn.disabled = false;
+    analyzeCustomBtn.disabled = false;
+  }
+}
+
+// Egyedi meccskeresés indítása
+async function runCustomAnalysis(forceRefresh = false) {
+  const query = customMatchInput.value.trim();
+  if (!query) {
+    showError('Kérlek írj be egy mérkőzést, csapatot vagy játékost a keresőmezőbe!');
+    customMatchInput.focus();
+    return;
+  }
+
+  lastExecutedMode = 'custom';
+  const { minOdds, maxOdds, tipsCount } = getFilterSettings();
+
+  startLoadingAnimation('custom', `"${query}" részletes elemzése...`);
+  analyzeIntervalBtn.disabled = true;
+  analyzeCustomBtn.disabled = true;
+
+  try {
+    const res = await fetch('/api/analyze/custom', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query,
+        eventId: selectedAutocompleteEventId,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        forceRefresh: Boolean(forceRefresh)
+      })
+    });
+
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.error || 'Hiba a mérkőzés elemzése során.');
+
+    stopLoadingAnimation();
+    renderAnalysisResults(
+      data,
+      `Keresés: "${query}" • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds • Top ${tipsCount} tipp`
+    );
+  } catch (err) {
+    showError(err.message);
+  } finally {
+    analyzeIntervalBtn.disabled = false;
+    analyzeCustomBtn.disabled = false;
+  }
+}
+
+analyzeIntervalBtn.addEventListener('click', () => runIntervalAnalysis(false));
+analyzeCustomBtn.addEventListener('click', () => runCustomAnalysis(false));
+forceRefreshBtn.addEventListener('click', () => {
+  if (lastExecutedMode === 'custom') runCustomAnalysis(true);
+  else runIntervalAnalysis(true);
+});
+
+// Autocomplete a főoldali keresőhöz
+let searchDebounce = null;
+customMatchInput.addEventListener('input', () => {
+  selectedAutocompleteEventId = null;
+  const val = customMatchInput.value.trim();
+  clearCustomInputBtn.classList.toggle('hidden', val.length === 0);
+
+  clearTimeout(searchDebounce);
+  if (val.length < 2) {
+    autocompleteDropdown.classList.add('hidden');
+    return;
+  }
+
+  searchDebounce = setTimeout(async () => {
+    try {
+      const res = await fetch(`/api/matches/search?q=${encodeURIComponent(val)}`);
+      const data = await res.json();
+      if (!data.ok || !data.matches || data.matches.length === 0) {
+        autocompleteDropdown.classList.add('hidden');
+        return;
+      }
+
+      autocompleteDropdown.innerHTML = data.matches.map(m => `
+        <button type="button" data-event-id="${m.eventId}" data-event-name="${escapeHtml(m.eventName)}"
+          class="autocomplete-item w-full text-left px-3.5 py-2.5 hover:bg-slate-800 transition flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div class="text-xs sm:text-sm font-semibold text-white truncate">${getSportIcon(m.sportId)} ${escapeHtml(m.eventName)}</div>
+            <div class="text-[11px] text-slate-400 truncate">${escapeHtml(m.competitionGroupName || '')} - ${escapeHtml(m.competitionName || '')}</div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-[11px] font-medium text-emerald-400">${formatHungarianDate(m.eventDate)}</div>
+          </div>
+        </button>
+      `).join('');
+
+      autocompleteDropdown.classList.remove('hidden');
+
+      autocompleteDropdown.querySelectorAll('.autocomplete-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          customMatchInput.value = btn.dataset.eventName;
+          selectedAutocompleteEventId = Number(btn.dataset.eventId);
+          clearCustomInputBtn.classList.remove('hidden');
+          autocompleteDropdown.classList.add('hidden');
+        });
+      });
+    } catch (_) {
+      autocompleteDropdown.classList.add('hidden');
+    }
+  }, 200);
+});
+
+clearCustomInputBtn.addEventListener('click', () => {
+  customMatchInput.value = '';
+  selectedAutocompleteEventId = null;
+  clearCustomInputBtn.classList.add('hidden');
+  autocompleteDropdown.classList.add('hidden');
+  customMatchInput.focus();
+});
+
+document.addEventListener('click', (e) => {
+  if (!customMatchInput.contains(e.target) && !autocompleteDropdown.contains(e.target)) {
+    autocompleteDropdown.classList.add('hidden');
+  }
+});
+
+customMatchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    autocompleteDropdown.classList.add('hidden');
+    runCustomAnalysis(false);
+  }
+});
+
+// Töltés animáció
+function startLoadingAnimation(mode, subtitle) {
+  const { minOdds, maxOdds, tipsCount } = getFilterSettings();
+  errorSection.classList.add('hidden');
+  resultsSection.classList.add('hidden');
+  loadingSection.classList.remove('hidden');
+  loadingTitle.textContent = subtitle;
+  loadingProgressBar.style.width = '20%';
+
+  const steps = [
+    { pct: '30%', text: `1/4: Mérkőzések és ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} szorzók szűrése...` },
+    { pct: '55%', text: '2/4: Internetes források és bírói adatok átvizsgálása...' },
+    { pct: '80%', text: '3/4: Forma, szögletek és sárga lapok összevetése...' },
+    { pct: '92%', text: `4/4: Top ${tipsCount} tipp összeállítása és kockázatelemzés...` }
+  ];
+
+  let idx = 0;
+  loadingStepText.textContent = steps[0].text;
+
+  clearInterval(loadingTimer);
+  loadingTimer = setInterval(() => {
+    idx = Math.min(steps.length - 1, idx + 1);
+    loadingStepText.textContent = steps[idx].text;
+    loadingProgressBar.style.width = steps[idx].pct;
+  }, 3500);
+}
+
+function stopLoadingAnimation() {
+  clearInterval(loadingTimer);
+  loadingSection.classList.add('hidden');
+}
+
+function showError(msg) {
+  stopLoadingAnimation();
+  errorMessageText.textContent = msg;
+  errorSection.classList.remove('hidden');
+}
+
+// Eredmények kirajzolása a főoldalon
+function renderAnalysisResults(payload, metaLabel) {
+  const result = payload.result || {};
+  const tips = Array.isArray(result.tips) ? result.tips : [];
+
+  resultsMetaBadge.textContent = metaLabel;
+  analysisOverviewText.textContent = result.analysisOverview || 'Az elemzés elkészült a kiválasztott feltételek alapján.';
+
+  if (payload.fromCache) {
+    cacheStatusBadge.textContent = `⚡ Okos Gyorsítótárból (0 API hívás)`;
+    cacheStatusBadge.classList.remove('hidden');
+    forceRefreshBtn.classList.remove('hidden');
+  } else {
+    cacheStatusBadge.classList.add('hidden');
+    forceRefreshBtn.classList.remove('hidden');
+  }
+
+  tipsContainer.innerHTML = '';
+  if (tips.length === 0) {
+    tipsContainer.innerHTML = `
+      <div class="glass-card rounded-2xl p-6 text-center text-slate-400 text-sm">
+        Nem található tipp a megadott odds sávban. Próbálj tágabb odds határokat beállítani!
+      </div>
+    `;
+  } else {
+    tips.forEach((tip, idx) => {
+      const rank = tip.rank || idx + 1;
+      const sportIcon = getSportIcon(tip.sportName?.includes('Tenisz') ? 5 : (tip.sportName?.includes('futball') || tip.sportName?.includes('NFL') ? 16 : 1));
+      const timeFormatted = formatHungarianDate(tip.eventDate);
+      const reasoning = tip.detailedReasoning || {};
+      const risk = tip.riskAssessment || {};
+      const prob = tip.estimatedProbability || 75;
+
+      const card = document.createElement('article');
+      card.className = 'tip-card glass-card rounded-2xl overflow-hidden shadow-xl border border-slate-800 p-4 sm:p-5 space-y-3';
+      card.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-black uppercase ${rank === 1 ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-emerald-400 border border-emerald-500/30'}">
+              #${rank}. Tipp
+            </span>
+            <span class="text-xs font-semibold text-slate-300">${sportIcon} ${escapeHtml(tip.competitionName || '')}</span>
+          </div>
+          <span class="text-xs text-slate-400 bg-slate-900 px-2 py-0.5 rounded-lg border border-slate-800">
+            🕒 ${escapeHtml(timeFormatted)}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+          <div class="md:col-span-8 min-w-0">
+            <h3 class="text-base sm:text-lg font-black text-white leading-snug break-words">
+              ${escapeHtml(tip.eventName || 'Mérkőzés')}
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+              ${escapeHtml(tip.shortSummary || '')}
+            </p>
+          </div>
+
+          <div class="md:col-span-4 rounded-xl bg-slate-900 border border-emerald-500/35 p-3 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block truncate">${escapeHtml(tip.marketName)}</span>
+              <span class="text-sm font-black text-emerald-400 block truncate mt-0.5">${escapeHtml(tip.outcomeName)}</span>
+              <span class="text-[11px] text-slate-400 mt-0.5 block">Esély: <strong class="text-white">${prob}%</strong></span>
+            </div>
+            <div class="shrink-0 px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-lg">
+              ${Number(tip.odds).toFixed(2)}
+            </div>
+          </div>
+        </div>
+
+        <!-- Részletes kifejtés & kockázat -->
+        <div class="pt-2 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="text-slate-400">
+            Kockázati szint: <strong class="text-amber-400">${escapeHtml(risk.level || 'Közepes')} (${risk.score || 4}/10)</strong>
+          </div>
+          <span class="text-slate-500 italic text-[11px]">${escapeHtml(risk.explanation || '')}</span>
+        </div>
+      `;
+      tipsContainer.appendChild(card);
+    });
+  }
+
+  resultsSection.classList.remove('hidden');
+}
+
+// ============================================================================
+// 4. SPORTÁG NÉZET: BAJNOKSÁGOK ÉS AZNAPI MECCSEK TOP 2 TIPPPEL
+// ============================================================================
+
+async function loadSportCompetitions(sportId, resetSelection = false) {
   prestigiousBadgesContainer.innerHTML = `<div class="text-xs text-slate-500 animate-pulse">Rangos bajnokságok betöltése...</div>`;
   moreLeaguesContainer.innerHTML = '';
 
   try {
-    const sportsParam = Array.from(selectedSportIds).join(',');
-    const res = await fetch(`/api/competitions?sports=${sportsParam}`);
+    const res = await fetch(`/api/competitions?sports=${sportId}`);
     const data = await res.json();
-
     if (!data.ok) throw new Error(data.error);
 
     allCompetitions = data.competitions || [];
@@ -164,13 +564,10 @@ async function loadCompetitions(resetSelection = false) {
     const prestigious = allCompetitions.filter(c => c.prestigeScore >= 750 || c.displayName.toLowerCase().includes('bl') || c.displayName.toLowerCase().includes('el'));
     const others = allCompetitions.filter(c => !prestigious.includes(c));
 
-    // Ha most váltottunk sportágat, alapból jelöljük ki az első kiemelt bajnokságot (pl. BL) vagy az összes kiemeltet!
     if (resetSelection || selectedCompetitionKeys.size === 0) {
       selectedCompetitionKeys.clear();
-      // Kiemelt bajnokságok közül azok, amiknek ma van mérkőzése
       const topToday = prestigious.filter(c => c.todayMatches > 0);
       if (topToday.length > 0) {
-        // Alapból a legrangosabb sorozatot (pl. BL) jelöljük ki, hogy azonnal látható legyen a meccslista!
         selectedCompetitionKeys.add(topToday[0].key);
       } else if (prestigious.length > 0) {
         selectedCompetitionKeys.add(prestigious[0].key);
@@ -230,7 +627,6 @@ function renderCompetitionBadges(prestigious, others) {
     `;
   }).join('');
 
-  // Kattintás eseménykezelők a bajnokság gombokra (Multi-select)
   document.querySelectorAll('.comp-badge-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.compKey;
@@ -250,7 +646,6 @@ function renderCompetitionBadges(prestigious, others) {
   });
 }
 
-// Gyors Bajnokság gombok
 selectAllLeaguesBtn.addEventListener('click', () => {
   selectedCompetitionKeys.clear();
   allCompetitions.forEach(c => {
@@ -259,7 +654,7 @@ selectAllLeaguesBtn.addEventListener('click', () => {
   if (selectedCompetitionKeys.size === 0) {
     allCompetitions.forEach(c => selectedCompetitionKeys.add(c.key));
   }
-  loadCompetitions();
+  loadSportCompetitions(activeNav);
 });
 
 selectTopLeaguesBtn.addEventListener('click', () => {
@@ -267,7 +662,7 @@ selectTopLeaguesBtn.addEventListener('click', () => {
   allCompetitions.filter(c => c.prestigeScore >= 800 || c.displayName.toLowerCase().includes('bl') || c.displayName.toLowerCase().includes('el')).forEach(c => {
     selectedCompetitionKeys.add(c.key);
   });
-  loadCompetitions();
+  loadSportCompetitions(activeNav);
 });
 
 toggleMoreLeaguesBtn.addEventListener('click', () => {
@@ -277,10 +672,7 @@ toggleMoreLeaguesBtn.addEventListener('click', () => {
   moreLeaguesBtnText.textContent = isHidden ? 'Kevesebb megjelenítése' : 'Továbbiak megjelenítése';
 });
 
-// ============================================================================
-// 4. AZNAPI MÉRKŐZÉSEK ÉS TOP 2 TIPP LEKÉRÉSE & MEGJELENÍTÉSE
-// ============================================================================
-
+// Aznapi meccsek lekérése és Top 2 tipp kirajzolása
 async function loadLeagueMatches() {
   leagueMatchesList.innerHTML = `
     <div class="glass-card rounded-2xl p-8 text-center space-y-3">
@@ -290,7 +682,7 @@ async function loadLeagueMatches() {
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
         </svg>
       </div>
-      <p class="text-xs sm:text-sm text-slate-300 font-medium">Aznapi mérkőzések és Top 2 piacok betöltése a Tippmixről...</p>
+      <p class="text-xs sm:text-sm text-slate-300 font-medium">Aznapi mérkőzések és Top 2 tippek betöltése...</p>
     </div>
   `;
 
@@ -301,7 +693,7 @@ async function loadLeagueMatches() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         competitionKeys: Array.from(selectedCompetitionKeys),
-        sportIds: Array.from(selectedSportIds),
+        sportIds: [Number(activeNav)],
         onlyToday: true,
         minOdds,
         maxOdds
@@ -311,37 +703,35 @@ async function loadLeagueMatches() {
     const data = await res.json();
     if (!data.ok) throw new Error(data.error);
 
-    currentMatches = data.matches || [];
-    matchesCountBadge.textContent = `${currentMatches.length} meccs`;
+    currentLeagueMatches = data.matches || [];
+    matchesCountBadge.textContent = `${currentLeagueMatches.length} meccs`;
 
-    if (currentMatches.length === 0) {
+    if (currentLeagueMatches.length === 0) {
       leagueMatchesList.innerHTML = `
         <div class="glass-card rounded-2xl p-8 text-center space-y-2 text-slate-400">
-          <p class="text-sm font-semibold">Nincs aznapi mérkőzés a kiválasztott bajnokságban a megadott odds határok között.</p>
-          <p class="text-xs text-slate-500">Próbálj más bajnokságot kijelölni vagy kattints a fenti "Összes mai meccs" gombra!</p>
+          <p class="text-sm font-semibold">Nincs aznapi mérkőzés a kiválasztott bajnokságban ebben az odds sávban.</p>
+          <p class="text-xs text-slate-500">Próbálj más bajnokságot választani vagy kattints az "Összes mai meccs" gombra!</p>
         </div>
       `;
       return;
     }
 
-    renderMatchRows(currentMatches);
+    renderLeagueMatchRows(currentLeagueMatches);
   } catch (err) {
     console.error('Hiba a meccsek betöltésekor:', err);
     leagueMatchesList.innerHTML = `<div class="glass-card rounded-2xl p-6 text-center text-rose-400 text-sm">Hiba a mérkőzések betöltésekor.</div>`;
   }
 }
 
-// EGY SORBAN: Időpont + Csapatok + TOP 2 TIPP + "RÉSZLETESEN" GOMB
-function renderMatchRows(matches) {
-  leagueMatchesList.innerHTML = matches.map((m, idx) => {
+function renderLeagueMatchRows(matches) {
+  leagueMatchesList.innerHTML = matches.map(m => {
     const timeFormatted = formatHungarianDate(m.eventDate);
     const sportIcon = getSportIcon(m.sportId);
     const tips = m.top2Tips || [];
 
-    // Top 2 tipp kirajzolása egy sorba
     let tipsHtml = '';
     if (tips.length > 0) {
-      tipsHtml = tips.map((t, tIdx) => `
+      tipsHtml = tips.map(t => `
         <div class="flex-1 min-w-[140px] bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-500/60 rounded-xl p-2 sm:p-2.5 flex items-center justify-between gap-2 transition">
           <div class="min-w-0">
             <span class="block text-[10px] uppercase font-bold text-slate-400 truncate">${escapeHtml(t.marketName)}</span>
@@ -355,13 +745,13 @@ function renderMatchRows(matches) {
         </div>
       `).join('');
     } else {
-      tipsHtml = `<div class="text-xs text-slate-500 italic py-1">Nincs elérhető piac az adott odds sávban.</div>`;
+      tipsHtml = `<div class="text-xs text-slate-500 italic py-1">Nincs elérhető piac a megadott odds sávban.</div>`;
     }
 
     return `
       <div class="match-row glass-card rounded-2xl p-3.5 sm:p-4 border border-slate-800 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4">
         
-        <!-- BAL OSZLOP: IDŐPONT, CSAPATOK ÉS BAJNOKSÁG -->
+        <!-- BAL: IDŐ, CSAPATOK, LIGA -->
         <div class="lg:w-4/12 min-w-0 space-y-1">
           <div class="flex items-center gap-2 flex-wrap">
             <span class="text-[11px] font-bold text-slate-300 bg-slate-900 px-2 py-0.5 rounded-md border border-slate-800 shrink-0">
@@ -376,12 +766,12 @@ function renderMatchRows(matches) {
           </h4>
         </div>
 
-        <!-- KÖZÉPSŐ OSZLOP: VELE EGY SORBA A TOP 2 TIPP -->
+        <!-- KÖZÉP: TOP 2 TIPP EGY SORBAN -->
         <div class="lg:w-6/12 flex flex-col sm:flex-row items-stretch gap-2 min-w-0">
           ${tipsHtml}
         </div>
 
-        <!-- JOBB OSZLOP: A SOR VÉGÉN A "RÉSZLETESEN" GOMB -->
+        <!-- JOBB: "RÉSZLETESEN" GOMB -->
         <div class="lg:w-2/12 flex items-center justify-end shrink-0">
           <button type="button" data-event-id="${m.eventId}" data-event-name="${escapeHtml(m.eventName)}"
             class="open-detailed-btn w-full lg:w-auto h-10 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md shadow-emerald-500/20 transition cursor-pointer active:scale-95">
@@ -396,12 +786,11 @@ function renderMatchRows(matches) {
     `;
   }).join('');
 
-  // Részletesen gombok eseménykezelője
   document.querySelectorAll('.open-detailed-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const eventId = Number(btn.dataset.eventId);
       const eventName = btn.dataset.eventName;
-      const matchObj = currentMatches.find(m => m.eventId === eventId);
+      const matchObj = currentLeagueMatches.find(m => m.eventId === eventId);
       openDetailedModal(eventId, eventName, matchObj);
     });
   });
@@ -412,8 +801,6 @@ function renderMatchRows(matches) {
 // ============================================================================
 
 async function openDetailedModal(eventId, eventName, matchObj) {
-  activeDetailedEvent = { eventId, eventName };
-
   modalMatchTitle.textContent = eventName;
   modalSportBadge.textContent = matchObj ? `${getSportIcon(matchObj.sportId)} ${matchObj.sportName || 'Sport'}` : 'Mérkőzés';
   modalCompetitionBadge.textContent = matchObj ? (matchObj.competitionName || '') : '';
@@ -457,16 +844,16 @@ function renderModalContent(result = {}) {
   modalLoading.classList.add('hidden');
   modalContent.classList.remove('hidden');
 
-  // 1. Játékvezetői adatok
+  // 1. Játékvezetői vizsgálat
   const ref = result.refereeAnalysis || {};
   modalRefereeName.textContent = ref.refereeName || 'Nem ismert / Információ alatt';
   modalRefereeCards.textContent = ref.cardAverage || 'Átlagos lapmutató';
   modalRefereePenalties.textContent = ref.penaltyTendency || 'Közepes tendencia';
-  modalRefereeSummary.textContent = ref.summary || 'A játékvezetői stílus nem befolyásolja drasztikusan a papírformát.';
+  modalRefereeSummary.textContent = ref.summary || 'A játékvezetői stílus nem befolyásolja drasztikusan a mérkőzés ritmusát.';
 
   // 2. Szögletek & Sárga lapok
   const cc = result.cornersAndCards || {};
-  modalCornerText.textContent = cc.cornerAnalysis || 'A szögletmutatók kiegyensúlyozott mezőnyjátékot jeleznek előre.';
+  modalCornerText.textContent = cc.cornerAnalysis || 'Kiegyensúlyozott szélsőjáték és mezőnyharc várható.';
   modalCardText.textContent = cc.cardAnalysis || 'Fegyelmezett játék várható, közepes lapos határokkal.';
 
   // 3. Top 3 Tippek
@@ -502,7 +889,6 @@ function renderModalContent(result = {}) {
           ${escapeHtml(reasoning.mainThesis || t.shortSummary || '')}
         </p>
 
-        <!-- Kockázati értékelés -->
         <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
           <span>Kockázati szint: <strong class="text-amber-400">${escapeHtml(risk.level || 'Alacsony-Közepes')} (${risk.score || 3}/10)</strong></span>
           <span class="text-[11px] italic text-slate-500">${escapeHtml(risk.explanation || '')}</span>
@@ -525,94 +911,12 @@ detailedModal.addEventListener('click', (e) => {
 });
 
 // ============================================================================
-// 6. KERESŐ & ODDS SÁV KEZELŐK
-// ============================================================================
-
-let searchTimeout = null;
-customSearchInput.addEventListener('input', () => {
-  const val = customSearchInput.value.trim();
-  clearTimeout(searchTimeout);
-  if (val.length < 2) {
-    searchDropdown.classList.add('hidden');
-    return;
-  }
-
-  searchTimeout = setTimeout(async () => {
-    try {
-      const res = await fetch(`/api/matches/search?q=${encodeURIComponent(val)}`);
-      const data = await res.json();
-      if (!data.ok || !data.matches || data.matches.length === 0) {
-        searchDropdown.classList.add('hidden');
-        return;
-      }
-
-      searchDropdown.innerHTML = data.matches.map(m => `
-        <button type="button" data-event-id="${m.eventId}" data-event-name="${escapeHtml(m.eventName)}"
-          class="search-result-item w-full text-left px-3 py-2 hover:bg-slate-800 transition flex items-center justify-between text-xs">
-          <span class="text-white font-semibold truncate">${getSportIcon(m.sportId)} ${escapeHtml(m.eventName)}</span>
-          <span class="text-emerald-400 shrink-0 font-medium">${formatHungarianDate(m.eventDate)}</span>
-        </button>
-      `).join('');
-
-      searchDropdown.classList.remove('hidden');
-
-      document.querySelectorAll('.search-result-item').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const eventId = Number(btn.dataset.eventId);
-          const eventName = btn.dataset.eventName;
-          customSearchInput.value = eventName;
-          searchDropdown.classList.add('hidden');
-          openDetailedModal(eventId, eventName, { eventId, eventName });
-        });
-      });
-    } catch (_) {
-      searchDropdown.classList.add('hidden');
-    }
-  }, 250);
-});
-
-customSearchSubmitBtn.addEventListener('click', () => {
-  const q = customSearchInput.value.trim();
-  if (!q) return;
-  searchDropdown.classList.add('hidden');
-  openDetailedModal(null, q, { eventName: q });
-});
-
-customSearchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    customSearchSubmitBtn.click();
-  }
-});
-
-// Odds sáv szinkronizáció
-function syncOdds() {
-  const { minOdds, maxOdds } = getFilterSettings();
-  oddsFilterBadge.textContent = `Odds: ${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}`;
-  loadLeagueMatches();
-}
-
-minOddsInput.addEventListener('change', syncOdds);
-maxOddsInput.addEventListener('change', syncOdds);
-
-oddsPresetBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    minOddsInput.value = btn.dataset.min;
-    maxOddsInput.value = btn.dataset.max;
-    oddsPresetBtns.forEach(b => {
-      b.className = (b === btn)
-        ? 'odds-preset-btn rounded-lg text-xs font-black bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 transition'
-        : 'odds-preset-btn rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition';
-    });
-    syncOdds();
-  });
-});
-
-// ============================================================================
-// 7. INICIALIZÁLÁS
+// 6. INICIALIZÁLÁS
 // ============================================================================
 
 async function init() {
+  initHomeControls();
+
   try {
     const res = await fetch('/api/status');
     const data = await res.json();
@@ -624,15 +928,15 @@ async function init() {
       });
       catalogStatusText.innerHTML = `
         <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
-        <span><strong class="text-white">${data.totalEvents} mérkőzés</strong> elérhető (NFL, Foci, Tenisz)</span>
+        <span><strong class="text-white">${data.totalEvents} mérkőzés</strong> elérhető (Foci, Tenisz, NFL)</span>
       `;
     }
   } catch (err) {
     console.warn('Státusz hiba:', err);
   }
 
-  updateSportButtonStyles();
-  loadCompetitions(true);
+  // Alapértelmezetten a Főoldal ("ÖSSZES") nézet jelenik meg
+  switchNav('all');
 }
 
 init();
