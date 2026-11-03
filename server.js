@@ -660,7 +660,8 @@ app.get('/api/competitions', async (req, res) => {
 app.post('/api/matches/by-competitions', async (req, res) => {
   try {
     const catalog = await fetchTippmixCatalog();
-    const competitionKeys = Array.isArray(req.body.competitionKeys) ? req.body.competitionKeys : [];
+    const competitionKeys = Array.isArray(req.body.competitionKeys) ? req.body.competitionKeys.filter(k => k && k !== 'ALL') : [];
+    const competitionGroupName = req.body.competitionGroupName ? String(req.body.competitionGroupName).trim() : null;
     const sportIds = Array.isArray(req.body.sportIds) ? req.body.sportIds.map(Number) : [1];
     const onlyToday = req.body.onlyToday !== false;
     const rawMinOdds = Math.max(1.01, Math.min(20.0, Number(req.body.minOdds) || 1.30));
@@ -679,6 +680,10 @@ app.post('/api/matches/by-competitions', async (req, res) => {
       const groupName = ev.competitionGroupName || '';
       const compName = ev.competitionName || '';
       const compKey = `${ev.sportId}:${groupName} - ${compName}`;
+
+      if (competitionGroupName && competitionGroupName !== 'ALL' && groupName !== competitionGroupName) {
+        return false;
+      }
 
       if (competitionKeys.length > 0 && !competitionKeys.includes(compKey) && !competitionKeys.includes(compName)) {
         return false;

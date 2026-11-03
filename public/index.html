@@ -380,45 +380,42 @@
     <!-- ==================================================================== -->
     <div id="sportLeagueView" class="hidden space-y-4 sm:space-y-5">
       
-      <!-- BAJNOKSÁG SZŰRŐ PANEL (RANGSOROLT HIERARCHIA: BL, EL, PREMIER LEAGUE, LA LIGA, NB I) -->
-      <section class="glass-card rounded-2xl p-4 sm:p-5 shadow-lg space-y-3.5 border-t-2 border-t-emerald-500">
+      <!-- KÉT LÉPCSŐS DROPDOWN: 1. ORSZÁG / LIGA -> 2. OSZTÁLY / SOROZAT -->
+      <section class="glass-card rounded-2xl p-4 sm:p-5 shadow-lg space-y-4 border-t-2 border-t-emerald-500">
         <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-800">
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
             <h2 id="leagueSectionHeading" class="text-xs sm:text-sm font-black uppercase tracking-wider text-white">
-              Bajnokság &amp; Sorozat Kiválasztása (Rangsorolt Prioritás)
+              Bajnokság &amp; Osztály Kiválasztása
             </h2>
           </div>
-          <div class="flex items-center gap-2">
-            <button id="selectAllLeaguesBtn" type="button"
-              class="text-[11px] font-bold text-slate-400 hover:text-white px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition cursor-pointer">
-              Összes mai meccs
-            </button>
-            <button id="selectTopLeaguesBtn" type="button"
-              class="text-[11px] font-bold text-emerald-400 hover:text-emerald-300 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 transition cursor-pointer">
-              ⭐ Csak Kiemelt Ligák (BL, EL, Top 5)
-            </button>
-          </div>
+          <span class="text-[11px] text-slate-400 font-medium">
+            1. Ország / Nemzetközi Liga &rarr; 2. Osztály / Kupa
+          </span>
         </div>
 
-        <!-- Rangos elitsorozatok gyorsgombjai -->
-        <div>
-          <span class="block text-[11px] font-semibold text-slate-400 mb-1.5 uppercase">Kiemelt elitsorozatok &amp; bajnokságok:</span>
-          <div id="prestigiousBadgesContainer" class="flex flex-wrap gap-1.5 sm:gap-2"></div>
-        </div>
-
-        <!-- További bajnokságok -->
-        <div class="pt-2 border-t border-slate-800/60">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-semibold text-slate-400 uppercase">További elérhető bajnokságok:</span>
-            <button id="toggleMoreLeaguesBtn" type="button" class="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer">
-              <span id="moreLeaguesBtnText">Továbbiak megjelenítése</span>
-              <svg id="moreLeaguesChevron" class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <!-- 1. Dropdown: Ország / Ligacsoport -->
+          <div>
+            <label for="countryGroupSelect" class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1.5 flex items-center justify-between">
+              <span>1. Válassz Országot / Ligát:</span>
+              <span id="countryTodayMatchesBadge" class="text-[10px] text-slate-400 font-medium"></span>
+            </label>
+            <select id="countryGroupSelect"
+              class="h-11 w-full rounded-xl bg-slate-900 border border-slate-700 px-3 text-sm text-white font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 transition cursor-pointer">
+            </select>
           </div>
-          <div id="moreLeaguesContainer" class="hidden mt-2.5 max-h-56 overflow-y-auto no-scrollbar grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5 p-1"></div>
+
+          <!-- 2. Dropdown: Bajnokság / Osztály / Kupa -->
+          <div>
+            <label for="competitionSubSelect" class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1.5 flex items-center justify-between">
+              <span>2. Válassz Osztályt / Sorozatot:</span>
+              <span id="compTodayMatchesBadge" class="text-[10px] text-slate-400 font-medium"></span>
+            </label>
+            <select id="competitionSubSelect"
+              class="h-11 w-full rounded-xl bg-slate-900 border border-slate-700 px-3 text-sm text-white font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 transition cursor-pointer">
+            </select>
+          </div>
         </div>
       </section>
 

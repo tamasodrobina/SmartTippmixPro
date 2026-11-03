@@ -60,15 +60,12 @@ const forceRefreshBtn = document.getElementById('forceRefreshBtn');
 const analysisOverviewText = document.getElementById('analysisOverviewText');
 const tipsContainer = document.getElementById('tipsContainer');
 
-// Bajnokság & Meccs táblázat elemek (Sportág nézet)
+// Bajnokság & Meccs táblázat elemek (Sportág nézet - Kétlépcsős Dropdown)
 const leagueSectionHeading = document.getElementById('leagueSectionHeading');
-const selectAllLeaguesBtn = document.getElementById('selectAllLeaguesBtn');
-const selectTopLeaguesBtn = document.getElementById('selectTopLeaguesBtn');
-const prestigiousBadgesContainer = document.getElementById('prestigiousBadgesContainer');
-const toggleMoreLeaguesBtn = document.getElementById('toggleMoreLeaguesBtn');
-const moreLeaguesBtnText = document.getElementById('moreLeaguesBtnText');
-const moreLeaguesChevron = document.getElementById('moreLeaguesChevron');
-const moreLeaguesContainer = document.getElementById('moreLeaguesContainer');
+const countryGroupSelect = document.getElementById('countryGroupSelect');
+const competitionSubSelect = document.getElementById('competitionSubSelect');
+const countryTodayMatchesBadge = document.getElementById('countryTodayMatchesBadge');
+const compTodayMatchesBadge = document.getElementById('compTodayMatchesBadge');
 
 const matchesSectionTitle = document.getElementById('matchesSectionTitle');
 const matchesCountBadge = document.getElementById('matchesCountBadge');
@@ -546,12 +543,79 @@ function renderAnalysisResults(payload, metaLabel) {
 }
 
 // ============================================================================
-// 4. SPORTÁG NÉZET: BAJNOKSÁGOK ÉS AZNAPI MECCSEK TOP 2 TIPPPEL
+// 4. SPORTÁG NÉZET: KÉT LÉPCSŐS DROPDOWN (ORSZÁG/LIGA -> OSZTÁLY/SOROZAT)
 // ============================================================================
 
+function getCountryFlag(groupName = '') {
+  const g = groupName.toLowerCase().trim();
+  if (g.includes('nemzetközi klub') || g.includes('bajnokok') || g.includes('európa-liga')) return '🏆';
+  if (g.includes('nemzetközi') || g.includes('nemzetek')) return '🌍';
+  if (g.includes('anglia')) return '🏴󠁧󠁢󠁥󠁮󠁧󠁿';
+  if (g.includes('spanyol')) return '🇪🇸';
+  if (g.includes('olasz')) return '🇮🇹';
+  if (g.includes('német')) return '🇩🇪';
+  if (g.includes('magyar')) return '🇭🇺';
+  if (g.includes('francia')) return '🇫🇷';
+  if (g.includes('skót') || g.includes('skócia')) return '🏴󠁧󠁢󠁳󠁣󠁴󠁿';
+  if (g.includes('lengyel')) return '🇵🇱';
+  if (g.includes('holland')) return '🇳🇱';
+  if (g.includes('portugál')) return '🇵🇹';
+  if (g.includes('török')) return '🇹🇷';
+  if (g.includes('cseh')) return '🇨🇿';
+  if (g.includes('svéd')) return '🇸🇪';
+  if (g.includes('dán')) return '🇩🇰';
+  if (g.includes('belga')) return '🇧🇪';
+  if (g.includes('osztrák') || g.includes('ausztria')) return '🇦🇹';
+  if (g.includes('svájc')) return '🇨🇭';
+  if (g.includes('görög')) return '🇬🇷';
+  if (g.includes('norvég')) return '🇳🇴';
+  if (g.includes('horvát')) return '🇭🇷';
+  if (g.includes('szerb')) return '🇷🇸';
+  if (g.includes('román')) return '🇷🇴';
+  if (g.includes('usa') || g.includes('amerik')) return '🇺🇸';
+  if (g.includes('atp')) return '🎾';
+  if (g.includes('wta')) return '🎾';
+  if (g.includes('challenger')) return '🎾';
+  return '⚽';
+}
+
+function getGroupPrestigeScore(sportId, groupName = '') {
+  const g = groupName.toLowerCase().trim();
+  if (Number(sportId) === 1) { // Foci
+    if (g.includes('nemzetközi klub')) return 1000;
+    if (g.includes('nemzetközi')) return 950;
+    if (g.includes('anglia')) return 920;
+    if (g.includes('spanyol')) return 910;
+    if (g.includes('olasz')) return 900;
+    if (g.includes('német')) return 890;
+    if (g.includes('magyar')) return 880;
+    if (g.includes('francia')) return 870;
+    if (g.includes('holland')) return 800;
+    if (g.includes('portugál')) return 790;
+    if (g.includes('török')) return 780;
+    if (g.includes('skót') || g.includes('skócia')) return 770;
+    if (g.includes('lengyel')) return 760;
+    if (g.includes('belga')) return 750;
+    return 300;
+  }
+  if (Number(sportId) === 5) { // Tenisz
+    if (g.includes('grand slam')) return 1000;
+    if (g.includes('atp')) return 900;
+    if (g.includes('wta')) return 850;
+    if (g.includes('challenger')) return 700;
+    return 400;
+  }
+  if (Number(sportId) === 16) { // NFL
+    if (g.includes('usa')) return 1000;
+    if (g.includes('ncaa')) return 700;
+    return 400;
+  }
+  return 100;
+}
+
 async function loadSportCompetitions(sportId, resetSelection = false) {
-  prestigiousBadgesContainer.innerHTML = `<div class="text-xs text-slate-500 animate-pulse">Rangos bajnokságok betöltése...</div>`;
-  moreLeaguesContainer.innerHTML = '';
+  countryGroupSelect.innerHTML = `<option value="">Betöltés...</option>`;
+  competitionSubSelect.innerHTML = `<option value="">Betöltés...</option>`;
 
   try {
     const res = await fetch(`/api/competitions?sports=${sportId}`);
@@ -560,116 +624,120 @@ async function loadSportCompetitions(sportId, resetSelection = false) {
 
     allCompetitions = data.competitions || [];
 
-    // Kiemelt elitsorozatok (BL, EL, Premier League, La Liga, NB I, NFL, stb.)
-    const prestigious = allCompetitions.filter(c => c.prestigeScore >= 750 || c.displayName.toLowerCase().includes('bl') || c.displayName.toLowerCase().includes('el'));
-    const others = allCompetitions.filter(c => !prestigious.includes(c));
+    // Csoportosítás Országok / Ligacsoportok szerint
+    const countryGroupsMap = new Map();
+    for (const c of allCompetitions) {
+      const g = c.competitionGroupName || 'Egyéb';
+      if (!countryGroupsMap.has(g)) {
+        countryGroupsMap.set(g, {
+          groupName: g,
+          prestige: getGroupPrestigeScore(sportId, g),
+          todayMatches: 0,
+          totalMatches: 0,
+          competitions: []
+        });
+      }
+      const grp = countryGroupsMap.get(g);
+      grp.todayMatches += c.todayMatches;
+      grp.totalMatches += c.totalMatches;
+      grp.competitions.push(c);
+    }
 
-    if (resetSelection || selectedCompetitionKeys.size === 0) {
-      selectedCompetitionKeys.clear();
-      const topToday = prestigious.filter(c => c.todayMatches > 0);
-      if (topToday.length > 0) {
-        selectedCompetitionKeys.add(topToday[0].key);
-      } else if (prestigious.length > 0) {
-        selectedCompetitionKeys.add(prestigious[0].key);
-      } else if (allCompetitions.length > 0) {
-        selectedCompetitionKeys.add(allCompetitions[0].key);
+    const countryGroups = Array.from(countryGroupsMap.values());
+    countryGroups.sort((a, b) => {
+      if (b.prestige !== a.prestige) return b.prestige - a.prestige;
+      if (b.todayMatches !== a.todayMatches) return b.todayMatches - a.todayMatches;
+      return b.totalMatches - a.totalMatches;
+    });
+
+    // Feltöltjük az 1. Dropdown-t (Ország / Liga)
+    countryGroupSelect.innerHTML = '';
+    
+    // "Összes ország" opció
+    const totalTodayAll = countryGroups.reduce((acc, g) => acc + g.todayMatches, 0);
+    const optAll = document.createElement('option');
+    optAll.value = 'ALL';
+    optAll.textContent = `🌐 Összes ország / liga (${totalTodayAll} mai meccs)`;
+    countryGroupSelect.appendChild(optAll);
+
+    countryGroups.forEach(cg => {
+      const opt = document.createElement('option');
+      opt.value = cg.groupName;
+      const flag = getCountryFlag(cg.groupName);
+      const matchBadge = cg.todayMatches > 0 ? `(${cg.todayMatches} mai)` : `(${cg.totalMatches})`;
+      opt.textContent = `${flag} ${cg.groupName} ${matchBadge}`;
+      countryGroupSelect.appendChild(opt);
+    });
+
+    // Alapértelmezett kiválasztás: az első olyan rangos csoport, aminek ma van meccse (pl. Nemzetközi klubcsapatok - BL)
+    if (resetSelection) {
+      const defaultGroup = countryGroups.find(g => g.todayMatches > 0 && g.prestige >= 800) || countryGroups[0];
+      if (defaultGroup) {
+        countryGroupSelect.value = defaultGroup.groupName;
       }
     }
 
-    renderCompetitionBadges(prestigious, others);
-    loadLeagueMatches();
+    updateCompetitionSubDropdown();
   } catch (err) {
     console.error('Hiba a bajnokságok betöltésekor:', err);
-    prestigiousBadgesContainer.innerHTML = `<div class="text-xs text-rose-400">Nem sikerült betölteni a bajnokságokat.</div>`;
+    countryGroupSelect.innerHTML = `<option value="">Hiba a betöltéskor</option>`;
   }
 }
 
-function renderCompetitionBadges(prestigious, others) {
-  prestigiousBadgesContainer.innerHTML = prestigious.map(c => {
-    const active = selectedCompetitionKeys.has(c.key);
-    const icon = getSportIcon(c.sportId);
-    const matchCountStr = c.todayMatches > 0 ? `${c.todayMatches} mai` : `${c.totalMatches}`;
-    return `
-      <button type="button" data-comp-key="${escapeHtml(c.key)}"
-        class="comp-badge-btn px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5 border ${
-          active
-            ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20'
-            : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-700'
-        }">
-        <span>${icon}</span>
-        <span>${escapeHtml(c.displayName)}</span>
-        <span class="px-1.5 py-0.2 rounded text-[10px] font-black ${active ? 'bg-slate-950/20 text-white' : 'bg-slate-800 text-emerald-400'}">
-          ${matchCountStr}
-        </span>
-      </button>
-    `;
-  }).join('');
+// 2. Dropdown (Bajnokság / Osztály) frissítése az 1. Dropdown alapján
+function updateCompetitionSubDropdown() {
+  const selectedGroup = countryGroupSelect.value;
+  competitionSubSelect.innerHTML = '';
 
-  moreLeaguesContainer.innerHTML = others.map(c => {
-    const active = selectedCompetitionKeys.has(c.key);
-    const icon = getSportIcon(c.sportId);
-    const matchCountStr = c.todayMatches > 0 ? `${c.todayMatches} mai` : `${c.totalMatches}`;
-    return `
-      <button type="button" data-comp-key="${escapeHtml(c.key)}"
-        class="comp-badge-btn p-2 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center justify-between gap-1 border truncate ${
-          active
-            ? 'bg-emerald-500 text-slate-950 border-emerald-400 font-bold'
-            : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800'
-        }">
-        <span class="truncate flex items-center gap-1">
-          <span>${icon}</span>
-          <span class="truncate">${escapeHtml(c.displayName)}</span>
-        </span>
-        <span class="px-1.5 py-0.2 rounded text-[10px] shrink-0 ${active ? 'bg-slate-950/20 text-white' : 'bg-slate-800 text-slate-400'}">
-          ${matchCountStr}
-        </span>
-      </button>
-    `;
-  }).join('');
+  let availableComps = [];
+  if (!selectedGroup || selectedGroup === 'ALL') {
+    availableComps = allCompetitions;
+  } else {
+    availableComps = allCompetitions.filter(c => (c.competitionGroupName || 'Egyéb') === selectedGroup);
+  }
 
-  document.querySelectorAll('.comp-badge-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const key = btn.dataset.compKey;
-      if (selectedCompetitionKeys.has(key)) {
-        if (selectedCompetitionKeys.size > 1) {
-          selectedCompetitionKeys.delete(key);
-        }
-      } else {
-        selectedCompetitionKeys.add(key);
-      }
-      renderCompetitionBadges(
-        allCompetitions.filter(c => c.prestigeScore >= 750 || c.displayName.toLowerCase().includes('bl') || c.displayName.toLowerCase().includes('el')),
-        allCompetitions.filter(c => !(c.prestigeScore >= 750 || c.displayName.toLowerCase().includes('bl') || c.displayName.toLowerCase().includes('el')))
-      );
-      loadLeagueMatches();
-    });
+  // Rendezés a csoporton belül presztízs szerint (BL, EL előre, vagy 1. osztály a 2. előtt)
+  availableComps.sort((a, b) => {
+    if (b.prestigeScore !== a.prestigeScore) return b.prestigeScore - a.prestigeScore;
+    if (b.todayMatches !== a.todayMatches) return b.todayMatches - a.todayMatches;
+    return b.totalMatches - a.totalMatches;
   });
+
+  const totalTodaySub = availableComps.reduce((acc, c) => acc + c.todayMatches, 0);
+  countryTodayMatchesBadge.textContent = `${totalTodaySub} mai mérkőzés`;
+
+  // Első opció: "Összes osztály / sorozat ebből az országból"
+  const optAllSub = document.createElement('option');
+  optAllSub.value = 'ALL';
+  optAllSub.textContent = `⭐ Összes osztály / sorozat ebből (${totalTodaySub} mai meccs)`;
+  competitionSubSelect.appendChild(optAllSub);
+
+  availableComps.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.key;
+    const star = c.prestigeScore >= 800 ? '⭐ ' : '';
+    const matchCountStr = c.todayMatches > 0 ? `(${c.todayMatches} mai)` : `(${c.totalMatches})`;
+    opt.textContent = `${star}${c.competitionName} ${matchCountStr}`;
+    competitionSubSelect.appendChild(opt);
+  });
+
+  // Ha van kiemelt sorozat (pl. BL), válasszuk ki alapból azt!
+  const topMatchComp = availableComps.find(c => c.todayMatches > 0 && (c.prestigeScore >= 900 || c.competitionName.includes('BL')));
+  if (topMatchComp) {
+    competitionSubSelect.value = topMatchComp.key;
+  } else if (availableComps.length > 0 && availableComps[0].todayMatches > 0) {
+    competitionSubSelect.value = availableComps[0].key;
+  }
+
+  loadLeagueMatches();
 }
 
-selectAllLeaguesBtn.addEventListener('click', () => {
-  selectedCompetitionKeys.clear();
-  allCompetitions.forEach(c => {
-    if (c.todayMatches > 0) selectedCompetitionKeys.add(c.key);
-  });
-  if (selectedCompetitionKeys.size === 0) {
-    allCompetitions.forEach(c => selectedCompetitionKeys.add(c.key));
-  }
-  loadSportCompetitions(activeNav);
+countryGroupSelect.addEventListener('change', () => {
+  updateCompetitionSubDropdown();
 });
 
-selectTopLeaguesBtn.addEventListener('click', () => {
-  selectedCompetitionKeys.clear();
-  allCompetitions.filter(c => c.prestigeScore >= 800 || c.displayName.toLowerCase().includes('bl') || c.displayName.toLowerCase().includes('el')).forEach(c => {
-    selectedCompetitionKeys.add(c.key);
-  });
-  loadSportCompetitions(activeNav);
-});
-
-toggleMoreLeaguesBtn.addEventListener('click', () => {
-  const isHidden = moreLeaguesContainer.classList.contains('hidden');
-  moreLeaguesContainer.classList.toggle('hidden', !isHidden);
-  moreLeaguesChevron.classList.toggle('rotate-180', isHidden);
-  moreLeaguesBtnText.textContent = isHidden ? 'Kevesebb megjelenítése' : 'Továbbiak megjelenítése';
+competitionSubSelect.addEventListener('change', () => {
+  loadLeagueMatches();
 });
 
 // Aznapi meccsek lekérése és Top 2 tipp kirajzolása
@@ -688,11 +756,23 @@ async function loadLeagueMatches() {
 
   try {
     const { minOdds, maxOdds } = getFilterSettings();
+    const selectedGroup = countryGroupSelect.value;
+    const selectedCompKey = competitionSubSelect.value;
+
+    let compKeysToSend = [];
+    if (selectedCompKey && selectedCompKey !== 'ALL') {
+      compKeysToSend = [selectedCompKey];
+    } else if (selectedGroup && selectedGroup !== 'ALL') {
+      const compsInGroup = allCompetitions.filter(c => (c.competitionGroupName || 'Egyéb') === selectedGroup);
+      compKeysToSend = compsInGroup.map(c => c.key);
+    }
+
     const res = await fetch('/api/matches/by-competitions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        competitionKeys: Array.from(selectedCompetitionKeys),
+        competitionKeys: compKeysToSend,
+        competitionGroupName: (selectedGroup && selectedGroup !== 'ALL') ? selectedGroup : null,
         sportIds: [Number(activeNav)],
         onlyToday: true,
         minOdds,
@@ -706,11 +786,18 @@ async function loadLeagueMatches() {
     currentLeagueMatches = data.matches || [];
     matchesCountBadge.textContent = `${currentLeagueMatches.length} meccs`;
 
+    // Fejléc szövegének aktualizálása
+    const groupText = (selectedGroup && selectedGroup !== 'ALL') ? selectedGroup : 'Összes ország';
+    const compText = (selectedCompKey && selectedCompKey !== 'ALL')
+      ? (competitionSubSelect.options[competitionSubSelect.selectedIndex]?.textContent.replace(/^⭐\s*/, '').split('(')[0].trim() || '')
+      : 'Összes osztály';
+    matchesSectionTitle.textContent = `${groupText} • ${compText} (Aznapi mérkőzések)`;
+
     if (currentLeagueMatches.length === 0) {
       leagueMatchesList.innerHTML = `
         <div class="glass-card rounded-2xl p-8 text-center space-y-2 text-slate-400">
-          <p class="text-sm font-semibold">Nincs aznapi mérkőzés a kiválasztott bajnokságban ebben az odds sávban.</p>
-          <p class="text-xs text-slate-500">Próbálj más bajnokságot választani vagy kattints az "Összes mai meccs" gombra!</p>
+          <p class="text-sm font-semibold">Nincs aznapi mérkőzés a kiválasztott osztályban/bajnokságban ebben az odds sávban.</p>
+          <p class="text-xs text-slate-500">Válassz másik bajnokságot vagy az "Összes osztály ebből" lehetőséget!</p>
         </div>
       `;
       return;
