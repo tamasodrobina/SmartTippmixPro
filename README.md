@@ -1,28 +1,40 @@
 # SmartTippmixPro 🎯
 
-AI-alapú intelligens sportfogadási elemző és odds radar alkalmazás, amely a hivatalos Szerencsejáték Zrt. (Tippmix / TippmixPro) élő kínálatára, valós oddsaira és nemzetközi statisztikai adatbázisokra épül.
+AI-alapú intelligens sportfogadási elemző és odds radar alkalmazás, amely a hivatalos Szerencsejáték Zrt. (Tippmix / TippmixPro) élő kínálatára, valós oddsaira, játékvezetői statisztikáira és nemzetközi elemző adatbázisokra épül.
 
 ![SmartTippmixPro](https://img.shields.io/badge/Platform-TippmixPro-emerald?style=for-the-badge)
 ![AI-Powered](https://img.shields.io/badge/AI-Google%20Gemini-blue?style=for-the-badge)
-![Sportágak](https://img.shields.io/badge/Sportágak-34%2B%20%26%20E--Sport-purple?style=for-the-badge)
+![Fókusz](https://img.shields.io/badge/Sportágak-NFL%20•%20Foci%20•%20Tenisz-purple?style=for-the-badge)
 
 ---
 
 ## 🚀 Fő funkciók
 
-* ⏱️ **Időintervallum elemzés (1 – 24 óra):** Megkeresi a kiválasztott órán belül induló mérkőzéseket.
-* 🏆 **34+ Sportág & E-Sport:** Foci, Tenisz, Kosárlabda, Jégkorong, E-Sport (CS2, LoL, Dota, E-Kosár, E-Foci), Kézilabda, Darts, Snooker, MMA, Asztalitenisz, Röplabda, Vízilabda, Amerikai futball és még 20+ kategória.
-* 🎯 **Egyedileg állítható Odds tartomány:** Szabadon beállítható min/max odds (alapértelmezett: 1.30 – 2.00, gyors profilok: 1.20–1.55, 1.30–2.00, 1.70–3.00).
-* 📋 **Állítható Tippszám (1 – 10 db):** Te döntöd el, hány legvalószínűbb tippet szeretnél látni (Top 1-től Top 10-ig).
-* ⚡ **Intelligens Gyorsítótár (Smart Cache):** Ha nem változtak a mérkőzések az adott időablakban, a backend **0 külső API hívással**, azonnal memóriából adja vissza az eredményt.
-* 🔍 **Konkrét Mérkőzés / Csapat Kereső:** Írj be bármilyen meccset vagy csapatot; az élő Tippmix listából automatikus kiegészítéssel vagy szabad internetes kereséssel elemzi az eseményt.
-* 📖 **Kattintható Részletes Indoklás & Kockázatelemzés:**
-  * Szakmai indoklás (Miért ez a gondolat?)
-  * Forma, aktuális statisztikák és H2H mérleg
-  * Elemző- és tippoldalak nemzetközi konszenzusa
-  * 3 kulcsérv a tipp mellett
-  * Kockázatelemzés (1–10 skála + szöveges értékelés arról, mi boríthatja a papírformát)
-  * Felhasznált forráslinkek
+* 🏈 **Fókuszált Sportágak (Multi-select):**
+  * ⚽ **Labdarúgás (Foci):** BL, EL, Konferencia Liga, Premier League, La Liga, Serie A, Bundesliga, Ligue 1, OTP Bank Liga (NB I) és egyéb rangos ligák.
+  * 🎾 **Tenisz:** Grand Slam tornák, ATP Masters, ATP 500/250, WTA, Challenger sorozatok.
+  * 🏈 **Amerikai futball (NFL):** NFL alapszakasz, rájátszás és NCAA.
+  * Egyszerre tetszőleges kombinációban bejelölhetők.
+
+* 🏆 **Prioritásos Bajnokság-választó (Prestige Scoring):**
+  * Ha a focit választod ki, a legrangosabb sorozatok kerülnek előre: **BL (Bajnokok Ligája)**, **EL (Európa Liga)**, **Top 5 európai bajnokság**, **NB I**.
+  * Gyorsgombok a kiemelt elitsorozatokra és kibontható választó a további ligákhoz.
+
+* 📅 **Aznapi Mérkőzések & Top 2 Tipp egy sorban:**
+  * Az adott bajnokság aznapi összes mérkőzése átlátható listában jelenik meg.
+  * Vele egy sorban megjelenik a mérkőzés **Top 2 legvalószínűbb tippje** (a kiválasztott odds sávból, pl. 1.30–2.00).
+
+* 🔍 **"Részletesen" Gomb & Mélyelemzés (Top 3 Tipp):**
+  * Minden meccssor végén egy kattintással megnyitható a teljes AI mélyelemzés.
+  * 👨‍⚖️ **Játékvezetői (Bíró) vizsgálat:** Focinál és NFL-nél utánanéz a kijelölt bírónak, meccsenkénti lapátlagának (sárga/piros lap), tizenegyes- és szabálytalansági tendenciáinak.
+  * 🚩 **Szögletek & Büntetőlapok:** Alapos elemzés a sarokrúgások és sárga lapok várható alakulásáról.
+  * ⭐ **Top 3 legvalószínűbb tipp** részletes indoklással, becsült valószínűséggel és kockázati besorolással (1–10).
+
+* 🎯 **Egyedileg állítható Odds tartomány:**
+  * Szabadon beállítható min/max odds (alapértelmezett: 1.30 – 2.00, gyors profilok: 1.20–1.55, 1.30–2.00, 1.70–3.00).
+
+* ⚡ **Intelligens Gyorsítótár (Smart Cache):**
+  * Ha nem változtak a mérkőzések vagy az elemzési paraméterek, a backend **0 külső API hívással**, azonnal memóriából adja vissza az eredményt.
 
 ---
 
@@ -30,7 +42,7 @@ AI-alapú intelligens sportfogadási elemző és odds radar alkalmazás, amely a
 
 A Gemini API kulcs **teljesen el van rejtve** a felhasználók és a frontend elől:
 * A kulcsot kizárólag a szerver oldali környezeti változó (`GEMINI_API_KEY`) kezeli (`.env` fájlban vagy Render / VPS környezetben).
-* A `.gitignore` meggátolja a `.env` feltöltését, így a kulcs soha nem kerül publikus GitHub repóba.
+* A `.gitignore` védi a `.env` fájlt, így a kulcs soha nem kerül publikus GitHub repóba.
 
 ---
 
