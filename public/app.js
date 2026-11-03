@@ -664,14 +664,14 @@ async function loadSportCompetitions(sportId, resetSelection = false) {
       const opt = document.createElement('option');
       opt.value = cg.groupName;
       const flag = getCountryFlag(cg.groupName);
-      const matchBadge = cg.todayMatches > 0 ? `(${cg.todayMatches} mai)` : `(${cg.totalMatches})`;
+      const matchBadge = cg.todayMatches > 0 ? `(${cg.todayMatches} mai meccs)` : `(0 mai meccs)`;
       opt.textContent = `${flag} ${cg.groupName} ${matchBadge}`;
       countryGroupSelect.appendChild(opt);
     });
 
-    // Alapértelmezett kiválasztás: az első olyan rangos csoport, aminek ma van meccse (pl. Nemzetközi klubcsapatok - BL)
+    // Alapértelmezett kiválasztás: az első olyan rangos csoport, aminek MA van meccse (pl. Nemzetközi klubcsapatok - BL)
     if (resetSelection) {
-      const defaultGroup = countryGroups.find(g => g.todayMatches > 0 && g.prestige >= 800) || countryGroups[0];
+      const defaultGroup = countryGroups.find(g => g.todayMatches > 0) || countryGroups[0];
       if (defaultGroup) {
         countryGroupSelect.value = defaultGroup.groupName;
       }
@@ -696,32 +696,35 @@ function updateCompetitionSubDropdown() {
     availableComps = allCompetitions.filter(c => (c.competitionGroupName || 'Egyéb') === selectedGroup);
   }
 
-  // Rendezés a csoporton belül presztízs szerint (BL, EL előre, vagy 1. osztály a 2. előtt)
+  // Rendezés a csoporton belül: mai meccsekkel rendelkezők legelőre, majd presztízs szerint
   availableComps.sort((a, b) => {
+    const hasTodayA = a.todayMatches > 0 ? 1 : 0;
+    const hasTodayB = b.todayMatches > 0 ? 1 : 0;
+    if (hasTodayB !== hasTodayA) return hasTodayB - hasTodayA;
     if (b.prestigeScore !== a.prestigeScore) return b.prestigeScore - a.prestigeScore;
     if (b.todayMatches !== a.todayMatches) return b.todayMatches - a.todayMatches;
     return b.totalMatches - a.totalMatches;
   });
 
   const totalTodaySub = availableComps.reduce((acc, c) => acc + c.todayMatches, 0);
-  countryTodayMatchesBadge.textContent = `${totalTodaySub} mai mérkőzés`;
+  countryTodayMatchesBadge.textContent = `${totalTodaySub} mai mérkőzés elérhető`;
 
-  // Első opció: "Összes osztály / sorozat ebből az országból"
+  // Első opció: "Összes osztály ebből az országból"
   const optAllSub = document.createElement('option');
   optAllSub.value = 'ALL';
-  optAllSub.textContent = `⭐ Összes osztály / sorozat ebből (${totalTodaySub} mai meccs)`;
+  optAllSub.textContent = `⭐ Összes osztály ebből (${totalTodaySub} mai meccs)`;
   competitionSubSelect.appendChild(optAllSub);
 
   availableComps.forEach(c => {
     const opt = document.createElement('option');
     opt.value = c.key;
-    const star = c.prestigeScore >= 800 ? '⭐ ' : '';
-    const matchCountStr = c.todayMatches > 0 ? `(${c.todayMatches} mai)` : `(${c.totalMatches})`;
+    const star = c.todayMatches > 0 ? '⚽ ' : '';
+    const matchCountStr = c.todayMatches > 0 ? `(${c.todayMatches} mai meccs)` : `(0 mai meccs)`;
     opt.textContent = `${star}${c.competitionName} ${matchCountStr}`;
     competitionSubSelect.appendChild(opt);
   });
 
-  // Ha van kiemelt sorozat (pl. BL), válasszuk ki alapból azt!
+  // Alapból olyan bajnokságot jelölünk ki, aminek van MA mérkőzése!
   const topMatchComp = availableComps.find(c => c.todayMatches > 0 && (c.prestigeScore >= 900 || c.competitionName.includes('BL')));
   if (topMatchComp) {
     competitionSubSelect.value = topMatchComp.key;
@@ -791,7 +794,7 @@ async function loadLeagueMatches() {
     const compText = (selectedCompKey && selectedCompKey !== 'ALL')
       ? (competitionSubSelect.options[competitionSubSelect.selectedIndex]?.textContent.replace(/^⭐\s*/, '').split('(')[0].trim() || '')
       : 'Összes osztály';
-    matchesSectionTitle.textContent = `${groupText} • ${compText} (Aznapi mérkőzések)`;
+    matchesSectionTitle.textContent = `${groupText} • ${compText} (Kizárólag mai mérkőzések)`;
 
     if (currentLeagueMatches.length === 0) {
       leagueMatchesList.innerHTML = `

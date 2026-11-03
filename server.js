@@ -29,6 +29,20 @@ const ALL_SPORTS_MASTER = [
 
 const ALLOWED_SPORT_IDS = new Set([1, 5, 16]);
 
+// Segédfüggvény: pontosan ma játszódik-e a mérkőzés a magyar időzóna szerint (Europe/Budapest)
+function isTodayInHungary(dateInput) {
+  if (!dateInput) return false;
+  try {
+    const d = new Date(dateInput);
+    const now = new Date();
+    const dStr = d.toLocaleDateString('hu-HU', { timeZone: 'Europe/Budapest' });
+    const nowStr = now.toLocaleDateString('hu-HU', { timeZone: 'Europe/Budapest' });
+    return dStr === nowStr;
+  } catch (_) {
+    return false;
+  }
+}
+
 // ============================================================================
 // 2. BAJNOKSÁG RANGSOROLÓ (PRESTIGE SCORING)
 // ============================================================================
@@ -632,10 +646,7 @@ app.get('/api/competitions', async (req, res) => {
       const item = compMap.get(compKey);
       item.totalMatches++;
 
-      const evDate = new Date(ev.eventDate);
-      const isToday = evDate.toISOString().slice(0, 10) === todayStr ||
-        (evDate >= now && evDate <= new Date(now.getTime() + 24 * 3600 * 1000));
-      if (isToday) {
+      if (isTodayInHungary(ev.eventDate)) {
         item.todayMatches++;
       }
     }
@@ -656,7 +667,7 @@ app.get('/api/competitions', async (req, res) => {
   }
 });
 
-// 7.3 AZNAPI MÉRKŐZÉSEK ÉS TOP 2 TIPP ADOTT BAJNOKSÁG(OK)HOZ
+// 7.3 AZNAPI MÉRKŐZÉSEK ÉS TOP 2 TIPP ADOTT BAJNOKSÁG(OK)HOZ (SZIGORÚAN CSAK MAI MECCSEK!)
 app.post('/api/matches/by-competitions', async (req, res) => {
   try {
     const catalog = await fetchTippmixCatalog();
@@ -668,10 +679,6 @@ app.post('/api/matches/by-competitions', async (req, res) => {
     const rawMaxOdds = Math.max(1.05, Math.min(50.0, Number(req.body.maxOdds) || 2.00));
     const minOdds = Math.min(rawMinOdds, rawMaxOdds);
     const maxOdds = Math.max(rawMinOdds, rawMaxOdds);
-
-    const now = new Date();
-    const todayStr = now.toISOString().slice(0, 10);
-    const tomorrowNight = new Date(now.getTime() + 30 * 3600 * 1000);
 
     // Kiszűrjük a mérkőzéseket a kiválasztott bajnokság(ok) alapján
     let matchedEvents = catalog.events.filter(ev => {
@@ -689,10 +696,11 @@ app.post('/api/matches/by-competitions', async (req, res) => {
         return false;
       }
 
+      // SZIGORÚAN CSAK A MAI NAPON (Europe/Budapest) JÁTSZOTT MECCSEK!
       if (onlyToday) {
-        const evDate = new Date(ev.eventDate);
-        const matchesDate = evDate.toISOString().slice(0, 10) === todayStr || (evDate >= now && evDate <= tomorrowNight);
-        if (!matchesDate) return false;
+        if (!isTodayInHungary(ev.eventDate)) {
+          return false;
+        }
       }
 
       return true;
