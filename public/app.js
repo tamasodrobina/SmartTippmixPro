@@ -451,6 +451,40 @@ function showError(msg) {
   errorSection.classList.remove('hidden');
 }
 
+function getRiskVisuals(level = '', score = 4) {
+  const norm = (level || '').toLowerCase();
+  const numScore = Math.min(10, Math.max(1, Number(score) || 4));
+
+  if (norm.includes('alacsony') && !norm.includes('közepes') && numScore <= 3) {
+    return {
+      badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+      barClass: 'bg-emerald-500',
+      boxClass: 'bg-emerald-950/40 border-emerald-500/30',
+      textClass: 'text-emerald-300',
+      label: level || 'Alacsony kockázat',
+      score: numScore
+    };
+  }
+  if (norm.includes('magas') || numScore >= 7) {
+    return {
+      badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
+      barClass: 'bg-rose-500',
+      boxClass: 'bg-rose-950/40 border-rose-500/30',
+      textClass: 'text-rose-300',
+      label: level || 'Magasabb kockázat',
+      score: numScore
+    };
+  }
+  return {
+    badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+    barClass: 'bg-amber-400',
+    boxClass: 'bg-amber-950/35 border-amber-500/30',
+    textClass: 'text-amber-300',
+    label: level || 'Közepes kockázat',
+    score: numScore
+  };
+}
+
 // Eredmények kirajzolása a főoldalon
 function renderAnalysisResults(payload, metaLabel) {
   const result = payload.result || {};
@@ -460,7 +494,7 @@ function renderAnalysisResults(payload, metaLabel) {
   analysisOverviewText.textContent = result.analysisOverview || 'Az elemzés elkészült a kiválasztott feltételek alapján.';
 
   if (payload.fromCache) {
-    cacheStatusBadge.textContent = `⚡ Okos Gyorsítótárból (0 API hívás)`;
+    cacheStatusBadge.textContent = '⚡ Okos Gyorsítótárból (0 API hívás)';
     cacheStatusBadge.classList.remove('hidden');
     forceRefreshBtn.classList.remove('hidden');
   } else {
@@ -483,57 +517,156 @@ function renderAnalysisResults(payload, metaLabel) {
       const reasoning = tip.detailedReasoning || {};
       const risk = tip.riskAssessment || {};
       const prob = tip.estimatedProbability || 75;
+      const keyFactors = Array.isArray(reasoning.keyFactors) ? reasoning.keyFactors : [];
+      const riskInfo = getRiskVisuals(risk.level, risk.score);
 
       const card = document.createElement('article');
-      card.className = 'tip-card glass-card rounded-2xl overflow-hidden shadow-xl border border-slate-800 p-4 sm:p-5 space-y-3';
+      card.className = 'tip-card glass-card rounded-2xl overflow-hidden shadow-xl border border-slate-800 transition-all';
       card.innerHTML = `
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <span class="px-2.5 py-1 rounded-lg text-xs font-black uppercase ${rank === 1 ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-emerald-400 border border-emerald-500/30'}">
-              #${rank}. Tipp
+        <!-- KATTINTHATÓ FEJLÉC / FŐ KÁRTYA -->
+        <div class="tip-card-trigger p-4 sm:p-5 cursor-pointer select-none space-y-3.5 transition hover:bg-slate-900/40">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg text-xs font-black uppercase ${rank === 1 ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-emerald-400 border border-emerald-500/30'}">
+                #${rank}. Tipp
+              </span>
+              <span class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                <span>${sportIcon}</span>
+                <span>${escapeHtml(tip.competitionName || '')}</span>
+              </span>
+            </div>
+            <span class="text-xs text-slate-400 bg-slate-900 px-2 py-0.5 rounded-lg border border-slate-800">
+              🕒 ${escapeHtml(timeFormatted)}
             </span>
-            <span class="text-xs font-semibold text-slate-300">${sportIcon} ${escapeHtml(tip.competitionName || '')}</span>
           </div>
-          <span class="text-xs text-slate-400 bg-slate-900 px-2 py-0.5 rounded-lg border border-slate-800">
-            🕒 ${escapeHtml(timeFormatted)}
-          </span>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+            <div class="md:col-span-8 min-w-0">
+              <h3 class="text-base sm:text-lg font-black text-white leading-snug break-words">
+                ${escapeHtml(tip.eventName || 'Mérkőzés')}
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                ${escapeHtml(tip.shortSummary || '')}
+              </p>
+            </div>
+
+            <div class="md:col-span-4 rounded-xl bg-slate-900 border border-emerald-500/35 p-3 flex items-center justify-between gap-3">
+              <div class="min-w-0 flex-1">
+                <span class="text-[10px] uppercase font-bold text-slate-400 block truncate">${escapeHtml(tip.marketName)}</span>
+                <span class="text-sm font-black text-emerald-400 block truncate mt-0.5">${escapeHtml(tip.outcomeName)}</span>
+                <span class="text-[11px] text-slate-400 mt-0.5 block">Esély: <strong class="text-white">${prob}%</strong></span>
+              </div>
+              <div class="shrink-0 px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-lg">
+                ${Number(tip.odds).toFixed(2)}
+              </div>
+            </div>
+          </div>
+
+          <!-- Alsó sáv: Kockázati szint + Lenyitás gomb -->
+          <div class="pt-2.5 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-slate-400">Kockázati szint:</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${riskInfo.badgeClass}">
+                ${escapeHtml(riskInfo.label)} (${riskInfo.score}/10)
+              </span>
+            </div>
+
+            <button type="button" class="toggle-details-btn inline-flex items-center gap-1.5 font-bold text-emerald-400 hover:text-emerald-300 transition cursor-pointer">
+              <span class="toggle-btn-text">Kattints a részletes indoklásért</span>
+              <svg class="toggle-chevron w-4 h-4 transition-transform duration-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
-          <div class="md:col-span-8 min-w-0">
-            <h3 class="text-base sm:text-lg font-black text-white leading-snug break-words">
-              ${escapeHtml(tip.eventName || 'Mérkőzés')}
-            </h3>
-            <p class="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
-              ${escapeHtml(tip.shortSummary || '')}
+        <!-- LENYÍLÓ RÉSZLETES INDOKLÁS PANEL -->
+        <div class="tip-details-panel hidden border-t border-slate-800 bg-slate-950/90 p-4 sm:p-5 space-y-4">
+          <!-- 1. Miért ez a gondolat? -->
+          <div class="space-y-1.5">
+            <h4 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <span>💡</span>
+              <span>Miért ez a gondolat? (Szakmai indoklás)</span>
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-800 break-words">
+              ${escapeHtml(reasoning.mainThesis || tip.shortSummary || 'Nincs külön indoklás rögzítve.')}
             </p>
           </div>
 
-          <div class="md:col-span-4 rounded-xl bg-slate-900 border border-emerald-500/35 p-3 flex items-center justify-between gap-3">
-            <div class="min-w-0">
-              <span class="text-[10px] uppercase font-bold text-slate-400 block truncate">${escapeHtml(tip.marketName)}</span>
-              <span class="text-sm font-black text-emerald-400 block truncate mt-0.5">${escapeHtml(tip.outcomeName)}</span>
-              <span class="text-[11px] text-slate-400 mt-0.5 block">Esély: <strong class="text-white">${prob}%</strong></span>
+          <!-- 2. Forma és statisztikák (ha van) -->
+          ${reasoning.formAndStats ? `
+            <div class="space-y-1.5">
+              <h5 class="text-xs font-bold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+                <span>📊</span>
+                <span>Forma, statisztikák &amp; H2H</span>
+              </h5>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-900 p-3 rounded-xl border border-slate-800 break-words">
+                ${escapeHtml(reasoning.formAndStats)}
+              </p>
             </div>
-            <div class="shrink-0 px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-lg">
-              ${Number(tip.odds).toFixed(2)}
-            </div>
-          </div>
-        </div>
+          ` : ''}
 
-        <!-- Részletes kifejtés & kockázat -->
-        <div class="pt-2 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-          <div class="text-slate-400">
-            Kockázati szint: <strong class="text-amber-400">${escapeHtml(risk.level || 'Közepes')} (${risk.score || 4}/10)</strong>
+          <!-- 3. Kulcsérvek (ha van) -->
+          ${keyFactors.length > 0 ? `
+            <div class="space-y-1.5">
+              <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <span>📌</span>
+                <span>Releváns kulcsérvek a tipp mellett:</span>
+              </h5>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                ${keyFactors.map(f => `
+                  <li class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 flex items-start gap-2 min-w-0">
+                    <span class="text-emerald-400 font-bold shrink-0">✔</span>
+                    <span class="break-words">${escapeHtml(f)}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          ` : ''}
+
+          <!-- 4. Mennyire kockázatos? -->
+          <div class="rounded-xl border p-3.5 sm:p-4 space-y-2 ${riskInfo.boxClass}">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <h5 class="text-xs sm:text-sm font-extrabold uppercase tracking-wider ${riskInfo.textClass} flex items-center gap-2">
+                <span>⚠️</span>
+                <span>Mennyire kockázatos? — ${escapeHtml(riskInfo.label)} (${riskInfo.score}/10)</span>
+              </h5>
+              <div class="w-full sm:w-36 bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-700 shrink-0">
+                <div class="${riskInfo.barClass} h-full" style="width: ${riskInfo.score * 10}%"></div>
+              </div>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed break-words">
+              ${escapeHtml(risk.explanation || 'Átlagos kockázatú mérkőzés.')}
+            </p>
           </div>
-          <span class="text-slate-500 italic text-[11px]">${escapeHtml(risk.explanation || '')}</span>
         </div>
       `;
+
+      const trigger = card.querySelector('.tip-card-trigger');
+      const detailsPanel = card.querySelector('.tip-details-panel');
+      const chevron = card.querySelector('.toggle-chevron');
+      const btnText = card.querySelector('.toggle-btn-text');
+
+      trigger.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
+        const isHidden = detailsPanel.classList.contains('hidden');
+        if (isHidden) {
+          detailsPanel.classList.remove('hidden');
+          chevron.classList.add('rotate-180');
+          btnText.textContent = 'Részletes indoklás bezárása';
+        } else {
+          detailsPanel.classList.add('hidden');
+          chevron.classList.remove('rotate-180');
+          btnText.textContent = 'Kattints a részletes indoklásért';
+        }
+      });
+
       tipsContainer.appendChild(card);
     });
   }
 
   resultsSection.classList.remove('hidden');
+  resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ============================================================================
