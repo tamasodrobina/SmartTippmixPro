@@ -924,10 +924,11 @@ async function loadLeagueMatches() {
     matchesSectionTitle.textContent = `${groupText} • ${compText} (Kizárólag mai mérkőzések)`;
 
     if (currentLeagueMatches.length === 0) {
+      const isNfl = Number(activeNav) === 16;
       leagueMatchesList.innerHTML = `
         <div class="glass-card rounded-2xl p-8 text-center space-y-2 text-slate-400">
-          <p class="text-sm font-semibold">Nincs aznapi mérkőzés a kiválasztott osztályban/bajnokságban ebben az odds sávban.</p>
-          <p class="text-xs text-slate-500">Válassz másik bajnokságot vagy az "Összes osztály ebből" lehetőséget!</p>
+          <p class="text-sm font-semibold">${isNfl ? 'Ma nincs NFL mérkőzés (a forduló meccsei csütörtökön és hétvégén esedékesek).' : 'Nincs aznapi mérkőzés a kiválasztott osztályban/bajnokságban ebben az odds sávban.'}</p>
+          <p class="text-xs text-slate-500">${isNfl ? 'Nézd meg a Főoldali keresőt vagy válassz Foci / Tenisz mérkőzéseket mára!' : 'Válassz másik bajnokságot vagy az "Összes osztály ebből" lehetőséget!'}</p>
         </div>
       `;
       return;
@@ -1137,13 +1138,27 @@ async function init() {
     const data = await res.json();
     if (data.sports) {
       data.sports.forEach(s => {
-        if (s.tippmixId === 1) sportCount1.textContent = s.count;
-        if (s.tippmixId === 5) sportCount5.textContent = s.count;
-        if (s.tippmixId === 16) sportCount16.textContent = s.count;
+        const badgeEl = s.tippmixId === 1 ? sportCount1 : (s.tippmixId === 5 ? sportCount5 : (s.tippmixId === 16 ? sportCount16 : null));
+        if (badgeEl) {
+          const todayCount = Number(s.todayUpcomingCount ?? s.count ?? 0);
+          const totalCount = Number(s.totalCount ?? 0);
+
+          if (todayCount > 0) {
+            badgeEl.textContent = todayCount;
+            badgeEl.className = 'px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-emerald-400 font-bold';
+            badgeEl.title = `Ma hátralévő mérkőzések: ${todayCount} (Heti teljes: ${totalCount})`;
+          } else {
+            badgeEl.textContent = totalCount > 0 ? `0 (${totalCount})` : '0';
+            badgeEl.className = 'px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-400 font-bold';
+            badgeEl.title = `Ma nincs mérkőzés (Heti fordulóban: ${totalCount})`;
+          }
+        }
       });
+
+      const todayTotal = data.todayEvents ?? data.totalEvents;
       catalogStatusText.innerHTML = `
         <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
-        <span><strong class="text-white">${data.totalEvents} mérkőzés</strong> elérhető (Foci, Tenisz, NFL)</span>
+        <span><strong class="text-white">${todayTotal} mai mérkőzés</strong> elérhető (Foci, Tenisz, NFL) &bull; <span class="text-slate-400 text-[11px]">Heti teljes adatbázis: ${data.totalEvents}</span></span>
       `;
     }
   } catch (err) {

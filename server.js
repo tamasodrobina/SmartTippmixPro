@@ -184,17 +184,37 @@ async function fetchTippmixCatalog(forceRefresh = false) {
   // SZIGORÚ SZŰRÉS: Kizárólag Foci (1), Tenisz (5), NFL (16)
   const events = rawEvents.filter(ev => ev && ALLOWED_SPORT_IDS.has(Number(ev.sportId)));
 
-  const countsById = new Map();
+  const nowDate = new Date(now);
+  const totalCountsById = new Map();
+  const todayCountsById = new Map();
+  const todayUpcomingCountsById = new Map();
+
   for (const ev of events) {
-    countsById.set(ev.sportId, (countsById.get(ev.sportId) || 0) + 1);
+    const spId = Number(ev.sportId);
+    totalCountsById.set(spId, (totalCountsById.get(spId) || 0) + 1);
+
+    if (isTodayInHungary(ev.eventDate)) {
+      todayCountsById.set(spId, (todayCountsById.get(spId) || 0) + 1);
+      if (new Date(ev.eventDate) > nowDate) {
+        todayUpcomingCountsById.set(spId, (todayUpcomingCountsById.get(spId) || 0) + 1);
+      }
+    }
   }
 
-  const sports = ALL_SPORTS_MASTER.map(s => ({
-    ...s,
-    sportId: s.key,
-    sportName: s.name,
-    count: countsById.get(s.tippmixId) || 0
-  }));
+  const sports = ALL_SPORTS_MASTER.map(s => {
+    const todayCount = todayCountsById.get(s.tippmixId) || 0;
+    const todayUpcoming = todayUpcomingCountsById.get(s.tippmixId) || 0;
+    const totalCount = totalCountsById.get(s.tippmixId) || 0;
+    return {
+      ...s,
+      sportId: s.key,
+      sportName: s.name,
+      count: todayUpcoming, // Elsődleges számláló: MA még hátralévő, fogadható meccsek!
+      todayCount,
+      todayUpcomingCount: todayUpcoming,
+      totalCount
+    };
+  });
 
   catalogCache = {
     timestamp: now,
@@ -585,12 +605,16 @@ app.get('/api/status', async (req, res) => {
     const catalog = await fetchTippmixCatalog();
     const now = new Date();
     const upcomingCount = catalog.events.filter(e => new Date(e.eventDate) > now).length;
+    const todayAllEvents = catalog.events.filter(e => isTodayInHungary(e.eventDate)).length;
+    const todayUpcomingEvents = catalog.events.filter(e => isTodayInHungary(e.eventDate) && new Date(e.eventDate) > now).length;
 
     res.json({
       ok: true,
       hasServerApiKey: Boolean(process.env.GEMINI_API_KEY),
       totalEvents: catalog.events.length,
       upcomingEvents: upcomingCount,
+      todayEvents: todayUpcomingEvents,
+      todayAllEvents,
       sports: catalog.sports,
       cacheStats: {
         cachedAnalyses: aiAnalysisCache.size,
@@ -603,7 +627,7 @@ app.get('/api/status', async (req, res) => {
     res.json({
       ok: false,
       hasServerApiKey: Boolean(process.env.GEMINI_API_KEY),
-      sports: ALL_SPORTS_MASTER.map(s => ({ ...s, sportId: s.key, sportName: s.name, count: 0 })),
+      sports: ALL_SPORTS_MASTER.map(s => ({ ...s, sportId: s.key, sportName: s.name, count: 0, todayCount: 0, totalCount: 0 })),
       error: err.message
     });
   }
@@ -613,7 +637,8 @@ app.get('/api/status', async (req, res) => {
 app.get('/api/competitions', async (req, res) => {
   try {
     const catalog = await fetchTippmixCatalog();
-    const rawSports = (req.query.sports || '1,5,16').toString().split(',').map(s => Number(s.trim())).filter(Boolean);
+    const rawParam = req.query.sportId || req.query.sports || '1,5,16';
+    const rawSports = rawParam.toString().split(',').map(s => Number(s.trim())).filter(Boolean);
     const filterSports = rawSports.length > 0 ? rawSports : [1, 5, 16];
 
     const now = new Date();
