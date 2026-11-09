@@ -272,6 +272,24 @@ function initHomeControls() {
   syncLabels();
 }
 
+async function parseJsonResponse(res) {
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    if (res.status === 502 || res.status === 503) {
+      throw new Error('A szerver jelenleg épp frissül a felhőben (Render deploy). Kérlek várj kb. 20 másodpercet és próbáld újra!');
+    }
+    if (res.status === 504) {
+      throw new Error('Időtúllépés történt az elemzés során. Kérlek próbáld újra!');
+    }
+    throw new Error(`A szerver átmenetileg nem válaszol (HTTP ${res.status}). Kérlek próbáld újra!`);
+  }
+  const data = await res.json();
+  if (!res.ok || (data && data.ok === false)) {
+    throw new Error(data?.error || `Hiba történt az elemzés közben (HTTP ${res.status})`);
+  }
+  return data;
+}
+
 // Intervallum elemzés indítása
 async function runIntervalAnalysis(forceRefresh = false) {
   lastExecutedMode = 'interval';
@@ -298,8 +316,7 @@ async function runIntervalAnalysis(forceRefresh = false) {
       })
     });
 
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.error || 'Hiba az elemzés során.');
+    const data = await parseJsonResponse(res);
 
     stopLoadingAnimation();
     renderAnalysisResults(
@@ -344,8 +361,7 @@ async function runCustomAnalysis(forceRefresh = false) {
       })
     });
 
-    const data = await res.json();
-    if (!res.ok || !data.ok) throw new Error(data.error || 'Hiba a mérkőzés elemzése során.');
+    const data = await parseJsonResponse(res);
 
     stopLoadingAnimation();
     renderAnalysisResults(
@@ -1134,8 +1150,7 @@ async function openDetailedModal(eventId, eventName, matchObj, forceRefresh = fa
       })
     });
 
-    const data = await res.json();
-    if (!data.ok) throw new Error(data.error || 'Az elemzés lekérése sikertelen.');
+    const data = await parseJsonResponse(res);
 
     if (modalCacheBadge) {
       if (data.fromCache) {
@@ -1534,8 +1549,7 @@ async function fetchAndRenderHistory() {
     });
 
     const res = await fetch(`/api/tips/history?${params.toString()}`);
-    const data = await res.json();
-    if (!data.ok) throw new Error(data.error || 'Hiba az előzmények lekérésekor.');
+    const data = await parseJsonResponse(res);
 
     const historyItems = Array.isArray(data.history) ? [...data.history] : [];
     const pendingItems = Array.isArray(data.pending) ? [...data.pending] : [];
