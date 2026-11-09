@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T17:52:35.517Z",
+  "updatedAt": "2026-11-09T18:30:33.346Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,15 +29,15 @@
       }
     },
     "tennis": {
-      "totalChecked": 0,
+      "totalChecked": 1,
       "won": 0,
-      "lost": 0,
+      "lost": 1,
       "winRate": 0,
       "byRisk": {
         "low": {
-          "totalChecked": 0,
+          "totalChecked": 1,
           "won": 0,
-          "lost": 0,
+          "lost": 1,
           "winRate": 0
         },
         "medium": {
@@ -224,24 +224,6 @@
       "riskLevel": "Alacsony",
       "source": "client_sync",
       "addedAt": "2026-11-09T15:22:48.543Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_ctaburlukneumayer_2026-11-09_ctaburjtkszm135_kevesebbmint135",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "C. Tabur - Luk. Neumayer",
-      "competitionName": "Challenger - Orleans, férfi egyes",
-      "eventDate": "2026-11-09T17:05:00+01:00",
-      "marketName": "C. Tabur - Játékszám 13,5",
-      "outcomeName": "Kevesebb, mint 13,5",
-      "odds": 1.36,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "client_sync",
-      "addedAt": "2026-11-09T15:22:48.544Z",
       "status": "pending"
     },
     {
@@ -1343,7 +1325,27 @@
       "status": "pending"
     }
   ],
-  "history": [],
+  "history": [
+    {
+      "id": "5_ctaburlukneumayer_2026-11-09_ctaburjtkszm135_kevesebbmint135",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "C. Tabur - Luk. Neumayer",
+      "eventDate": "2026-11-09T17:05:00+01:00",
+      "competitionName": "Challenger - Orleans, férfi egyes",
+      "marketName": "C. Tabur - Játékszám 13,5",
+      "outcomeName": "Kevesebb, mint 13,5",
+      "odds": 1.36,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "6-3, 6-2",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T18:30:30.014Z",
+      "status": "lost"
+    }
+  ],
   "seenTipIds": [
     "1_botosaniotelulgalati_2026-11-09_dntetlennlattvisszajr_botosani",
     "1_kristiansundvalerenga_2026-11-09_1flidmindktcsapatszerezglt_nem",
