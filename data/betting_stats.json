@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-09T20:14:42.226Z",
+  "updatedAt": "2026-11-09T20:38:32.209Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 0,
+      "totalChecked": 1,
       "won": 0,
-      "lost": 0,
+      "lost": 1,
       "winRate": 0,
       "byRisk": {
         "low": {
@@ -21,9 +21,9 @@
           "winRate": 0
         },
         "high": {
-          "totalChecked": 0,
+          "totalChecked": 1,
           "won": 0,
-          "lost": 0,
+          "lost": 1,
           "winRate": 0
         }
       }
@@ -422,24 +422,6 @@
       "riskLevel": "Közepes",
       "source": "league_table",
       "addedAt": "2026-11-09T15:39:15.856Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_iberia1999gagra_2026-11-09_ktesly_dntetlenvagygagra",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5592667,
-      "eventName": "Iberia 1999 - Gagra",
-      "competitionName": "Georgiai bajnokság",
-      "eventDate": "2026-11-09T17:00:00+01:00",
-      "marketName": "Kétesély",
-      "outcomeName": "Döntetlen vagy Gagra",
-      "odds": 1.98,
-      "riskCategory": "high",
-      "riskScore": 7,
-      "riskLevel": "Magas",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:21.436Z",
       "status": "pending"
     },
     {
@@ -1326,6 +1308,25 @@
     }
   ],
   "history": [
+    {
+      "id": "1_iberia1999gagra_2026-11-09_ktesly_dntetlenvagygagra",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Iberia 1999 - Gagra",
+      "eventDate": "2026-11-09T17:00:00+01:00",
+      "competitionName": "Georgiai bajnokság",
+      "marketName": "Kétesély",
+      "outcomeName": "Döntetlen vagy Gagra",
+      "odds": 1.98,
+      "riskCategory": "high",
+      "riskScore": 7,
+      "riskLevel": "Magas",
+      "won": false,
+      "finalScore": "3-0",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T20:38:17.440Z",
+      "status": "lost"
+    },
     {
       "id": "5_ctaburlukneumayer_2026-11-09_ctaburjtkszm135_kevesebbmint135",
       "sportId": 5,
