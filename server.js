@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { initTracker, recordTip, recordTipsBatch, evaluatePendingTips, getStats } from './tracker.js';
 
 dotenv.config();
 
@@ -599,6 +600,19 @@ function parseJsonFromAiResponse(text) {
 // 7. REST API VÉGPONTOK
 // ============================================================================
 
+// 7.0 STATISZTIKA & TALÁLATI ARÁNY (FOCI & NFL)
+app.get('/api/stats', async (req, res) => {
+  try {
+    // A háttérben megpróbáljuk kiértékelni a befejezett meccseket
+    evaluatePendingTips(fetchEventDetails, callGeminiWithSearch).catch(err => {
+      console.warn('⚠️ evaluatePendingTips hiba:', err.message);
+    });
+    res.json(getStats());
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 // 7.1 STÁTUSZ & SPORTÁGAK
 app.get('/api/status', async (req, res) => {
   try {
@@ -798,6 +812,29 @@ app.post('/api/matches/by-competitions', async (req, res) => {
       })
     );
 
+    // Automatikus tipp-mentés és duplikációmentes regisztráció (Foci és NFL esetén)
+    const leagueTipsToRecord = [];
+    for (const em of enrichedMatches) {
+      if (Array.isArray(em.top2Tips)) {
+        for (const t of em.top2Tips) {
+          leagueTipsToRecord.push({
+            eventId: em.eventId,
+            eventName: em.eventName,
+            eventDate: em.eventDate,
+            sportId: em.sportId,
+            sportName: em.sportName,
+            competitionName: em.competitionName,
+            marketName: t.marketName,
+            outcomeName: t.outcomeName,
+            odds: t.odds
+          });
+        }
+      }
+    }
+    if (leagueTipsToRecord.length > 0) {
+      recordTipsBatch(leagueTipsToRecord, 'league_table');
+    }
+
     res.json({
       ok: true,
       totalCount: matchedEvents.length,
@@ -976,6 +1013,11 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       fromCache: false
     };
 
+    // Automatikus tipp-mentés és duplikációmentes regisztráció (Foci és NFL esetén)
+    if (Array.isArray(aiResult.data?.tips)) {
+      recordTipsBatch(aiResult.data.tips, 'homepage_interval');
+    }
+
     aiAnalysisCache.set(fingerprint, {
       timestamp: Date.now(),
       payload: responsePayload
@@ -1138,6 +1180,11 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       fromCache: false
     };
 
+    // Automatikus tipp-mentés és duplikációmentes regisztráció (Foci és NFL esetén)
+    if (Array.isArray(aiResult.data?.tips)) {
+      recordTipsBatch(aiResult.data.tips, 'homepage_custom');
+    }
+
     aiAnalysisCache.set(fingerprint, {
       timestamp: Date.now(),
       payload: responsePayload
@@ -1150,7 +1197,13 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`✅ SmartTippmixPro AI Szerver fut: http://localhost:${PORT}`);
   console.log(`⚽ Fókusz sportágak: Labdarúgás, Tenisz, NFL`);
+
+  // Tracker inicializálás és háttérellenőrzés indítása
+  await initTracker();
+  setInterval(() => {
+    evaluatePendingTips(fetchEventDetails, callGeminiWithSearch).catch(() => {});
+  }, 10 * 60 * 1000);
 });

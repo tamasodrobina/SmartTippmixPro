@@ -1,0 +1,19 @@
+{
+  "updatedAt": "2026-11-09T08:53:43.661Z",
+  "stats": {
+    "football": {
+      "totalChecked": 0,
+      "won": 0,
+      "lost": 0,
+      "winRate": 0
+    },
+    "nfl": {
+      "totalChecked": 0,
+      "won": 0,
+      "lost": 0,
+      "winRate": 0
+    }
+  },
+  "pendingTips": [],
+  "seenTipIds": []
+}

@@ -19,6 +19,13 @@ const sportCount1 = document.getElementById('sportCount1');
 const sportCount5 = document.getElementById('sportCount5');
 const sportCount16 = document.getElementById('sportCount16');
 
+// Találati arány (Win Rate) sáv elemek
+const footballWinRate = document.getElementById('footballWinRate');
+const footballWinCount = document.getElementById('footballWinCount');
+const nflWinRate = document.getElementById('nflWinRate');
+const nflWinCount = document.getElementById('nflWinCount');
+const pendingTipsBadge = document.getElementById('pendingTipsBadge');
+
 // Nézet szekciók
 const mainHomeView = document.getElementById('mainHomeView');
 const sportLeagueView = document.getElementById('sportLeagueView');
@@ -667,6 +674,7 @@ function renderAnalysisResults(payload, metaLabel) {
 
   resultsSection.classList.remove('hidden');
   resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  loadBettingStats();
 }
 
 // ============================================================================
@@ -935,6 +943,7 @@ async function loadLeagueMatches() {
     }
 
     renderLeagueMatchRows(currentLeagueMatches);
+    loadBettingStats();
   } catch (err) {
     console.error('Hiba a meccsek betöltésekor:', err);
     leagueMatchesList.innerHTML = `<div class="glass-card rounded-2xl p-6 text-center text-rose-400 text-sm">Hiba a mérkőzések betöltésekor.</div>`;
@@ -1130,8 +1139,48 @@ detailedModal.addEventListener('click', (e) => {
 // 6. INICIALIZÁLÁS
 // ============================================================================
 
+// Találati arány & statisztika lekérése
+async function loadBettingStats() {
+  try {
+    const res = await fetch('/api/stats');
+    const data = await res.json();
+    if (!data.ok || !data.stats) return;
+
+    const f = data.stats.football || {};
+    const n = data.stats.nfl || {};
+
+    if (footballWinRate && footballWinCount) {
+      if (f.totalChecked > 0) {
+        footballWinRate.textContent = `${f.winRate}%`;
+        footballWinCount.textContent = `(${f.won}/${f.totalChecked} nyert)`;
+      } else {
+        footballWinRate.textContent = `--%`;
+        footballWinCount.textContent = `(0/0 nyert)`;
+      }
+    }
+
+    if (nflWinRate && nflWinCount) {
+      if (n.totalChecked > 0) {
+        nflWinRate.textContent = `${n.winRate}%`;
+        nflWinCount.textContent = `(${n.won}/${n.totalChecked} nyert)`;
+      } else {
+        nflWinRate.textContent = `--%`;
+        nflWinCount.textContent = `(0/0 nyert)`;
+      }
+    }
+
+    if (pendingTipsBadge) {
+      const pCount = Number(data.pendingCount || 0);
+      pendingTipsBadge.textContent = `${pCount} ellenőrzésre vár`;
+    }
+  } catch (err) {
+    console.warn('Statisztika lekérési hiba:', err);
+  }
+}
+
 async function init() {
   initHomeControls();
+  loadBettingStats();
 
   try {
     const res = await fetch('/api/status');
