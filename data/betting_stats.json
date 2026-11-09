@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-09T21:30:47.466Z",
+  "updatedAt": "2026-11-09T22:39:33.265Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 5,
-      "won": 1,
+      "totalChecked": 6,
+      "won": 2,
       "lost": 4,
-      "winRate": 20,
+      "winRate": 33,
       "byRisk": {
         "low": {
           "totalChecked": 0,
@@ -15,10 +15,10 @@
           "winRate": 0
         },
         "medium": {
-          "totalChecked": 4,
-          "won": 1,
+          "totalChecked": 5,
+          "won": 2,
           "lost": 3,
-          "winRate": 25
+          "winRate": 40
         },
         "high": {
           "totalChecked": 1,
@@ -911,24 +911,6 @@
       "status": "pending"
     },
     {
-      "id": "1_independienteyumbounionmagdalena_2026-11-09_glszm2525_kevesebbmint25",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5619393,
-      "eventName": "Independiente Yumbo - Union Magdalena",
-      "competitionName": "Kolumbiai 2., rájátszás, A cs.",
-      "eventDate": "2026-11-09T21:30:00+01:00",
-      "marketName": "Gólszám 2,5 (2.5)",
-      "outcomeName": "Kevesebb, mint 2,5",
-      "odds": 1.52,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:21.567Z",
-      "status": "pending"
-    },
-    {
       "id": "1_spluquenocs2demayo_2026-11-09_dntetlennlattvisszajr_spluqueno",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -1164,6 +1146,25 @@
     }
   ],
   "history": [
+    {
+      "id": "1_independienteyumbounionmagdalena_2026-11-09_glszm2525_kevesebbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Independiente Yumbo - Union Magdalena",
+      "eventDate": "2026-11-09T21:30:00+01:00",
+      "competitionName": "Kolumbiai 2., rájátszás, A cs.",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Kevesebb, mint 2,5",
+      "odds": 1.52,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "0-1",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T22:39:33.265Z",
+      "status": "won"
+    },
     {
       "id": "1_pinetopesaro_2026-11-09_ktesly_dntetlenvagypesaro",
       "sportId": 1,
