@@ -219,11 +219,34 @@ export function recordTipsBatch(tipsList = [], source = 'batch') {
 
 // 5. Statisztika lekérdezése
 export function getStats() {
+  const pendingBySport = {
+    football: state.pendingTips.filter(t => t.sportId === 1).length,
+    tennis: state.pendingTips.filter(t => t.sportId === 5).length,
+    nfl: state.pendingTips.filter(t => t.sportId === 16).length
+  };
+
+  // Dinamikusan hozzárendeljük az egyes sportágakhoz a függőben lévő tippjeik számát
+  const statsWithPending = {
+    football: {
+      ...state.stats.football,
+      pendingCount: pendingBySport.football
+    },
+    tennis: {
+      ...state.stats.tennis,
+      pendingCount: pendingBySport.tennis
+    },
+    nfl: {
+      ...state.stats.nfl,
+      pendingCount: pendingBySport.nfl
+    }
+  };
+
   return {
     ok: true,
     updatedAt: state.updatedAt,
-    stats: state.stats,
+    stats: statsWithPending,
     pendingCount: state.pendingTips.length,
+    pendingBySport,
     pendingTipsSummary: state.pendingTips.slice(0, 15).map(t => ({
       sportName: t.sportName,
       eventName: t.eventName,

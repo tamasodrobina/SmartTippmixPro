@@ -25,18 +25,21 @@ const footballWinCount = document.getElementById('footballWinCount');
 const footballRiskLow = document.getElementById('footballRiskLow');
 const footballRiskMed = document.getElementById('footballRiskMed');
 const footballRiskHigh = document.getElementById('footballRiskHigh');
+const footballPendingBadge = document.getElementById('footballPendingBadge');
 
 const tennisWinRate = document.getElementById('tennisWinRate');
 const tennisWinCount = document.getElementById('tennisWinCount');
 const tennisRiskLow = document.getElementById('tennisRiskLow');
 const tennisRiskMed = document.getElementById('tennisRiskMed');
 const tennisRiskHigh = document.getElementById('tennisRiskHigh');
+const tennisPendingBadge = document.getElementById('tennisPendingBadge');
 
 const nflWinRate = document.getElementById('nflWinRate');
 const nflWinCount = document.getElementById('nflWinCount');
 const nflRiskLow = document.getElementById('nflRiskLow');
 const nflRiskMed = document.getElementById('nflRiskMed');
 const nflRiskHigh = document.getElementById('nflRiskHigh');
+const nflPendingBadge = document.getElementById('nflPendingBadge');
 
 const pendingTipsBadge = document.getElementById('pendingTipsBadge');
 
@@ -1160,7 +1163,7 @@ async function loadBettingStats() {
     const data = await res.json();
     if (!data.ok || !data.stats) return;
 
-    function renderSportStats(sportData, rateEl, countEl, lowEl, medEl, highEl) {
+    function renderSportStats(sportData, rateEl, countEl, lowEl, medEl, highEl, pendingEl) {
       const s = sportData || {};
       if (rateEl && countEl) {
         if (s.totalChecked > 0) {
@@ -1169,6 +1172,16 @@ async function loadBettingStats() {
         } else {
           rateEl.textContent = `--%`;
           countEl.textContent = `(0/0 nyert)`;
+        }
+      }
+
+      if (pendingEl) {
+        const pendingCount = Number(s.pendingCount || 0);
+        pendingEl.textContent = `${pendingCount} vár`;
+        if (pendingCount > 0) {
+          pendingEl.className = 'text-[10px] px-1.5 py-0.5 rounded bg-amber-950/40 border border-amber-600/60 text-amber-300 font-bold';
+        } else {
+          pendingEl.className = 'text-[10px] px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700/70 text-slate-400 font-medium';
         }
       }
 
@@ -1182,9 +1195,9 @@ async function loadBettingStats() {
       if (highEl) highEl.textContent = high.totalChecked > 0 ? `${high.winRate}%` : `--%`;
     }
 
-    renderSportStats(data.stats.football, footballWinRate, footballWinCount, footballRiskLow, footballRiskMed, footballRiskHigh);
-    renderSportStats(data.stats.tennis, tennisWinRate, tennisWinCount, tennisRiskLow, tennisRiskMed, tennisRiskHigh);
-    renderSportStats(data.stats.nfl, nflWinRate, nflWinCount, nflRiskLow, nflRiskMed, nflRiskHigh);
+    renderSportStats(data.stats.football, footballWinRate, footballWinCount, footballRiskLow, footballRiskMed, footballRiskHigh, footballPendingBadge);
+    renderSportStats(data.stats.tennis, tennisWinRate, tennisWinCount, tennisRiskLow, tennisRiskMed, tennisRiskHigh, tennisPendingBadge);
+    renderSportStats(data.stats.nfl, nflWinRate, nflWinCount, nflRiskLow, nflRiskMed, nflRiskHigh, nflPendingBadge);
 
     if (pendingTipsBadge) {
       const pCount = Number(data.pendingCount || 0);
