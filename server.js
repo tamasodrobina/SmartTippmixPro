@@ -819,7 +819,7 @@ app.get('/api/health', (req, res) => {
   res.json({ ok: true, status: 'alive', time: new Date().toISOString() });
 });
 
-// 7.0 STATISZTIKA & TALÁLATI ARÁNY (FOCI & NFL)
+// 7.0 STATISZTIKA & TALÁLATI ARÁNY (FOCI, TENISZ, NFL)
 app.get('/api/stats', async (req, res) => {
   try {
     // A háttérben megpróbáljuk kiértékelni a befejezett meccseket
@@ -827,6 +827,20 @@ app.get('/api/stats', async (req, res) => {
       console.warn('⚠️ evaluatePendingTips hiba:', err.message);
     });
     res.json(getStats());
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// KLIENS OLDALI TIPPEK SZINKRONIZÁLÁSA / HELYREÁLLÍTÁSA (Deploy utáni adatmentés)
+app.post('/api/tips/sync', (req, res) => {
+  try {
+    const incomingTips = Array.isArray(req.body.tips) ? req.body.tips : [];
+    if (incomingTips.length === 0) {
+      return res.json({ ok: true, addedCount: 0 });
+    }
+    const addedCount = recordTipsBatch(incomingTips, 'client_sync');
+    res.json({ ok: true, addedCount, totalPending: getStats().pendingCount });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }

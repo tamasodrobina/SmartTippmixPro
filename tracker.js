@@ -60,9 +60,8 @@ export async function initTracker() {
     console.warn('⚠️ Hiba a helyi statisztika betöltésekor:', err.message);
   }
 
-  if (GITHUB_TOKEN) {
-    await pullFromGitHub();
-  }
+  // Mindig megpróbáljuk betölteni GitHubról (akár van token, akár nincs)
+  await pullFromGitHub();
 }
 
 function mergeSportStats(existing) {
@@ -392,40 +391,73 @@ KIZÁRÓLAG egy érvényes JSON formátumban válaszolj:
 
 // 7. GITHUB SZINKRONIZÁCIÓ
 async function pullFromGitHub() {
-  if (!GITHUB_TOKEN) return;
   try {
-    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/data/betting_stats.json`;
-    const res = await fetch(url, {
-      headers: {
-        'Authorization': `Bearer ${GITHUB_TOKEN}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'SmartTippmixPro-Tracker'
-      }
-    });
+    let remoteState = null;
 
-    if (res.status === 200) {
-      const data = await res.json();
-      const content = Buffer.from(data.content, 'base64').toString('utf8');
-      const remoteState = JSON.parse(content);
-      if (remoteState && remoteState.stats) {
-        const remoteTotal = (remoteState.stats.football?.totalChecked || 0) + 
-                            (remoteState.stats.tennis?.totalChecked || 0) + 
-                            (remoteState.stats.nfl?.totalChecked || 0);
-        const localTotal = (state.stats.football?.totalChecked || 0) + 
-                           (state.stats.tennis?.totalChecked || 0) + 
-                           (state.stats.nfl?.totalChecked || 0);
-        if (remoteTotal >= localTotal) {
-          state = {
-            ...remoteState,
-            stats: {
-              football: mergeSportStats(remoteState.stats.football),
-              tennis: mergeSportStats(remoteState.stats.tennis),
-              nfl: mergeSportStats(remoteState.stats.nfl)
-            }
-          };
-          console.log(`☁️ Statisztikák sikeresen betöltve GitHubról: Foci ${state.stats.football.winRate}%, Tenisz ${state.stats.tennis.winRate}%, NFL ${state.stats.nfl.winRate}%`);
+    if (GITHUB_TOKEN) {
+      const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/data/betting_stats.json`;
+      const res = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'SmartTippmixPro-Tracker'
+        }
+      });
+
+      if (res.status === 200) {
+        const data = await res.json();
+        const content = Buffer.from(data.content, 'base64').toString('utf8');
+        remoteState = JSON.parse(content);
+      }
+    }
+
+    // Ha nincs token vagy az API nem válaszolt, töltsük le közvetlenül a publikus tárolóból
+    if (!remoteState) {
+      const rawUrl = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/data/betting_stats.json?t=${Date.now()}`;
+      const rawRes = await fetch(rawUrl, {
+        headers: { 'User-Agent': 'SmartTippmixPro-Tracker' }
+      });
+      if (rawRes.ok) {
+        remoteState = await rawRes.json();
+      }
+    }
+
+    if (remoteState && remoteState.stats) {
+      function combineSportStats(local, remote) {
+        const l = local || createSportStats();
+        const r = remote || createSportStats();
+        if ((r.totalChecked || 0) >= (l.totalChecked || 0)) {
+          return mergeSportStats(r);
+        }
+        return mergeSportStats(l);
+      }
+
+      state.stats = {
+        football: combineSportStats(state.stats?.football, remoteState.stats?.football),
+        tennis: combineSportStats(state.stats?.tennis, remoteState.stats?.tennis),
+        nfl: combineSportStats(state.stats?.nfl, remoteState.stats?.nfl)
+      };
+
+      // FÜGGŐ TIPPEK UNIÓJA: Soha semmit nem írunk felül üressel!
+      const existingIds = new Set(state.pendingTips.map(t => t.id));
+      if (Array.isArray(remoteState.pendingTips)) {
+        for (const rt of remoteState.pendingTips) {
+          if (rt && rt.id && !existingIds.has(rt.id)) {
+            state.pendingTips.push(rt);
+            existingIds.add(rt.id);
+          }
         }
       }
+
+      if (Array.isArray(remoteState.seenTipIds)) {
+        const seenSet = new Set(state.seenTipIds);
+        for (const sid of remoteState.seenTipIds) {
+          seenSet.add(sid);
+        }
+        state.seenTipIds = Array.from(seenSet).slice(-3000);
+      }
+
+      console.log(`☁️ Statisztikák és függő tippek sikeresen beolvasva GitHubról: Foci ${state.stats.football.winRate}%, Tenisz ${state.stats.tennis.winRate}%, NFL ${state.stats.nfl.winRate}%, Függőben: ${state.pendingTips.length}`);
     }
   } catch (err) {
     console.warn('⚠️ GitHub pull nem sikerült:', err.message);

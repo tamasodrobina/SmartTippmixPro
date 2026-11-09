@@ -510,9 +510,41 @@ function getRiskVisuals(level = '', score = 4) {
 }
 
 // Eredmények kirajzolása a főoldalon
+const LS_PENDING_KEY = 'smart_tippmix_saved_tips';
+
+function saveQueriedTipsLocally(tips = []) {
+  if (!Array.isArray(tips) || tips.length === 0) return;
+  try {
+    const raw = localStorage.getItem(LS_PENDING_KEY);
+    const existing = raw ? JSON.parse(raw) : [];
+    const map = new Map();
+    for (const t of existing) {
+      if (t && (t.id || (t.eventName && t.outcomeName))) {
+        const key = t.id || `${t.eventName}-${t.marketName}-${t.outcomeName}`;
+        map.set(key, t);
+      }
+    }
+    for (const t of tips) {
+      if (t && (t.eventName && t.outcomeName)) {
+        const key = t.id || `${t.eventName}-${t.marketName}-${t.outcomeName}`;
+        map.set(key, { ...t, savedAt: Date.now() });
+      }
+    }
+    const combined = Array.from(map.values()).slice(-200);
+    localStorage.setItem(LS_PENDING_KEY, JSON.stringify(combined));
+  } catch (e) {
+    console.warn('LocalStorage mentési hiba:', e);
+  }
+}
+
 function renderAnalysisResults(payload, metaLabel) {
   const result = payload.result || {};
   const tips = Array.isArray(result.tips) ? result.tips : [];
+
+  if (tips.length > 0) {
+    saveQueriedTipsLocally(tips);
+    setTimeout(loadBettingStats, 800);
+  }
 
   resultsMetaBadge.textContent = metaLabel;
   analysisOverviewText.textContent = result.analysisOverview || 'Az elemzés elkészült a kiválasztott feltételek alapján.';
@@ -1202,6 +1234,44 @@ async function loadBettingStats() {
     if (pendingTipsBadge) {
       const pCount = Number(data.pendingCount || 0);
       pendingTipsBadge.textContent = `${pCount} ellenőrzésre vár`;
+    }
+
+    // AUTOMATIKUS KLIENS-OLDALI HELYREÁLLÍTÁS (Render deploy és szerver restart ellen):
+    // Ha a szerver újratelepült és a memóriája üres, a böngésző azonnal visszaállítja az aktív tippeket!
+    const rawLocal = localStorage.getItem(LS_PENDING_KEY);
+    if (rawLocal) {
+      try {
+        const localTips = JSON.parse(rawLocal);
+        const now = Date.now();
+        const freshTips = localTips.filter(t => !t.savedAt || (now - t.savedAt < 48 * 3600 * 1000));
+        if (freshTips.length > 0 && Number(data.pendingCount || 0) < freshTips.length) {
+          fetch('/api/tips/sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tips: freshTips })
+          })
+            .then(r => r.json())
+            .then(syncData => {
+              if (syncData && syncData.addedCount > 0) {
+                console.log(`🔄 [HELYREÁLLÍTÁS] ${syncData.addedCount} korábbi függő tipp visszaállítva a szerverre!`);
+                // Újratöltjük a sávot
+                fetch('/api/stats')
+                  .then(r => r.json())
+                  .then(updated => {
+                    if (updated && updated.stats) {
+                      renderSportStats(updated.stats.football, footballWinRate, footballWinCount, footballRiskLow, footballRiskMed, footballRiskHigh, footballPendingBadge);
+                      renderSportStats(updated.stats.tennis, tennisWinRate, tennisWinCount, tennisRiskLow, tennisRiskMed, tennisRiskHigh, tennisPendingBadge);
+                      renderSportStats(updated.stats.nfl, nflWinRate, nflWinCount, nflRiskLow, nflRiskMed, nflRiskHigh, nflPendingBadge);
+                      if (pendingTipsBadge) {
+                        pendingTipsBadge.textContent = `${updated.pendingCount || 0} ellenőrzésre vár`;
+                      }
+                    }
+                  });
+              }
+            })
+            .catch(() => {});
+        }
+      } catch (_) {}
     }
   } catch (err) {
     console.warn('Statisztika lekérési hiba:', err);
