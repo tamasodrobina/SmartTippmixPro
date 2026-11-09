@@ -1,5 +1,6 @@
 {
-  "updatedAt": "2026-11-09T10:29:17.553Z",
+  "updatedAt": "2026-11-09T11:36:50.000Z",
+  "resetAt": "2026-11-09T11:36:50.000Z",
   "stats": {
     "football": {
       "totalChecked": 0,
@@ -7,24 +8,9 @@
       "lost": 0,
       "winRate": 0,
       "byRisk": {
-        "low": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        },
-        "medium": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        },
-        "high": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        }
+        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
       }
     },
     "tennis": {
@@ -33,24 +19,9 @@
       "lost": 0,
       "winRate": 0,
       "byRisk": {
-        "low": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        },
-        "medium": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        },
-        "high": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        }
+        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
       }
     },
     "nfl": {
@@ -59,162 +30,12 @@
       "lost": 0,
       "winRate": 0,
       "byRisk": {
-        "low": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        },
-        "medium": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        },
-        "high": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
-        }
+        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
       }
     }
   },
-  "pendingTips": [
-    {
-      "id": "16_kansascitychiefsbuffalobills_2026-11-09_amrkzsgyztese_kansascitychiefs",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "Kansas City Chiefs - Buffalo Bills",
-      "competitionName": "",
-      "eventDate": "2026-11-09T11:10:11.454Z",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "Kansas City Chiefs",
-      "odds": 1.85,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "client_sync",
-      "addedAt": "2026-11-09T10:10:11.508Z",
-      "status": "pending"
-    },
-    {
-      "id": "16_minnesotabuffalo_2026-11-10_1x2_buffalo",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": 5546464,
-      "eventName": "Minnesota - Buffalo",
-      "competitionName": "NFL",
-      "eventDate": "2026-11-10T02:15:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Buffalo",
-      "odds": 1.56,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T10:21:54.132Z",
-      "status": "pending"
-    },
-    {
-      "id": "16_minnesotabuffalo_2026-11-10_pontszm425425_tbbmint425",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": 5546464,
-      "eventName": "Minnesota - Buffalo",
-      "competitionName": "NFL",
-      "eventDate": "2026-11-10T02:15:00+01:00",
-      "marketName": "Pontszám 42,5 (42.5)",
-      "outcomeName": "Több, mint 42,5",
-      "odds": 1.63,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T10:21:54.133Z",
-      "status": "pending"
-    },
-    {
-      "id": "16_minnesotabuffalo_2026-11-10_amrkzsgyztese_buffalo",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "Minnesota - Buffalo",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-10T02:15:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "Buffalo",
-      "odds": 1.49,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-09T10:22:01.954Z",
-      "status": "pending"
-    },
-    {
-      "id": "16_minnesotabuffalo_2026-11-10_flidvgeredmny_buffalobuffalo",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "Minnesota - Buffalo",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-10T02:15:00+01:00",
-      "marketName": "Félidő/végeredmény",
-      "outcomeName": "Buffalo/Buffalo",
-      "odds": 1.92,
-      "riskCategory": "medium",
-      "riskScore": 6,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-09T10:22:01.955Z",
-      "status": "pending"
-    },
-    {
-      "id": "16_minnesotabuffalo_2026-11-10_hendikep5555_minnesota55",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "Minnesota - Buffalo",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-10T02:15:00+01:00",
-      "marketName": "Hendikep 5,5 (5.5)",
-      "outcomeName": "Minnesota +5,5",
-      "odds": 1.62,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-09T10:23:31.141Z",
-      "status": "pending"
-    },
-    {
-      "id": "16_minnesotabuffalo_2026-11-10_vendgcsapatpontszm235235_tbbmint235",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "Minnesota - Buffalo",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-10T02:15:00+01:00",
-      "marketName": "Vendégcsapat - Pontszám 23,5 (23.5)",
-      "outcomeName": "Több, mint 23,5",
-      "odds": 1.78,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-09T10:29:17.553Z",
-      "status": "pending"
-    }
-  ],
-  "seenTipIds": [
-    "16_kansascitychiefsbuffalobills_2026-11-09_amrkzsgyztese_kansascitychiefs",
-    "16_minnesotabuffalo_2026-11-10_1x2_buffalo",
-    "16_minnesotabuffalo_2026-11-10_pontszm425425_tbbmint425",
-    "16_minnesotabuffalo_2026-11-10_amrkzsgyztese_buffalo",
-    "16_minnesotabuffalo_2026-11-10_flidvgeredmny_buffalobuffalo",
-    "16_minnesotabuffalo_2026-11-10_hendikep5555_minnesota55",
-    "16_minnesotabuffalo_2026-11-10_vendgcsapatpontszm235235_tbbmint235"
-  ]
+  "pendingTips": [],
+  "seenTipIds": []
 }

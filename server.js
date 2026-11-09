@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { initTracker, recordTip, recordTipsBatch, evaluatePendingTips, getStats } from './tracker.js';
+import { initTracker, recordTip, recordTipsBatch, evaluatePendingTips, getStats, resetTracker } from './tracker.js';
 
 dotenv.config();
 
@@ -841,6 +841,16 @@ app.post('/api/tips/sync', (req, res) => {
     }
     const addedCount = recordTipsBatch(incomingTips, 'client_sync');
     res.json({ ok: true, addedCount, totalPending: getStats().pendingCount });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// STATISZTIKÁK ÉS FÜGGŐ TIPPEK TELJES NULLÁZÁSA (RESET)
+app.post('/api/stats/reset', (req, res) => {
+  try {
+    const cleanState = resetTracker();
+    res.json({ ok: true, message: 'Minden statisztika és függő tipp sikeresen nullázva!', state: cleanState });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }

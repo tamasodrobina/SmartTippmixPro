@@ -1327,13 +1327,25 @@ async function loadBettingStats() {
     if (rawLocal) {
       try {
         const localTips = JSON.parse(rawLocal);
+        const resetTime = data.resetAt ? new Date(data.resetAt).getTime() : 0;
         const now = Date.now();
-        const freshTips = localTips.filter(t => !t.savedAt || (now - t.savedAt < 48 * 3600 * 1000));
-        if (freshTips.length > 0 && Number(data.pendingCount || 0) < freshTips.length) {
+
+        // Ha a szerveren történt egy friss reset, a reset előtti régi teszttippeket azonnal töröljük!
+        const validTips = localTips.filter(t => {
+          if (!t.savedAt) return false;
+          if (resetTime > 0 && t.savedAt <= resetTime) return false;
+          return (now - t.savedAt < 48 * 3600 * 1000);
+        });
+
+        if (validTips.length !== localTips.length) {
+          localStorage.setItem(LS_PENDING_KEY, JSON.stringify(validTips));
+        }
+
+        if (validTips.length > 0 && Number(data.pendingCount || 0) < validTips.length) {
           fetch('/api/tips/sync', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ tips: freshTips })
+            body: JSON.stringify({ tips: validTips })
           })
             .then(r => r.json())
             .then(syncData => {

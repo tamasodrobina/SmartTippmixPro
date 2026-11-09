@@ -29,6 +29,7 @@ function createSportStats() {
 // Kezdő állapot (Foci, Tenisz, NFL)
 let state = {
   updatedAt: new Date().toISOString(),
+  resetAt: null,
   stats: {
     football: createSportStats(),
     tennis: createSportStats(),
@@ -46,6 +47,7 @@ export async function initTracker() {
       const parsed = JSON.parse(raw);
       state = {
         updatedAt: parsed.updatedAt || new Date().toISOString(),
+        resetAt: parsed.resetAt || null,
         stats: {
           football: mergeSportStats(parsed.stats?.football),
           tennis: mergeSportStats(parsed.stats?.tennis),
@@ -243,6 +245,7 @@ export function getStats() {
   return {
     ok: true,
     updatedAt: state.updatedAt,
+    resetAt: state.resetAt || null,
     stats: statsWithPending,
     pendingCount: state.pendingTips.length,
     pendingBySport,
@@ -258,6 +261,25 @@ export function getStats() {
       source: t.source
     }))
   };
+}
+
+// Teljes nullázás (Reset)
+export function resetTracker() {
+  const nowIso = new Date().toISOString();
+  state = {
+    updatedAt: nowIso,
+    resetAt: nowIso,
+    stats: {
+      football: createSportStats(),
+      tennis: createSportStats(),
+      nfl: createSportStats()
+    },
+    pendingTips: [],
+    seenTipIds: []
+  };
+  saveState();
+  console.log('🔄 [TRACKER RESET] Minden statisztika és függő tipp sikeresen nullázva!');
+  return state;
 }
 
 // 6. Eredmény-ellenőrző háttérmotor
@@ -423,6 +445,24 @@ async function pullFromGitHub() {
     }
 
     if (remoteState && remoteState.stats) {
+      // Ha a távoli állapot egy frissebb resetet tartalmaz, tisztán érvényesítjük a resetet!
+      if (remoteState.resetAt && (!state.resetAt || new Date(remoteState.resetAt) > new Date(state.resetAt))) {
+        state = {
+          updatedAt: remoteState.updatedAt || new Date().toISOString(),
+          resetAt: remoteState.resetAt,
+          stats: {
+            football: mergeSportStats(remoteState.stats?.football),
+            tennis: mergeSportStats(remoteState.stats?.tennis),
+            nfl: mergeSportStats(remoteState.stats?.nfl)
+          },
+          pendingTips: Array.isArray(remoteState.pendingTips) ? remoteState.pendingTips : [],
+          seenTipIds: Array.isArray(remoteState.seenTipIds) ? remoteState.seenTipIds : []
+        };
+        saveState();
+        console.log('🔄 [TRACKER SYNC] Friss nullázás (reset) sikeresen érvényesítve GitHubról!');
+        return;
+      }
+
       function combineSportStats(local, remote) {
         const l = local || createSportStats();
         const r = remote || createSportStats();
