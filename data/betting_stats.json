@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T20:53:49.557Z",
+  "updatedAt": "2026-11-09T21:03:36.022Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,15 +29,15 @@
       }
     },
     "tennis": {
-      "totalChecked": 4,
+      "totalChecked": 5,
       "won": 0,
-      "lost": 4,
+      "lost": 5,
       "winRate": 0,
       "byRisk": {
         "low": {
-          "totalChecked": 4,
+          "totalChecked": 5,
           "won": 0,
-          "lost": 4,
+          "lost": 5,
           "winRate": 0
         },
         "medium": {
@@ -170,24 +170,6 @@
       "riskLevel": "Alacsony",
       "source": "client_sync",
       "addedAt": "2026-11-09T15:22:48.536Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_leoborgtobysamuel_2026-11-09_leoborgnyerlegalbbegyjtszmt_nem",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "Leo Borg - Toby Samuel",
-      "competitionName": "ATP - Stockholm, férfi egyes",
-      "eventDate": "2026-11-09T19:10:00+01:00",
-      "marketName": "Leo Borg nyer legalább egy játszmát",
-      "outcomeName": "Nem",
-      "odds": 1.36,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "client_sync",
-      "addedAt": "2026-11-09T15:22:48.538Z",
       "status": "pending"
     },
     {
@@ -1254,6 +1236,25 @@
     }
   ],
   "history": [
+    {
+      "id": "5_leoborgtobysamuel_2026-11-09_leoborgnyerlegalbbegyjtszmt_nem",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "Leo Borg - Toby Samuel",
+      "eventDate": "2026-11-09T19:10:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "marketName": "Leo Borg nyer legalább egy játszmát",
+      "outcomeName": "Nem",
+      "odds": 1.36,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "6-4, 6-4",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T20:58:10.141Z",
+      "status": "lost"
+    },
     {
       "id": "5_ireneburilloescorihuelaylizarazo_2026-11-09_ireneburilloescorihuelajtkszm125_kevesebbmint125",
       "sportId": 5,
