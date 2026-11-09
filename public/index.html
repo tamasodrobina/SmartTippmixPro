@@ -208,11 +208,13 @@
             </div>
           </div>
 
-          <!-- Függőben lévő ellenőrzések -->
-          <div class="flex items-center gap-1.5 bg-slate-950/70 px-3 py-1.5 rounded-xl border border-slate-800 text-xs text-slate-300">
+          <!-- Függőben lévő ellenőrzések (Kattintható gyorsgomb) -->
+          <button type="button" id="pendingTipsBadgeBtn" data-history-trigger data-sport="all" data-risk="all" data-status="pending"
+            class="flex items-center gap-1.5 bg-slate-950/70 hover:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 hover:border-amber-400/50 text-xs text-slate-300 transition cursor-pointer active:scale-95 shadow-sm"
+            title="Kattints az ellenőrzésre váró tippek megtekintéséhez!">
             <span>⏳</span>
             <span id="pendingTipsBadge" class="font-semibold text-amber-300">0 ellenőrzésre vár</span>
-          </div>
+          </button>
         </div>
 
         <!-- 3 SPORTÁG KÁRTYA (FOCI, TENISZ, NFL) -->
@@ -220,7 +222,7 @@
           
           <!-- 1. FOCI -->
           <div class="bg-slate-950/80 p-2.5 sm:p-3 rounded-xl border border-slate-800/90 flex flex-col justify-between gap-2">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between cursor-pointer hover:opacity-90 transition" data-history-trigger data-sport="1" data-risk="all" data-status="all" title="Kattints a FOCI tippek előzményeiért!">
               <div class="flex items-center gap-1.5 font-bold text-white text-[13px]">
                 <span class="text-base">⚽</span>
                 <span>FOCI</span>
@@ -231,26 +233,32 @@
                 <span id="footballWinCount" class="text-[10px] text-slate-400 block -mt-0.5">(0/0 nyert)</span>
               </div>
             </div>
-            <!-- Kockázati bontás -->
+            <!-- Kockázati bontás (Kattintható gombok az előzményekhez) -->
             <div class="grid grid-cols-3 gap-1 pt-1.5 border-t border-slate-800/60 text-[10px] text-center">
-              <div class="bg-emerald-950/30 border border-emerald-900/40 rounded px-1 py-0.5">
-                <span class="text-emerald-400 block font-medium">Alacsony</span>
+              <button type="button" data-history-trigger data-sport="1" data-risk="low"
+                class="bg-emerald-950/30 hover:bg-emerald-900/50 border border-emerald-900/40 hover:border-emerald-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints az Alacsony kockázatú focitippek előzményeiért">
+                <span class="text-emerald-400 block font-medium group-hover:text-emerald-300">Alacsony</span>
                 <span id="footballRiskLow" class="font-bold text-white text-[11px]">--%</span>
-              </div>
-              <div class="bg-amber-950/30 border border-amber-900/40 rounded px-1 py-0.5">
-                <span class="text-amber-400 block font-medium">Közepes</span>
+              </button>
+              <button type="button" data-history-trigger data-sport="1" data-risk="medium"
+                class="bg-amber-950/30 hover:bg-amber-900/50 border border-amber-900/40 hover:border-amber-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints a Közepes kockázatú focitippek előzményeiért">
+                <span class="text-amber-400 block font-medium group-hover:text-amber-300">Közepes</span>
                 <span id="footballRiskMed" class="font-bold text-white text-[11px]">--%</span>
-              </div>
-              <div class="bg-rose-950/30 border border-rose-900/40 rounded px-1 py-0.5">
-                <span class="text-rose-400 block font-medium">Magas</span>
+              </button>
+              <button type="button" data-history-trigger data-sport="1" data-risk="high"
+                class="bg-rose-950/30 hover:bg-rose-900/50 border border-rose-900/40 hover:border-rose-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints a Magas kockázatú focitippek előzményeiért">
+                <span class="text-rose-400 block font-medium group-hover:text-rose-300">Magas</span>
                 <span id="footballRiskHigh" class="font-bold text-white text-[11px]">--%</span>
-              </div>
+              </button>
             </div>
           </div>
 
           <!-- 2. TENISZ -->
           <div class="bg-slate-950/80 p-2.5 sm:p-3 rounded-xl border border-slate-800/90 flex flex-col justify-between gap-2">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between cursor-pointer hover:opacity-90 transition" data-history-trigger data-sport="5" data-risk="all" data-status="all" title="Kattints a TENISZ tippek előzményeiért!">
               <div class="flex items-center gap-1.5 font-bold text-white text-[13px]">
                 <span class="text-base">🎾</span>
                 <span>TENISZ</span>
@@ -261,26 +269,32 @@
                 <span id="tennisWinCount" class="text-[10px] text-slate-400 block -mt-0.5">(0/0 nyert)</span>
               </div>
             </div>
-            <!-- Kockázati bontás -->
+            <!-- Kockázati bontás (Kattintható gombok) -->
             <div class="grid grid-cols-3 gap-1 pt-1.5 border-t border-slate-800/60 text-[10px] text-center">
-              <div class="bg-emerald-950/30 border border-emerald-900/40 rounded px-1 py-0.5">
-                <span class="text-emerald-400 block font-medium">Alacsony</span>
+              <button type="button" data-history-trigger data-sport="5" data-risk="low"
+                class="bg-emerald-950/30 hover:bg-emerald-900/50 border border-emerald-900/40 hover:border-emerald-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints az Alacsony kockázatú tenisztippek előzményeiért">
+                <span class="text-emerald-400 block font-medium group-hover:text-emerald-300">Alacsony</span>
                 <span id="tennisRiskLow" class="font-bold text-white text-[11px]">--%</span>
-              </div>
-              <div class="bg-amber-950/30 border border-amber-900/40 rounded px-1 py-0.5">
-                <span class="text-amber-400 block font-medium">Közepes</span>
+              </button>
+              <button type="button" data-history-trigger data-sport="5" data-risk="medium"
+                class="bg-amber-950/30 hover:bg-amber-900/50 border border-amber-900/40 hover:border-amber-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints a Közepes kockázatú tenisztippek előzményeiért">
+                <span class="text-amber-400 block font-medium group-hover:text-amber-300">Közepes</span>
                 <span id="tennisRiskMed" class="font-bold text-white text-[11px]">--%</span>
-              </div>
-              <div class="bg-rose-950/30 border border-rose-900/40 rounded px-1 py-0.5">
-                <span class="text-rose-400 block font-medium">Magas</span>
+              </button>
+              <button type="button" data-history-trigger data-sport="5" data-risk="high"
+                class="bg-rose-950/30 hover:bg-rose-900/50 border border-rose-900/40 hover:border-rose-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints a Magas kockázatú tenisztippek előzményeiért">
+                <span class="text-rose-400 block font-medium group-hover:text-rose-300">Magas</span>
                 <span id="tennisRiskHigh" class="font-bold text-white text-[11px]">--%</span>
-              </div>
+              </button>
             </div>
           </div>
 
           <!-- 3. NFL -->
           <div class="bg-slate-950/80 p-2.5 sm:p-3 rounded-xl border border-slate-800/90 flex flex-col justify-between gap-2">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between cursor-pointer hover:opacity-90 transition" data-history-trigger data-sport="16" data-risk="all" data-status="all" title="Kattints az NFL tippek előzményeiért!">
               <div class="flex items-center gap-1.5 font-bold text-white text-[13px]">
                 <span class="text-base">🏈</span>
                 <span>NFL</span>
@@ -291,20 +305,26 @@
                 <span id="nflWinCount" class="text-[10px] text-slate-400 block -mt-0.5">(0/0 nyert)</span>
               </div>
             </div>
-            <!-- Kockázati bontás -->
+            <!-- Kockázati bontás (Kattintható gombok) -->
             <div class="grid grid-cols-3 gap-1 pt-1.5 border-t border-slate-800/60 text-[10px] text-center">
-              <div class="bg-emerald-950/30 border border-emerald-900/40 rounded px-1 py-0.5">
-                <span class="text-emerald-400 block font-medium">Alacsony</span>
+              <button type="button" data-history-trigger data-sport="16" data-risk="low"
+                class="bg-emerald-950/30 hover:bg-emerald-900/50 border border-emerald-900/40 hover:border-emerald-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints az Alacsony kockázatú NFL tippek előzményeiért">
+                <span class="text-emerald-400 block font-medium group-hover:text-emerald-300">Alacsony</span>
                 <span id="nflRiskLow" class="font-bold text-white text-[11px]">--%</span>
-              </div>
-              <div class="bg-amber-950/30 border border-amber-900/40 rounded px-1 py-0.5">
-                <span class="text-amber-400 block font-medium">Közepes</span>
+              </button>
+              <button type="button" data-history-trigger data-sport="16" data-risk="medium"
+                class="bg-amber-950/30 hover:bg-amber-900/50 border border-amber-900/40 hover:border-amber-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints a Közepes kockázatú NFL tippek előzményeiért">
+                <span class="text-amber-400 block font-medium group-hover:text-amber-300">Közepes</span>
                 <span id="nflRiskMed" class="font-bold text-white text-[11px]">--%</span>
-              </div>
-              <div class="bg-rose-950/30 border border-rose-900/40 rounded px-1 py-0.5">
-                <span class="text-rose-400 block font-medium">Magas</span>
+              </button>
+              <button type="button" data-history-trigger data-sport="16" data-risk="high"
+                class="bg-rose-950/30 hover:bg-rose-900/50 border border-rose-900/40 hover:border-rose-500/60 rounded px-1 py-1 cursor-pointer transition active:scale-95 text-center group"
+                title="Kattints a Magas kockázatú NFL tippek előzményeiért">
+                <span class="text-rose-400 block font-medium group-hover:text-rose-300">Magas</span>
                 <span id="nflRiskHigh" class="font-bold text-white text-[11px]">--%</span>
-              </div>
+              </button>
             </div>
           </div>
 
@@ -630,6 +650,83 @@
           <div id="modalTipsList" class="space-y-3"></div>
         </div>
 
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- TIPPNAPLÓ & ELŐZMÉNYEK MODAL (KOCKÁZATOK ÉS SPORTÁGAK SZERINT) -->
+  <!-- ==================================================================== -->
+  <div id="tipHistoryModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-5 hidden">
+    <div class="glass-card bg-slate-900 border border-slate-800 rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Modal Fejléc -->
+      <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between gap-3 shrink-0">
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">📋</span>
+            <h2 id="historyModalTitle" class="text-base sm:text-lg font-black text-white truncate">
+              Tipp Előzmények &amp; Eredmények
+            </h2>
+          </div>
+          <p id="historyModalSubtitle" class="text-xs text-slate-400 mt-0.5 truncate">
+            Valós befejezett meccsek eredményei és függőben lévő tippek
+          </p>
+        </div>
+        <button id="closeHistoryModalBtn" type="button"
+          class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition cursor-pointer shrink-0">
+          ✕
+        </button>
+      </div>
+
+      <!-- Szűrősáv (Státusz, Sportág, Kockázat) -->
+      <div class="px-4 py-3 sm:px-5 bg-slate-950/60 border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-2.5 shrink-0">
+        <!-- Fő státusz választó gombok -->
+        <div class="flex items-center gap-1.5" id="historyStatusTabs">
+          <button type="button" data-status-filter="all" class="history-status-tab px-2.5 py-1 rounded-lg text-xs font-bold transition bg-emerald-500 text-slate-950 shadow-sm cursor-pointer">
+            Összes (<span id="histCountAll">0</span>)
+          </button>
+          <button type="button" data-status-filter="won" class="history-status-tab px-2.5 py-1 rounded-lg text-xs font-semibold transition text-slate-300 hover:bg-slate-800 cursor-pointer">
+            ✅ Nyert (<span id="histCountWon">0</span>)
+          </button>
+          <button type="button" data-status-filter="lost" class="history-status-tab px-2.5 py-1 rounded-lg text-xs font-semibold transition text-slate-300 hover:bg-slate-800 cursor-pointer">
+            ❌ Veszett (<span id="histCountLost">0</span>)
+          </button>
+          <button type="button" data-status-filter="pending" class="history-status-tab px-2.5 py-1 rounded-lg text-xs font-semibold transition text-slate-300 hover:bg-slate-800 cursor-pointer">
+            ⏳ Függőben (<span id="histCountPending">0</span>)
+          </button>
+        </div>
+
+        <!-- Sportág & Kockázat dropdownok -->
+        <div class="flex items-center gap-2 text-xs">
+          <select id="historySportSelect" class="bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-1 text-slate-200 text-xs font-medium focus:outline-none focus:border-emerald-500 cursor-pointer">
+            <option value="all">Minden sportág</option>
+            <option value="1">⚽ Foci</option>
+            <option value="5">🎾 Tenisz</option>
+            <option value="16">🏈 NFL</option>
+          </select>
+
+          <select id="historyRiskSelect" class="bg-slate-900 border border-slate-700/80 rounded-lg px-2.5 py-1 text-slate-200 text-xs font-medium focus:outline-none focus:border-emerald-500 cursor-pointer">
+            <option value="all">Minden kockázat</option>
+            <option value="low">🟢 Alacsony</option>
+            <option value="medium">🟡 Közepes</option>
+            <option value="high">🔴 Magas</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Görgethető tartalom -->
+      <div id="historyModalBody" class="p-4 sm:p-5 overflow-y-auto space-y-2.5 flex-1 max-h-[60vh]">
+        <!-- Dinamikusan kártyák -->
+      </div>
+
+      <!-- Modal Alsó sáv -->
+      <div class="p-3 sm:px-5 bg-slate-950/80 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between shrink-0">
+        <span id="historyModalSummaryText">Összesen 0 elem.</span>
+        <button id="historyModalRefreshBtn" type="button" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 cursor-pointer">
+          <span>🔄</span> Kényszerített frissítés
+        </button>
       </div>
 
     </div>

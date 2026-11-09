@@ -36,6 +36,7 @@ let state = {
     nfl: createSportStats()
   },
   pendingTips: [],
+  history: [],
   seenTipIds: []
 };
 
@@ -54,9 +55,10 @@ export async function initTracker() {
           nfl: mergeSportStats(parsed.stats?.nfl)
         },
         pendingTips: Array.isArray(parsed.pendingTips) ? parsed.pendingTips : [],
+        history: Array.isArray(parsed.history) ? parsed.history : [],
         seenTipIds: Array.isArray(parsed.seenTipIds) ? parsed.seenTipIds : []
       };
-      console.log(`📊 Tracker betöltve: Foci ${state.stats.football.winRate}%, Tenisz ${state.stats.tennis.winRate}%, NFL ${state.stats.nfl.winRate}%, Függőben: ${state.pendingTips.length}`);
+      console.log(`📊 Tracker betöltve: Foci ${state.stats.football.winRate}%, Tenisz ${state.stats.tennis.winRate}%, NFL ${state.stats.nfl.winRate}%, Függőben: ${state.pendingTips.length}, Előzmények: ${state.history.length}`);
     }
   } catch (err) {
     console.warn('⚠️ Hiba a helyi statisztika betöltésekor:', err.message);
@@ -249,18 +251,85 @@ export function getStats() {
     stats: statsWithPending,
     pendingCount: state.pendingTips.length,
     pendingBySport,
-    pendingTipsSummary: state.pendingTips.slice(0, 15).map(t => ({
+    pendingTipsSummary: state.pendingTips.slice(0, 100).map(t => ({
+      id: t.id,
+      sportId: t.sportId,
       sportName: t.sportName,
       eventName: t.eventName,
       eventDate: t.eventDate,
+      competitionName: t.competitionName || '',
       marketName: t.marketName,
       outcomeName: t.outcomeName,
       odds: t.odds,
       riskLevel: t.riskLevel,
       riskCategory: t.riskCategory,
-      source: t.source
-    }))
+      riskScore: t.riskScore,
+      source: t.source,
+      status: 'pending'
+    })),
+    historyCount: (state.history || []).length,
+    history: (state.history || []).slice(0, 200)
   };
+}
+
+// Lekérdezi az előzményeket (szűrhető: sportId, riskCategory, status)
+export function getHistory(filters = {}) {
+  let list = Array.isArray(state.history) ? [...state.history] : [];
+  if (filters.sportId && filters.sportId !== 'all') {
+    const sId = Number(filters.sportId);
+    list = list.filter(t => t.sportId === sId);
+  }
+  if (filters.riskCategory && filters.riskCategory !== 'all') {
+    list = list.filter(t => t.riskCategory === filters.riskCategory);
+  }
+  if (filters.status && filters.status !== 'all') {
+    list = list.filter(t => t.status === filters.status);
+  }
+  return list;
+}
+
+// Manuális vagy kliens oldali kiértékelt tipp rögzítése
+export function recordEvaluatedTip(item) {
+  if (!item || !item.eventName || !item.marketName || !item.outcomeName) return null;
+  const sportId = normalizeSportId(item.sportId || item.sportName) || 1;
+  const tipId = item.id || generateTipId(sportId, item.eventName, item.eventDate, item.marketName, item.outcomeName);
+  const riskInfo = determineRiskCategory(item);
+
+  if (!Array.isArray(state.history)) state.history = [];
+  const existingIndex = state.history.findIndex(h => h.id === tipId);
+
+  const historyItem = {
+    id: tipId,
+    sportId,
+    sportName: item.sportName || (sportId === 5 ? 'Tenisz' : (sportId === 16 ? 'Amerikai futball (NFL)' : 'Labdarúgás (Foci)')),
+    eventName: item.eventName,
+    eventDate: item.eventDate || new Date().toISOString(),
+    competitionName: item.competitionName || '',
+    marketName: item.marketName,
+    outcomeName: item.outcomeName,
+    odds: Number(item.odds) || 1.5,
+    riskCategory: riskInfo.category,
+    riskScore: riskInfo.score,
+    riskLevel: riskInfo.level,
+    won: Boolean(item.won),
+    finalScore: item.finalScore || null,
+    verificationMethod: item.verificationMethod || 'manual_sync',
+    evaluatedAt: item.evaluatedAt || new Date().toISOString(),
+    status: item.won ? 'won' : 'lost'
+  };
+
+  if (existingIndex >= 0) {
+    state.history[existingIndex] = historyItem;
+  } else {
+    state.history.unshift(historyItem);
+  }
+
+  // Eltávolítjuk a függők közül
+  state.pendingTips = state.pendingTips.filter(t => t.id !== tipId);
+  if (!state.seenTipIds.includes(tipId)) state.seenTipIds.push(tipId);
+
+  saveState();
+  return historyItem;
 }
 
 // Teljes nullázás (Reset)
@@ -275,10 +344,11 @@ export function resetTracker() {
       nfl: createSportStats()
     },
     pendingTips: [],
+    history: [],
     seenTipIds: []
   };
   saveState();
-  console.log('🔄 [TRACKER RESET] Minden statisztika és függő tipp sikeresen nullázva!');
+  console.log('🔄 [TRACKER RESET] Minden statisztika, függő tipp és előzmény sikeresen nullázva!');
   return state;
 }
 
@@ -398,6 +468,38 @@ KIZÁRÓLAG egy érvényes JSON formátumban válaszolj:
       subStats.winRate = Math.round((subStats.won / subStats.totalChecked) * 100);
 
       console.log(`✅ TIPP KIÉRTÉKELVE: [${tip.sportName} - ${tip.riskLevel || riskCat}] ${tip.eventName} -> ${tip.marketName}: ${tip.outcomeName} | Eredmény: ${verificationResult.won ? 'NYERT 🟢' : 'VESZTETT 🔴'} (${verificationResult.method})`);
+      
+      // Hozzáadjuk a lezárt tipp előzmények közé (history)
+      const historyItem = {
+        id: tip.id,
+        sportId: tip.sportId,
+        sportName: tip.sportName,
+        eventName: tip.eventName,
+        eventDate: tip.eventDate,
+        competitionName: tip.competitionName || '',
+        marketName: tip.marketName,
+        outcomeName: tip.outcomeName,
+        odds: tip.odds,
+        riskCategory: riskCat,
+        riskScore: tip.riskScore || (riskCat === 'low' ? 3 : (riskCat === 'high' ? 8 : 5)),
+        riskLevel: tip.riskLevel || (riskCat === 'low' ? 'Alacsony' : (riskCat === 'high' ? 'Magas' : 'Közepes')),
+        won: verificationResult.won,
+        finalScore: verificationResult.score || null,
+        verificationMethod: verificationResult.method,
+        evaluatedAt: new Date().toISOString(),
+        status: verificationResult.won ? 'won' : 'lost'
+      };
+
+      if (!Array.isArray(state.history)) state.history = [];
+      const existingHistIdx = state.history.findIndex(h => h.id === historyItem.id);
+      if (existingHistIdx >= 0) {
+        state.history[existingHistIdx] = historyItem;
+      } else {
+        state.history.unshift(historyItem);
+        if (state.history.length > 300) {
+          state.history = state.history.slice(0, 300);
+        }
+      }
       // A meccs TÖRLŐDIK a függő listából ahogy kérted!
     } else {
       remainingPending.push(tip);
@@ -497,7 +599,23 @@ async function pullFromGitHub() {
         state.seenTipIds = Array.from(seenSet).slice(-3000);
       }
 
-      console.log(`☁️ Statisztikák és függő tippek sikeresen beolvasva GitHubról: Foci ${state.stats.football.winRate}%, Tenisz ${state.stats.tennis.winRate}%, NFL ${state.stats.nfl.winRate}%, Függőben: ${state.pendingTips.length}`);
+      // ELŐZMÉNYEK UNIÓJA
+      if (Array.isArray(remoteState.history)) {
+        const histMap = new Map();
+        for (const h of state.history || []) {
+          if (h && h.id) histMap.set(h.id, h);
+        }
+        for (const h of remoteState.history) {
+          if (h && h.id && !histMap.has(h.id)) {
+            histMap.set(h.id, h);
+          }
+        }
+        state.history = Array.from(histMap.values())
+          .sort((a, b) => new Date(b.evaluatedAt || 0) - new Date(a.evaluatedAt || 0))
+          .slice(0, 300);
+      }
+
+      console.log(`☁️ Statisztikák, függő tippek és előzmények sikeresen beolvasva GitHubról: Foci ${state.stats.football.winRate}%, Tenisz ${state.stats.tennis.winRate}%, NFL ${state.stats.nfl.winRate}%, Függőben: ${state.pendingTips.length}, Előzmények: ${state.history.length}`);
     }
   } catch (err) {
     console.warn('⚠️ GitHub pull nem sikerült:', err.message);

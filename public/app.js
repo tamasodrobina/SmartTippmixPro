@@ -1379,8 +1379,300 @@ async function loadBettingStats() {
   }
 }
 
+// ============================================================================
+// 7. TIPPNAPLÓ & ELŐZMÉNYEK MODAL (KOCKÁZATOK ÉS SPORTÁGAK SZERINT)
+// ============================================================================
+
+const tipHistoryModal = document.getElementById('tipHistoryModal');
+const closeHistoryModalBtn = document.getElementById('closeHistoryModalBtn');
+const historyModalTitle = document.getElementById('historyModalTitle');
+const historyModalSubtitle = document.getElementById('historyModalSubtitle');
+const historySportSelect = document.getElementById('historySportSelect');
+const historyRiskSelect = document.getElementById('historyRiskSelect');
+const historyModalBody = document.getElementById('historyModalBody');
+const historyModalSummaryText = document.getElementById('historyModalSummaryText');
+const historyModalRefreshBtn = document.getElementById('historyModalRefreshBtn');
+
+const histCountAll = document.getElementById('histCountAll');
+const histCountWon = document.getElementById('histCountWon');
+const histCountLost = document.getElementById('histCountLost');
+const histCountPending = document.getElementById('histCountPending');
+const historyStatusTabs = document.querySelectorAll('.history-status-tab');
+
+let currentHistoryFilter = {
+  sportId: 'all',
+  riskCategory: 'all',
+  status: 'all'
+};
+
+function initTipHistoryModal() {
+  // Minden kattintható statisztikai doboz és gomb eseménykezelése
+  document.querySelectorAll('[data-history-trigger]').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const sport = trigger.getAttribute('data-sport') || 'all';
+      const risk = trigger.getAttribute('data-risk') || 'all';
+      const status = trigger.getAttribute('data-status') || 'all';
+      openTipHistoryModal(sport, risk, status);
+    });
+  });
+
+  if (closeHistoryModalBtn) {
+    closeHistoryModalBtn.addEventListener('click', closeTipHistoryModal);
+  }
+
+  if (tipHistoryModal) {
+    tipHistoryModal.addEventListener('click', (e) => {
+      if (e.target === tipHistoryModal) closeTipHistoryModal();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && tipHistoryModal && !tipHistoryModal.classList.contains('hidden')) {
+      closeTipHistoryModal();
+    }
+  });
+
+  if (historySportSelect) {
+    historySportSelect.addEventListener('change', () => {
+      currentHistoryFilter.sportId = historySportSelect.value;
+      updateHistoryModalTitle();
+      fetchAndRenderHistory();
+    });
+  }
+
+  if (historyRiskSelect) {
+    historyRiskSelect.addEventListener('change', () => {
+      currentHistoryFilter.riskCategory = historyRiskSelect.value;
+      updateHistoryModalTitle();
+      fetchAndRenderHistory();
+    });
+  }
+
+  if (historyStatusTabs) {
+    historyStatusTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const filter = tab.getAttribute('data-status-filter') || 'all';
+        currentHistoryFilter.status = filter;
+        updateStatusTabsUI();
+        fetchAndRenderHistory();
+      });
+    });
+  }
+
+  if (historyModalRefreshBtn) {
+    historyModalRefreshBtn.addEventListener('click', () => {
+      fetchAndRenderHistory();
+    });
+  }
+}
+
+function updateStatusTabsUI() {
+  historyStatusTabs.forEach(tab => {
+    const f = tab.getAttribute('data-status-filter');
+    if (f === currentHistoryFilter.status) {
+      tab.className = 'history-status-tab px-2.5 py-1 rounded-lg text-xs font-bold transition bg-emerald-500 text-slate-950 shadow-sm cursor-pointer';
+    } else {
+      tab.className = 'history-status-tab px-2.5 py-1 rounded-lg text-xs font-semibold transition text-slate-300 hover:bg-slate-800 cursor-pointer';
+    }
+  });
+}
+
+function updateHistoryModalTitle() {
+  let sportName = 'Összes sportág';
+  if (currentHistoryFilter.sportId === '1') sportName = '⚽ Labdarúgás (Foci)';
+  if (currentHistoryFilter.sportId === '5') sportName = '🎾 Tenisz';
+  if (currentHistoryFilter.sportId === '16') sportName = '🏈 Amerikai futball (NFL)';
+
+  let riskName = 'Minden kockázati szint';
+  if (currentHistoryFilter.riskCategory === 'low') riskName = '🟢 Alacsony kockázat (1-3)';
+  if (currentHistoryFilter.riskCategory === 'medium') riskName = '🟡 Közepes kockázat (4-6)';
+  if (currentHistoryFilter.riskCategory === 'high') riskName = '🔴 Magas kockázat (7-10)';
+
+  historyModalTitle.textContent = `${sportName} – ${riskName}`;
+  historyModalSubtitle.textContent = `A kiválasztott szűrésnek megfelelő lezárt és folyamatban lévő tippek`;
+}
+
+function openTipHistoryModal(sportId = 'all', riskCategory = 'all', status = 'all') {
+  currentHistoryFilter.sportId = sportId;
+  currentHistoryFilter.riskCategory = riskCategory;
+  currentHistoryFilter.status = status;
+
+  if (historySportSelect) historySportSelect.value = sportId;
+  if (historyRiskSelect) historyRiskSelect.value = riskCategory;
+  updateStatusTabsUI();
+  updateHistoryModalTitle();
+
+  tipHistoryModal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  fetchAndRenderHistory();
+}
+
+function closeTipHistoryModal() {
+  tipHistoryModal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+async function fetchAndRenderHistory() {
+  historyModalBody.innerHTML = `
+    <div class="py-12 text-center space-y-3">
+      <div class="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 animate-spin">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+      </div>
+      <p class="text-xs text-slate-400">Tipp előzmények betöltése...</p>
+    </div>
+  `;
+
+  try {
+    const params = new URLSearchParams({
+      sportId: currentHistoryFilter.sportId,
+      riskCategory: currentHistoryFilter.riskCategory,
+      status: currentHistoryFilter.status
+    });
+
+    const res = await fetch(`/api/tips/history?${params.toString()}`);
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Hiba az előzmények lekérésekor.');
+
+    const historyItems = Array.isArray(data.history) ? data.history : [];
+    const pendingItems = Array.isArray(data.pending) ? data.pending : [];
+
+    // Összesített elemek a választott státusz alapján
+    let displayList = [];
+    if (currentHistoryFilter.status === 'pending') {
+      displayList = pendingItems.map(p => ({ ...p, status: 'pending' }));
+    } else if (currentHistoryFilter.status === 'won') {
+      displayList = historyItems.filter(h => h.won);
+    } else if (currentHistoryFilter.status === 'lost') {
+      displayList = historyItems.filter(h => !h.won);
+    } else {
+      // 'all': először a függők, utána a lezártak időrendben
+      displayList = [
+        ...pendingItems.map(p => ({ ...p, status: 'pending' })),
+        ...historyItems
+      ];
+    }
+
+    // Számlálók frissítése
+    const wonCount = historyItems.filter(h => h.won).length;
+    const lostCount = historyItems.filter(h => !h.won).length;
+    const pendingCount = pendingItems.length;
+    const totalCount = wonCount + lostCount + pendingCount;
+
+    if (histCountAll) histCountAll.textContent = totalCount;
+    if (histCountWon) histCountWon.textContent = wonCount;
+    if (histCountLost) histCountLost.textContent = lostCount;
+    if (histCountPending) histCountPending.textContent = pendingCount;
+
+    historyModalSummaryText.textContent = `Találatok: ${displayList.length} db tipp (${wonCount} nyert, ${lostCount} vesztett, ${pendingCount} vár)`;
+
+    if (displayList.length === 0) {
+      historyModalBody.innerHTML = `
+        <div class="glass-card rounded-2xl p-8 text-center text-slate-400 space-y-2 border border-slate-800 my-4">
+          <span class="text-3xl block mb-2">📋</span>
+          <h4 class="text-sm font-bold text-white">Még nem található tipp ebben a kategóriában</h4>
+          <p class="text-xs text-slate-500 max-w-md mx-auto">
+            Amint az AI által elemzett tippek mérkőzései befejeződnek, a rendszer automatikusan kiértékeli őket és ide rögzíti a végeredményt.
+          </p>
+        </div>
+      `;
+      return;
+    }
+
+    historyModalBody.innerHTML = '';
+    displayList.forEach(item => {
+      const isPending = item.status === 'pending';
+      const isWon = item.won === true;
+      const isLost = !isPending && item.won === false;
+
+      let statusBadgeHtml = '';
+      let cardBorderClass = 'border-slate-800';
+
+      if (isPending) {
+        statusBadgeHtml = `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/15 border border-amber-500/30 text-amber-300">⏳ ELLENŐRZÉSRE VÁR</span>`;
+        cardBorderClass = 'border-amber-900/30';
+      } else if (isWon) {
+        statusBadgeHtml = `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-500/20 border border-emerald-500/40 text-emerald-300">✅ NYERT</span>`;
+        cardBorderClass = 'border-emerald-900/40';
+      } else {
+        statusBadgeHtml = `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-rose-500/20 border border-rose-500/40 text-rose-300">❌ VESZTETT</span>`;
+        cardBorderClass = 'border-rose-900/40';
+      }
+
+      const sportIcon = getSportIcon(item.sportId);
+      const timeFormatted = formatHungarianDate(item.eventDate);
+      const riskInfo = getRiskVisuals(item.riskLevel || (item.riskCategory === 'low' ? 'Alacsony' : (item.riskCategory === 'high' ? 'Magas' : 'Közepes')), item.riskScore);
+
+      const card = document.createElement('div');
+      card.className = `p-3.5 sm:p-4 rounded-2xl bg-slate-950/70 border ${cardBorderClass} space-y-2.5 transition hover:bg-slate-950/90`;
+      card.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="text-sm">${sportIcon}</span>
+            <span class="text-xs font-semibold text-slate-300 truncate">${escapeHtml(item.competitionName || item.sportName || '')}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] text-slate-400">🕒 ${escapeHtml(timeFormatted)}</span>
+            ${statusBadgeHtml}
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/60 pt-2">
+          <div class="min-w-0">
+            <h4 class="text-sm sm:text-base font-bold text-white truncate">${escapeHtml(item.eventName || '')}</h4>
+            <div class="flex flex-wrap items-center gap-1.5 mt-1 text-xs">
+              <span class="text-slate-400 font-medium">Piac:</span>
+              <span class="text-slate-200 font-semibold">${escapeHtml(item.marketName || '')}</span>
+              <span class="text-slate-600">&bull;</span>
+              <span class="text-slate-400 font-medium">Tipp:</span>
+              <span class="text-emerald-400 font-bold bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-900/40">${escapeHtml(item.outcomeName || '')}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 text-right">
+            <div>
+              <span class="text-base font-black text-white">${Number(item.odds || 0).toFixed(2)}</span>
+              <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Odds</span>
+            </div>
+            <div class="px-2 py-1 rounded-lg ${riskInfo.badgeClass} text-[10px] font-bold text-center">
+              <span>${riskInfo.label}</span>
+              <span class="block text-[9px] opacity-80">${item.riskScore || 5}/10</span>
+            </div>
+          </div>
+        </div>
+
+        ${item.finalScore ? `
+          <div class="text-[11px] text-slate-300 bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-800 flex items-center justify-between">
+            <span>⚽ <strong>Hivatalos végeredmény:</strong> ${escapeHtml(item.finalScore)}</span>
+            <span class="text-slate-500 text-[10px]">${item.verificationMethod === 'tippmix_api' ? 'TippmixPro API' : 'Webes ellenőrzés'}</span>
+          </div>
+        ` : (isPending ? `
+          <div class="text-[10px] text-amber-300/80 bg-amber-950/20 px-2.5 py-1 rounded-lg border border-amber-900/30 flex items-center gap-1.5">
+            <span>ℹ️</span>
+            <span>A mérkőzés lejárta után a rendszer automatikusan ellenőrzi az eredményt.</span>
+          </div>
+        ` : '')}
+      `;
+
+      historyModalBody.appendChild(card);
+    });
+  } catch (err) {
+    historyModalBody.innerHTML = `
+      <div class="glass-card rounded-2xl p-6 text-center text-rose-400 text-xs space-y-2 border border-rose-900/40">
+        <p>Hiba történt az előzmények lekérése közben: ${escapeHtml(err.message)}</p>
+        <button type="button" onclick="fetchAndRenderHistory()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold">Újrapróbálkozás</button>
+      </div>
+    `;
+  }
+}
+
 async function init() {
   initHomeControls();
+  initTipHistoryModal();
   loadBettingStats();
 
   try {

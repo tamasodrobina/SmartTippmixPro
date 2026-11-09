@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { initTracker, recordTip, recordTipsBatch, evaluatePendingTips, getStats, resetTracker } from './tracker.js';
+import { initTracker, recordTip, recordTipsBatch, evaluatePendingTips, getStats, resetTracker, getHistory, recordEvaluatedTip } from './tracker.js';
 
 dotenv.config();
 
@@ -845,6 +845,55 @@ app.post('/api/tips/sync', (req, res) => {
     }
     const addedCount = recordTipsBatch(incomingTips, 'client_sync');
     res.json({ ok: true, addedCount, totalPending: getStats().pendingCount });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// TIPP ELŐZMÉNYEK ÉS FÜGGŐ TIPPEK LEKÉRDEZÉSE (Szűrés: sportId, riskCategory, status)
+app.get('/api/tips/history', (req, res) => {
+  try {
+    const { sportId, riskCategory, status } = req.query;
+    const historyList = getHistory({ sportId, riskCategory, status });
+    const fullStats = getStats();
+
+    // Függő tippek szűrése az ablakhoz
+    let pendingList = fullStats.pendingTipsSummary || [];
+    if (sportId && sportId !== 'all') {
+      const sId = Number(sportId);
+      pendingList = pendingList.filter(t => t.sportId === sId);
+    }
+    if (riskCategory && riskCategory !== 'all') {
+      pendingList = pendingList.filter(t => t.riskCategory === riskCategory);
+    }
+
+    res.json({
+      ok: true,
+      history: historyList,
+      pending: pendingList,
+      stats: fullStats.stats,
+      counts: {
+        totalHistory: historyList.length,
+        totalPending: pendingList.length
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// KIÉRTÉKELT TIPP RÖGZÍTÉSE / IMPORTÁLÁSA (pl. már lezárult élő tipp beemelése)
+app.post('/api/tips/history/record', (req, res) => {
+  try {
+    const item = req.body;
+    if (!item) {
+      return res.status(400).json({ ok: false, error: 'Hiányzó tipp adat.' });
+    }
+    const recorded = recordEvaluatedTip(item);
+    if (!recorded) {
+      return res.status(400).json({ ok: false, error: 'Érvénytelen tipp formátum.' });
+    }
+    res.json({ ok: true, item: recorded, stats: getStats() });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
