@@ -277,7 +277,10 @@ export function getHistory(filters = {}) {
   let list = Array.isArray(state.history) ? [...state.history] : [];
   if (filters.sportId && filters.sportId !== 'all') {
     const sId = Number(filters.sportId);
-    list = list.filter(t => t.sportId === sId);
+    list = list.filter(t => {
+      const tipSportId = Number(t.sportId || (t.sportName?.includes('Tenisz') ? 5 : (t.sportName?.includes('futball') || t.sportName?.includes('NFL') ? 16 : 1)));
+      return tipSportId === sId;
+    });
   }
   if (filters.riskCategory && filters.riskCategory !== 'all') {
     list = list.filter(t => t.riskCategory === filters.riskCategory);

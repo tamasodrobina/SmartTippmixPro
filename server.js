@@ -861,7 +861,10 @@ app.get('/api/tips/history', (req, res) => {
     let pendingList = fullStats.pendingTipsSummary || [];
     if (sportId && sportId !== 'all') {
       const sId = Number(sportId);
-      pendingList = pendingList.filter(t => t.sportId === sId);
+      pendingList = pendingList.filter(t => {
+        const tipSportId = Number(t.sportId || (t.sportName?.includes('Tenisz') ? 5 : (t.sportName?.includes('futball') || t.sportName?.includes('NFL') ? 16 : 1)));
+        return tipSportId === sId;
+      });
     }
     if (riskCategory && riskCategory !== 'all') {
       pendingList = pendingList.filter(t => t.riskCategory === riskCategory);

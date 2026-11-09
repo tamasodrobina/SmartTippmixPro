@@ -1564,38 +1564,63 @@ async function fetchAndRenderHistory() {
         historyItems.forEach(item => { if (item && item.id) hMap.set(item.id, item); });
         localStorage.setItem(LS_HISTORY_KEY, JSON.stringify(Array.from(hMap.values()).slice(0, 300)));
       } else if (storedList.length > 0) {
-        // A szerver újraindult és üres, a böngészőből helyreállítjuk a szervert!
-        for (const item of storedList) {
-          fetch('/api/tips/history/record', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(item)
-          }).catch(() => {});
-          historyItems.push(item);
+        // A szerver újraindult, de csak a kiválasztott szűrésnek megfelelő helyi elemeket töltjük be!
+        const matchingLocal = storedList.filter(item => {
+          if (currentHistoryFilter.sportId !== 'all') {
+            const expSport = Number(currentHistoryFilter.sportId);
+            const itemSport = Number(item.sportId || (item.sportName?.includes('Tenisz') ? 5 : (item.sportName?.includes('futball') || item.sportName?.includes('NFL') ? 16 : 1)));
+            if (itemSport !== expSport) return false;
+          }
+          if (currentHistoryFilter.riskCategory !== 'all' && item.riskCategory !== currentHistoryFilter.riskCategory) {
+            return false;
+          }
+          return true;
+        });
+
+        for (const ml of matchingLocal) {
+          if (!historyItems.some(h => h.id === ml.id)) {
+            historyItems.push(ml);
+          }
         }
       }
     } catch (_) {}
 
+    // Szigorú szűrőfüggvény a sportágra és a kockázatra
+    const filterBySportAndRisk = (list) => list.filter(item => {
+      if (currentHistoryFilter.sportId !== 'all') {
+        const expectedSportId = Number(currentHistoryFilter.sportId);
+        const itemSportId = Number(item.sportId || (item.sportName?.includes('Tenisz') ? 5 : (item.sportName?.includes('futball') || item.sportName?.includes('NFL') ? 16 : 1)));
+        if (itemSportId !== expectedSportId) return false;
+      }
+      if (currentHistoryFilter.riskCategory !== 'all') {
+        if (item.riskCategory !== currentHistoryFilter.riskCategory) return false;
+      }
+      return true;
+    });
+
+    const filteredHistory = filterBySportAndRisk(historyItems);
+    const filteredPending = filterBySportAndRisk(pendingItems);
+
     // Összesített elemek a választott státusz alapján
     let displayList = [];
     if (currentHistoryFilter.status === 'pending') {
-      displayList = pendingItems.map(p => ({ ...p, status: 'pending' }));
+      displayList = filteredPending.map(p => ({ ...p, status: 'pending' }));
     } else if (currentHistoryFilter.status === 'won') {
-      displayList = historyItems.filter(h => h.won);
+      displayList = filteredHistory.filter(h => h.won);
     } else if (currentHistoryFilter.status === 'lost') {
-      displayList = historyItems.filter(h => !h.won);
+      displayList = filteredHistory.filter(h => !h.won);
     } else {
       // 'all': először a függők, utána a lezártak időrendben
       displayList = [
-        ...pendingItems.map(p => ({ ...p, status: 'pending' })),
-        ...historyItems
+        ...filteredPending.map(p => ({ ...p, status: 'pending' })),
+        ...filteredHistory
       ];
     }
 
-    // Számlálók frissítése
-    const wonCount = historyItems.filter(h => h.won).length;
-    const lostCount = historyItems.filter(h => !h.won).length;
-    const pendingCount = pendingItems.length;
+    // Számlálók pontos frissítése a szűrt adatok alapján
+    const wonCount = filteredHistory.filter(h => h.won).length;
+    const lostCount = filteredHistory.filter(h => !h.won).length;
+    const pendingCount = filteredPending.length;
     const totalCount = wonCount + lostCount + pendingCount;
 
     if (histCountAll) histCountAll.textContent = totalCount;
