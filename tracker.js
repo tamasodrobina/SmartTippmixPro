@@ -519,10 +519,13 @@ async function pullFromGitHub() {
     let remoteState = null;
 
     if (GITHUB_TOKEN) {
+      const authHeader = GITHUB_TOKEN.startsWith('Bearer ') || GITHUB_TOKEN.startsWith('token ') 
+        ? GITHUB_TOKEN 
+        : `token ${GITHUB_TOKEN}`;
       const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/data/betting_stats.json`;
       const res = await fetch(url, {
         headers: {
-          'Authorization': `Bearer ${GITHUB_TOKEN}`,
+          'Authorization': authHeader,
           'Accept': 'application/vnd.github.v3+json',
           'User-Agent': 'SmartTippmixPro-Tracker'
         }
@@ -623,14 +626,21 @@ async function pullFromGitHub() {
 }
 
 async function pushToGitHub() {
-  if (!GITHUB_TOKEN) return;
+  if (!GITHUB_TOKEN) {
+    console.log('ℹ️ [GITHUB SYNC] GITHUB_TOKEN nincs beállítva a környezetben, push kihagyva.');
+    return;
+  }
   try {
+    const authHeader = GITHUB_TOKEN.startsWith('Bearer ') || GITHUB_TOKEN.startsWith('token ') 
+      ? GITHUB_TOKEN 
+      : `token ${GITHUB_TOKEN}`;
+
     const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/data/betting_stats.json`;
     let sha = null;
 
     const checkRes = await fetch(url, {
       headers: {
-        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+        'Authorization': authHeader,
         'Accept': 'application/vnd.github.v3+json',
         'User-Agent': 'SmartTippmixPro-Tracker'
       }
@@ -638,13 +648,16 @@ async function pushToGitHub() {
     if (checkRes.status === 200) {
       const checkData = await checkRes.json();
       sha = checkData.sha;
+    } else {
+      const checkErr = await checkRes.text();
+      console.warn(`⚠️ [GITHUB SYNC] Fájl-ellenőrzés sikertelen (HTTP ${checkRes.status}):`, checkErr);
     }
 
     const contentBase64 = Buffer.from(JSON.stringify(state, null, 2), 'utf8').toString('base64');
     const updateRes = await fetch(url, {
       method: 'PUT',
       headers: {
-        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+        'Authorization': authHeader,
         'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json',
         'User-Agent': 'SmartTippmixPro-Tracker'
@@ -657,7 +670,10 @@ async function pushToGitHub() {
     });
 
     if (updateRes.ok) {
-      console.log('☁️ Statisztika sikeresen szinkronizálva a GitHub tárolóba!');
+      console.log('☁️ [GITHUB SYNC] Statisztika és előzmények sikeresen szinkronizálva a GitHub tárolóba!');
+    } else {
+      const updateErr = await updateRes.text();
+      console.warn(`⚠️ [GITHUB SYNC] Mentés sikertelen a GitHubra (HTTP ${updateRes.status}):`, updateErr);
     }
   } catch (err) {
     console.warn('⚠️ Hiba a GitHub szinkronizálás során:', err.message);
