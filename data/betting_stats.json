@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-09T11:36:50.000Z",
-  "resetAt": "2026-11-09T11:36:50.000Z",
+  "updatedAt": "2026-11-09T10:37:49.972Z",
+  "resetAt": "2026-11-09T10:37:49.972Z",
   "stats": {
     "football": {
       "totalChecked": 0,
@@ -8,9 +8,24 @@
       "lost": 0,
       "winRate": 0,
       "byRisk": {
-        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
-        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
-        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
+        "low": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        },
+        "medium": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        },
+        "high": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        }
       }
     },
     "tennis": {
@@ -19,9 +34,24 @@
       "lost": 0,
       "winRate": 0,
       "byRisk": {
-        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
-        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
-        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
+        "low": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        },
+        "medium": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        },
+        "high": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        }
       }
     },
     "nfl": {
@@ -30,9 +60,24 @@
       "lost": 0,
       "winRate": 0,
       "byRisk": {
-        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
-        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
-        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
+        "low": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        },
+        "medium": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        },
+        "high": {
+          "totalChecked": 0,
+          "won": 0,
+          "lost": 0,
+          "winRate": 0
+        }
       }
     }
   },
