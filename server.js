@@ -600,6 +600,11 @@ function parseJsonFromAiResponse(text) {
 // 7. REST API VÉGPONTOK
 // ============================================================================
 
+// Health check végpont (UptimeRobot pinghez)
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true, status: 'alive', time: new Date().toISOString() });
+});
+
 // 7.0 STATISZTIKA & TALÁLATI ARÁNY (FOCI & NFL)
 app.get('/api/stats', async (req, res) => {
   try {

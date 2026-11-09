@@ -353,3 +353,4 @@ async function pushToGitHub() {
     console.warn('⚠️ Hiba a GitHub szinkronizálás során:', err.message);
   }
 }
+
