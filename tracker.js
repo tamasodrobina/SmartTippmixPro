@@ -663,7 +663,7 @@ async function pushToGitHub() {
         'User-Agent': 'SmartTippmixPro-Tracker'
       },
       body: JSON.stringify({
-        message: `chore: update betting win rate stats [Foci: ${state.stats.football.winRate}% | Tenisz: ${state.stats.tennis.winRate}% | NFL: ${state.stats.nfl.winRate}%]`,
+        message: `chore: update betting win rate stats [Foci: ${state.stats.football.winRate}% | Tenisz: ${state.stats.tennis.winRate}% | NFL: ${state.stats.nfl.winRate}%] [skip render] [skip ci]`,
         content: contentBase64,
         sha: sha || undefined
       })
