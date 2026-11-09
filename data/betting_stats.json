@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T17:52:06.968Z",
+  "updatedAt": "2026-11-09T17:52:35.517Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -1287,6 +1287,60 @@
       "source": "league_table",
       "addedAt": "2026-11-09T17:52:06.968Z",
       "status": "pending"
+    },
+    {
+      "id": "16_minnesotabuffalo_2026-11-10_amrkzsgyztese_buffalo",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Minnesota - Buffalo",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-10T02:15:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "Buffalo",
+      "odds": 1.47,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-09T17:52:35.516Z",
+      "status": "pending"
+    },
+    {
+      "id": "16_minnesotabuffalo_2026-11-10_pontszm435435_tbbmint435",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Minnesota - Buffalo",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-10T02:15:00+01:00",
+      "marketName": "Pontszám 43,5 (43.5)",
+      "outcomeName": "Több, mint 43,5",
+      "odds": 1.63,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-09T17:52:35.516Z",
+      "status": "pending"
+    },
+    {
+      "id": "16_minnesotabuffalo_2026-11-10_flidvgeredmny_buffalobuffalo",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Minnesota - Buffalo",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-10T02:15:00+01:00",
+      "marketName": "Félidő/végeredmény",
+      "outcomeName": "Buffalo/Buffalo",
+      "odds": 1.89,
+      "riskCategory": "medium",
+      "riskScore": 6,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-09T17:52:35.517Z",
+      "status": "pending"
     }
   ],
   "history": [],
@@ -1357,6 +1411,9 @@
     "1_almokawloonarabwesc_2026-11-10_1x2_almokawloonarab",
     "1_almokawloonarabwesc_2026-11-10_ktesly_dntetlenvagywesc",
     "16_minnesotabuffalo_2026-11-10_1x2_buffalo",
-    "16_minnesotabuffalo_2026-11-10_pontszm475475_kevesebbmint475"
+    "16_minnesotabuffalo_2026-11-10_pontszm475475_kevesebbmint475",
+    "16_minnesotabuffalo_2026-11-10_amrkzsgyztese_buffalo",
+    "16_minnesotabuffalo_2026-11-10_pontszm435435_tbbmint435",
+    "16_minnesotabuffalo_2026-11-10_flidvgeredmny_buffalobuffalo"
   ]
 }
