@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T20:38:32.209Z",
+  "updatedAt": "2026-11-09T20:53:49.557Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,15 +29,15 @@
       }
     },
     "tennis": {
-      "totalChecked": 1,
+      "totalChecked": 4,
       "won": 0,
-      "lost": 1,
+      "lost": 4,
       "winRate": 0,
       "byRisk": {
         "low": {
-          "totalChecked": 1,
+          "totalChecked": 4,
           "won": 0,
-          "lost": 1,
+          "lost": 4,
           "winRate": 0
         },
         "medium": {
@@ -188,60 +188,6 @@
       "riskLevel": "Alacsony",
       "source": "client_sync",
       "addedAt": "2026-11-09T15:22:48.538Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_mhoukestgentzsch_2026-11-09_amrkzsgyztese_tgentzsch",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "M. Houkes - T. Gentzsch",
-      "competitionName": "Challenger - Orleans, férfi egyes",
-      "eventDate": "2026-11-09T16:50:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "T. Gentzsch",
-      "odds": 1.32,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "client_sync",
-      "addedAt": "2026-11-09T15:22:48.542Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_skopplmikrut_2026-11-09_amrkzsgyztese_lmikrut",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "S. Kopp - L. Mikrut",
-      "competitionName": "Challenger - Monasztir, férfi egyes",
-      "eventDate": "2026-11-09T17:05:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "L. Mikrut",
-      "odds": 1.3,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "client_sync",
-      "addedAt": "2026-11-09T15:22:48.543Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_ireneburilloescorihuelaylizarazo_2026-11-09_ireneburilloescorihuelajtkszm125_kevesebbmint125",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "Irene Burillo Escorihuela - Y. Lizarazo",
-      "competitionName": "WTA-Challenger - Sopo, női egyes",
-      "eventDate": "2026-11-09T18:50:00+01:00",
-      "marketName": "Irene Burillo Escorihuela - Játékszám 12,5",
-      "outcomeName": "Kevesebb, mint 12,5",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "client_sync",
-      "addedAt": "2026-11-09T15:22:48.587Z",
       "status": "pending"
     },
     {
@@ -1308,6 +1254,63 @@
     }
   ],
   "history": [
+    {
+      "id": "5_ireneburilloescorihuelaylizarazo_2026-11-09_ireneburilloescorihuelajtkszm125_kevesebbmint125",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "Irene Burillo Escorihuela - Y. Lizarazo",
+      "eventDate": "2026-11-09T18:50:00+01:00",
+      "competitionName": "WTA-Challenger - Sopo, női egyes",
+      "marketName": "Irene Burillo Escorihuela - Játékszám 12,5",
+      "outcomeName": "Kevesebb, mint 12,5",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "6-1, 6-2",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T20:48:13.049Z",
+      "status": "lost"
+    },
+    {
+      "id": "5_skopplmikrut_2026-11-09_amrkzsgyztese_lmikrut",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "S. Kopp - L. Mikrut",
+      "eventDate": "2026-11-09T17:05:00+01:00",
+      "competitionName": "Challenger - Monasztir, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "L. Mikrut",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "6-4, 6-4",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T20:48:11.971Z",
+      "status": "lost"
+    },
+    {
+      "id": "5_mhoukestgentzsch_2026-11-09_amrkzsgyztese_tgentzsch",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "M. Houkes - T. Gentzsch",
+      "eventDate": "2026-11-09T16:50:00+01:00",
+      "competitionName": "Challenger - Orleans, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "T. Gentzsch",
+      "odds": 1.32,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "6-4, 6-4",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T20:48:10.800Z",
+      "status": "lost"
+    },
     {
       "id": "1_iberia1999gagra_2026-11-09_ktesly_dntetlenvagygagra",
       "sportId": 1,
