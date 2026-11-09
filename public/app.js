@@ -98,6 +98,8 @@ const leagueMatchesList = document.getElementById('leagueMatchesList');
 // Modal elemek
 const detailedModal = document.getElementById('detailedModal');
 const closeModalBtn = document.getElementById('closeModalBtn');
+const modalRefreshBtn = document.getElementById('modalRefreshBtn');
+const modalCacheBadge = document.getElementById('modalCacheBadge');
 const modalSportBadge = document.getElementById('modalSportBadge');
 const modalCompetitionBadge = document.getElementById('modalCompetitionBadge');
 const modalTimeBadge = document.getElementById('modalTimeBadge');
@@ -105,6 +107,7 @@ const modalMatchTitle = document.getElementById('modalMatchTitle');
 const modalLoading = document.getElementById('modalLoading');
 const modalContent = document.getElementById('modalContent');
 const modalTipsList = document.getElementById('modalTipsList');
+const refreshLeagueMatchesBtn = document.getElementById('refreshLeagueMatchesBtn');
 
 // ============================================================================
 // 1. SEGÉDFÜGGVÉNYEK & FORMÁZÓK
@@ -928,7 +931,7 @@ competitionSubSelect.addEventListener('change', () => {
 });
 
 // Aznapi meccsek lekérése és Top 2 tipp kirajzolása
-async function loadLeagueMatches() {
+async function loadLeagueMatches(forceRefresh = false) {
   leagueMatchesList.innerHTML = `
     <div class="glass-card rounded-2xl p-8 text-center space-y-3">
       <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 animate-spin">
@@ -963,7 +966,8 @@ async function loadLeagueMatches() {
         sportIds: [Number(activeNav)],
         onlyToday: true,
         minOdds,
-        maxOdds
+        maxOdds,
+        forceRefresh: Boolean(forceRefresh)
       })
     });
 
@@ -1076,16 +1080,39 @@ function renderLeagueMatchRows(matches) {
 // 5. RÉSZLETES ELEMZÉS MODAL (TOP 3 TIPP + JÁTÉKVEZETŐ + SÁRGA LAPOK & SZÖGLETEK)
 // ============================================================================
 
-async function openDetailedModal(eventId, eventName, matchObj) {
+let currentModalEventId = null;
+let currentModalEventName = '';
+let currentModalMatchObj = null;
+
+async function openDetailedModal(eventId, eventName, matchObj, forceRefresh = false) {
+  currentModalEventId = eventId;
+  currentModalEventName = eventName;
+  currentModalMatchObj = matchObj;
+
   modalMatchTitle.textContent = eventName;
   modalSportBadge.textContent = matchObj ? `${getSportIcon(matchObj.sportId)} ${matchObj.sportName || 'Sport'}` : 'Mérkőzés';
   modalCompetitionBadge.textContent = matchObj ? (matchObj.competitionName || '') : '';
   modalTimeBadge.textContent = matchObj ? formatHungarianDate(matchObj.eventDate) : 'Ma';
 
+  if (modalCacheBadge) modalCacheBadge.classList.add('hidden');
   modalLoading.classList.remove('hidden');
   modalContent.classList.add('hidden');
   detailedModal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+
+  // Alapértelmezett loading tartalom visszaállítása
+  modalLoading.innerHTML = `
+    <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 animate-spin">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+    </div>
+    <h4 class="text-sm sm:text-base font-bold text-white">${forceRefresh ? 'Teljesen friss AI elemzés generálása...' : 'AI Elemzés folyamatban...'}</h4>
+    <p class="text-xs text-emerald-400 max-w-md mx-auto">
+      Releváns statisztikák, forma és Top 3 tipp összegyűjtése...
+    </p>
+  `;
 
   try {
     const { minOdds, maxOdds } = getFilterSettings();
@@ -1097,22 +1124,41 @@ async function openDetailedModal(eventId, eventName, matchObj) {
         query: eventName,
         minOdds,
         maxOdds,
-        tipsCount: 3
+        tipsCount: 3,
+        forceRefresh: Boolean(forceRefresh)
       })
     });
 
     const data = await res.json();
-    if (!data.ok) throw new Error(data.error);
+    if (!data.ok) throw new Error(data.error || 'Az elemzés lekérése sikertelen.');
+
+    if (modalCacheBadge) {
+      if (data.fromCache) {
+        modalCacheBadge.classList.remove('hidden');
+      } else {
+        modalCacheBadge.classList.add('hidden');
+      }
+    }
 
     renderModalContent(data.result);
   } catch (err) {
     console.error('Hiba a részletes elemzés lekérésekor:', err);
     modalLoading.innerHTML = `
-      <div class="text-rose-400 p-4">
-        <p class="font-bold">Az elemzés nem sikerült.</p>
-        <p class="text-xs text-rose-300 mt-1">${escapeHtml(err.message)}</p>
+      <div class="text-rose-400 p-4 space-y-3">
+        <p class="font-bold text-base">Az elemzés nem sikerült.</p>
+        <p class="text-xs text-rose-300">${escapeHtml(err.message)}</p>
+        <button type="button" id="modalRetryBtn"
+          class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition cursor-pointer shadow-lg active:scale-95">
+          🔄 Újrapróbálás (Cache nélkül)
+        </button>
       </div>
     `;
+    const retryBtn = document.getElementById('modalRetryBtn');
+    if (retryBtn) {
+      retryBtn.addEventListener('click', () => {
+        openDetailedModal(currentModalEventId, currentModalEventName, currentModalMatchObj, true);
+      });
+    }
   }
 }
 
@@ -1120,8 +1166,33 @@ function renderModalContent(result = {}) {
   modalLoading.classList.add('hidden');
   modalContent.classList.remove('hidden');
 
-  // Top 3 Tippek - Csak a releváns információk megjelenítése
   const tips = result.tips || [];
+
+  if (tips.length === 0) {
+    modalTipsList.innerHTML = `
+      <div class="glass-card rounded-2xl p-6 text-center space-y-3 border border-slate-800">
+        <div class="text-3xl">🔍</div>
+        <h4 class="font-bold text-white text-sm sm:text-base">Nem található megfelelő tipp a beállított odds sávban</h4>
+        <p class="text-xs text-slate-400 max-w-md mx-auto">
+          A megadott odds határok között (${minOddsInput.value} – ${maxOddsInput.value}) nem volt elérhető kimenetel, vagy a modell válasza üres volt.
+        </p>
+        <button type="button" id="modalEmptyRefreshBtn"
+          class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition cursor-pointer shadow-lg shadow-emerald-500/20 active:scale-95">
+          <span>🔄</span>
+          <span>Friss AI Elemzés Kérése (Cache nélkül)</span>
+        </button>
+      </div>
+    `;
+    const btn = document.getElementById('modalEmptyRefreshBtn');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        openDetailedModal(currentModalEventId, currentModalEventName, currentModalMatchObj, true);
+      });
+    }
+    return;
+  }
+
+  // Top 3 Tippek - Csak a releváns információk megjelenítése
   modalTipsList.innerHTML = tips.map((t, idx) => {
     const rank = t.rank || idx + 1;
     const reasoning = t.detailedReasoning || {};
@@ -1170,6 +1241,20 @@ function renderModalContent(result = {}) {
       </div>
     `;
   }).join('');
+}
+
+if (modalRefreshBtn) {
+  modalRefreshBtn.addEventListener('click', () => {
+    if (currentModalEventId || currentModalEventName) {
+      openDetailedModal(currentModalEventId, currentModalEventName, currentModalMatchObj, true);
+    }
+  });
+}
+
+if (refreshLeagueMatchesBtn) {
+  refreshLeagueMatchesBtn.addEventListener('click', () => {
+    loadLeagueMatches(true);
+  });
 }
 
 closeModalBtn.addEventListener('click', () => {

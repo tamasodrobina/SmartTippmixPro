@@ -1165,10 +1165,13 @@ app.post('/api/analyze/interval', async (req, res) => {
 
     const cachedAnalysis = aiAnalysisCache.get(fingerprint);
     if (!forceRefresh && cachedAnalysis && Date.now() - cachedAnalysis.timestamp < AI_ANALYSIS_CACHE_TTL_MS) {
-      return res.json({
-        ...cachedAnalysis.payload,
-        fromCache: true
-      });
+      const cachedTips = cachedAnalysis.payload?.result?.tips;
+      if (Array.isArray(cachedTips) && cachedTips.length > 0) {
+        return res.json({
+          ...cachedAnalysis.payload,
+          fromCache: true
+        });
+      }
     }
 
     const enrichedEvents = topCandidates.length > 0
@@ -1258,10 +1261,12 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       recordTipsBatch(aiResult.data.tips, 'homepage_interval');
     }
 
-    aiAnalysisCache.set(fingerprint, {
-      timestamp: Date.now(),
-      payload: responsePayload
-    });
+    if (Array.isArray(aiResult.data?.tips) && aiResult.data.tips.length > 0) {
+      aiAnalysisCache.set(fingerprint, {
+        timestamp: Date.now(),
+        payload: responsePayload
+      });
+    }
 
     res.json(responsePayload);
   } catch (err) {
@@ -1294,7 +1299,11 @@ app.post('/api/analyze/custom', async (req, res) => {
     let matchedEvents = [];
 
     if (eventId) {
-      const found = catalog.events.find(e => Number(e.eventId) === eventId);
+      let found = catalog.events.find(e => Number(e.eventId) === eventId);
+      if (!found) {
+        const detailed = await fetchEventDetails(eventId, forceRefresh);
+        if (detailed) found = detailed;
+      }
       if (found) matchedEvents = [found];
     }
 
@@ -1330,10 +1339,13 @@ app.post('/api/analyze/custom', async (req, res) => {
 
     const cachedAnalysis = aiAnalysisCache.get(fingerprint);
     if (!forceRefresh && cachedAnalysis && Date.now() - cachedAnalysis.timestamp < AI_ANALYSIS_CACHE_TTL_MS) {
-      return res.json({
-        ...cachedAnalysis.payload,
-        fromCache: true
-      });
+      const cachedTips = cachedAnalysis.payload?.result?.tips;
+      if (Array.isArray(cachedTips) && cachedTips.length > 0) {
+        return res.json({
+          ...cachedAnalysis.payload,
+          fromCache: true
+        });
+      }
     }
 
     const enrichedEvents = matchedEvents.length > 0
@@ -1428,10 +1440,12 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       recordTipsBatch(aiResult.data.tips, 'homepage_custom');
     }
 
-    aiAnalysisCache.set(fingerprint, {
-      timestamp: Date.now(),
-      payload: responsePayload
-    });
+    if (Array.isArray(aiResult.data?.tips) && aiResult.data.tips.length > 0) {
+      aiAnalysisCache.set(fingerprint, {
+        timestamp: Date.now(),
+        payload: responsePayload
+      });
+    }
 
     res.json(responsePayload);
   } catch (err) {
