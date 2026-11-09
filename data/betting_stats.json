@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T15:30:48.639Z",
+  "updatedAt": "2026-11-09T15:39:08.521Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -351,6 +351,60 @@
       "source": "homepage_interval",
       "addedAt": "2026-11-09T15:30:48.639Z",
       "status": "pending"
+    },
+    {
+      "id": "1_u23kataru23szingapr_2026-11-10_glszm3535_kevesebbmint35",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5632282,
+      "eventName": "U23Katar - U23Szingapúr",
+      "competitionName": "U23 válogatott mérkőzés",
+      "eventDate": "2026-11-10T09:00:00+01:00",
+      "marketName": "Gólszám 3,5 (3.5)",
+      "outcomeName": "Kevesebb, mint 3,5",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "league_table",
+      "addedAt": "2026-11-09T15:39:08.520Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_u23kataru23szingapr_2026-11-10_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5632282,
+      "eventName": "U23Katar - U23Szingapúr",
+      "competitionName": "U23 válogatott mérkőzés",
+      "eventDate": "2026-11-10T09:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.7,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "league_table",
+      "addedAt": "2026-11-09T15:39:08.521Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_u23vietnmu23thaifld_2026-11-10_1x2_u23vietnm",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5632283,
+      "eventName": "U23Vietnám - U23Thaiföld",
+      "competitionName": "U23 válogatott mérkőzés",
+      "eventDate": "2026-11-10T13:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "U23Vietnám",
+      "odds": 1.64,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "league_table",
+      "addedAt": "2026-11-09T15:39:08.521Z",
+      "status": "pending"
     }
   ],
   "history": [],
@@ -369,6 +423,9 @@
     "1_1fcklnrbleipzig_2026-11-09_glszm2525_tbbmint25",
     "1_hapoelkfarsabamaccabibneireine_2026-11-09_mindktcsapatszerezglt_igen",
     "1_ironimodiinhapoelakko_2026-11-09_dntetlennlattvisszajr_ironimodiin",
-    "1_kfarqasemhapoelafula_2026-11-09_glszm2525_tbbmint25"
+    "1_kfarqasemhapoelafula_2026-11-09_glszm2525_tbbmint25",
+    "1_u23kataru23szingapr_2026-11-10_glszm3535_kevesebbmint35",
+    "1_u23kataru23szingapr_2026-11-10_mindktcsapatszerezglt_nem",
+    "1_u23vietnmu23thaifld_2026-11-10_1x2_u23vietnm"
   ]
 }
