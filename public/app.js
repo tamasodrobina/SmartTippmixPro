@@ -514,6 +514,7 @@ function getRiskVisuals(level = '', score = 4) {
 
 // Eredmények kirajzolása a főoldalon
 const LS_PENDING_KEY = 'smart_tippmix_saved_tips';
+const LS_HISTORY_KEY = 'smart_tippmix_saved_history';
 
 function saveQueriedTipsLocally(tips = []) {
   if (!Array.isArray(tips) || tips.length === 0) return;
@@ -1326,19 +1327,17 @@ async function loadBettingStats() {
     }
 
     // AUTOMATIKUS KLIENS-OLDALI HELYREÁLLÍTÁS (Render deploy és szerver restart ellen):
-    // Ha a szerver újratelepült és a memóriája üres, a böngésző azonnal visszaállítja az aktív tippeket!
+    // A böngésző biztonsági mentésként megőrzi az utóbbi 48 óra tippjeit, és deploy után visszaszinkronizálja!
     const rawLocal = localStorage.getItem(LS_PENDING_KEY);
     if (rawLocal) {
       try {
         const localTips = JSON.parse(rawLocal);
-        const resetTime = data.resetAt ? new Date(data.resetAt).getTime() : 0;
         const now = Date.now();
 
-        // Ha a szerveren történt egy friss reset, a reset előtti régi teszttippeket azonnal töröljük!
+        // Kizárólag az elavult (48 óránál régebbi) tippeket szűrjük ki, a deploy NEM törli őket!
         const validTips = localTips.filter(t => {
-          if (!t.savedAt) return false;
-          if (resetTime > 0 && t.savedAt <= resetTime) return false;
-          return (now - t.savedAt < 48 * 3600 * 1000);
+          const tTime = t.savedAt || (t.eventDate ? new Date(t.eventDate).getTime() : now);
+          return (now - tTime < 48 * 3600 * 1000);
         });
 
         if (validTips.length !== localTips.length) {
@@ -1538,8 +1537,30 @@ async function fetchAndRenderHistory() {
     const data = await res.json();
     if (!data.ok) throw new Error(data.error || 'Hiba az előzmények lekérésekor.');
 
-    const historyItems = Array.isArray(data.history) ? data.history : [];
-    const pendingItems = Array.isArray(data.pending) ? data.pending : [];
+    const historyItems = Array.isArray(data.history) ? [...data.history] : [];
+    const pendingItems = Array.isArray(data.pending) ? [...data.pending] : [];
+
+    // Kliensoldali előzmény-mentés és visszaállítás (Deploy elleni védelem)
+    try {
+      const rawStored = localStorage.getItem(LS_HISTORY_KEY);
+      const storedList = rawStored ? JSON.parse(rawStored) : [];
+      if (historyItems.length > 0) {
+        const hMap = new Map();
+        storedList.forEach(item => { if (item && item.id) hMap.set(item.id, item); });
+        historyItems.forEach(item => { if (item && item.id) hMap.set(item.id, item); });
+        localStorage.setItem(LS_HISTORY_KEY, JSON.stringify(Array.from(hMap.values()).slice(0, 300)));
+      } else if (storedList.length > 0) {
+        // A szerver újraindult és üres, a böngészőből helyreállítjuk a szervert!
+        for (const item of storedList) {
+          fetch('/api/tips/history/record', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item)
+          }).catch(() => {});
+          historyItems.push(item);
+        }
+      }
+    } catch (_) {}
 
     // Összesített elemek a választott státusz alapján
     let displayList = [];
