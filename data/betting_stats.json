@@ -1,17 +1,38 @@
 {
-  "updatedAt": "2026-11-09T09:09:47.611Z",
+  "updatedAt": "2026-11-09T10:00:00.000Z",
   "stats": {
     "football": {
       "totalChecked": 0,
       "won": 0,
       "lost": 0,
-      "winRate": 0
+      "winRate": 0,
+      "byRisk": {
+        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
+      }
+    },
+    "tennis": {
+      "totalChecked": 0,
+      "won": 0,
+      "lost": 0,
+      "winRate": 0,
+      "byRisk": {
+        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
+      }
     },
     "nfl": {
       "totalChecked": 0,
       "won": 0,
       "lost": 0,
-      "winRate": 0
+      "winRate": 0,
+      "byRisk": {
+        "low": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "medium": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 },
+        "high": { "totalChecked": 0, "won": 0, "lost": 0, "winRate": 0 }
+      }
     }
   },
   "pendingTips": [],

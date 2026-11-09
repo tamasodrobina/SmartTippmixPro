@@ -19,11 +19,25 @@ const sportCount1 = document.getElementById('sportCount1');
 const sportCount5 = document.getElementById('sportCount5');
 const sportCount16 = document.getElementById('sportCount16');
 
-// Találati arány (Win Rate) sáv elemek
+// Találati arány (Win Rate) sáv elemek (Foci, Tenisz, NFL)
 const footballWinRate = document.getElementById('footballWinRate');
 const footballWinCount = document.getElementById('footballWinCount');
+const footballRiskLow = document.getElementById('footballRiskLow');
+const footballRiskMed = document.getElementById('footballRiskMed');
+const footballRiskHigh = document.getElementById('footballRiskHigh');
+
+const tennisWinRate = document.getElementById('tennisWinRate');
+const tennisWinCount = document.getElementById('tennisWinCount');
+const tennisRiskLow = document.getElementById('tennisRiskLow');
+const tennisRiskMed = document.getElementById('tennisRiskMed');
+const tennisRiskHigh = document.getElementById('tennisRiskHigh');
+
 const nflWinRate = document.getElementById('nflWinRate');
 const nflWinCount = document.getElementById('nflWinCount');
+const nflRiskLow = document.getElementById('nflRiskLow');
+const nflRiskMed = document.getElementById('nflRiskMed');
+const nflRiskHigh = document.getElementById('nflRiskHigh');
+
 const pendingTipsBadge = document.getElementById('pendingTipsBadge');
 
 // Nézet szekciók
@@ -1139,35 +1153,38 @@ detailedModal.addEventListener('click', (e) => {
 // 6. INICIALIZÁLÁS
 // ============================================================================
 
-// Találati arány & statisztika lekérése
+// Találati arány & statisztika lekérése (Foci, Tenisz, NFL + Kockázati szintek)
 async function loadBettingStats() {
   try {
     const res = await fetch('/api/stats');
     const data = await res.json();
     if (!data.ok || !data.stats) return;
 
-    const f = data.stats.football || {};
-    const n = data.stats.nfl || {};
-
-    if (footballWinRate && footballWinCount) {
-      if (f.totalChecked > 0) {
-        footballWinRate.textContent = `${f.winRate}%`;
-        footballWinCount.textContent = `(${f.won}/${f.totalChecked} nyert)`;
-      } else {
-        footballWinRate.textContent = `--%`;
-        footballWinCount.textContent = `(0/0 nyert)`;
+    function renderSportStats(sportData, rateEl, countEl, lowEl, medEl, highEl) {
+      const s = sportData || {};
+      if (rateEl && countEl) {
+        if (s.totalChecked > 0) {
+          rateEl.textContent = `${s.winRate}%`;
+          countEl.textContent = `(${s.won}/${s.totalChecked} nyert)`;
+        } else {
+          rateEl.textContent = `--%`;
+          countEl.textContent = `(0/0 nyert)`;
+        }
       }
+
+      const byRisk = s.byRisk || {};
+      const low = byRisk.low || {};
+      const med = byRisk.medium || {};
+      const high = byRisk.high || {};
+
+      if (lowEl) lowEl.textContent = low.totalChecked > 0 ? `${low.winRate}%` : `--%`;
+      if (medEl) medEl.textContent = med.totalChecked > 0 ? `${med.winRate}%` : `--%`;
+      if (highEl) highEl.textContent = high.totalChecked > 0 ? `${high.winRate}%` : `--%`;
     }
 
-    if (nflWinRate && nflWinCount) {
-      if (n.totalChecked > 0) {
-        nflWinRate.textContent = `${n.winRate}%`;
-        nflWinCount.textContent = `(${n.won}/${n.totalChecked} nyert)`;
-      } else {
-        nflWinRate.textContent = `--%`;
-        nflWinCount.textContent = `(0/0 nyert)`;
-      }
-    }
+    renderSportStats(data.stats.football, footballWinRate, footballWinCount, footballRiskLow, footballRiskMed, footballRiskHigh);
+    renderSportStats(data.stats.tennis, tennisWinRate, tennisWinCount, tennisRiskLow, tennisRiskMed, tennisRiskHigh);
+    renderSportStats(data.stats.nfl, nflWinRate, nflWinCount, nflRiskLow, nflRiskMed, nflRiskHigh);
 
     if (pendingTipsBadge) {
       const pCount = Number(data.pendingCount || 0);

@@ -264,31 +264,169 @@ async function fetchEventDetails(eventId, forceRefresh = false) {
   }
 }
 
-// Piaci prioritások: kiemelten kezeljük a sárga lapokat, szögleteket és a fő piacokat!
-function getMarketPriority(marketName = '') {
+// ============================================================================
+// PIACI KATEGÓRIÁK, PRIORITÁSOK ÉS TELJES KÍNÁLAT KEZELÉSE
+// ============================================================================
+
+// Piac kategória felismerése minden lehetséges fogadási típushoz
+function getMarketCategory(marketName = '') {
   const name = marketName.toLowerCase();
-  // 1. Fő piacok (1X2, Győztes)
-  if (name === '1x2' || name.includes('mérkőzés győztese') || name.includes('ki nyeri') || name === 'győztes') return 1;
-  // 2. Kétesély, DNB
-  if (name === 'kétesély' || name.includes('döntetlennél a tét visszajár')) return 2;
-  // 3. Mindkét csapat szerez gólt
-  if (name.includes('mindkét csapat szerez gólt')) return 3;
-  // 4. Gólszámok (1.5, 2.5, 3.5)
-  if (/^gólszám [1234],5$/.test(name) || /^pontszám/.test(name) || /^játékszám/.test(name) || /^szettszám/.test(name)) return 4;
-  // 5. Szögletszám és Büntetőlapok (Sárga lapok)
-  if (name.includes('szögletszám') || name.includes('büntetőlap') || name.includes('sárga lap')) return 4.5;
-  // 6. Hendikep és egyéb
-  if (name.includes('hendikep') || name.includes('játszma') || name.includes('gólszám')) return 5;
-  if (name.includes('1. félidő') || name.includes('csapat szöglet') || name.includes('csapat gólszám')) return 6;
-  return 10;
+
+  // 1. Góllövő / Gólszerző / Játékos statisztikák / Touchdown
+  if (
+    name.includes('gólszerző') ||
+    name.includes('góllövő') ||
+    name.includes('szerez gólt') ||
+    name.includes('szerez legalább') ||
+    name.includes('játékos') ||
+    name.includes('touchdown') ||
+    name.includes('passzolt') ||
+    name.includes('yard') ||
+    name.includes('első gól') ||
+    name.includes('ki szerzi') ||
+    name.includes('melyik játékos')
+  ) {
+    return 'SCORER_PLAYER';
+  }
+
+  // 2. Kiállítás / Piros lap
+  if (
+    name.includes('kiállítás') ||
+    name.includes('piros lap') ||
+    name.includes('kiállít') ||
+    name.includes('lesz kiállítás') ||
+    name.includes('kiállítás a mérkőzésen')
+  ) {
+    return 'RED_CARD';
+  }
+
+  // 3. 11-es / Büntető
+  if (
+    name.includes('11-es') ||
+    name.includes('tizenegyes') ||
+    name.includes('büntető') ||
+    name.includes('lesz 11') ||
+    name.includes('lesz büntető') ||
+    name.includes('büntetőrúgás') ||
+    name.includes('büntető a mérkőzésen')
+  ) {
+    return 'PENALTY';
+  }
+
+  // 4. Szögletszám és szögletek
+  if (name.includes('szöglet') || name.includes('szögletszám') || name.includes('szögletek')) {
+    return 'CORNERS';
+  }
+
+  // 5. Lapok és sárga lapok / büntetőlapok
+  if (
+    name.includes('büntetőlap') ||
+    name.includes('sárga lap') ||
+    name.includes('lapok száma') ||
+    name.includes('lapok') ||
+    name.includes('lap ')
+  ) {
+    return 'CARDS';
+  }
+
+  // 6. Fő piacok (1X2, Győztes)
+  if (
+    name === '1x2' ||
+    name.includes('mérkőzés győztese') ||
+    name.includes('ki nyeri') ||
+    name === 'győztes'
+  ) {
+    return 'MAIN_1X2';
+  }
+
+  // 7. Kétesély, DNB
+  if (name === 'kétesély' || name.includes('döntetlennél a tét visszajár')) {
+    return 'MAIN_CHANCE';
+  }
+
+  // 8. Mindkét csapat szerez gólt
+  if (name.includes('mindkét csapat szerez gólt') || name.includes('btts')) {
+    return 'BTTS';
+  }
+
+  // 9. Gólszámok, Pontszámok, Szettszámok, Játékszámok
+  if (
+    name.includes('gólszám') ||
+    name.includes('pontszám') ||
+    name.includes('szettszám') ||
+    name.includes('játékszám') ||
+    name.includes('mezőnygól') ||
+    name.includes('gólok száma')
+  ) {
+    return 'TOTALS';
+  }
+
+  // 10. Hendikep és Ázsiai piacok
+  if (name.includes('hendikep') || name.includes('ázsiai')) {
+    return 'HANDICAP';
+  }
+
+  // 11. Félidők, Harmadok, Negyedek, Játszmák
+  if (
+    name.includes('1. félidő') ||
+    name.includes('2. félidő') ||
+    name.includes('félidő') ||
+    name.includes('játszma') ||
+    name.includes('harmad') ||
+    name.includes('negyed')
+  ) {
+    return 'PERIODS';
+  }
+
+  // 12. Különleges csapatspecifikus és mérkőzés piacok
+  if (
+    name.includes('kapott gól nélkül') ||
+    name.includes('tisztán tartott') ||
+    name.includes('nyer legalább egy') ||
+    name.includes('különbség') ||
+    name.includes('első 10 perc') ||
+    name.includes('tie-break') ||
+    name.includes('pontos eredmény') ||
+    name.includes('pontos végeredmény')
+  ) {
+    return 'SPECIAL';
+  }
+
+  return 'OTHER';
 }
 
-function extractTargetOddsMarkets(markets = [], minOdds = 1.30, maxOdds = 2.00, maxOptionsPerEvent = 16) {
+function getCategoryBasePriority(category) {
+  switch (category) {
+    case 'MAIN_1X2': return 1.0;
+    case 'MAIN_CHANCE': return 1.5;
+    case 'BTTS': return 2.0;
+    case 'TOTALS': return 2.5;
+    case 'SCORER_PLAYER': return 2.8; // Gólszerző / Góllövő / Touchdown kiemelten kezelve!
+    case 'RED_CARD': return 3.0;      // Kiállítás / Piros lap kiemelten!
+    case 'PENALTY': return 3.2;       // 11-es / Büntető kiemelten!
+    case 'CORNERS': return 3.5;       // Szögletek
+    case 'CARDS': return 3.7;         // Sárga lapok / Büntetőlapok
+    case 'SPECIAL': return 4.0;       // Kapott gól nélkül, tie-break, stb.
+    case 'HANDICAP': return 4.5;      // Hendikepek
+    case 'PERIODS': return 5.0;       // Félidők
+    default: return 6.0;
+  }
+}
+
+// Piaci prioritások meghatározása
+function getMarketPriority(marketName = '') {
+  const cat = getMarketCategory(marketName);
+  return getCategoryBasePriority(cat);
+}
+
+// Odds tartományba eső piacok kinyerése és sokszínűségi optimalizálása
+function extractTargetOddsMarkets(markets = [], minOdds = 1.30, maxOdds = 2.00, maxOptionsPerEvent = 25) {
   const validOptions = [];
   const midPoint = (minOdds + maxOdds) / 2;
 
   for (const m of markets) {
     if (!m.outcomes || !Array.isArray(m.outcomes)) continue;
+    const cat = getMarketCategory(m.marketName);
     const priority = getMarketPriority(m.marketName);
 
     for (const o of m.outcomes) {
@@ -299,28 +437,90 @@ function extractTargetOddsMarkets(markets = [], minOdds = 1.30, maxOdds = 2.00, 
           marketName: m.marketName + (m.specialOddsValue ? ` (${m.specialOddsValue})` : ''),
           outcomeName: o.outcomeName,
           odds: Number(odds.toFixed(2)),
+          category: cat,
           priority
         });
       }
     }
   }
 
-  validOptions.sort((a, b) => {
-    if (a.priority !== b.priority) return a.priority - b.priority;
-    const distA = Math.abs(a.odds - midPoint);
-    const distB = Math.abs(b.odds - midPoint);
-    return distA - distB;
+  // Ha nagy opciószámot kérünk (pl. egyedi meccselemzésnél maxOptionsPerEvent >= 50),
+  // akkor visszaadjuk a TELJES valós kínálatot prioritás és odds szerint rendezve
+  if (maxOptionsPerEvent >= 50) {
+    validOptions.sort((a, b) => {
+      if (a.priority !== b.priority) return a.priority - b.priority;
+      const distA = Math.abs(a.odds - midPoint);
+      const distB = Math.abs(b.odds - midPoint);
+      return distA - distB;
+    });
+    return validOptions.slice(0, maxOptionsPerEvent);
+  }
+
+  // Korlátozottabb kvótánál (pl. intervallum keresésnél több mérkőzéshez):
+  // Gondoskodunk róla, hogy minden elérhető kategória (Gólszerző, Kiállítás, 11-es, Szöglet, Lapok, Gólszám stb.)
+  // képviselve legyen, és ne csak 1X2 vagy sima gólszám töltse ki a helyeket.
+  const categoryBuckets = new Map();
+  for (const opt of validOptions) {
+    if (!categoryBuckets.has(opt.category)) {
+      categoryBuckets.set(opt.category, []);
+    }
+    categoryBuckets.get(opt.category).push(opt);
+  }
+
+  for (const bucket of categoryBuckets.values()) {
+    bucket.sort((a, b) => {
+      const distA = Math.abs(a.odds - midPoint);
+      const distB = Math.abs(b.odds - midPoint);
+      return distA - distB;
+    });
+  }
+
+  const selected = [];
+  const marketCounts = new Map();
+
+  const sortedCategories = Array.from(categoryBuckets.keys()).sort((catA, catB) => {
+    return getCategoryBasePriority(catA) - getCategoryBasePriority(catB);
   });
 
-  return validOptions.slice(0, maxOptionsPerEvent);
+  let added = true;
+  while (selected.length < maxOptionsPerEvent && added) {
+    added = false;
+    for (const cat of sortedCategories) {
+      if (selected.length >= maxOptionsPerEvent) break;
+      const bucket = categoryBuckets.get(cat);
+      while (bucket.length > 0) {
+        const candidate = bucket.shift();
+        const baseName = candidate.marketName.split('(')[0].trim().toLowerCase();
+        const count = marketCounts.get(baseName) || 0;
+        // Maximum 2 kimenetel ugyanabból a konkrét piacnévből a változatosság biztosítására
+        if (count < 2) {
+          marketCounts.set(baseName, count + 1);
+          selected.push(candidate);
+          added = true;
+          break;
+        }
+      }
+    }
+  }
+
+  if (selected.length < maxOptionsPerEvent) {
+    const remaining = validOptions.filter(o => !selected.includes(o));
+    remaining.sort((a, b) => a.priority - b.priority);
+    for (const r of remaining) {
+      if (selected.length >= maxOptionsPerEvent) break;
+      selected.push(r);
+    }
+  }
+
+  return selected;
 }
 
-async function enrichCandidateEvents(candidateEvents, minOdds = 1.30, maxOdds = 2.00, forceRefresh = false) {
+async function enrichCandidateEvents(candidateEvents, minOdds = 1.30, maxOdds = 2.00, forceRefresh = false, maxOptionsPerEvent = 25) {
   const detailedResults = await Promise.all(
     candidateEvents.map(async (ev) => {
       const detailed = await fetchEventDetails(ev.eventId, forceRefresh);
       const allMarkets = detailed?.markets?.length ? detailed.markets : (ev.markets || []);
-      const filteredOptions = extractTargetOddsMarkets(allMarkets, minOdds, maxOdds, 16);
+      const filteredOptions = extractTargetOddsMarkets(allMarkets, minOdds, maxOdds, maxOptionsPerEvent);
 
       return {
         eventId: ev.eventId,
@@ -418,12 +618,14 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
     for (const ev of topToSearch) {
       // 1. Általános forma és előrejelzés keresés
       const qMain = `${ev.eventName} prediction stats H2H betting tips`;
-      // 2. Célzott játékvezető, sárga lapok és szögletek keresés (focinál és NFL-nél!)
+      // 2. Célzott játékvezető, lapok, kiállítás, 11-es, szögletek és gólszerzők keresése
       let qSpecial = '';
       if (Number(ev.sportId) === 1 || ev.sportName?.toLowerCase().includes('foci')) {
-        qSpecial = `${ev.eventName} referee cards corners stats`;
+        qSpecial = `${ev.eventName} referee cards red cards penalties corners goalscorers stats`;
       } else if (Number(ev.sportId) === 16 || ev.sportName?.toLowerCase().includes('nfl')) {
-        qSpecial = `${ev.eventName} referee penalties betting stats`;
+        qSpecial = `${ev.eventName} referee penalties touchdown pass yards betting stats`;
+      } else if (Number(ev.sportId) === 5 || ev.sportName?.toLowerCase().includes('tenisz')) {
+        qSpecial = `${ev.eventName} tennis predictions aces break points tiebreak stats`;
       }
 
       const searches = [searchDuckDuckGoCached(qMain, 3)];
@@ -438,12 +640,12 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
 
       if (combined.length > 0) {
         const lines = combined.map(r => `   • [${r.title}]: ${r.snippet}`).join('\n');
-        researchSections.push(`Mérkőzés internetes és bírói/lap/szöglet találatok (${ev.sportName} - ${ev.eventName}):\n${lines}`);
+        researchSections.push(`Mérkőzés internetes és statisztikai (forma, bíró, lapok, 11-es, szöglet, gól) találatok (${ev.sportName} - ${ev.eventName}):\n${lines}`);
       }
     }
   } else if (customQuery) {
     const q1 = `${customQuery} prediction stats H2H betting tips odds`;
-    const q2 = `${customQuery} referee cards corners stats penalties`;
+    const q2 = `${customQuery} referee cards red cards penalties corners goalscorers stats`;
     const [res1, res2] = await Promise.all([
       searchDuckDuckGoCached(q1, 4),
       searchDuckDuckGoCached(q2, 4)
@@ -956,7 +1158,7 @@ app.post('/api/analyze/interval', async (req, res) => {
     }
 
     const enrichedEvents = topCandidates.length > 0
-      ? await enrichCandidateEvents(topCandidates, minOdds, maxOdds, forceRefresh)
+      ? await enrichCandidateEvents(topCandidates, minOdds, maxOdds, forceRefresh, 25)
       : [];
 
     const webResearch = await gatherWebResearchForMatches(
@@ -966,12 +1168,12 @@ app.post('/api/analyze/interval', async (req, res) => {
 
     let matchesContextBlock = '';
     if (enrichedEvents.length > 0) {
-      matchesContextBlock = `A KÖVETKEZŐ ${hours} ÓRÁBAN ELÉRHETŐ TIPPMIXPRO MÉRKŐZÉSEK ÉS ${minOdds.toFixed(2)}-${maxOdds.toFixed(2)} KÖZÖTTI PIACOK:\n` +
+      matchesContextBlock = `A KÖVETKEZŐ ${hours} ÓRÁBAN ELÉRHETŐ TIPPMIXPRO MÉRKŐZÉSEK ÉS SOKSZÍNŰ ${minOdds.toFixed(2)}-${maxOdds.toFixed(2)} KÖZÖTTI PIACOK (1X2, GÓLSZÁM, MINDKÉT CSAPAT GÓL, GÓLLÖVŐ, KIÁLLÍTÁS, 11-ES, SZÖGLETEK, LAPOK, FÉLIDŐK, HENDIKEPEK):\n` +
         enrichedEvents.map((ev, idx) => {
           const marketsStr = ev.availableTargetMarkets
             .map(m => `   - Piac: "${m.marketName}" | Tipp: "${m.outcomeName}" | Odds: ${m.odds.toFixed(2)}`)
             .join('\n');
-          return `[${idx + 1}] Sportág: ${ev.sportName} | Sorozat: ${ev.competitionGroupName} - ${ev.competitionName}\n    Mérkőzés: ${ev.eventName} (Kezdés: ${ev.eventDate})\n    Elérhető ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} közötti opciók:\n${marketsStr}`;
+          return `[${idx + 1}] Sportág: ${ev.sportName} | Sorozat: ${ev.competitionGroupName} - ${ev.competitionName}\n    Mérkőzés: ${ev.eventName} (Kezdés: ${ev.eventDate})\n    Elérhető ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} közötti opciók (${ev.availableTargetMarkets.length} db):\n${marketsStr}`;
         }).join('\n\n');
     }
 
@@ -980,8 +1182,9 @@ A felhasználó a következő ${hours} órában keresi a **${tipsCount} LEGVALÓ
 Kiválasztott sportág: ${selectedSportMeta ? selectedSportMeta.name : 'Foci, Tenisz vagy NFL'}.
 
 KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
-1. RELEVANCIA-SZABÁLY: Nem kell kiemelni a játékvezetőt, sem a szögleteket vagy lapokat, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából! Minden információt (bíró, lapok, szögletek, forma, hiányzók) KIZÁRÓLAG AKKOR adj a részletes leírásba, ha azok közvetlenül relevánsak a kiválasztott tipp alátámasztásához. Ha nem relevánsak, ne említsd őket!
-2. Pontosan ${tipsCount} tippet adj vissza, szakmai indoklással és kockázati besorolással!
+1. **PIACI SOKSZÍNŰSÉG**: A kínálatban mindenféle piac elérhető (1X2, Gólszám/Pontszám, Mindkét csapat szerez gólt, Gólszerző/Touchdown, Kiállítás, 11-es/Büntető, Szögletek, Lapok, Hendikep, Félidők). A rendelkezésre álló valós opciókból válaszd ki a legbiztosabbakat és legnagyobb értékűeket!
+2. **RELEVANCIA-SZABÁLY**: Nem kell feleslegesen kiemelni a bírót, a lapokat vagy a szögleteket, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. bíró szigora lapos/11-es/kiállítás tippnél, szögletstatisztika sarokrúgás tippnél)! Csak releváns tényezőket említs!
+3. Pontosan ${tipsCount} tippet adj vissza, szakmai indoklással és kockázati besorolással!
 
 ${matchesContextBlock}
 
@@ -1120,34 +1323,37 @@ app.post('/api/analyze/custom', async (req, res) => {
     }
 
     const enrichedEvents = matchedEvents.length > 0
-      ? await enrichCandidateEvents(matchedEvents, minOdds, maxOdds, forceRefresh)
+      ? await enrichCandidateEvents(matchedEvents, minOdds, maxOdds, forceRefresh, 80)
       : [];
 
-    console.log(`🌐 [RÉSZLETES ELEMZÉS] Internetes kutatás indítása: "${query}" (Bíró, lapok, szögletek, forma)...`);
+    console.log(`🌐 [RÉSZLETES ELEMZÉS] Internetes kutatás indítása: "${query}" (Bíró, lapok, 11-es, szögletek, gólszerzők, forma)...`);
     const webResearch = await gatherWebResearchForMatches(enrichedEvents, query);
 
     let tippmixContextText = '';
     if (enrichedEvents.length > 0) {
-      tippmixContextText = `A kiválasztott mérkőzéshez ("${query}") a TippmixPro valós ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} közötti piacai és szorzói:\n\n` +
+      tippmixContextText = `A kiválasztott mérkőzéshez ("${query}") a TippmixPro valós ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} közötti teljes piaci kínálata és szorzói:\n\n` +
         enrichedEvents.map((ev, idx) => {
           const marketsStr = ev.availableTargetMarkets
             .map(m => `   - Piac: "${m.marketName}" | Tipp: "${m.outcomeName}" | Odds: ${m.odds.toFixed(2)}`)
             .join('\n');
-          return `[${idx + 1}] Sportág: ${ev.sportName} | Bajnokság: ${ev.competitionGroupName} - ${ev.competitionName}\n    Mérkőzés: ${ev.eventName} (Kezdés: ${ev.eventDate})\n    Elérhető ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} közötti opciók:\n${marketsStr}`;
+          return `[${idx + 1}] Sportág: ${ev.sportName} | Bajnokság: ${ev.competitionGroupName} - ${ev.competitionName}\n    Mérkőzés: ${ev.eventName} (Kezdés: ${ev.eventDate})\n    Elérhető ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} közötti opciók (${ev.availableTargetMarkets.length} db):\n${marketsStr}`;
         }).join('\n\n');
     }
 
     const prompt = `Te egy kiemelkedő felkészültségű sportfogadási szakértő és statisztikai elemző vagy (Labdarúgás, Tenisz, Amerikai futball / NFL).
 A felhasználó az alábbi konkrét mérkőzés mélyreható szakmai elemzését kéri: "${query}".
 
-KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG):
-1. **RELEVANCIA-SZABÁLY**:
-   - Nem kell külön kiemelni a játékvezetőt, sem a szögleteket vagy lapokat, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. ha lap/szöglet piacon van a tipp, vagy a bíró személye közvetlenül befolyásolja az adott piacot)!
+KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG ÉS PIACI SOKSZÍNŰSÉG):
+1. **MINDEN ELÉRHETŐ FOGADÁSI PIAC ÉS LEHETŐSÉG ÁTTEKINTÉSE**:
+   - A mérkőzéshez lent megadott TippmixPro kínálat a teljes odds-sávot tartalmazza: 1X2, Kétesély, Gólszám/Pontszám, Mindkét csapat gólt szerez, Góllövő / Gólszerző / Touchdown, Kiállítás / Piros lap, 11-es / Büntető, Szögletek, Lapok, Félidők, Hendikepek stb.!
+   - Bátran és nyitottan válassz speciális piacokat is (pl. gólszerző, lapok, szöglet, 11-es/büntető, kiállítás, félidő), amennyiben a statisztikák, a forma vagy a bírói adatok alapján az képviseli a legnagyobb valószínűséget és értéket!
+2. **RELEVANCIA-SZABÁLY**:
+   - Nem kell külön kiemelni a játékvezetőt, sem a szögleteket vagy lapokat, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. ha lap/szöglet/11-es/kiállítás piacon van a tipp, vagy a bíró személye közvetlenül befolyásolja az adott piacot)!
    - Minden információt (bíró, lapok, szögletek, sérülések, statisztikák) CSAK AKKOR adj a részletes leírásba, ha azok közvetlenül relevánsak a tippek szempontjából. Ha nem relevánsak, ne említsd őket!
-2. **TOP 3 LEGVALÓSZÍNŰBB TIPP**:
-   - Válassz ki pontosan **3 darab különböző piaci tippet** a mérkőzésre, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**!
+3. **TOP 3 LEGVALÓSZÍNŰBB TIPP (KÜLÖNBÖZŐ PIACI TÍPUSOKBÓL)**:
+   - Válassz ki pontosan **3 darab különböző piacú és jellegű tippet** a mérkőzésre, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**!
    - Ha a fenti TippmixPro adatokban szerepelnek opciók, KÖTELEZŐEN az ott lévő valós piacneveket és oddsokat válaszd ki!
-3. **KOCKÁZATI ÉRTÉKELÉS (1-10)**:
+4. **KOCKÁZATI ÉRTÉKELÉS (1-10)**:
    - Részletesen indokold meg a kockázat mértékét és a váratlan forgatókönyveket!
 
 TIPPMIXPRO ADATOK:
