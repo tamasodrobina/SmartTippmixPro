@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-09T21:03:36.022Z",
+  "updatedAt": "2026-11-09T21:30:47.466Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 1,
-      "won": 0,
-      "lost": 1,
-      "winRate": 0,
+      "totalChecked": 5,
+      "won": 1,
+      "lost": 4,
+      "winRate": 20,
       "byRisk": {
         "low": {
           "totalChecked": 0,
@@ -15,10 +15,10 @@
           "winRate": 0
         },
         "medium": {
-          "totalChecked": 0,
-          "won": 0,
-          "lost": 0,
-          "winRate": 0
+          "totalChecked": 4,
+          "won": 1,
+          "lost": 3,
+          "winRate": 25
         },
         "high": {
           "totalChecked": 1,
@@ -114,24 +114,6 @@
       "riskCategory": "low",
       "riskScore": 2,
       "riskLevel": "Alacsony",
-      "source": "client_sync",
-      "addedAt": "2026-11-09T15:22:48.533Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_laspalmaseldense_2026-11-09_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Las Palmas - Eldense",
-      "competitionName": "Spanyolország - Spanyol 2.",
-      "eventDate": "2026-11-09T20:30:00+01:00",
-      "marketName": "Hazai csapat kapott gól nélkül játssza le a mérkőzést",
-      "outcomeName": "Nem",
-      "odds": 1.33,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
       "source": "client_sync",
       "addedAt": "2026-11-09T15:22:48.533Z",
       "status": "pending"
@@ -623,24 +605,6 @@
       "status": "pending"
     },
     {
-      "id": "1_laspalmaseldense_2026-11-09_ktesly_dntetlenvagyeldense",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5536281,
-      "eventName": "Las Palmas - Eldense",
-      "competitionName": "Spanyol 2.",
-      "eventDate": "2026-11-09T20:30:00+01:00",
-      "marketName": "Kétesély",
-      "outcomeName": "Döntetlen vagy Eldense",
-      "odds": 1.56,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:21.539Z",
-      "status": "pending"
-    },
-    {
       "id": "1_sabadellrealsociedad2_2026-11-09_1x2_sabadell",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -695,24 +659,6 @@
       "status": "pending"
     },
     {
-      "id": "1_altamuracavese_2026-11-09_glszm2525_tbbmint25",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5546106,
-      "eventName": "Altamura - Cavese",
-      "competitionName": "Olasz C, C csoport",
-      "eventDate": "2026-11-09T20:30:00+01:00",
-      "marketName": "Gólszám 2,5 (2.5)",
-      "outcomeName": "Több, mint 2,5",
-      "odds": 1.66,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:21.544Z",
-      "status": "pending"
-    },
-    {
       "id": "1_foggiabarletta_2026-11-09_ktesly_dntetlenvagybarletta",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -764,24 +710,6 @@
       "riskLevel": "Közepes",
       "source": "league_table",
       "addedAt": "2026-11-09T15:39:21.548Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_pinetopesaro_2026-11-09_ktesly_dntetlenvagypesaro",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5546109,
-      "eventName": "Pineto - Pesaro",
-      "competitionName": "Olasz C, B csoport",
-      "eventDate": "2026-11-09T20:30:00+01:00",
-      "marketName": "Kétesély",
-      "outcomeName": "Döntetlen vagy Pesaro",
-      "odds": 1.63,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:21.549Z",
       "status": "pending"
     },
     {
@@ -1236,6 +1164,82 @@
     }
   ],
   "history": [
+    {
+      "id": "1_pinetopesaro_2026-11-09_ktesly_dntetlenvagypesaro",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Pineto - Pesaro",
+      "eventDate": "2026-11-09T20:30:00+01:00",
+      "competitionName": "Olasz C, B csoport",
+      "marketName": "Kétesély",
+      "outcomeName": "Döntetlen vagy Pesaro",
+      "odds": 1.63,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "1-0",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T21:30:47.466Z",
+      "status": "lost"
+    },
+    {
+      "id": "1_altamuracavese_2026-11-09_glszm2525_tbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Altamura - Cavese",
+      "eventDate": "2026-11-09T20:30:00+01:00",
+      "competitionName": "Olasz C, C csoport",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.66,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "0-0",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T21:30:42.372Z",
+      "status": "lost"
+    },
+    {
+      "id": "1_laspalmaseldense_2026-11-09_ktesly_dntetlenvagyeldense",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Las Palmas - Eldense",
+      "eventDate": "2026-11-09T20:30:00+01:00",
+      "competitionName": "Spanyol 2.",
+      "marketName": "Kétesély",
+      "outcomeName": "Döntetlen vagy Eldense",
+      "odds": 1.56,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "1-2",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T21:30:37.295Z",
+      "status": "won"
+    },
+    {
+      "id": "1_laspalmaseldense_2026-11-09_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Las Palmas - Eldense",
+      "eventDate": "2026-11-09T20:30:00+01:00",
+      "competitionName": "Spanyolország - Spanyol 2.",
+      "marketName": "Hazai csapat kapott gól nélkül játssza le a mérkőzést",
+      "outcomeName": "Nem",
+      "odds": 1.33,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "1-0",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-09T21:28:14.567Z",
+      "status": "lost"
+    },
     {
       "id": "5_leoborgtobysamuel_2026-11-09_leoborgnyerlegalbbegyjtszmt_nem",
       "sportId": 5,
