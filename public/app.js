@@ -550,7 +550,7 @@ function renderAnalysisResults(payload, metaLabel) {
   }
 
   resultsMetaBadge.textContent = metaLabel;
-  analysisOverviewText.textContent = result.analysisOverview || 'Az elemzés elkészült a kiválasztott feltételek alapján.';
+  analysisOverviewText.textContent = result.analysisOverview || (payload.noMatches ? payload.noMatchesMessage : 'Az elemzés elkészült a kiválasztott feltételek alapján.');
 
   if (payload.fromCache) {
     cacheStatusBadge.textContent = '⚡ Okos Gyorsítótárból (0 API hívás)';
@@ -562,12 +562,16 @@ function renderAnalysisResults(payload, metaLabel) {
   }
 
   tipsContainer.innerHTML = '';
-  if (tips.length === 0) {
+  if (payload.noMatches || tips.length === 0) {
+    const emptyMsg = payload.noMatchesMessage || 'Nem található fogadási opció a megadott feltételekkel. Próbálj tágabb időintervallumot vagy odds határokat választani!';
     tipsContainer.innerHTML = `
-      <div class="glass-card rounded-2xl p-6 text-center text-slate-400 text-sm">
-        Nem található tipp a megadott odds sávban. Próbálj tágabb odds határokat beállítani!
+      <div class="glass-card rounded-2xl p-8 text-center text-slate-300 space-y-3 border border-slate-800">
+        <span class="text-4xl block mb-2">🗓️</span>
+        <h4 class="text-base font-bold text-white">Nincs kezdődő mérkőzés vagy elérhető piac a megadott feltételekkel</h4>
+        <p class="text-sm text-slate-400 max-w-lg mx-auto leading-relaxed">${escapeHtml(emptyMsg)}</p>
       </div>
     `;
+    return;
   } else {
     tips.forEach((tip, idx) => {
       const rank = tip.rank || idx + 1;

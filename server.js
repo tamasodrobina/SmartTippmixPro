@@ -520,7 +520,11 @@ async function enrichCandidateEvents(candidateEvents, minOdds = 1.30, maxOdds = 
     candidateEvents.map(async (ev) => {
       const detailed = await fetchEventDetails(ev.eventId, forceRefresh);
       const allMarkets = detailed?.markets?.length ? detailed.markets : (ev.markets || []);
-      const filteredOptions = extractTargetOddsMarkets(allMarkets, minOdds, maxOdds, maxOptionsPerEvent);
+      let filteredOptions = extractTargetOddsMarkets(allMarkets, minOdds, maxOdds, maxOptionsPerEvent);
+      // Ha nincs egyetlen piac sem a szűk sávban, enyhe fallback sávval kinyerjük, hogy ne vesszen el a meccs
+      if (filteredOptions.length === 0) {
+        filteredOptions = extractTargetOddsMarkets(allMarkets, Math.max(1.10, minOdds - 0.20), Math.min(3.50, maxOdds + 0.40), maxOptionsPerEvent);
+      }
 
       return {
         eventId: ev.eventId,
@@ -1161,6 +1165,28 @@ app.post('/api/analyze/interval', async (req, res) => {
       return false;
     });
 
+    // Ha EGYÁLTALÁN NINCS mérkőzés a megadott intervallumban az adott sportágból
+    if (windowEvents.length === 0) {
+      const sportLabel = selectedSportMeta ? selectedSportMeta.name : (sportId === 'all' ? 'Összes sportág' : 'a kiválasztott sportág');
+      return res.json({
+        ok: true,
+        mode: 'interval',
+        noMatches: true,
+        hours,
+        sportId,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        sportName: selectedSportMeta ? selectedSportMeta.name : 'NFL, Foci, Tenisz',
+        noMatchesMessage: `A(z) ${sportLabel} kínálatában a következő ${hours} órában nem található kezdődő mérkőzés a TippmixPro felületén. Kérlek válassz tágabb időintervallumot (pl. 12 vagy 24 óra), vagy válaszd az "Összes sportág" lehetőséget!`,
+        result: {
+          analysisOverview: `A(z) ${sportLabel} kínálatában a következő ${hours} órában nincs kezdődő mérkőzés a TippmixPro-n.`,
+          tips: []
+        },
+        fromCache: false
+      });
+    }
+
     windowEvents.sort((a, b) => (b.totalMarketCount || 1) - (a.totalMarketCount || 1));
     const topCandidates = windowEvents.slice(0, Math.max(12, tipsCount * 2 + 2));
 
@@ -1188,6 +1214,28 @@ app.post('/api/analyze/interval', async (req, res) => {
       ? await enrichCandidateEvents(topCandidates, minOdds, maxOdds, forceRefresh, 25)
       : [];
 
+    const totalAvailableMarkets = enrichedEvents.reduce((acc, ev) => acc + (ev.availableTargetMarkets?.length || 0), 0);
+    if (totalAvailableMarkets === 0) {
+      const sportLabel = selectedSportMeta ? selectedSportMeta.name : (sportId === 'all' ? 'Összes sportág' : 'a kiválasztott sportág');
+      return res.json({
+        ok: true,
+        mode: 'interval',
+        noMatches: true,
+        hours,
+        sportId,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        sportName: selectedSportMeta ? selectedSportMeta.name : 'NFL, Foci, Tenisz',
+        noMatchesMessage: `Bár van mérkőzés a következő ${hours} órában (${windowEvents.length} db), a beállított szigorú ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} közötti odds sávban egyetlen fogadási piac sem érhető el. Próbáld tágítani az odds határokat!`,
+        result: {
+          analysisOverview: `A következő ${hours} óra mérkőzéseinél a beállított ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} szorzóhatárok között jelenleg nem található fogadható piac.`,
+          tips: []
+        },
+        fromCache: false
+      });
+    }
+
     const webResearch = await gatherWebResearchForMatches(
       enrichedEvents,
       enrichedEvents.length === 0 ? `${selectedSportMeta ? selectedSportMeta.name : 'football tennis NFL'} upcoming matches next ${hours} hours predictions betting tips odds` : ''
@@ -1205,13 +1253,18 @@ app.post('/api/analyze/interval', async (req, res) => {
     }
 
     const prompt = `Te egy profi sportfogadási és statisztikai elemző vagy (kiemelt szakterületeid: Labdarúgás, Tenisz, Amerikai futball / NFL).
-A felhasználó a következő ${hours} órában keresi a **${tipsCount} LEGVALÓSZÍNŰBB fogadási tippet**, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**.
+A felhasználó a következő ${hours} órában keresi a **legfeljebb ${tipsCount} LEGVALÓSZÍNŰBB fogadási tippet**, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**.
 Kiválasztott sportág: ${selectedSportMeta ? selectedSportMeta.name : 'Foci, Tenisz vagy NFL'}.
 
 KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
-1. **PIACI SOKSZÍNŰSÉG**: A kínálatban mindenféle piac elérhető (1X2, Gólszám/Pontszám, Mindkét csapat szerez gólt, Gólszerző/Touchdown, Kiállítás, 11-es/Büntető, Szögletek, Lapok, Hendikep, Félidők). A rendelkezésre álló valós opciókból válaszd ki a legbiztosabbakat és legnagyobb értékűeket!
-2. **RELEVANCIA-SZABÁLY**: Nem kell feleslegesen kiemelni a bírót, a lapokat vagy a szögleteket, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. bíró szigora lapos/11-es/kiállítás tippnél, szögletstatisztika sarokrúgás tippnél)! Csak releváns tényezőket említs!
-3. Pontosan ${tipsCount} tippet adj vissza, szakmai indoklással és kockázati besorolással!
+1. **SZIGORÚAN VALÓDI MÉRKŐZÉSEK ÉS PIACOK**:
+   - KIZÁRÓLAG a fenti "KÖVETKEZŐ ${hours} ÓRÁBAN ELÉRHETŐ TIPPMIXPRO MÉRKŐZÉSEK" listában szereplő mérkőzésekből és opciókból választhatsz tippet! Szigorúan tilos kitalálni bármilyen más meccset vagy oddsot!
+2. **KEVÉS MÉRKŐZÉS VAGY KEVÉS OPCIÓ KEZELÉSE**:
+   - Ha a következő ${hours} órában kevés mérkőzés érhető el (pl. csak 1-2 meccs), akkor a megadott valós mérkőzések KÜLÖNBÖZŐ PIACAI közül válassz (pl. 1X2 kimenetel, gólszám, lapok, szöglet, büntető, gólszerző, hendikep).
+   - Amennyiben nincs elegendő kimagasló fogadási érték a kínálatban, adj vissza KEVESEBB (akár csak 1 vagy 2) prémium tippet a kért ${tipsCount} helyett, de SOHA NE találj ki fantom mérkőzést!
+3. **PIACI SOKSZÍNŰSÉG**: A kínálatban mindenféle piac elérhető (1X2, Gólszám/Pontszám, Mindkét csapat szerez gólt, Gólszerző/Touchdown, Kiállítás, 11-es/Büntető, Szögletek, Lapok, Hendikep, Félidők). A fenti valós listában szereplő opciókból válogass!
+4. **RELEVANCIA-SZABÁLY**: Nem kell feleslegesen kiemelni a bírót, a lapokat vagy a szögleteket, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. bíró szigora lapos/11-es/kiállítás tippnél, szögletstatisztika sarokrúgás tippnél)! Csak releváns tényezőket említs!
+5. Legfeljebb ${tipsCount} prémium tippet adj vissza a fentiek szerint, szakmai indoklással és kockázati besorolással!
 
 ${matchesContextBlock}
 
@@ -1335,6 +1388,23 @@ app.post('/api/analyze/custom', async (req, res) => {
         .sort((a, b) => b.score - a.score);
 
       matchedEvents = scored.slice(0, 4).map(s => s.ev);
+    }
+
+    if (matchedEvents.length === 0) {
+      return res.json({
+        ok: true,
+        mode: 'custom',
+        noMatches: true,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        noMatchesMessage: `A megadott keresési kifejezésre ("${query}") jelenleg nem található kezdődő mérkőzés a TippmixPro kínálatában. Kérlek ellenőrizd a csapat nevét, vagy válassz a kereső ajánlataiból!`,
+        result: {
+          analysisOverview: `Nem található aktív TippmixPro mérkőzés erre a keresésre: "${query}".`,
+          tips: []
+        },
+        fromCache: false
+      });
     }
 
     const fingerprint = createAnalysisFingerprint({
