@@ -30,6 +30,20 @@ const ALL_SPORTS_MASTER = [
 
 const ALLOWED_SPORT_IDS = new Set([1, 5, 16]);
 
+// Segédfüggvény: a következő 24 órában (gördülő 24h) kezdődik-e a mérkőzés
+function isWithinNext24Hours(dateInput) {
+  if (!dateInput) return false;
+  try {
+    const t = new Date(dateInput).getTime();
+    if (isNaN(t)) return false;
+    const now = Date.now();
+    const max = now + 24 * 60 * 60 * 1000;
+    return t >= now && t <= max;
+  } catch (_) {
+    return false;
+  }
+}
+
 // Segédfüggvény: pontosan ma játszódik-e a mérkőzés a magyar időzóna szerint (Europe/Budapest)
 function isTodayInHungary(dateInput) {
   if (!dateInput) return false;
@@ -104,7 +118,7 @@ function getCompetitionPrestigeScore(sportId, groupName = '', compName = '') {
 // 3. GYORSÍTÓTÁR (CACHE & RATE-LIMIT VÉDELEM)
 // ============================================================================
 
-const CATALOG_CACHE_TTL_MS = 3 * 60 * 1000;        // 3 perc: Tippmix meccslista
+const CATALOG_CACHE_TTL_MS = 60 * 60 * 1000;        // 60 perc: óránkénti intelligens katalógus frissítés
 const EVENT_MARKET_CACHE_TTL_MS = 15 * 60 * 1000;  // 15 perc: mérkőzés piacai
 const WEB_RESEARCH_CACHE_TTL_MS = 60 * 60 * 1000;  // 60 perc: internetes statisztikák
 const AI_ANALYSIS_CACHE_TTL_MS = 20 * 60 * 1000;   // 20 perc: AI elemzés
@@ -185,34 +199,32 @@ async function fetchTippmixCatalog(forceRefresh = false) {
   // SZIGORÚ SZŰRÉS: Kizárólag Foci (1), Tenisz (5), NFL (16)
   const events = rawEvents.filter(ev => ev && ALLOWED_SPORT_IDS.has(Number(ev.sportId)));
 
-  const nowDate = new Date(now);
+  const nowMs = now;
+  const max24hMs = nowMs + 24 * 60 * 60 * 1000;
   const totalCountsById = new Map();
-  const todayCountsById = new Map();
-  const todayUpcomingCountsById = new Map();
+  const next24hCountsById = new Map();
 
   for (const ev of events) {
     const spId = Number(ev.sportId);
     totalCountsById.set(spId, (totalCountsById.get(spId) || 0) + 1);
 
-    if (isTodayInHungary(ev.eventDate)) {
-      todayCountsById.set(spId, (todayCountsById.get(spId) || 0) + 1);
-      if (new Date(ev.eventDate) > nowDate) {
-        todayUpcomingCountsById.set(spId, (todayUpcomingCountsById.get(spId) || 0) + 1);
-      }
+    const t = new Date(ev.eventDate).getTime();
+    if (t >= nowMs && t <= max24hMs) {
+      next24hCountsById.set(spId, (next24hCountsById.get(spId) || 0) + 1);
     }
   }
 
   const sports = ALL_SPORTS_MASTER.map(s => {
-    const todayCount = todayCountsById.get(s.tippmixId) || 0;
-    const todayUpcoming = todayUpcomingCountsById.get(s.tippmixId) || 0;
+    const count24h = next24hCountsById.get(s.tippmixId) || 0;
     const totalCount = totalCountsById.get(s.tippmixId) || 0;
     return {
       ...s,
       sportId: s.key,
       sportName: s.name,
-      count: todayUpcoming, // Elsődleges számláló: MA még hátralévő, fogadható meccsek!
-      todayCount,
-      todayUpcomingCount: todayUpcoming,
+      count: count24h, // Elsődleges számláló: Következő 24 óra mérkőzései!
+      next24hCount: count24h,
+      todayUpcomingCount: count24h,
+      todayCount: count24h,
       totalCount
     };
   });
@@ -618,29 +630,33 @@ app.get('/api/stats', async (req, res) => {
   }
 });
 
-// 7.1 STÁTUSZ & SPORTÁGAK
+// 7.1 STÁTUSZ & SPORTÁGAK (GÖRDÜLŐ 24 ÓRÁS SZÁMÍTÁS)
 app.get('/api/status', async (req, res) => {
   try {
     const catalog = await fetchTippmixCatalog();
-    const now = new Date();
-    const upcomingCount = catalog.events.filter(e => new Date(e.eventDate) > now).length;
-    const todayAllEvents = catalog.events.filter(e => isTodayInHungary(e.eventDate)).length;
-    const todayUpcomingEvents = catalog.events.filter(e => isTodayInHungary(e.eventDate) && new Date(e.eventDate) > now).length;
+    const now = Date.now();
+    const max24h = now + 24 * 60 * 60 * 1000;
+
+    const upcomingCount = catalog.events.filter(e => new Date(e.eventDate).getTime() > now).length;
+    const rolling24hCount = catalog.events.filter(e => {
+      const t = new Date(e.eventDate).getTime();
+      return t >= now && t <= max24h;
+    }).length;
 
     res.json({
       ok: true,
       hasServerApiKey: Boolean(process.env.GEMINI_API_KEY),
       totalEvents: catalog.events.length,
       upcomingEvents: upcomingCount,
-      todayEvents: todayUpcomingEvents,
-      todayAllEvents,
+      todayEvents: rolling24hCount,
+      rolling24hEvents: rolling24hCount,
       sports: catalog.sports,
       cacheStats: {
         cachedAnalyses: aiAnalysisCache.size,
         cachedMatches: eventMarketCache.size,
         cachedWebSearches: webResearchCache.size
       },
-      serverTime: now.toISOString()
+      serverTime: new Date(now).toISOString()
     });
   } catch (err) {
     res.json({
@@ -683,15 +699,17 @@ app.get('/api/competitions', async (req, res) => {
           displayName: groupName ? `${groupName} - ${compName}` : compName,
           prestigeScore: prestige,
           totalMatches: 0,
-          todayMatches: 0
+          todayMatches: 0,
+          next24hMatches: 0
         });
       }
 
       const item = compMap.get(compKey);
       item.totalMatches++;
 
-      if (isTodayInHungary(ev.eventDate)) {
+      if (isWithinNext24Hours(ev.eventDate)) {
         item.todayMatches++;
+        item.next24hMatches = (item.next24hMatches || 0) + 1;
       }
     }
 
@@ -711,7 +729,7 @@ app.get('/api/competitions', async (req, res) => {
   }
 });
 
-// 7.3 AZNAPI MÉRKŐZÉSEK ÉS TOP 2 TIPP ADOTT BAJNOKSÁG(OK)HOZ (SZIGORÚAN CSAK MAI MECCSEK!)
+// 7.3 KÖVETKEZŐ 24 ÓRA MÉRKŐZÉSEI ÉS TOP 2 TIPP ADOTT BAJNOKSÁG(OK)HOZ (GÖRDÜLŐ 24H)
 app.post('/api/matches/by-competitions', async (req, res) => {
   try {
     const catalog = await fetchTippmixCatalog();
@@ -740,9 +758,9 @@ app.post('/api/matches/by-competitions', async (req, res) => {
         return false;
       }
 
-      // SZIGORÚAN CSAK A MAI NAPON (Europe/Budapest) JÁTSZOTT MECCSEK!
+      // GÖRDÜLŐ 24 ÓRÁS SZŰRÉS: a mostantól számított következő 24 óra meccsei!
       if (onlyToday) {
-        if (!isTodayInHungary(ev.eventDate)) {
+        if (!isWithinNext24Hours(ev.eventDate)) {
           return false;
         }
       }
@@ -1211,4 +1229,9 @@ app.listen(PORT, async () => {
   setInterval(() => {
     evaluatePendingTips(fetchEventDetails, callGeminiWithSearch).catch(() => {});
   }, 10 * 60 * 1000);
+
+  // Óránkénti intelligens katalógus frissítés (hogy a gördülő 24 órás ablak mindig friss legyen)
+  setInterval(() => {
+    fetchTippmixCatalog(true).catch(err => console.warn('⚠️ Óránkénti katalógus frissítési hiba:', err.message));
+  }, 60 * 60 * 1000);
 });

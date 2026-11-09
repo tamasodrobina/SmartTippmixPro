@@ -787,24 +787,24 @@ async function loadSportCompetitions(sportId, resetSelection = false) {
 
     // Feltöltjük az 1. Dropdown-t (Ország / Liga)
     countryGroupSelect.innerHTML = '';
-    
+
     // "Összes ország" opció
     const totalTodayAll = countryGroups.reduce((acc, g) => acc + g.todayMatches, 0);
     const optAll = document.createElement('option');
     optAll.value = 'ALL';
-    optAll.textContent = `🌐 Összes ország / liga (${totalTodayAll} mai meccs)`;
+    optAll.textContent = `🌐 Összes ország / liga (${totalTodayAll} meccs a következő 24 órában)`;
     countryGroupSelect.appendChild(optAll);
 
     countryGroups.forEach(cg => {
       const opt = document.createElement('option');
       opt.value = cg.groupName;
       const flag = getCountryFlag(cg.groupName);
-      const matchBadge = cg.todayMatches > 0 ? `(${cg.todayMatches} mai meccs)` : `(0 mai meccs)`;
+      const matchBadge = cg.todayMatches > 0 ? `(${cg.todayMatches} meccs / 24h)` : `(0 meccs)`;
       opt.textContent = `${flag} ${cg.groupName} ${matchBadge}`;
       countryGroupSelect.appendChild(opt);
     });
 
-    // Alapértelmezett kiválasztás: az első olyan rangos csoport, aminek MA van meccse (pl. Nemzetközi klubcsapatok - BL)
+    // Alapértelmezett kiválasztás: az első olyan rangos csoport, aminek a következő 24 órában van meccse (pl. Nemzetközi klubcsapatok - BL)
     if (resetSelection) {
       const defaultGroup = countryGroups.find(g => g.todayMatches > 0) || countryGroups[0];
       if (defaultGroup) {
@@ -831,7 +831,7 @@ function updateCompetitionSubDropdown() {
     availableComps = allCompetitions.filter(c => (c.competitionGroupName || 'Egyéb') === selectedGroup);
   }
 
-  // Rendezés a csoporton belül: mai meccsekkel rendelkezők legelőre, majd presztízs szerint
+  // Rendezés a csoporton belül: a következő 24 órában meccsekkel rendelkezők legelőre, majd presztízs szerint
   availableComps.sort((a, b) => {
     const hasTodayA = a.todayMatches > 0 ? 1 : 0;
     const hasTodayB = b.todayMatches > 0 ? 1 : 0;
@@ -842,19 +842,19 @@ function updateCompetitionSubDropdown() {
   });
 
   const totalTodaySub = availableComps.reduce((acc, c) => acc + c.todayMatches, 0);
-  countryTodayMatchesBadge.textContent = `${totalTodaySub} mai mérkőzés elérhető`;
+  countryTodayMatchesBadge.textContent = `${totalTodaySub} mérkőzés a következő 24 órában`;
 
   // Első opció: "Összes osztály ebből az országból"
   const optAllSub = document.createElement('option');
   optAllSub.value = 'ALL';
-  optAllSub.textContent = `⭐ Összes osztály ebből (${totalTodaySub} mai meccs)`;
+  optAllSub.textContent = `⭐ Összes osztály ebből (${totalTodaySub} meccs / 24h)`;
   competitionSubSelect.appendChild(optAllSub);
 
   availableComps.forEach(c => {
     const opt = document.createElement('option');
     opt.value = c.key;
     const star = c.todayMatches > 0 ? '⚽ ' : '';
-    const matchCountStr = c.todayMatches > 0 ? `(${c.todayMatches} mai meccs)` : `(0 mai meccs)`;
+    const matchCountStr = c.todayMatches > 0 ? `(${c.todayMatches} meccs / 24h)` : `(0 meccs)`;
     opt.textContent = `${star}${c.competitionName} ${matchCountStr}`;
     competitionSubSelect.appendChild(opt);
   });
@@ -929,14 +929,14 @@ async function loadLeagueMatches() {
     const compText = (selectedCompKey && selectedCompKey !== 'ALL')
       ? (competitionSubSelect.options[competitionSubSelect.selectedIndex]?.textContent.replace(/^⭐\s*/, '').split('(')[0].trim() || '')
       : 'Összes osztály';
-    matchesSectionTitle.textContent = `${groupText} • ${compText} (Kizárólag mai mérkőzések)`;
+    matchesSectionTitle.textContent = `${groupText} • ${compText} (Következő 24 óra)`;
 
     if (currentLeagueMatches.length === 0) {
       const isNfl = Number(activeNav) === 16;
       leagueMatchesList.innerHTML = `
         <div class="glass-card rounded-2xl p-8 text-center space-y-2 text-slate-400">
-          <p class="text-sm font-semibold">${isNfl ? 'Ma nincs NFL mérkőzés (a forduló meccsei csütörtökön és hétvégén esedékesek).' : 'Nincs aznapi mérkőzés a kiválasztott osztályban/bajnokságban ebben az odds sávban.'}</p>
-          <p class="text-xs text-slate-500">${isNfl ? 'Nézd meg a Főoldali keresőt vagy válassz Foci / Tenisz mérkőzéseket mára!' : 'Válassz másik bajnokságot vagy az "Összes osztály ebből" lehetőséget!'}</p>
+          <p class="text-sm font-semibold">${isNfl ? 'A következő 24 órában nincs NFL mérkőzés (a forduló meccsei a hétvégén esedékesek).' : 'Nincs mérkőzés a következő 24 órában a kiválasztott osztályban/bajnokságban ebben az odds sávban.'}</p>
+          <p class="text-xs text-slate-500">${isNfl ? 'Nézd meg a Főoldali keresőt vagy válassz Foci / Tenisz mérkőzéseket!' : 'Válassz másik bajnokságot vagy az "Összes osztály ebből" lehetőséget!'}</p>
         </div>
       `;
       return;
@@ -1195,19 +1195,19 @@ async function init() {
           if (todayCount > 0) {
             badgeEl.textContent = todayCount;
             badgeEl.className = 'px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-emerald-400 font-bold';
-            badgeEl.title = `Ma hátralévő mérkőzések: ${todayCount} (Heti teljes: ${totalCount})`;
+            badgeEl.title = `Mérkőzések a következő 24 órában: ${todayCount} (Heti teljes: ${totalCount})`;
           } else {
             badgeEl.textContent = totalCount > 0 ? `0 (${totalCount})` : '0';
             badgeEl.className = 'px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-400 font-bold';
-            badgeEl.title = `Ma nincs mérkőzés (Heti fordulóban: ${totalCount})`;
+            badgeEl.title = `A következő 24 órában nincs mérkőzés (Heti fordulóban: ${totalCount})`;
           }
         }
       });
 
-      const todayTotal = data.todayEvents ?? data.totalEvents;
+      const rollingTotal = data.rolling24hEvents ?? data.todayEvents ?? data.totalEvents;
       catalogStatusText.innerHTML = `
         <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
-        <span><strong class="text-white">${todayTotal} mai mérkőzés</strong> elérhető (Foci, Tenisz, NFL) &bull; <span class="text-slate-400 text-[11px]">Heti teljes adatbázis: ${data.totalEvents}</span></span>
+        <span><strong class="text-white">${rollingTotal} mérkőzés</strong> a következő 24 órában (Foci, Tenisz, NFL) &bull; <span class="text-slate-400 text-[11px]">Heti teljes adatbázis: ${data.totalEvents}</span></span>
       `;
     }
   } catch (err) {
