@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T17:11:42.389Z",
+  "updatedAt": "2026-11-10T19:01:42.100Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,10 +29,10 @@
       }
     },
     "tennis": {
-      "totalChecked": 15,
-      "won": 6,
+      "totalChecked": 16,
+      "won": 7,
       "lost": 9,
-      "winRate": 40,
+      "winRate": 44,
       "byRisk": {
         "low": {
           "totalChecked": 12,
@@ -41,10 +41,10 @@
           "winRate": 42
         },
         "medium": {
-          "totalChecked": 3,
-          "won": 1,
+          "totalChecked": 4,
+          "won": 2,
           "lost": 2,
-          "winRate": 33
+          "winRate": 50
         },
         "high": {
           "totalChecked": 0,
@@ -209,24 +209,6 @@
       "status": "pending"
     },
     {
-      "id": "5_hvnrunezbergs_2026-11-10_amrkzsgyztese_hvnrune",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "H.V.N. Rune - Z. Bergs",
-      "competitionName": "ATP - Stockholm, férfi egyes",
-      "eventDate": "2026-11-10T18:00:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "H.V.N. Rune",
-      "odds": 1.58,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T15:11:18.217Z",
-      "status": "pending"
-    },
-    {
       "id": "5_cgaufflnoskova_2026-11-10_amrkzsgyztese_cgauff",
       "sportId": 5,
       "sportName": "Tenisz",
@@ -264,6 +246,25 @@
     }
   ],
   "history": [
+    {
+      "id": "5_hvnrunezbergs_2026-11-10_amrkzsgyztese_hvnrune",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "H.V.N. Rune - Z. Bergs",
+      "eventDate": "2026-11-10T18:00:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "H.V.N. Rune",
+      "odds": 1.58,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T19:01:42.100Z",
+      "status": "won"
+    },
     {
       "id": "5_arinderknechmkecmanovic_2026-11-10_amrkzsgyztese_arinderknech",
       "sportId": 5,
