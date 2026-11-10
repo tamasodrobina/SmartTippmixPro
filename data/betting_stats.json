@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T11:01:45.491Z",
+  "updatedAt": "2026-11-10T11:11:53.975Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 6,
-      "won": 0,
+      "totalChecked": 9,
+      "won": 3,
       "lost": 6,
-      "winRate": 0,
+      "winRate": 33,
       "byRisk": {
         "low": {
-          "totalChecked": 6,
-          "won": 0,
+          "totalChecked": 9,
+          "won": 3,
           "lost": 6,
-          "winRate": 0
+          "winRate": 33
         },
         "medium": {
           "totalChecked": 0,
@@ -227,60 +227,6 @@
       "status": "pending"
     },
     {
-      "id": "5_kbennanisnagal_2026-11-10_jtszmkszma_2",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "K. Bennani - S. Nagal",
-      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
-      "eventDate": "2026-11-10T10:10:00+01:00",
-      "marketName": "Játszmák száma",
-      "outcomeName": "2",
-      "odds": 1.37,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:01:05.593Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_felgillmefstathiou_2026-11-10_jtszmkszma_2",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "Fel. Gill - M. Efstathiou",
-      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
-      "eventDate": "2026-11-10T10:10:00+01:00",
-      "marketName": "Játszmák száma",
-      "outcomeName": "2",
-      "odds": 1.32,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:01:05.595Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_fmaestrellijackloge_2026-11-10_amrkzsgyztese_fmaestrelli",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "F. Maestrelli - Jack Loge",
-      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
-      "eventDate": "2026-11-10T10:10:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "F. Maestrelli",
-      "odds": 1.38,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:01:05.596Z",
-      "status": "pending"
-    },
-    {
       "id": "5_dsvrcinavsachko_2026-11-10_amrkzsgyztese_dsvrcina",
       "sportId": 5,
       "sportName": "Tenisz",
@@ -426,6 +372,63 @@
     }
   ],
   "history": [
+    {
+      "id": "5_fmaestrellijackloge_2026-11-10_amrkzsgyztese_fmaestrelli",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "F. Maestrelli - Jack Loge",
+      "eventDate": "2026-11-10T10:10:00+01:00",
+      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "F. Maestrelli",
+      "odds": 1.38,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-10T11:11:53.975Z",
+      "status": "won"
+    },
+    {
+      "id": "5_felgillmefstathiou_2026-11-10_jtszmkszma_2",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "Fel. Gill - M. Efstathiou",
+      "eventDate": "2026-11-10T10:10:00+01:00",
+      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
+      "marketName": "Játszmák száma",
+      "outcomeName": "2",
+      "odds": 1.32,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "0-2",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-10T11:11:53.974Z",
+      "status": "won"
+    },
+    {
+      "id": "5_kbennanisnagal_2026-11-10_jtszmkszma_2",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "K. Bennani - S. Nagal",
+      "eventDate": "2026-11-10T10:10:00+01:00",
+      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
+      "marketName": "Játszmák száma",
+      "outcomeName": "2",
+      "odds": 1.37,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "0-2",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-10T11:11:53.974Z",
+      "status": "won"
+    },
     {
       "id": "1_u23kataru23szingapr_2026-11-10_mindktcsapatszerezglt_nem",
       "sportId": 1,
