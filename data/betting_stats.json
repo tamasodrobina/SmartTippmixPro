@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T15:11:18.219Z",
+  "updatedAt": "2026-11-10T15:12:06.247Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 13,
-      "won": 5,
+      "totalChecked": 14,
+      "won": 6,
       "lost": 8,
-      "winRate": 38,
+      "winRate": 43,
       "byRisk": {
         "low": {
-          "totalChecked": 11,
-          "won": 4,
+          "totalChecked": 12,
+          "won": 5,
           "lost": 7,
-          "winRate": 36
+          "winRate": 42
         },
         "medium": {
           "totalChecked": 2,
@@ -116,24 +116,6 @@
       "riskLevel": "Magas",
       "source": "league_table",
       "addedAt": "2026-11-09T15:39:21.625Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_lsonegoqhalys_2026-11-10_lsonegonyerlegalbbegyjtszmt_igen",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "L. Sonego - Q. Halys",
-      "competitionName": "ATP - Stockholm, férfi egyes",
-      "eventDate": "2026-11-10T14:10:00+01:00",
-      "marketName": "L. Sonego nyer legalább egy játszmát",
-      "outcomeName": "Igen",
-      "odds": 1.35,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:01:05.588Z",
       "status": "pending"
     },
     {
@@ -299,24 +281,6 @@
       "status": "pending"
     },
     {
-      "id": "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "U23Vietnám - U23Thaiföld",
-      "competitionName": "Nemzetközi utánpótlás - U23 válogatott mérkőzés",
-      "eventDate": "2026-11-10T13:00:00+01:00",
-      "marketName": "Gólszám",
-      "outcomeName": "2-3",
-      "odds": 1.94,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:10:29.364Z",
-      "status": "pending"
-    },
-    {
       "id": "5_hvnrunezbergs_2026-11-10_amrkzsgyztese_hvnrune",
       "sportId": 5,
       "sportName": "Tenisz",
@@ -369,9 +333,46 @@
       "source": "homepage_interval",
       "addedAt": "2026-11-10T15:11:18.219Z",
       "status": "pending"
+    },
+    {
+      "id": "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "U23Vietnám - U23Thaiföld",
+      "competitionName": "Nemzetközi utánpótlás - U23 válogatott mérkőzés",
+      "eventDate": "2026-11-10T13:00:00+01:00",
+      "marketName": "Gólszám",
+      "outcomeName": "2-3",
+      "odds": 1.94,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-10T09:10:29.364Z",
+      "status": "pending"
     }
   ],
   "history": [
+    {
+      "id": "5_lsonegoqhalys_2026-11-10_lsonegonyerlegalbbegyjtszmt_igen",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "L. Sonego - Q. Halys",
+      "eventDate": "2026-11-10T14:10:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "marketName": "L. Sonego nyer legalább egy játszmát",
+      "outcomeName": "Igen",
+      "odds": 1.35,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T15:11:41.691Z",
+      "status": "won"
+    },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_ktesly_dntetlenvagyu23thaifld",
       "sportId": 1,
