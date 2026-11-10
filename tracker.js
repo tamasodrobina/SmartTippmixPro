@@ -355,35 +355,88 @@ export function resetTracker() {
   return state;
 }
 
-// 6. Eredmény-ellenőrző háttérmotor (Kötegelt, kvótakímélő kiértékelés)
+// 6. Eredmény-ellenőrző háttérmotor (Hivatalos Tippmix API + Kötegelt Gemini Fallback)
+const TIPPMIX_RESULTS_URL = 'https://api.tippmix.hu/v2/tippmix/results';
+const resultsCache = new Map(); // key: `${sportId}_${date}`, val: { data, ts }
+
+export async function fetchTippmixOfficialResults(sportId = 1, dateStr) {
+  const dateKey = String(dateStr || new Date().toISOString().slice(0, 10)).slice(0, 10);
+  const cacheKey = `${sportId}_${dateKey}`;
+  const now = Date.now();
+
+  if (resultsCache.has(cacheKey)) {
+    const cached = resultsCache.get(cacheKey);
+    if (now - cached.ts < 5 * 60 * 1000) {
+      return cached.data;
+    }
+  }
+
+  try {
+    const res = await fetch(TIPPMIX_RESULTS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': 'https://www.tippmix.hu',
+        'Referer': 'https://www.tippmix.hu/eredmenyek',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      },
+      body: JSON.stringify({
+        sportId: Number(sportId) || 1,
+        pageSize: 100,
+        page: 1,
+        date: dateKey
+      })
+    });
+
+    if (!res.ok) {
+      return [];
+    }
+
+    const json = await res.json();
+    const events = Array.isArray(json?.events) ? json.events : [];
+    resultsCache.set(cacheKey, { data: events, ts: now });
+    return events;
+  } catch (err) {
+    console.warn(`⚠️ Tippmix results lekérési hiba (${sportId}, ${dateKey}):`, err.message);
+    return [];
+  }
+}
+
 function applyEvaluationResult(tip, verificationResult) {
   let targetStats = state.stats.football;
   if (tip.sportId === 5) targetStats = state.stats.tennis;
   if (tip.sportId === 16) targetStats = state.stats.nfl;
 
-  targetStats.totalChecked++;
-  if (verificationResult.won) {
-    targetStats.won++;
-  } else {
-    targetStats.lost++;
-  }
-  targetStats.winRate = Math.round((targetStats.won / targetStats.totalChecked) * 100);
+  const isVoid = Boolean(verificationResult.isVoid);
+  const isWon = Boolean(verificationResult.won);
 
-  // Kockázati kategória (low, medium, high) frissítése
-  const riskCat = tip.riskCategory || 'medium';
-  if (!targetStats.byRisk) {
-    targetStats.byRisk = createSportStats().byRisk;
-  }
-  const subStats = targetStats.byRisk[riskCat] || targetStats.byRisk.medium;
-  subStats.totalChecked++;
-  if (verificationResult.won) {
-    subStats.won++;
+  if (isVoid) {
+    console.log(`🔄 TIPP TÉT VISSZAJÁR: [${tip.sportName}] ${tip.eventName} -> ${tip.marketName}: ${tip.outcomeName} (${verificationResult.method || 'tippmix_official'})`);
   } else {
-    subStats.lost++;
-  }
-  subStats.winRate = Math.round((subStats.won / subStats.totalChecked) * 100);
+    targetStats.totalChecked++;
+    if (isWon) {
+      targetStats.won++;
+    } else {
+      targetStats.lost++;
+    }
+    targetStats.winRate = Math.round((targetStats.won / targetStats.totalChecked) * 100);
 
-  console.log(`✅ TIPP KIÉRTÉKELVE: [${tip.sportName} - ${tip.riskLevel || riskCat}] ${tip.eventName} -> ${tip.marketName}: ${tip.outcomeName} | Eredmény: ${verificationResult.won ? 'NYERT 🟢' : 'VESZTETT 🔴'} (${verificationResult.method || 'gemini_search'})`);
+    // Kockázati kategória (low, medium, high) frissítése
+    const riskCat = tip.riskCategory || 'medium';
+    if (!targetStats.byRisk) {
+      targetStats.byRisk = createSportStats().byRisk;
+    }
+    const subStats = targetStats.byRisk[riskCat] || targetStats.byRisk.medium;
+    subStats.totalChecked++;
+    if (isWon) {
+      subStats.won++;
+    } else {
+      subStats.lost++;
+    }
+    subStats.winRate = Math.round((subStats.won / subStats.totalChecked) * 100);
+
+    console.log(`✅ TIPP KIÉRTÉKELVE: [${tip.sportName} - ${tip.riskLevel || riskCat}] ${tip.eventName} -> ${tip.marketName}: ${tip.outcomeName} | Eredmény: ${isWon ? 'NYERT 🟢' : 'VESZTETT 🔴'} (${verificationResult.method || 'tippmix_official'})`);
+  }
 
   const historyItem = {
     id: tip.id,
@@ -395,14 +448,14 @@ function applyEvaluationResult(tip, verificationResult) {
     marketName: tip.marketName,
     outcomeName: tip.outcomeName,
     odds: tip.odds,
-    riskCategory: riskCat,
-    riskScore: tip.riskScore || (riskCat === 'low' ? 3 : (riskCat === 'high' ? 8 : 5)),
-    riskLevel: tip.riskLevel || (riskCat === 'low' ? 'Alacsony' : (riskCat === 'high' ? 'Magas' : 'Közepes')),
-    won: Boolean(verificationResult.won),
+    riskCategory: tip.riskCategory || 'medium',
+    riskScore: tip.riskScore || (tip.riskCategory === 'low' ? 3 : (tip.riskCategory === 'high' ? 8 : 5)),
+    riskLevel: tip.riskLevel || (tip.riskCategory === 'low' ? 'Alacsony' : (tip.riskCategory === 'high' ? 'Magas' : 'Közepes')),
+    won: isWon,
     finalScore: verificationResult.score || null,
-    verificationMethod: verificationResult.method || 'gemini_search',
+    verificationMethod: verificationResult.method || 'tippmix_official',
     evaluatedAt: new Date().toISOString(),
-    status: verificationResult.won ? 'won' : 'lost'
+    status: isVoid ? 'void' : (isWon ? 'won' : 'lost')
   };
 
   if (!Array.isArray(state.history)) state.history = [];
@@ -441,7 +494,7 @@ export async function evaluatePendingTips(fetchEventDetailsFn, callGeminiFn) {
       if (tip.sportId === 5) durationMs = 120 * 60 * 1000;
       if (tip.sportId === 16) durationMs = 210 * 60 * 1000;
 
-      // 72 óránál régebbi, beragadt meccsek kiszűrése (hogy ne terhelje a kvótát)
+      // 72 óránál régebbi, beragadt meccsek kiszűrése (hogy ne terhelje a rendszert)
       const ageHours = (now - eventTime) / (1000 * 60 * 60);
       if (ageHours > 72) {
         console.warn(`🧹 Beragadt régi tipp eltávolítva (>72h): ${tip.eventName} - ${tip.marketName}`);
@@ -462,25 +515,61 @@ export async function evaluatePendingTips(fetchEventDetailsFn, callGeminiFn) {
 
     const unverifiedTips = [];
 
-    // 2. Tippmix API ellenőrzés (ha van eventId)
+    // 2. LÉPÉS: HIVATALOS TIPPMIX EREDMÉNYEK (0 AI token, automatikus winner/loser/void)
+    const norm = s => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const cleanMarket = m => String(m || '').split('(')[0].trim().toLowerCase();
+
     for (const tip of readyTips) {
       let verified = false;
-      if (tip.eventId && fetchEventDetailsFn) {
-        try {
-          const details = await fetchEventDetailsFn(tip.eventId);
-          if (details && details.markets) {
-            const m = details.markets.find(m =>
-              m.marketName?.toLowerCase().trim() === tip.marketName?.toLowerCase().trim()
+      const dateKey = String(tip.eventDate || new Date().toISOString().slice(0, 10)).slice(0, 10);
+      
+      const datesToTry = [dateKey];
+      try {
+        const dObj = new Date(dateKey);
+        const prev = new Date(dObj.getTime() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+        const next = new Date(dObj.getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+        datesToTry.push(prev, next);
+      } catch (_) {}
+
+      for (const d of datesToTry) {
+        if (verified) break;
+        const events = await fetchTippmixOfficialResults(tip.sportId, d);
+        if (!Array.isArray(events) || events.length === 0) continue;
+
+        const matchedEv = events.find(e => 
+          (tip.eventId && Number(e.id) === Number(tip.eventId)) ||
+          norm(e.name) === norm(tip.eventName)
+        );
+
+        if (matchedEv && Array.isArray(matchedEv.markets)) {
+          const market = matchedEv.markets.find(m => 
+            cleanMarket(m.name) === cleanMarket(tip.marketName) ||
+            norm(m.name) === norm(tip.marketName)
+          );
+
+          if (market && Array.isArray(market.outcomes)) {
+            const outcome = market.outcomes.find(o => 
+              norm(o.name) === norm(tip.outcomeName)
             );
-            if (m && m.winnerOutcomeName) {
-              const isWon = m.winnerOutcomeName.toLowerCase().trim() === tip.outcomeName.toLowerCase().trim();
-              applyEvaluationResult(tip, { won: isWon, method: 'tippmix_api' });
+
+            if (outcome && (outcome.result === 'winner' || outcome.result === 'loser' || outcome.result === 'void')) {
+              let score = null;
+              if (matchedEv.fulltimeScore && typeof matchedEv.fulltimeScore.participant1Score !== 'undefined') {
+                score = `${matchedEv.fulltimeScore.participant1Score}-${matchedEv.fulltimeScore.participant2Score}`;
+              }
+              applyEvaluationResult(tip, {
+                won: outcome.result === 'winner',
+                isVoid: outcome.result === 'void',
+                score,
+                method: 'tippmix_official'
+              });
               statsChanged = true;
               verified = true;
             }
           }
-        } catch (_) {}
+        }
       }
+
       if (!verified) {
         unverifiedTips.push(tip);
       }

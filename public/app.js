@@ -1659,6 +1659,9 @@ async function fetchAndRenderHistory() {
       if (isPending) {
         statusBadgeHtml = `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-amber-500/15 border border-amber-500/30 text-amber-300">⏳ ELLENŐRZÉSRE VÁR</span>`;
         cardBorderClass = 'border-amber-900/30';
+      } else if (item.status === 'void') {
+        statusBadgeHtml = `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-sky-500/20 border border-sky-500/40 text-sky-300">🔄 TÉT VISSZAJÁR</span>`;
+        cardBorderClass = 'border-sky-900/40';
       } else if (isWon) {
         statusBadgeHtml = `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-500/20 border border-emerald-500/40 text-emerald-300">✅ NYERT</span>`;
         cardBorderClass = 'border-emerald-900/40';
