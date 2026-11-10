@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T14:02:03.313Z",
+  "updatedAt": "2026-11-10T14:22:47.890Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -242,6 +242,60 @@
       "riskLevel": "Közepes",
       "source": "homepage_interval",
       "addedAt": "2026-11-10T09:10:29.364Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_internazionalemanchestercity_2026-11-10_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Internazionale - Manchester City",
+      "competitionName": "Nemzetközi klubcsapatok - BL",
+      "eventDate": "2026-11-10T21:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.62,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-10T14:22:47.887Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_internazionalemanchestercity_2026-11-10_1flid1x2_manchestercity",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Internazionale - Manchester City",
+      "competitionName": "Nemzetközi klubcsapatok - BL",
+      "eventDate": "2026-11-10T21:00:00+01:00",
+      "marketName": "1. félidő - 1X2",
+      "outcomeName": "Manchester City",
+      "odds": 1.7,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-10T14:22:47.888Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_internazionalemanchestercity_2026-11-10_1x2glszm2525_vendgstbb",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Internazionale - Manchester City",
+      "competitionName": "Nemzetközi klubcsapatok - BL",
+      "eventDate": "2026-11-10T21:00:00+01:00",
+      "marketName": "1X2 + Gólszám 2,5 (2.5)",
+      "outcomeName": "Vendég és több",
+      "odds": 1.66,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-10T14:22:47.890Z",
       "status": "pending"
     }
   ],
@@ -1855,6 +1909,9 @@
     "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
     "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezglt_igen",
     "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezgltglszm2525_igenstbbmint25",
-    "1_parissgbayernmnchen_2026-11-10_1x2_bayernmnchen"
+    "1_parissgbayernmnchen_2026-11-10_1x2_bayernmnchen",
+    "1_internazionalemanchestercity_2026-11-10_mindktcsapatszerezglt_igen",
+    "1_internazionalemanchestercity_2026-11-10_1flid1x2_manchestercity",
+    "1_internazionalemanchestercity_2026-11-10_1x2glszm2525_vendgstbb"
   ]
 }
