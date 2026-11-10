@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T13:09:49.455Z",
+  "updatedAt": "2026-11-10T13:41:43.492Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 10,
+      "totalChecked": 11,
       "won": 4,
-      "lost": 6,
-      "winRate": 40,
+      "lost": 7,
+      "winRate": 36,
       "byRisk": {
         "low": {
-          "totalChecked": 9,
+          "totalChecked": 10,
           "won": 3,
-          "lost": 6,
-          "winRate": 33
+          "lost": 7,
+          "winRate": 30
         },
         "medium": {
           "totalChecked": 1,
@@ -335,24 +335,6 @@
       "status": "pending"
     },
     {
-      "id": "5_rbertolalcarboni_2026-11-10_amrkzsgyztese_rbertola",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "R. Bertola - L. Carboni",
-      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
-      "eventDate": "2026-11-10T11:20:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "R. Bertola",
-      "odds": 1.31,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:01:05.599Z",
-      "status": "pending"
-    },
-    {
       "id": "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezglt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -408,6 +390,25 @@
     }
   ],
   "history": [
+    {
+      "id": "5_rbertolalcarboni_2026-11-10_amrkzsgyztese_rbertola",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "R. Bertola - L. Carboni",
+      "eventDate": "2026-11-10T11:20:00+01:00",
+      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "R. Bertola",
+      "odds": 1.31,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T13:41:43.492Z",
+      "status": "lost"
+    },
     {
       "id": "5_dsvrcinavsachko_2026-11-10_amrkzsgyztese_dsvrcina",
       "sportId": 5,
