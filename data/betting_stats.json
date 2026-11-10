@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T19:01:42.100Z",
+  "updatedAt": "2026-11-10T20:21:42.391Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 16,
-      "won": 7,
+      "totalChecked": 17,
+      "won": 8,
       "lost": 9,
-      "winRate": 44,
+      "winRate": 47,
       "byRisk": {
         "low": {
-          "totalChecked": 12,
-          "won": 5,
+          "totalChecked": 13,
+          "won": 6,
           "lost": 7,
-          "winRate": 42
+          "winRate": 46
         },
         "medium": {
           "totalChecked": 4,
@@ -225,27 +225,28 @@
       "source": "homepage_interval",
       "addedAt": "2026-11-10T15:11:18.218Z",
       "status": "pending"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "5_lmusettitobysamuel_2026-11-10_tobysamuelnyerlegalbbegyjtszmt_nem",
       "sportId": 5,
       "sportName": "Tenisz",
-      "eventId": null,
       "eventName": "L. Musetti - Toby Samuel",
-      "competitionName": "ATP - Stockholm, férfi egyes",
       "eventDate": "2026-11-10T19:10:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
       "marketName": "Toby Samuel nyer legalább egy játszmát",
       "outcomeName": "Nem",
       "odds": 1.7,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T15:11:18.219Z",
-      "status": "pending"
-    }
-  ],
-  "history": [
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T20:21:42.391Z",
+      "status": "won"
+    },
     {
       "id": "5_hvnrunezbergs_2026-11-10_amrkzsgyztese_hvnrune",
       "sportId": 5,
