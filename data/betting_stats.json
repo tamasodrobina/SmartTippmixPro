@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-10T22:01:55.189Z",
+  "updatedAt": "2026-11-10T22:11:44.896Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 71,
-      "won": 44,
+      "totalChecked": 72,
+      "won": 45,
       "lost": 27,
-      "winRate": 62,
+      "winRate": 63,
       "byRisk": {
         "low": {
           "totalChecked": 11,
@@ -15,8 +15,8 @@
           "winRate": 64
         },
         "medium": {
-          "totalChecked": 48,
-          "won": 32,
+          "totalChecked": 49,
+          "won": 33,
           "lost": 16,
           "winRate": 67
         },
@@ -99,27 +99,28 @@
       "source": "homepage_interval",
       "addedAt": "2026-11-10T15:11:18.218Z",
       "status": "pending"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezgltglszm2525_igenstbbmint25",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Paris SG - Bayern München",
-      "competitionName": "Nemzetközi klubcsapatok - BL, női",
       "eventDate": "2026-11-10T21:00:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
       "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
       "outcomeName": "Igen és több, mint 2,5",
       "odds": 1.67,
       "riskCategory": "medium",
       "riskScore": 5,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-10T13:09:49.454Z",
-      "status": "pending"
-    }
-  ],
-  "history": [
+      "won": true,
+      "finalScore": "1-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T22:11:44.896Z",
+      "status": "won"
+    },
     {
       "id": "1_parissgbayernmnchen_2026-11-10_glszm2525_tbbmint25",
       "sportId": 1,
