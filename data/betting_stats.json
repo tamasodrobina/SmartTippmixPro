@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T14:24:37.734Z",
+  "updatedAt": "2026-11-10T15:11:18.219Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -227,24 +227,6 @@
       "status": "pending"
     },
     {
-      "id": "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "U23Vietnám - U23Thaiföld",
-      "competitionName": "Nemzetközi utánpótlás - U23 válogatott mérkőzés",
-      "eventDate": "2026-11-10T13:00:00+01:00",
-      "marketName": "Gólszám",
-      "outcomeName": "2-3",
-      "odds": 1.94,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:10:29.364Z",
-      "status": "pending"
-    },
-    {
       "id": "1_internazionalemanchestercity_2026-11-10_mindktcsapatszerezglt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -314,6 +296,78 @@
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
       "addedAt": "2026-11-10T14:24:37.734Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "U23Vietnám - U23Thaiföld",
+      "competitionName": "Nemzetközi utánpótlás - U23 válogatott mérkőzés",
+      "eventDate": "2026-11-10T13:00:00+01:00",
+      "marketName": "Gólszám",
+      "outcomeName": "2-3",
+      "odds": 1.94,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-10T09:10:29.364Z",
+      "status": "pending"
+    },
+    {
+      "id": "5_hvnrunezbergs_2026-11-10_amrkzsgyztese_hvnrune",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventId": null,
+      "eventName": "H.V.N. Rune - Z. Bergs",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "eventDate": "2026-11-10T18:00:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "H.V.N. Rune",
+      "odds": 1.58,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-10T15:11:18.217Z",
+      "status": "pending"
+    },
+    {
+      "id": "5_cgaufflnoskova_2026-11-10_amrkzsgyztese_cgauff",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventId": null,
+      "eventName": "C. Gauff - L. Noskova",
+      "competitionName": "WTA - WTA-vb, női egyes, 1. csop.",
+      "eventDate": "2026-11-10T22:10:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "C. Gauff",
+      "odds": 1.55,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-10T15:11:18.218Z",
+      "status": "pending"
+    },
+    {
+      "id": "5_lmusettitobysamuel_2026-11-10_tobysamuelnyerlegalbbegyjtszmt_nem",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventId": null,
+      "eventName": "L. Musetti - Toby Samuel",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "eventDate": "2026-11-10T19:10:00+01:00",
+      "marketName": "Toby Samuel nyer legalább egy játszmát",
+      "outcomeName": "Nem",
+      "odds": 1.7,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-10T15:11:18.219Z",
       "status": "pending"
     }
   ],
@@ -1931,6 +1985,9 @@
     "1_internazionalemanchestercity_2026-11-10_mindktcsapatszerezglt_igen",
     "1_internazionalemanchestercity_2026-11-10_1flid1x2_manchestercity",
     "1_internazionalemanchestercity_2026-11-10_1x2glszm2525_vendgstbb",
-    "1_parissgbayernmnchen_2026-11-10_glszm2525_tbbmint25"
+    "1_parissgbayernmnchen_2026-11-10_glszm2525_tbbmint25",
+    "5_hvnrunezbergs_2026-11-10_amrkzsgyztese_hvnrune",
+    "5_cgaufflnoskova_2026-11-10_amrkzsgyztese_cgauff",
+    "5_lmusettitobysamuel_2026-11-10_tobysamuelnyerlegalbbegyjtszmt_nem"
   ]
 }
