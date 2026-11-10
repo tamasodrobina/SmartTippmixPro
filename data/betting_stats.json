@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-10T15:41:45.892Z",
+  "updatedAt": "2026-11-10T17:01:51.159Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 63,
-      "won": 37,
-      "lost": 26,
-      "winRate": 59,
+      "totalChecked": 65,
+      "won": 38,
+      "lost": 27,
+      "winRate": 58,
       "byRisk": {
         "low": {
           "totalChecked": 10,
@@ -15,16 +15,16 @@
           "winRate": 60
         },
         "medium": {
-          "totalChecked": 42,
-          "won": 26,
+          "totalChecked": 43,
+          "won": 27,
           "lost": 16,
-          "winRate": 62
+          "winRate": 63
         },
         "high": {
-          "totalChecked": 11,
+          "totalChecked": 12,
           "won": 5,
-          "lost": 6,
-          "winRate": 45
+          "lost": 7,
+          "winRate": 42
         }
       }
     },
@@ -82,60 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_almokawloonarabwesc_2026-11-10_1x2_almokawloonarab",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5610128,
-      "eventName": "Al-Mokawloon Arab - WE SC",
-      "competitionName": "Egyiptomi Kupa",
-      "eventDate": "2026-11-10T16:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Al-Mokawloon Arab",
-      "odds": 1.56,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:21.624Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_almokawloonarabwesc_2026-11-10_ktesly_dntetlenvagywesc",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5610128,
-      "eventName": "Al-Mokawloon Arab - WE SC",
-      "competitionName": "Egyiptomi Kupa",
-      "eventDate": "2026-11-10T16:00:00+01:00",
-      "marketName": "Kétesély",
-      "outcomeName": "Döntetlen vagy WE SC",
-      "odds": 1.8,
-      "riskCategory": "high",
-      "riskScore": 7,
-      "riskLevel": "Magas",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:21.625Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_arinderknechmkecmanovic_2026-11-10_amrkzsgyztese_arinderknech",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "A. Rinderknech - M. Kecmanovic",
-      "competitionName": "ATP - Stockholm, férfi egyes",
-      "eventDate": "2026-11-10T15:20:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "A. Rinderknech",
-      "odds": 1.48,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:01:05.591Z",
-      "status": "pending"
-    },
     {
       "id": "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezglt_igen",
       "sportId": 1,
@@ -315,9 +261,65 @@
       "source": "homepage_interval",
       "addedAt": "2026-11-10T15:11:18.219Z",
       "status": "pending"
+    },
+    {
+      "id": "5_arinderknechmkecmanovic_2026-11-10_amrkzsgyztese_arinderknech",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventId": null,
+      "eventName": "A. Rinderknech - M. Kecmanovic",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "eventDate": "2026-11-10T15:20:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "A. Rinderknech",
+      "odds": 1.48,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-10T09:01:05.591Z",
+      "status": "pending"
     }
   ],
   "history": [
+    {
+      "id": "1_almokawloonarabwesc_2026-11-10_ktesly_dntetlenvagywesc",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Al-Mokawloon Arab - WE SC",
+      "eventDate": "2026-11-10T16:00:00+01:00",
+      "competitionName": "Egyiptomi Kupa",
+      "marketName": "Kétesély",
+      "outcomeName": "Döntetlen vagy WE SC",
+      "odds": 1.8,
+      "riskCategory": "high",
+      "riskScore": 7,
+      "riskLevel": "Magas",
+      "won": false,
+      "finalScore": "1-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T17:01:45.788Z",
+      "status": "lost"
+    },
+    {
+      "id": "1_almokawloonarabwesc_2026-11-10_1x2_almokawloonarab",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Al-Mokawloon Arab - WE SC",
+      "eventDate": "2026-11-10T16:00:00+01:00",
+      "competitionName": "Egyiptomi Kupa",
+      "marketName": "1X2",
+      "outcomeName": "Al-Mokawloon Arab",
+      "odds": 1.56,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "1-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T17:01:45.788Z",
+      "status": "won"
+    },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
       "sportId": 1,
