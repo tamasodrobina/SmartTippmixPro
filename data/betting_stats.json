@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T12:21:49.989Z",
+  "updatedAt": "2026-11-10T13:09:49.455Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -350,6 +350,60 @@
       "riskLevel": "Alacsony",
       "source": "homepage_interval",
       "addedAt": "2026-11-10T09:01:05.599Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Paris SG - Bayern München",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
+      "eventDate": "2026-11-10T21:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.5,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-10T13:09:49.453Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Paris SG - Bayern München",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
+      "eventDate": "2026-11-10T21:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
+      "outcomeName": "Igen és több, mint 2,5",
+      "odds": 1.67,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-10T13:09:49.454Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_parissgbayernmnchen_2026-11-10_1x2_bayernmnchen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Paris SG - Bayern München",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
+      "eventDate": "2026-11-10T21:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Bayern München",
+      "odds": 1.64,
+      "riskCategory": "medium",
+      "riskScore": 6,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-10T13:09:49.455Z",
       "status": "pending"
     }
   ],
@@ -1789,6 +1843,9 @@
     "1_u23vietnmu23thaifld_2026-11-10_mindktcsapatszerezglt_igen",
     "1_u23vietnmu23thaifld_2026-11-10_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
     "1_u23vietnmu23thaifld_2026-11-10_ktesly_dntetlenvagyu23thaifld",
-    "1_u23vietnmu23thaifld_2026-11-10_glszm_23"
+    "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
+    "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezglt_igen",
+    "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+    "1_parissgbayernmnchen_2026-11-10_1x2_bayernmnchen"
   ]
 }
