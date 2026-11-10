@@ -1571,12 +1571,12 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
   }
 });
 
-app.listen(PORT, async () => {
-  console.log(`✅ SmartTippmixPro AI Szerver fut: http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ SmartTippmixPro AI Szerver fut: http://0.0.0.0:${PORT}`);
   console.log(`⚽ Fókusz sportágak: Labdarúgás, Tenisz, NFL`);
 
   // Tracker inicializálás és háttérellenőrzés indítása
-  await initTracker();
+  initTracker().catch(err => console.warn('⚠️ initTracker hiba:', err.message));
   setInterval(() => {
     evaluatePendingTips(fetchEventDetails, callGeminiWithSearch).catch(() => {});
   }, 10 * 60 * 1000);
