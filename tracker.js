@@ -355,165 +355,230 @@ export function resetTracker() {
   return state;
 }
 
-// 6. Eredmény-ellenőrző háttérmotor
+// 6. Eredmény-ellenőrző háttérmotor (Kötegelt, kvótakímélő kiértékelés)
+function applyEvaluationResult(tip, verificationResult) {
+  let targetStats = state.stats.football;
+  if (tip.sportId === 5) targetStats = state.stats.tennis;
+  if (tip.sportId === 16) targetStats = state.stats.nfl;
+
+  targetStats.totalChecked++;
+  if (verificationResult.won) {
+    targetStats.won++;
+  } else {
+    targetStats.lost++;
+  }
+  targetStats.winRate = Math.round((targetStats.won / targetStats.totalChecked) * 100);
+
+  // Kockázati kategória (low, medium, high) frissítése
+  const riskCat = tip.riskCategory || 'medium';
+  if (!targetStats.byRisk) {
+    targetStats.byRisk = createSportStats().byRisk;
+  }
+  const subStats = targetStats.byRisk[riskCat] || targetStats.byRisk.medium;
+  subStats.totalChecked++;
+  if (verificationResult.won) {
+    subStats.won++;
+  } else {
+    subStats.lost++;
+  }
+  subStats.winRate = Math.round((subStats.won / subStats.totalChecked) * 100);
+
+  console.log(`✅ TIPP KIÉRTÉKELVE: [${tip.sportName} - ${tip.riskLevel || riskCat}] ${tip.eventName} -> ${tip.marketName}: ${tip.outcomeName} | Eredmény: ${verificationResult.won ? 'NYERT 🟢' : 'VESZTETT 🔴'} (${verificationResult.method || 'gemini_search'})`);
+
+  const historyItem = {
+    id: tip.id,
+    sportId: tip.sportId,
+    sportName: tip.sportName,
+    eventName: tip.eventName,
+    eventDate: tip.eventDate,
+    competitionName: tip.competitionName || '',
+    marketName: tip.marketName,
+    outcomeName: tip.outcomeName,
+    odds: tip.odds,
+    riskCategory: riskCat,
+    riskScore: tip.riskScore || (riskCat === 'low' ? 3 : (riskCat === 'high' ? 8 : 5)),
+    riskLevel: tip.riskLevel || (riskCat === 'low' ? 'Alacsony' : (riskCat === 'high' ? 'Magas' : 'Közepes')),
+    won: Boolean(verificationResult.won),
+    finalScore: verificationResult.score || null,
+    verificationMethod: verificationResult.method || 'gemini_search',
+    evaluatedAt: new Date().toISOString(),
+    status: verificationResult.won ? 'won' : 'lost'
+  };
+
+  if (!Array.isArray(state.history)) state.history = [];
+  const existingHistIdx = state.history.findIndex(h => h.id === historyItem.id);
+  if (existingHistIdx >= 0) {
+    state.history[existingHistIdx] = historyItem;
+  } else {
+    state.history.unshift(historyItem);
+    if (state.history.length > 500) {
+      state.history = state.history.slice(0, 500);
+    }
+  }
+}
+
 export async function evaluatePendingTips(fetchEventDetailsFn, callGeminiFn) {
   if (isEvaluating) return;
-  if (state.pendingTips.length === 0) return;
+  if (!Array.isArray(state.pendingTips) || state.pendingTips.length === 0) return;
 
   isEvaluating = true;
   const now = Date.now();
-  const remainingPending = [];
   let statsChanged = false;
 
-  for (const tip of state.pendingTips) {
-    const eventTime = new Date(tip.eventDate).getTime();
-    if (isNaN(eventTime)) {
-      continue;
+  try {
+    // 1. Megkeressük azokat a tippeket, amelyek mérkőzése már biztosan befejeződött
+    const readyTips = [];
+    const futureTips = [];
+
+    for (const tip of state.pendingTips) {
+      const eventTime = new Date(tip.eventDate).getTime();
+      if (isNaN(eventTime)) {
+        continue;
+      }
+
+      // Becsült meccs-időtartam: Foci: 115 perc, Tenisz: 120 perc, NFL: 210 perc
+      let durationMs = 115 * 60 * 1000;
+      if (tip.sportId === 5) durationMs = 120 * 60 * 1000;
+      if (tip.sportId === 16) durationMs = 210 * 60 * 1000;
+
+      // 72 óránál régebbi, beragadt meccsek kiszűrése (hogy ne terhelje a kvótát)
+      const ageHours = (now - eventTime) / (1000 * 60 * 60);
+      if (ageHours > 72) {
+        console.warn(`🧹 Beragadt régi tipp eltávolítva (>72h): ${tip.eventName} - ${tip.marketName}`);
+        continue;
+      }
+
+      if (now >= eventTime + durationMs) {
+        readyTips.push(tip);
+      } else {
+        futureTips.push(tip);
+      }
     }
 
-    // Becsült meccs-időtartam:
-    // Foci: 115 perc, Tenisz: 120 perc, NFL: 210 perc
-    let durationMs = 115 * 60 * 1000;
-    if (tip.sportId === 5) durationMs = 120 * 60 * 1000;
-    if (tip.sportId === 16) durationMs = 210 * 60 * 1000;
-
-    const isFinishedTime = now >= eventTime + durationMs;
-    if (!isFinishedTime) {
-      remainingPending.push(tip);
-      continue;
+    if (readyTips.length === 0) {
+      state.pendingTips = futureTips;
+      return;
     }
 
-    let verificationResult = null;
+    const unverifiedTips = [];
 
-    // 1. Lépés: Tippmix API lekérdezés
-    if (tip.eventId && fetchEventDetailsFn) {
-      try {
-        const details = await fetchEventDetailsFn(tip.eventId);
-        if (details && details.markets) {
-          const m = details.markets.find(m => 
-            m.marketName?.toLowerCase().trim() === tip.marketName?.toLowerCase().trim()
-          );
-          if (m && m.winnerOutcomeName) {
-            const isWon = m.winnerOutcomeName.toLowerCase().trim() === tip.outcomeName.toLowerCase().trim();
-            verificationResult = { won: isWon, method: 'tippmix_api' };
+    // 2. Tippmix API ellenőrzés (ha van eventId)
+    for (const tip of readyTips) {
+      let verified = false;
+      if (tip.eventId && fetchEventDetailsFn) {
+        try {
+          const details = await fetchEventDetailsFn(tip.eventId);
+          if (details && details.markets) {
+            const m = details.markets.find(m =>
+              m.marketName?.toLowerCase().trim() === tip.marketName?.toLowerCase().trim()
+            );
+            if (m && m.winnerOutcomeName) {
+              const isWon = m.winnerOutcomeName.toLowerCase().trim() === tip.outcomeName.toLowerCase().trim();
+              applyEvaluationResult(tip, { won: isWon, method: 'tippmix_api' });
+              statsChanged = true;
+              verified = true;
+            }
           }
-        }
-      } catch (_) {}
+        } catch (_) {}
+      }
+      if (!verified) {
+        unverifiedTips.push(tip);
+      }
     }
 
-    // 2. Lépés: Ha nincs a Tippmix API-ban, Gemini AI internetes keresés
-    if (!verificationResult && callGeminiFn && process.env.GEMINI_API_KEY) {
-      try {
-        const queryPrompt = `Feladat: Állapítsd meg pontosan egy korábbi sportesemény végeredményét és hogy a megadott fogadási tipp nyertes lett-e!
-Sportág: ${tip.sportName}
-Mérkőzés: "${tip.eventName}"
-Időpont: ${tip.eventDate}
-Fogadási Piac: "${tip.marketName}"
-Kiválasztott Kimenetel (Tipp): "${tip.outcomeName}"
+    // 3. Ha maradt ellenőrizendő tipp, és elérhető a Gemini AI:
+    // KÖTEGELT KÉRÉS (Egyszerre több meccs 1 promptban, napi kvóta 500 kérés védelmére)
+    if (unverifiedTips.length > 0 && callGeminiFn && process.env.GEMINI_API_KEY) {
+      // Csoportosítás mérkőzés szerint
+      const matchMap = new Map();
+      for (const tip of unverifiedTips) {
+        const key = tip.eventName;
+        if (!matchMap.has(key)) matchMap.set(key, []);
+        matchMap.get(key).push(tip);
+      }
+
+      // Ciklusonként legfeljebb 3-5 mérkőzést ellenőrzünk 1 promptban
+      const matchesToProcess = Array.from(matchMap.entries()).slice(0, 3);
+      const evaluatedTipIds = new Set();
+
+      const batchItems = matchesToProcess.map(([eventName, tips]) => ({
+        match: eventName,
+        sport: tips[0].sportName,
+        date: tips[0].eventDate,
+        tips: tips.map(t => ({
+          id: t.id,
+          market: t.marketName,
+          selection: t.outcomeName,
+          odds: t.odds
+        }))
+      }));
+
+      const queryPrompt = `Feladat: Határozd meg az alábbi lezárult sportesemények hivatalos végeredményét és értékeld ki a hozzájuk tartozó fogadási tippeket!
+Mérkőzések és vizsgálandó tippek:
+${JSON.stringify(batchItems, null, 2)}
 
 Keresd meg az interneten a hivatalos végeredményt!
-KIZÁRÓLAG egy érvényes JSON formátumban válaszolj:
+KIZÁRÓLAG egy érvényes JSON formátumban válaszolj az alábbi struktúrában:
 {
-  "finished": true,
-  "finalScore": "pl. 2-1 vagy 6-4, 6-3",
-  "won": true,
-  "explanation": "Rövid indoklás miért nyert vagy vesztett a tipp"
+  "results": [
+    {
+      "id": "tipp_azonosito",
+      "finished": true,
+      "finalScore": "pl. 2-1",
+      "won": true,
+      "explanation": "Rövid indoklás miért nyert vagy vesztett a tipp"
+    }
+  ]
 }
-(Ha a meccs mégsem fejeződött be vagy elmaradt, a "finished" legyen false).`;
+(Ha egy meccs elmaradt vagy nem fejeződött be, a "finished" értéke legyen false).`;
 
+      try {
         const aiCheck = await callGeminiFn({
           apiKey: process.env.GEMINI_API_KEY,
           prompt: queryPrompt
         });
 
-        if (aiCheck?.data && aiCheck.data.finished && typeof aiCheck.data.won === 'boolean') {
-          verificationResult = {
-            won: aiCheck.data.won,
-            method: 'gemini_search',
-            score: aiCheck.data.finalScore
-          };
+        const resultsList = Array.isArray(aiCheck?.data?.results)
+          ? aiCheck.data.results
+          : (Array.isArray(aiCheck?.data) ? aiCheck.data : []);
+
+        for (const resItem of resultsList) {
+          if (resItem && resItem.finished && typeof resItem.won === 'boolean' && resItem.id) {
+            const matchedTip = unverifiedTips.find(t => t.id === resItem.id);
+            if (matchedTip) {
+              applyEvaluationResult(matchedTip, {
+                won: resItem.won,
+                score: resItem.finalScore || null,
+                method: 'gemini_search'
+              });
+              evaluatedTipIds.add(matchedTip.id);
+              statsChanged = true;
+            }
+          }
         }
       } catch (err) {
-        console.warn(`⚠️ Eredményellenőrzési hiba (${tip.eventName}):`, err.message);
-      }
-    }
-
-    // Ha sikerült kiértékelni:
-    if (verificationResult) {
-      statsChanged = true;
-
-      // Célzott sportág statisztika
-      let targetStats = state.stats.football;
-      if (tip.sportId === 5) targetStats = state.stats.tennis;
-      if (tip.sportId === 16) targetStats = state.stats.nfl;
-
-      // Fő mutatók frissítése
-      targetStats.totalChecked++;
-      if (verificationResult.won) {
-        targetStats.won++;
-      } else {
-        targetStats.lost++;
-      }
-      targetStats.winRate = Math.round((targetStats.won / targetStats.totalChecked) * 100);
-
-      // Kockázati kategória (low, medium, high) frissítése
-      const riskCat = tip.riskCategory || 'medium';
-      if (!targetStats.byRisk) {
-        targetStats.byRisk = createSportStats().byRisk;
-      }
-      const subStats = targetStats.byRisk[riskCat] || targetStats.byRisk.medium;
-      subStats.totalChecked++;
-      if (verificationResult.won) {
-        subStats.won++;
-      } else {
-        subStats.lost++;
-      }
-      subStats.winRate = Math.round((subStats.won / subStats.totalChecked) * 100);
-
-      console.log(`✅ TIPP KIÉRTÉKELVE: [${tip.sportName} - ${tip.riskLevel || riskCat}] ${tip.eventName} -> ${tip.marketName}: ${tip.outcomeName} | Eredmény: ${verificationResult.won ? 'NYERT 🟢' : 'VESZTETT 🔴'} (${verificationResult.method})`);
-      
-      // Hozzáadjuk a lezárt tipp előzmények közé (history)
-      const historyItem = {
-        id: tip.id,
-        sportId: tip.sportId,
-        sportName: tip.sportName,
-        eventName: tip.eventName,
-        eventDate: tip.eventDate,
-        competitionName: tip.competitionName || '',
-        marketName: tip.marketName,
-        outcomeName: tip.outcomeName,
-        odds: tip.odds,
-        riskCategory: riskCat,
-        riskScore: tip.riskScore || (riskCat === 'low' ? 3 : (riskCat === 'high' ? 8 : 5)),
-        riskLevel: tip.riskLevel || (riskCat === 'low' ? 'Alacsony' : (riskCat === 'high' ? 'Magas' : 'Közepes')),
-        won: verificationResult.won,
-        finalScore: verificationResult.score || null,
-        verificationMethod: verificationResult.method,
-        evaluatedAt: new Date().toISOString(),
-        status: verificationResult.won ? 'won' : 'lost'
-      };
-
-      if (!Array.isArray(state.history)) state.history = [];
-      const existingHistIdx = state.history.findIndex(h => h.id === historyItem.id);
-      if (existingHistIdx >= 0) {
-        state.history[existingHistIdx] = historyItem;
-      } else {
-        state.history.unshift(historyItem);
-        if (state.history.length > 300) {
-          state.history = state.history.slice(0, 300);
+        const msg = String(err.message || '');
+        if (msg.includes('429') || msg.toLowerCase().includes('quota') || msg.includes('RESOURCE_EXHAUSTED') || msg.includes('limit')) {
+          console.warn('⏳ [TRACKER] Gemini API napi vagy perces kvótakorlát elérve. A háttérellenőrzés a következő ciklusban folytatódik.');
+        } else {
+          console.warn('⚠️ [TRACKER] Eredményellenőrzési hiba:', msg);
         }
       }
-      // A meccs TÖRLŐDIK a függő listából ahogy kérted!
-    } else {
-      remainingPending.push(tip);
-    }
-  }
 
-  state.pendingTips = remainingPending;
-  if (statsChanged) {
-    saveState();
+      // Azok a tippek maradnak függőben, amiket most még nem tudtunk kiértékelni
+      const remainingUnverified = unverifiedTips.filter(t => !evaluatedTipIds.has(t.id));
+      state.pendingTips = [...futureTips, ...remainingUnverified];
+    } else {
+      state.pendingTips = [...futureTips, ...unverifiedTips];
+    }
+  } catch (err) {
+    console.error('❌ [TRACKER] Váratlan hiba az evaluatePendingTips futásakor:', err.message);
+  } finally {
+    if (statsChanged) {
+      saveState();
+    }
+    isEvaluating = false;
   }
-  isEvaluating = false;
 }
 
 // 7. GITHUB SZINKRONIZÁCIÓ

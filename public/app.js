@@ -1475,8 +1475,12 @@ function initTipHistoryModal() {
   }
 
   if (historyModalRefreshBtn) {
-    historyModalRefreshBtn.addEventListener('click', () => {
+    historyModalRefreshBtn.addEventListener('click', async () => {
+      try {
+        await fetch('/api/stats/evaluate', { method: 'POST' });
+      } catch (_) {}
       fetchAndRenderHistory();
+      if (typeof fetchStats === 'function') fetchStats();
     });
   }
 }

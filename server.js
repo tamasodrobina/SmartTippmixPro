@@ -824,13 +824,21 @@ app.get('/api/health', (req, res) => {
 });
 
 // 7.0 STATISZTIKA & TALÁLATI ARÁNY (FOCI, TENISZ, NFL)
-app.get('/api/stats', async (req, res) => {
+app.get('/api/stats', (req, res) => {
   try {
-    // A háttérben megpróbáljuk kiértékelni a befejezett meccseket
+    res.json(getStats());
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// Manuális vagy kliens oldali ellenőrzés indítása
+app.post('/api/stats/evaluate', (req, res) => {
+  try {
     evaluatePendingTips(fetchEventDetails, callGeminiWithSearch).catch(err => {
       console.warn('⚠️ evaluatePendingTips hiba:', err.message);
     });
-    res.json(getStats());
+    res.json({ ok: true, message: 'Kiértékelés elindítva a háttérben.' });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
@@ -1116,29 +1124,6 @@ app.post('/api/matches/by-competitions', async (req, res) => {
         };
       })
     );
-
-    // Automatikus tipp-mentés és duplikációmentes regisztráció (Foci és NFL esetén)
-    const leagueTipsToRecord = [];
-    for (const em of enrichedMatches) {
-      if (Array.isArray(em.top2Tips)) {
-        for (const t of em.top2Tips) {
-          leagueTipsToRecord.push({
-            eventId: em.eventId,
-            eventName: em.eventName,
-            eventDate: em.eventDate,
-            sportId: em.sportId,
-            sportName: em.sportName,
-            competitionName: em.competitionName,
-            marketName: t.marketName,
-            outcomeName: t.outcomeName,
-            odds: t.odds
-          });
-        }
-      }
-    }
-    if (leagueTipsToRecord.length > 0) {
-      recordTipsBatch(leagueTipsToRecord, 'league_table');
-    }
 
     res.json({
       ok: true,
