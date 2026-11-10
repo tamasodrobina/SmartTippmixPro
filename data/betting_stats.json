@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-10T15:12:06.247Z",
+  "updatedAt": "2026-11-10T15:41:45.892Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 62,
-      "won": 36,
+      "totalChecked": 63,
+      "won": 37,
       "lost": 26,
-      "winRate": 58,
+      "winRate": 59,
       "byRisk": {
         "low": {
           "totalChecked": 10,
@@ -15,10 +15,10 @@
           "winRate": 60
         },
         "medium": {
-          "totalChecked": 41,
-          "won": 25,
+          "totalChecked": 42,
+          "won": 26,
           "lost": 16,
-          "winRate": 61
+          "winRate": 62
         },
         "high": {
           "totalChecked": 11,
@@ -116,24 +116,6 @@
       "riskLevel": "Magas",
       "source": "league_table",
       "addedAt": "2026-11-09T15:39:21.625Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_tmetcheverrytatirante_2026-11-10_amrkzsgyztese_tmetcheverry",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "T.M. Etcheverry - T.A. Tirante",
-      "competitionName": "ATP - Stockholm, férfi egyes",
-      "eventDate": "2026-11-10T14:30:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "T.M. Etcheverry",
-      "odds": 1.68,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:01:05.589Z",
       "status": "pending"
     },
     {
@@ -333,27 +315,47 @@
       "source": "homepage_interval",
       "addedAt": "2026-11-10T15:11:18.219Z",
       "status": "pending"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "U23Vietnám - U23Thaiföld",
-      "competitionName": "Nemzetközi utánpótlás - U23 válogatott mérkőzés",
       "eventDate": "2026-11-10T13:00:00+01:00",
+      "competitionName": "Nemzetközi utánpótlás - U23 válogatott mérkőzés",
       "marketName": "Gólszám",
       "outcomeName": "2-3",
       "odds": 1.94,
       "riskCategory": "medium",
       "riskScore": 5,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:10:29.364Z",
-      "status": "pending"
-    }
-  ],
-  "history": [
+      "won": true,
+      "finalScore": "3-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T15:41:45.892Z",
+      "status": "won"
+    },
+    {
+      "id": "5_tmetcheverrytatirante_2026-11-10_amrkzsgyztese_tmetcheverry",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "T.M. Etcheverry - T.A. Tirante",
+      "eventDate": "2026-11-10T14:30:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "T.M. Etcheverry",
+      "odds": 1.68,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T15:31:41.694Z",
+      "status": "void"
+    },
     {
       "id": "5_lsonegoqhalys_2026-11-10_lsonegonyerlegalbbegyjtszmt_igen",
       "sportId": 5,
