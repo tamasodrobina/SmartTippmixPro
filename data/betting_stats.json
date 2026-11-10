@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T14:22:47.890Z",
+  "updatedAt": "2026-11-10T14:24:37.734Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -296,6 +296,24 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-10T14:22:47.890Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_parissgbayernmnchen_2026-11-10_glszm2525_tbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Paris SG - Bayern München",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
+      "eventDate": "2026-11-10T21:00:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-10T14:24:37.734Z",
       "status": "pending"
     }
   ],
@@ -1912,6 +1930,7 @@
     "1_parissgbayernmnchen_2026-11-10_1x2_bayernmnchen",
     "1_internazionalemanchestercity_2026-11-10_mindktcsapatszerezglt_igen",
     "1_internazionalemanchestercity_2026-11-10_1flid1x2_manchestercity",
-    "1_internazionalemanchestercity_2026-11-10_1x2glszm2525_vendgstbb"
+    "1_internazionalemanchestercity_2026-11-10_1x2glszm2525_vendgstbb",
+    "1_parissgbayernmnchen_2026-11-10_glszm2525_tbbmint25"
   ]
 }
