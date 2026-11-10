@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T17:01:51.159Z",
+  "updatedAt": "2026-11-10T17:11:42.389Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,10 +29,10 @@
       }
     },
     "tennis": {
-      "totalChecked": 14,
+      "totalChecked": 15,
       "won": 6,
-      "lost": 8,
-      "winRate": 43,
+      "lost": 9,
+      "winRate": 40,
       "byRisk": {
         "low": {
           "totalChecked": 12,
@@ -41,10 +41,10 @@
           "winRate": 42
         },
         "medium": {
-          "totalChecked": 2,
+          "totalChecked": 3,
           "won": 1,
-          "lost": 1,
-          "winRate": 50
+          "lost": 2,
+          "winRate": 33
         },
         "high": {
           "totalChecked": 0,
@@ -261,27 +261,28 @@
       "source": "homepage_interval",
       "addedAt": "2026-11-10T15:11:18.219Z",
       "status": "pending"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "5_arinderknechmkecmanovic_2026-11-10_amrkzsgyztese_arinderknech",
       "sportId": 5,
       "sportName": "Tenisz",
-      "eventId": null,
       "eventName": "A. Rinderknech - M. Kecmanovic",
-      "competitionName": "ATP - Stockholm, férfi egyes",
       "eventDate": "2026-11-10T15:20:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
       "marketName": "A mérkőzés győztese",
       "outcomeName": "A. Rinderknech",
       "odds": 1.48,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-10T09:01:05.591Z",
-      "status": "pending"
-    }
-  ],
-  "history": [
+      "won": false,
+      "finalScore": "1-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T17:11:42.389Z",
+      "status": "lost"
+    },
     {
       "id": "1_almokawloonarabwesc_2026-11-10_ktesly_dntetlenvagywesc",
       "sportId": 1,
