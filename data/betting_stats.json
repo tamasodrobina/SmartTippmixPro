@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-10T09:10:29.364Z",
+  "updatedAt": "2026-11-10T11:01:45.491Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 54,
-      "won": 31,
+      "totalChecked": 56,
+      "won": 33,
       "lost": 23,
-      "winRate": 57,
+      "winRate": 59,
       "byRisk": {
         "low": {
           "totalChecked": 6,
@@ -15,10 +15,10 @@
           "winRate": 67
         },
         "medium": {
-          "totalChecked": 37,
-          "won": 22,
+          "totalChecked": 39,
+          "won": 24,
           "lost": 15,
-          "winRate": 59
+          "winRate": 62
         },
         "high": {
           "totalChecked": 11,
@@ -82,42 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_u23kataru23szingapr_2026-11-10_glszm3535_kevesebbmint35",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5632282,
-      "eventName": "U23Katar - U23Szingapúr",
-      "competitionName": "U23 válogatott mérkőzés",
-      "eventDate": "2026-11-10T09:00:00+01:00",
-      "marketName": "Gólszám 3,5 (3.5)",
-      "outcomeName": "Kevesebb, mint 3,5",
-      "odds": 1.6,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:08.520Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_u23kataru23szingapr_2026-11-10_mindktcsapatszerezglt_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": 5632282,
-      "eventName": "U23Katar - U23Szingapúr",
-      "competitionName": "U23 válogatott mérkőzés",
-      "eventDate": "2026-11-10T09:00:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Nem",
-      "odds": 1.7,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "league_table",
-      "addedAt": "2026-11-09T15:39:08.521Z",
-      "status": "pending"
-    },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_1x2_u23vietnm",
       "sportId": 1,
@@ -462,6 +426,44 @@
     }
   ],
   "history": [
+    {
+      "id": "1_u23kataru23szingapr_2026-11-10_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "U23Katar - U23Szingapúr",
+      "eventDate": "2026-11-10T09:00:00+01:00",
+      "competitionName": "U23 válogatott mérkőzés",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.7,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "0-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T11:01:45.490Z",
+      "status": "won"
+    },
+    {
+      "id": "1_u23kataru23szingapr_2026-11-10_glszm3535_kevesebbmint35",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "U23Katar - U23Szingapúr",
+      "eventDate": "2026-11-10T09:00:00+01:00",
+      "competitionName": "U23 válogatott mérkőzés",
+      "marketName": "Gólszám 3,5 (3.5)",
+      "outcomeName": "Kevesebb, mint 3,5",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "0-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-10T11:01:45.489Z",
+      "status": "won"
+    },
     {
       "id": "16_minnesotabuffalo_2026-11-10_flidvgeredmny_buffalobuffalo",
       "sportId": 16,
