@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-11T08:04:07.330Z",
+  "updatedAt": "2026-11-11T12:01:57.011Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 72,
-      "won": 45,
-      "lost": 27,
-      "winRate": 63,
+      "totalChecked": 74,
+      "won": 46,
+      "lost": 28,
+      "winRate": 62,
       "byRisk": {
         "low": {
-          "totalChecked": 11,
-          "won": 7,
-          "lost": 4,
-          "winRate": 64
+          "totalChecked": 13,
+          "won": 8,
+          "lost": 5,
+          "winRate": 62
         },
         "medium": {
           "totalChecked": 49,
@@ -83,42 +83,6 @@
   },
   "pendingTips": [
     {
-      "id": "1_visselkobemachidazelvia_2026-11-11_dntetlennlattvisszajr_visselkobe",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Vissel Kobe - Machida Zelvia",
-      "competitionName": "Japán - Japán Liga-kupa",
-      "eventDate": "2026-11-11T11:00:00+01:00",
-      "marketName": "Döntetlennél a tét visszajár",
-      "outcomeName": "Vissel Kobe",
-      "odds": 1.53,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T07:50:08.684Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_kawasakifrontalekashiwar_2026-11-11_mindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Kawasaki Frontale - Kashiwa R.",
-      "competitionName": "Japán - Japán Liga-kupa",
-      "eventDate": "2026-11-11T11:00:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.44,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T07:50:08.686Z",
-      "status": "pending"
-    },
-    {
       "id": "1_urawardcerezoosaka_2026-11-11_1x2_uraward",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -134,24 +98,6 @@
       "riskLevel": "Közepes",
       "source": "homepage_interval",
       "addedAt": "2026-11-11T07:50:08.688Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_yokohamafmkashimaa_2026-11-11_mindktcsapatszerezgltglszm2525_igenstbbmint25",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Yokohama FM - Kashima A.",
-      "competitionName": "Japán - Japán Liga-kupa",
-      "eventDate": "2026-11-11T11:00:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
-      "outcomeName": "Igen és több, mint 2,5",
-      "odds": 1.76,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T07:50:08.689Z",
       "status": "pending"
     },
     {
@@ -243,9 +189,65 @@
       "source": "homepage_interval",
       "addedAt": "2026-11-11T08:04:07.330Z",
       "status": "pending"
+    },
+    {
+      "id": "1_yokohamafmkashimaa_2026-11-11_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Yokohama FM - Kashima A.",
+      "competitionName": "Japán - Japán Liga-kupa",
+      "eventDate": "2026-11-11T11:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
+      "outcomeName": "Igen és több, mint 2,5",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-11T07:50:08.689Z",
+      "status": "pending"
     }
   ],
   "history": [
+    {
+      "id": "1_kawasakifrontalekashiwar_2026-11-11_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Kawasaki Frontale - Kashiwa R.",
+      "eventDate": "2026-11-11T11:00:00+01:00",
+      "competitionName": "Japán - Japán Liga-kupa",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.44,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-11T12:01:46.696Z",
+      "status": "won"
+    },
+    {
+      "id": "1_visselkobemachidazelvia_2026-11-11_dntetlennlattvisszajr_visselkobe",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Vissel Kobe - Machida Zelvia",
+      "eventDate": "2026-11-11T11:00:00+01:00",
+      "competitionName": "Japán - Japán Liga-kupa",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Vissel Kobe",
+      "odds": 1.53,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-11T12:01:46.695Z",
+      "status": "lost"
+    },
     {
       "id": "5_cgaufflnoskova_2026-11-10_amrkzsgyztese_cgauff",
       "sportId": 5,
