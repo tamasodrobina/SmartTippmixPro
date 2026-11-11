@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T15:11:50.403Z",
+  "updatedAt": "2026-11-11T17:07:21.512Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,22 +29,22 @@
       }
     },
     "tennis": {
-      "totalChecked": 19,
-      "won": 8,
-      "lost": 11,
-      "winRate": 42,
+      "totalChecked": 21,
+      "won": 9,
+      "lost": 12,
+      "winRate": 43,
       "byRisk": {
         "low": {
-          "totalChecked": 14,
+          "totalChecked": 15,
           "won": 6,
-          "lost": 8,
-          "winRate": 43
+          "lost": 9,
+          "winRate": 40
         },
         "medium": {
-          "totalChecked": 5,
-          "won": 2,
+          "totalChecked": 6,
+          "won": 3,
           "lost": 3,
-          "winRate": 40
+          "winRate": 50
         },
         "high": {
           "totalChecked": 0,
@@ -98,24 +98,6 @@
       "riskLevel": "Alacsony",
       "source": "homepage_interval",
       "addedAt": "2026-11-11T08:04:07.320Z",
-      "status": "pending"
-    },
-    {
-      "id": "5_piroszsomborctabur_2026-11-11_amrkzsgyztese_ctabur",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "Piros Zsombor - C. Tabur",
-      "competitionName": "Challenger - Orleans, férfi egyes",
-      "eventDate": "2026-11-11T14:40:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "C. Tabur",
-      "odds": 1.59,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T08:04:07.328Z",
       "status": "pending"
     },
     {
@@ -297,27 +279,47 @@
       "source": "homepage_custom",
       "addedAt": "2026-11-11T15:07:48.596Z",
       "status": "pending"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "5_mmartineauhgaston_2026-11-11_amrkzsgyztese_hgaston",
       "sportId": 5,
       "sportName": "Tenisz",
-      "eventId": null,
       "eventName": "M. Martineau - H. Gaston",
-      "competitionName": "Challenger - Orleans, férfi egyes",
       "eventDate": "2026-11-11T13:30:00+01:00",
+      "competitionName": "Challenger - Orleans, férfi egyes",
       "marketName": "A mérkőzés győztese",
       "outcomeName": "H. Gaston",
       "odds": 1.47,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T08:04:07.325Z",
-      "status": "pending"
-    }
-  ],
-  "history": [
+      "won": false,
+      "finalScore": "2-0",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-11T17:07:21.512Z",
+      "status": "lost"
+    },
+    {
+      "id": "5_piroszsomborctabur_2026-11-11_amrkzsgyztese_ctabur",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "Piros Zsombor - C. Tabur",
+      "eventDate": "2026-11-11T14:40:00+01:00",
+      "competitionName": "Challenger - Orleans, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "C. Tabur",
+      "odds": 1.59,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "1-2",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-11T17:07:21.512Z",
+      "status": "won"
+    },
     {
       "id": "5_lsonegoatabilo_2026-11-11_amrkzsgyztese_lsonego",
       "sportId": 5,
