@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-11T19:01:49.592Z",
+  "updatedAt": "2026-11-11T19:31:51.400Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 80,
-      "won": 51,
+      "totalChecked": 81,
+      "won": 52,
       "lost": 29,
       "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 16,
-          "won": 11,
+          "totalChecked": 17,
+          "won": 12,
           "lost": 5,
-          "winRate": 69
+          "winRate": 71
         },
         "medium": {
           "totalChecked": 52,
@@ -82,42 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "5_mlcarlembassolsribera_2026-11-11_amrkzsgyztese_mbassolsribera",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "M.L. Carle - M. Bassols Ribera",
-      "competitionName": "WTA-Challenger - Sopo, női egyes",
-      "eventDate": "2026-11-11T18:20:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "M. Bassols Ribera",
-      "odds": 1.42,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T08:04:07.330Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_frankfurtpsv_2026-11-11_glszm2525_tbbmint25",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Frankfurt - PSV",
-      "competitionName": "Nemzetközi klubcsapatok - Európa Kupa, női",
-      "eventDate": "2026-11-11T18:30:00+01:00",
-      "marketName": "Gólszám 2,5 (2.5)",
-      "outcomeName": "Több, mint 2,5",
-      "odds": 1.39,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T15:03:24.155Z",
-      "status": "pending"
-    },
     {
       "id": "1_liverpoolastonvilla_2026-11-11_1x2_liverpool",
       "sportId": 1,
@@ -189,9 +153,46 @@
       "source": "homepage_custom",
       "addedAt": "2026-11-11T15:07:48.596Z",
       "status": "pending"
+    },
+    {
+      "id": "5_mlcarlembassolsribera_2026-11-11_amrkzsgyztese_mbassolsribera",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventId": null,
+      "eventName": "M.L. Carle - M. Bassols Ribera",
+      "competitionName": "WTA-Challenger - Sopo, női egyes",
+      "eventDate": "2026-11-11T18:20:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "M. Bassols Ribera",
+      "odds": 1.42,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-11T08:04:07.330Z",
+      "status": "pending"
     }
   ],
   "history": [
+    {
+      "id": "1_frankfurtpsv_2026-11-11_glszm2525_tbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Frankfurt - PSV",
+      "eventDate": "2026-11-11T18:30:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - Európa Kupa, női",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.39,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-11T19:31:46.493Z",
+      "status": "won"
+    },
     {
       "id": "1_brndbyrosenborg_2026-11-11_kijuttovbb_brndby",
       "sportId": 1,
