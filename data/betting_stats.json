@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T15:03:24.160Z",
+  "updatedAt": "2026-11-11T15:07:48.596Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -278,6 +278,60 @@
       "riskLevel": "Alacsony",
       "source": "homepage_interval",
       "addedAt": "2026-11-11T15:03:24.160Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_liverpoolastonvilla_2026-11-11_1x2glszm1515_hazaistbb",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Liverpool - Aston Villa",
+      "competitionName": "Angol amatőr - Angol Liga-kupa, női, Észak",
+      "eventDate": "2026-11-11T20:00:00+01:00",
+      "marketName": "1X2 + Gólszám 1,5 (1.5)",
+      "outcomeName": "Hazai és több",
+      "odds": 1.52,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-11T15:07:48.592Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_liverpoolastonvilla_2026-11-11_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Liverpool - Aston Villa",
+      "competitionName": "Angol amatőr - Angol Liga-kupa, női, Észak",
+      "eventDate": "2026-11-11T20:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-11T15:07:48.593Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_liverpoolastonvilla_2026-11-11_zsiaihendikep11_liverpool1",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Liverpool - Aston Villa",
+      "competitionName": "Angol amatőr - Angol Liga-kupa, női, Észak",
+      "eventDate": "2026-11-11T20:00:00+01:00",
+      "marketName": "Ázsiai Hendikep -1 (-1)",
+      "outcomeName": "Liverpool -1",
+      "odds": 1.64,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-11T15:07:48.596Z",
       "status": "pending"
     }
   ],
@@ -2293,6 +2347,9 @@
     "1_brndbyrosenborg_2026-11-11_kijuttovbb_brndby",
     "1_frankfurtpsv_2026-11-11_glszm2525_tbbmint25",
     "1_liverpoolastonvilla_2026-11-11_1x2_liverpool",
-    "1_fleury91toulouse_2026-11-11_1x2_fleury91"
+    "1_fleury91toulouse_2026-11-11_1x2_fleury91",
+    "1_liverpoolastonvilla_2026-11-11_1x2glszm1515_hazaistbb",
+    "1_liverpoolastonvilla_2026-11-11_mindktcsapatszerezglt_igen",
+    "1_liverpoolastonvilla_2026-11-11_zsiaihendikep11_liverpool1"
   ]
 }
