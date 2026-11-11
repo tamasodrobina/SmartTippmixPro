@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-11T17:07:21.512Z",
+  "updatedAt": "2026-11-11T18:01:46.588Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 76,
-      "won": 48,
+      "totalChecked": 77,
+      "won": 49,
       "lost": 28,
-      "winRate": 63,
+      "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 13,
-          "won": 8,
+          "totalChecked": 14,
+          "won": 9,
           "lost": 5,
-          "winRate": 62
+          "winRate": 64
         },
         "medium": {
           "totalChecked": 51,
@@ -209,24 +209,6 @@
       "status": "pending"
     },
     {
-      "id": "1_fleury91toulouse_2026-11-11_1x2_fleury91",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Fleury 91 - Toulouse",
-      "competitionName": "Franciaország - Francia bajnokság, női",
-      "eventDate": "2026-11-11T17:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Fleury 91",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T15:03:24.160Z",
-      "status": "pending"
-    },
-    {
       "id": "1_liverpoolastonvilla_2026-11-11_1x2glszm1515_hazaistbb",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -282,6 +264,25 @@
     }
   ],
   "history": [
+    {
+      "id": "1_fleury91toulouse_2026-11-11_1x2_fleury91",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Fleury 91 - Toulouse",
+      "eventDate": "2026-11-11T17:00:00+01:00",
+      "competitionName": "Franciaország - Francia bajnokság, női",
+      "marketName": "1X2",
+      "outcomeName": "Fleury 91",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "7-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-11T18:01:46.588Z",
+      "status": "won"
+    },
     {
       "id": "5_mmartineauhgaston_2026-11-11_amrkzsgyztese_hgaston",
       "sportId": 5,
