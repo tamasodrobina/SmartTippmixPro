@@ -1,24 +1,24 @@
 {
-  "updatedAt": "2026-11-11T18:01:46.588Z",
+  "updatedAt": "2026-11-11T19:01:49.592Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 77,
-      "won": 49,
-      "lost": 28,
+      "totalChecked": 80,
+      "won": 51,
+      "lost": 29,
       "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 14,
-          "won": 9,
+          "totalChecked": 16,
+          "won": 11,
           "lost": 5,
-          "winRate": 64
+          "winRate": 69
         },
         "medium": {
-          "totalChecked": 51,
+          "totalChecked": 52,
           "won": 35,
-          "lost": 16,
-          "winRate": 69
+          "lost": 17,
+          "winRate": 67
         },
         "high": {
           "totalChecked": 12,
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 21,
+      "totalChecked": 22,
       "won": 9,
-      "lost": 12,
-      "winRate": 43,
+      "lost": 13,
+      "winRate": 41,
       "byRisk": {
         "low": {
-          "totalChecked": 15,
+          "totalChecked": 16,
           "won": 6,
-          "lost": 9,
-          "winRate": 40
+          "lost": 10,
+          "winRate": 38
         },
         "medium": {
           "totalChecked": 6,
@@ -83,24 +83,6 @@
   },
   "pendingTips": [
     {
-      "id": "5_alexshevchenkocruud_2026-11-11_jtszmkszma_2",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "Alex. Shevchenko - C. Ruud",
-      "competitionName": "ATP - Stockholm, férfi egyes",
-      "eventDate": "2026-11-11T18:00:00+01:00",
-      "marketName": "Játszmák száma",
-      "outcomeName": "2",
-      "odds": 1.42,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T08:04:07.320Z",
-      "status": "pending"
-    },
-    {
       "id": "5_mlcarlembassolsribera_2026-11-11_amrkzsgyztese_mbassolsribera",
       "sportId": 5,
       "sportName": "Tenisz",
@@ -116,60 +98,6 @@
       "riskLevel": "Alacsony",
       "source": "homepage_interval",
       "addedAt": "2026-11-11T08:04:07.330Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_artisbrnojablonec_2026-11-11_1x2_jablonec",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Artis Brno - Jablonec",
-      "competitionName": "Csehország - Cseh Kupa",
-      "eventDate": "2026-11-11T18:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Jablonec",
-      "odds": 1.77,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T15:03:24.146Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_fenerbahcerealsociedad_2026-11-11_1x2_realsociedad",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Fenerbahce - Real Sociedad",
-      "competitionName": "Nemzetközi klubcsapatok - Európa Kupa, női",
-      "eventDate": "2026-11-11T18:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Real Sociedad",
-      "odds": 1.45,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T15:03:24.152Z",
-      "status": "pending"
-    },
-    {
-      "id": "1_brndbyrosenborg_2026-11-11_kijuttovbb_brndby",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Bröndby - Rosenborg",
-      "competitionName": "Nemzetközi klubcsapatok - Európa Kupa, női",
-      "eventDate": "2026-11-11T18:00:00+01:00",
-      "marketName": "Ki jut tovább?",
-      "outcomeName": "Bröndby",
-      "odds": 1.33,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-11T15:03:24.154Z",
       "status": "pending"
     },
     {
@@ -264,6 +192,82 @@
     }
   ],
   "history": [
+    {
+      "id": "1_brndbyrosenborg_2026-11-11_kijuttovbb_brndby",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Bröndby - Rosenborg",
+      "eventDate": "2026-11-11T18:00:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - Európa Kupa, női",
+      "marketName": "Ki jut tovább?",
+      "outcomeName": "Bröndby",
+      "odds": 1.33,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-11T19:01:49.592Z",
+      "status": "won"
+    },
+    {
+      "id": "1_fenerbahcerealsociedad_2026-11-11_1x2_realsociedad",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Fenerbahce - Real Sociedad",
+      "eventDate": "2026-11-11T18:00:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - Európa Kupa, női",
+      "marketName": "1X2",
+      "outcomeName": "Real Sociedad",
+      "odds": 1.45,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "0-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-11T19:01:49.591Z",
+      "status": "won"
+    },
+    {
+      "id": "1_artisbrnojablonec_2026-11-11_1x2_jablonec",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Artis Brno - Jablonec",
+      "eventDate": "2026-11-11T18:00:00+01:00",
+      "competitionName": "Csehország - Cseh Kupa",
+      "marketName": "1X2",
+      "outcomeName": "Jablonec",
+      "odds": 1.77,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-11T19:01:49.591Z",
+      "status": "lost"
+    },
+    {
+      "id": "5_alexshevchenkocruud_2026-11-11_jtszmkszma_2",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "Alex. Shevchenko - C. Ruud",
+      "eventDate": "2026-11-11T18:00:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "marketName": "Játszmák száma",
+      "outcomeName": "2",
+      "odds": 1.42,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-11T19:01:43.588Z",
+      "status": "lost"
+    },
     {
       "id": "1_fleury91toulouse_2026-11-11_1x2_fleury91",
       "sportId": 1,
