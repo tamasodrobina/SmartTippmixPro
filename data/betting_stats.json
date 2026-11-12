@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T13:35:55.202Z",
+  "updatedAt": "2026-11-12T13:40:05.565Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -345,6 +345,72 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u19_eb_selejtező",
       "categorySubName": "U19 Eb-selejtező"
+    },
+    {
+      "id": "1_trkorszgbelgium_2026-11-12_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Törökország - Belgium",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 1.csop",
+      "eventDate": "2026-11-12T18:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.41,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T13:40:05.562Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_trkorszgbelgium_2026-11-12_1x2_belgium",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Törökország - Belgium",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 1.csop",
+      "eventDate": "2026-11-12T18:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Belgium",
+      "odds": 1.78,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T13:40:05.563Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_trkorszgbelgium_2026-11-12_glszm2525_tbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Törökország - Belgium",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 1.csop",
+      "eventDate": "2026-11-12T18:00:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.38,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T13:40:05.565Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
     }
   ],
   "history": [
@@ -3192,6 +3258,9 @@
     "1_u20franciaorszgu20dnia_2026-11-12_1x2_u20franciaorszg",
     "1_guineaeritrea_2026-11-12_mindktcsapatszerezglt_nem",
     "1_madagaszkrbissauguinea_2026-11-12_glszm25_kevesebbmint25",
-    "1_u19portugliau19litvnia_2026-11-12_glszm35_tbbmint35"
+    "1_u19portugliau19litvnia_2026-11-12_glszm35_tbbmint35",
+    "1_trkorszgbelgium_2026-11-12_mindktcsapatszerezglt_igen",
+    "1_trkorszgbelgium_2026-11-12_1x2_belgium",
+    "1_trkorszgbelgium_2026-11-12_glszm2525_tbbmint25"
   ]
 }
