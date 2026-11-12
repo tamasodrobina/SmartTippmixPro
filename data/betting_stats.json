@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-12T11:14:54.860Z",
+  "updatedAt": "2026-11-12T11:56:09.535Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 85,
+      "totalChecked": 87,
       "won": 56,
-      "lost": 29,
-      "winRate": 66,
+      "lost": 31,
+      "winRate": 64,
       "byRisk": {
         "low": {
           "totalChecked": 19,
@@ -15,10 +15,10 @@
           "winRate": 74
         },
         "medium": {
-          "totalChecked": 54,
+          "totalChecked": 56,
           "won": 37,
-          "lost": 17,
-          "winRate": 69
+          "lost": 19,
+          "winRate": 66
         },
         "high": {
           "totalChecked": 12,
@@ -237,28 +237,6 @@
       "categorySubName": "Challenger - Lima"
     },
     {
-      "id": "1_hwacheonkspogyeongju_2026-11-12_glszm2525_kevesebbmint25",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Hwacheon KSPO - Gyeongju",
-      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
-      "eventDate": "2026-11-12T11:00:00+01:00",
-      "marketName": "Gólszám 2,5 (2.5)",
-      "outcomeName": "Kevesebb, mint 2,5",
-      "odds": 1.9,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-12T08:29:44.111Z",
-      "status": "pending",
-      "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
-      "categorySubKey": "w_dél_koreai_bajnokság_női",
-      "categorySubName": "Dél-koreai bajnokság, női"
-    },
-    {
       "id": "1_hwacheonkspogyeongju_2026-11-12_zsiaihendikep055_gyeongju05",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -279,31 +257,55 @@
       "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_dél_koreai_bajnokság_női",
       "categorySubName": "Dél-koreai bajnokság, női"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_hwacheonkspogyeongju_2026-11-12_mindktcsapatszerezglt_nem",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Hwacheon KSPO - Gyeongju",
-      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
       "eventDate": "2026-11-12T11:00:00+01:00",
+      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
       "marketName": "Mindkét csapat szerez gólt",
       "outcomeName": "Nem",
       "odds": 1.91,
       "riskCategory": "medium",
       "riskScore": 6,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-12T08:29:44.114Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T11:56:06.529Z",
+      "status": "lost",
       "categoryGroupKey": "women",
       "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_dél_koreai_bajnokság_női",
       "categorySubName": "Dél-koreai bajnokság, női"
-    }
-  ],
-  "history": [
+    },
+    {
+      "id": "1_hwacheonkspogyeongju_2026-11-12_glszm2525_kevesebbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Hwacheon KSPO - Gyeongju",
+      "eventDate": "2026-11-12T11:00:00+01:00",
+      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Kevesebb, mint 2,5",
+      "odds": 1.9,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T11:55:57.325Z",
+      "status": "lost",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
+      "categorySubKey": "w_dél_koreai_bajnokság_női",
+      "categorySubName": "Dél-koreai bajnokság, női"
+    },
     {
       "id": "5_lcarboniixilas_2026-11-12_ixilasjtkszm115115_tbbmint115",
       "sportId": 5,
