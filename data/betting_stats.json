@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-12T18:58:15.505Z",
+  "updatedAt": "2026-11-12T19:18:25.891Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 95,
-      "won": 61,
+      "totalChecked": 96,
+      "won": 62,
       "lost": 34,
-      "winRate": 64,
+      "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 23,
-          "won": 16,
+          "totalChecked": 24,
+          "won": 17,
           "lost": 7,
-          "winRate": 70
+          "winRate": 71
         },
         "medium": {
           "totalChecked": 60,
@@ -29,10 +29,10 @@
       }
     },
     "tennis": {
-      "totalChecked": 27,
+      "totalChecked": 28,
       "won": 12,
-      "lost": 15,
-      "winRate": 44,
+      "lost": 16,
+      "winRate": 43,
       "byRisk": {
         "low": {
           "totalChecked": 20,
@@ -41,10 +41,10 @@
           "winRate": 45
         },
         "medium": {
-          "totalChecked": 7,
+          "totalChecked": 8,
           "won": 3,
-          "lost": 4,
-          "winRate": 43
+          "lost": 5,
+          "winRate": 38
         },
         "high": {
           "totalChecked": 0,
@@ -147,28 +147,6 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    },
-    {
-      "id": "5_froncadellifcomesana_2026-11-12_1jtszmagyztese1_fcomesana",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "F. Roncadelli - F. Comesana",
-      "competitionName": "Challenger - Lima, férfi egyes",
-      "eventDate": "2026-11-12T18:10:00+01:00",
-      "marketName": "1. játszma győztese (1)",
-      "outcomeName": "F. Comesana",
-      "odds": 1.33,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T07:04:57.465Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_challenger",
-      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
-      "categorySubKey": "ten_challenger_lima",
-      "categorySubName": "Challenger - Lima"
     },
     {
       "id": "1_olaszorszgfranciaorszg_2026-11-12_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -367,31 +345,55 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_u20franciaorszgu20dnia_2026-11-12_1x2_u20franciaorszg",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "U20Franciaország - U20Dánia",
-      "competitionName": "Nemzetközi utánpótlás - U20 válogatott mérkőzés",
       "eventDate": "2026-11-12T17:00:00+01:00",
+      "competitionName": "Nemzetközi utánpótlás - U20 válogatott mérkőzés",
       "marketName": "1X2",
       "outcomeName": "U20Franciaország",
       "odds": 1.43,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T13:35:55.193Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "2-1",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-12T19:18:25.891Z",
+      "status": "won",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u20_válogatott_mérkőzés",
       "categorySubName": "U20 válogatott mérkőzés"
-    }
-  ],
-  "history": [
+    },
+    {
+      "id": "5_froncadellifcomesana_2026-11-12_1jtszmagyztese1_fcomesana",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "F. Roncadelli - F. Comesana",
+      "eventDate": "2026-11-12T18:10:00+01:00",
+      "competitionName": "Challenger - Lima, férfi egyes",
+      "marketName": "1. játszma győztese (1)",
+      "outcomeName": "F. Comesana",
+      "odds": 1.33,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "6-4, 6-3",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-12T19:18:25.890Z",
+      "status": "lost",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_lima",
+      "categorySubName": "Challenger - Lima"
+    },
     {
       "id": "1_trkorszgbelgium_2026-11-12_glszm2525_tbbmint25",
       "sportId": 1,
