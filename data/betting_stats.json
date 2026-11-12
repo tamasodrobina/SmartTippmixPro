@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T13:40:05.565Z",
+  "updatedAt": "2026-11-12T14:05:53.222Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 24,
+      "totalChecked": 25,
       "won": 10,
-      "lost": 14,
-      "winRate": 42,
+      "lost": 15,
+      "winRate": 40,
       "byRisk": {
         "low": {
-          "totalChecked": 17,
+          "totalChecked": 18,
           "won": 7,
-          "lost": 10,
-          "winRate": 41
+          "lost": 11,
+          "winRate": 39
         },
         "medium": {
           "totalChecked": 7,
@@ -147,28 +147,6 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    },
-    {
-      "id": "5_amichelsenatabilo_2026-11-12_1jtszmagyztese1_amichelsen",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "A. Michelsen - A. Tabilo",
-      "competitionName": "ATP - Stockholm, férfi egyes",
-      "eventDate": "2026-11-12T13:00:00+01:00",
-      "marketName": "1. játszma győztese (1)",
-      "outcomeName": "A. Michelsen",
-      "odds": 1.3,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T07:04:57.461Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_top",
-      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
-      "categorySubKey": "ten_atp_stockholm",
-      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "5_kfeldbauschmmalige_2026-11-12_jtszmkszma_2",
@@ -414,6 +392,29 @@
     }
   ],
   "history": [
+    {
+      "id": "5_amichelsenatabilo_2026-11-12_1jtszmagyztese1_amichelsen",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "A. Michelsen - A. Tabilo",
+      "eventDate": "2026-11-12T13:00:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "marketName": "1. játszma győztese (1)",
+      "outcomeName": "A. Michelsen",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T14:05:53.222Z",
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
+    },
     {
       "id": "1_hwacheonkspogyeongju_2026-11-12_zsiaihendikep055_gyeongju05",
       "sportId": 1,
