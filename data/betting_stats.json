@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T16:55:56.524Z",
+  "updatedAt": "2026-11-12T17:05:52.829Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 26,
-      "won": 11,
+      "totalChecked": 27,
+      "won": 12,
       "lost": 15,
-      "winRate": 42,
+      "winRate": 44,
       "byRisk": {
         "low": {
-          "totalChecked": 19,
-          "won": 8,
+          "totalChecked": 20,
+          "won": 9,
           "lost": 11,
-          "winRate": 42
+          "winRate": 45
         },
         "medium": {
           "totalChecked": 7,
@@ -147,28 +147,6 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    },
-    {
-      "id": "5_laurasamsonireneburilloescorihuela_2026-11-12_amrkzsgyztese_laurasamson",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "Laura Samson - Irene Burillo Escorihuela",
-      "competitionName": "WTA-Challenger - Sopo, női egyes",
-      "eventDate": "2026-11-12T16:00:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "Laura Samson",
-      "odds": 1.3,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T07:04:57.463Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_challenger",
-      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
-      "categorySubKey": "ten_wta_challenger_sopo",
-      "categorySubName": "WTA-Challenger - Sopo"
     },
     {
       "id": "5_froncadellifcomesana_2026-11-12_1jtszmagyztese1_fcomesana",
@@ -348,6 +326,29 @@
     }
   ],
   "history": [
+    {
+      "id": "5_laurasamsonireneburilloescorihuela_2026-11-12_amrkzsgyztese_laurasamson",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "Laura Samson - Irene Burillo Escorihuela",
+      "eventDate": "2026-11-12T16:00:00+01:00",
+      "competitionName": "WTA-Challenger - Sopo, női egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "Laura Samson",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T17:05:52.829Z",
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_wta_challenger_sopo",
+      "categorySubName": "WTA-Challenger - Sopo"
+    },
     {
       "id": "1_u19portugliau19litvnia_2026-11-12_glszm35_tbbmint35",
       "sportId": 1,
