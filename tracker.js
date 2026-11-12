@@ -628,11 +628,13 @@ function createEmptyNodeStats(meta = {}) {
     winRate: 0,
     pendingCount: 0,
     netUnits: 0,
+    profitUnits: 0,
     roi: 0,
+    roiPercent: 0,
     byRisk: {
-      low: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0 },
-      medium: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0 },
-      high: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0 }
+      low: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0, profitUnits: 0 },
+      medium: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0, profitUnits: 0 },
+      high: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0, profitUnits: 0 }
     }
   };
 }
@@ -663,9 +665,12 @@ function addHistoryItemToNode(node, item) {
     rNode.netUnits = Number((rNode.netUnits - 1).toFixed(2));
   }
 
+  node.profitUnits = node.netUnits;
+  rNode.profitUnits = rNode.netUnits;
   node.winRate = Math.round((node.won / node.totalChecked) * 100);
   rNode.winRate = Math.round((rNode.won / rNode.totalChecked) * 100);
-  node.roi = Math.round((node.netUnits / node.totalChecked) * 100);
+  node.roi = Number(((node.netUnits / node.totalChecked) * 100).toFixed(1));
+  node.roiPercent = node.roi;
 }
 
 function addPendingItemToNode(node, item) {
