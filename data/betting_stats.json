@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T10:01:44.089Z",
+  "updatedAt": "2026-11-12T10:45:48.478Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -98,7 +98,11 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-12T07:02:24.647Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     },
     {
       "id": "16_nygiantswashington_2026-11-13_meznyglokszma2525_tbbmint25",
@@ -116,7 +120,11 @@
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
       "addedAt": "2026-11-12T07:02:24.649Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     },
     {
       "id": "16_nygiantswashington_2026-11-13_hendikep3535_washington35",
@@ -134,7 +142,11 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-12T07:02:24.651Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     },
     {
       "id": "5_amichelsenatabilo_2026-11-12_1jtszmagyztese1_amichelsen",
@@ -152,7 +164,11 @@
       "riskLevel": "Alacsony",
       "source": "homepage_interval",
       "addedAt": "2026-11-12T07:04:57.461Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "5_kfeldbauschmmalige_2026-11-12_jtszmkszma_2",
@@ -170,7 +186,11 @@
       "riskLevel": "Alacsony",
       "source": "homepage_interval",
       "addedAt": "2026-11-12T07:04:57.462Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_monasztir",
+      "categorySubName": "Challenger - Monasztir"
     },
     {
       "id": "5_laurasamsonireneburilloescorihuela_2026-11-12_amrkzsgyztese_laurasamson",
@@ -188,7 +208,11 @@
       "riskLevel": "Alacsony",
       "source": "homepage_interval",
       "addedAt": "2026-11-12T07:04:57.463Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_wta_challenger_sopo",
+      "categorySubName": "WTA-Challenger - Sopo"
     },
     {
       "id": "5_froncadellifcomesana_2026-11-12_1jtszmagyztese1_fcomesana",
@@ -206,7 +230,11 @@
       "riskLevel": "Közepes",
       "source": "homepage_interval",
       "addedAt": "2026-11-12T07:04:57.465Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_lima",
+      "categorySubName": "Challenger - Lima"
     },
     {
       "id": "1_hwacheonkspogyeongju_2026-11-12_glszm2525_kevesebbmint25",
@@ -224,7 +252,11 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-12T08:29:44.111Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_dél_koreai_bajnokság_női",
+      "categorySubName": "Dél-koreai bajnokság, női"
     },
     {
       "id": "1_hwacheonkspogyeongju_2026-11-12_zsiaihendikep055_gyeongju05",
@@ -242,7 +274,11 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-12T08:29:44.112Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_dél_koreai_bajnokság_női",
+      "categorySubName": "Dél-koreai bajnokság, női"
     },
     {
       "id": "1_hwacheonkspogyeongju_2026-11-12_mindktcsapatszerezglt_nem",
@@ -260,7 +296,11 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-12T08:29:44.114Z",
-      "status": "pending"
+      "status": "pending",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_dél_koreai_bajnokság_női",
+      "categorySubName": "Dél-koreai bajnokság, női"
     }
   ],
   "history": [
@@ -281,7 +321,11 @@
       "finalScore": "2-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-12T10:01:44.089Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_herszonisszosz",
+      "categorySubName": "Challenger - Herszonisszosz"
     },
     {
       "id": "5_mlcarlembassolsribera_2026-11-11_amrkzsgyztese_mbassolsribera",
@@ -300,7 +344,11 @@
       "finalScore": "0-2",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T21:01:47.689Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_wta_challenger_sopo",
+      "categorySubName": "WTA-Challenger - Sopo"
     },
     {
       "id": "1_liverpoolastonvilla_2026-11-11_zsiaihendikep11_liverpool1",
@@ -319,7 +367,11 @@
       "finalScore": "4-1",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T21:01:46.690Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_angol_liga_kupa_női",
+      "categorySubName": "Angol Liga-kupa, női"
     },
     {
       "id": "1_liverpoolastonvilla_2026-11-11_mindktcsapatszerezglt_igen",
@@ -338,7 +390,11 @@
       "finalScore": "4-1",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T21:01:46.689Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_angol_liga_kupa_női",
+      "categorySubName": "Angol Liga-kupa, női"
     },
     {
       "id": "1_liverpoolastonvilla_2026-11-11_1x2glszm1515_hazaistbb",
@@ -357,7 +413,11 @@
       "finalScore": "4-1",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T21:01:46.689Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_angol_liga_kupa_női",
+      "categorySubName": "Angol Liga-kupa, női"
     },
     {
       "id": "1_liverpoolastonvilla_2026-11-11_1x2_liverpool",
@@ -376,7 +436,11 @@
       "finalScore": "4-1",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T21:01:46.689Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_angol_liga_kupa_női",
+      "categorySubName": "Angol Liga-kupa, női"
     },
     {
       "id": "1_frankfurtpsv_2026-11-11_glszm2525_tbbmint25",
@@ -395,7 +459,11 @@
       "finalScore": "2-1",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T19:31:46.493Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_európa_kupa_női",
+      "categorySubName": "Európa Kupa, női"
     },
     {
       "id": "1_brndbyrosenborg_2026-11-11_kijuttovbb_brndby",
@@ -414,7 +482,11 @@
       "finalScore": "2-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T19:01:49.592Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_európa_kupa_női",
+      "categorySubName": "Európa Kupa, női"
     },
     {
       "id": "1_fenerbahcerealsociedad_2026-11-11_1x2_realsociedad",
@@ -433,7 +505,11 @@
       "finalScore": "0-2",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T19:01:49.591Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_európa_kupa_női",
+      "categorySubName": "Európa Kupa, női"
     },
     {
       "id": "1_artisbrnojablonec_2026-11-11_1x2_jablonec",
@@ -452,7 +528,11 @@
       "finalScore": "2-1",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T19:01:49.591Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_cseh_kupa",
+      "categorySubName": "Cseh Kupa"
     },
     {
       "id": "5_alexshevchenkocruud_2026-11-11_jtszmkszma_2",
@@ -471,7 +551,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T19:01:43.588Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "1_fleury91toulouse_2026-11-11_1x2_fleury91",
@@ -490,7 +574,11 @@
       "finalScore": "7-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T18:01:46.588Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_francia_bajnokság_női",
+      "categorySubName": "Francia bajnokság, női"
     },
     {
       "id": "5_mmartineauhgaston_2026-11-11_amrkzsgyztese_hgaston",
@@ -509,7 +597,11 @@
       "finalScore": "2-0",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-11T17:07:21.512Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_orleans",
+      "categorySubName": "Challenger - Orleans"
     },
     {
       "id": "5_piroszsomborctabur_2026-11-11_amrkzsgyztese_ctabur",
@@ -528,7 +620,11 @@
       "finalScore": "1-2",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-11T17:07:21.512Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_orleans",
+      "categorySubName": "Challenger - Orleans"
     },
     {
       "id": "5_lsonegoatabilo_2026-11-11_amrkzsgyztese_lsonego",
@@ -547,7 +643,11 @@
       "finalScore": "1-2",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T15:11:45.889Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "1_urawardcerezoosaka_2026-11-11_1x2_uraward",
@@ -566,7 +666,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T12:31:47.791Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_japán_liga_kupa",
+      "categorySubName": "Japán Liga-kupa"
     },
     {
       "id": "1_yokohamafmkashimaa_2026-11-11_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -585,7 +689,11 @@
       "finalScore": "2-3",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T12:11:46.889Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_japán_liga_kupa",
+      "categorySubName": "Japán Liga-kupa"
     },
     {
       "id": "1_kawasakifrontalekashiwar_2026-11-11_mindktcsapatszerezglt_igen",
@@ -604,7 +712,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T12:01:46.696Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_japán_liga_kupa",
+      "categorySubName": "Japán Liga-kupa"
     },
     {
       "id": "1_visselkobemachidazelvia_2026-11-11_dntetlennlattvisszajr_visselkobe",
@@ -623,7 +735,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-11T12:01:46.695Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_japán_liga_kupa",
+      "categorySubName": "Japán Liga-kupa"
     },
     {
       "id": "5_cgaufflnoskova_2026-11-10_amrkzsgyztese_cgauff",
@@ -642,7 +758,11 @@
       "finalScore": "0-2",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T23:41:42.300Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_wta_wta_vb",
+      "categorySubName": "WTA - WTA-vb"
     },
     {
       "id": "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -661,7 +781,11 @@
       "finalScore": "1-2",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T22:11:44.896Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_bl_női",
+      "categorySubName": "BL, női"
     },
     {
       "id": "1_parissgbayernmnchen_2026-11-10_glszm2525_tbbmint25",
@@ -680,7 +804,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T22:01:53.990Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_bl_női",
+      "categorySubName": "BL, női"
     },
     {
       "id": "1_internazionalemanchestercity_2026-11-10_1x2glszm2525_vendgstbb",
@@ -699,7 +827,11 @@
       "finalScore": "1-4",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T22:01:53.990Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "ucl",
+      "categoryGroupName": "Bajnokok Ligája (BL)",
+      "categorySubKey": "ucl",
+      "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
       "id": "1_internazionalemanchestercity_2026-11-10_1flid1x2_manchestercity",
@@ -718,7 +850,11 @@
       "finalScore": "1-4",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T22:01:53.990Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "ucl",
+      "categoryGroupName": "Bajnokok Ligája (BL)",
+      "categorySubKey": "ucl",
+      "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
       "id": "1_internazionalemanchestercity_2026-11-10_mindktcsapatszerezglt_igen",
@@ -737,7 +873,11 @@
       "finalScore": "1-4",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T22:01:53.990Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "ucl",
+      "categoryGroupName": "Bajnokok Ligája (BL)",
+      "categorySubKey": "ucl",
+      "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
       "id": "1_parissgbayernmnchen_2026-11-10_1x2_bayernmnchen",
@@ -756,7 +896,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T22:01:53.990Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_bl_női",
+      "categorySubName": "BL, női"
     },
     {
       "id": "1_parissgbayernmnchen_2026-11-10_mindktcsapatszerezglt_igen",
@@ -775,7 +919,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T22:01:45.494Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_bl_női",
+      "categorySubName": "BL, női"
     },
     {
       "id": "5_lmusettitobysamuel_2026-11-10_tobysamuelnyerlegalbbegyjtszmt_nem",
@@ -794,7 +942,11 @@
       "finalScore": "2-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T20:21:42.391Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "5_hvnrunezbergs_2026-11-10_amrkzsgyztese_hvnrune",
@@ -813,7 +965,11 @@
       "finalScore": "2-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T19:01:42.100Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "5_arinderknechmkecmanovic_2026-11-10_amrkzsgyztese_arinderknech",
@@ -832,7 +988,11 @@
       "finalScore": "1-2",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T17:11:42.389Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "1_almokawloonarabwesc_2026-11-10_ktesly_dntetlenvagywesc",
@@ -851,7 +1011,11 @@
       "finalScore": "1-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T17:01:45.788Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_egyiptomi_kupa",
+      "categorySubName": "Egyiptomi Kupa"
     },
     {
       "id": "1_almokawloonarabwesc_2026-11-10_1x2_almokawloonarab",
@@ -870,7 +1034,11 @@
       "finalScore": "1-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T17:01:45.788Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_egyiptomi_kupa",
+      "categorySubName": "Egyiptomi Kupa"
     },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_glszm_23",
@@ -889,7 +1057,11 @@
       "finalScore": "3-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T15:41:45.892Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "5_tmetcheverrytatirante_2026-11-10_amrkzsgyztese_tmetcheverry",
@@ -908,7 +1080,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T15:31:41.694Z",
-      "status": "void"
+      "status": "void",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "5_lsonegoqhalys_2026-11-10_lsonegonyerlegalbbegyjtszmt_igen",
@@ -927,7 +1103,11 @@
       "finalScore": "2-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T15:11:41.691Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_ktesly_dntetlenvagyu23thaifld",
@@ -946,7 +1126,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T14:01:47.396Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
@@ -965,7 +1149,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T14:01:47.396Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_mindktcsapatszerezglt_igen",
@@ -984,7 +1172,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T14:01:47.395Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_glszm3535_kevesebbmint35",
@@ -1003,7 +1195,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T14:01:47.395Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_dntetlennlattvisszajr_u23vietnm",
@@ -1022,7 +1218,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T14:01:47.395Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "5_amichelsenjmcerundolo_2026-11-10_1jtszmagyztese1_amichelsen",
@@ -1041,7 +1241,11 @@
       "finalScore": "2-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T14:01:47.395Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "5_amannarinoalexshevchenko_2026-11-10_amrkzsgyztese_amannarino",
@@ -1060,7 +1264,11 @@
       "finalScore": "0-2",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T14:01:47.395Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "1_u23vietnmu23thaifld_2026-11-10_1x2_u23vietnm",
@@ -1079,7 +1287,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T14:01:45.816Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "5_rbertolalcarboni_2026-11-10_amrkzsgyztese_rbertola",
@@ -1098,7 +1310,11 @@
       "finalScore": null,
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T13:41:43.492Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_herszonisszosz",
+      "categorySubName": "Challenger - Herszonisszosz"
     },
     {
       "id": "5_dsvrcinavsachko_2026-11-10_amrkzsgyztese_dsvrcina",
@@ -1117,7 +1333,11 @@
       "finalScore": "2-1",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T12:21:44.790Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_orleans",
+      "categorySubName": "Challenger - Orleans"
     },
     {
       "id": "5_fmaestrellijackloge_2026-11-10_amrkzsgyztese_fmaestrelli",
@@ -1136,7 +1356,11 @@
       "finalScore": "2-0",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-10T11:11:53.975Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_herszonisszosz",
+      "categorySubName": "Challenger - Herszonisszosz"
     },
     {
       "id": "5_felgillmefstathiou_2026-11-10_jtszmkszma_2",
@@ -1155,7 +1379,11 @@
       "finalScore": "0-2",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-10T11:11:53.974Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_herszonisszosz",
+      "categorySubName": "Challenger - Herszonisszosz"
     },
     {
       "id": "5_kbennanisnagal_2026-11-10_jtszmkszma_2",
@@ -1174,7 +1402,11 @@
       "finalScore": "0-2",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-10T11:11:53.974Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_herszonisszosz",
+      "categorySubName": "Challenger - Herszonisszosz"
     },
     {
       "id": "1_u23kataru23szingapr_2026-11-10_mindktcsapatszerezglt_nem",
@@ -1193,7 +1425,11 @@
       "finalScore": "0-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T11:01:45.490Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "1_u23kataru23szingapr_2026-11-10_glszm3535_kevesebbmint35",
@@ -1212,7 +1448,11 @@
       "finalScore": "0-0",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-10T11:01:45.489Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések",
+      "categorySubKey": "nat_u23_válogatott_mérkőzés",
+      "categorySubName": "U23 válogatott mérkőzés"
     },
     {
       "id": "16_minnesotabuffalo_2026-11-10_flidvgeredmny_buffalobuffalo",
@@ -1231,7 +1471,11 @@
       "finalScore": "6-23",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     },
     {
       "id": "16_minnesotabuffalo_2026-11-10_pontszm435435_tbbmint435",
@@ -1250,7 +1494,11 @@
       "finalScore": "6-23",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     },
     {
       "id": "16_minnesotabuffalo_2026-11-10_amrkzsgyztese_buffalo",
@@ -1269,7 +1517,11 @@
       "finalScore": "6-23",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     },
     {
       "id": "16_minnesotabuffalo_2026-11-10_pontszm475475_kevesebbmint475",
@@ -1288,7 +1540,11 @@
       "finalScore": "6-23",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     },
     {
       "id": "16_minnesotabuffalo_2026-11-10_1x2_buffalo",
@@ -1307,7 +1563,11 @@
       "finalScore": "6-23",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     },
     {
       "id": "1_auroracochabambauniversitariodevinto_2026-11-10_ktesly_dntetlenvagyuniversitariodevinto",
@@ -1326,7 +1586,11 @@
       "finalScore": "1-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_bolíviai_bajnokság",
+      "categorySubName": "Bolíviai bajnokság"
     },
     {
       "id": "1_auroracochabambauniversitariodevinto_2026-11-10_1x2_auroracochabamba",
@@ -1345,7 +1609,11 @@
       "finalScore": "1-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_bolíviai_bajnokság",
+      "categorySubName": "Bolíviai bajnokság"
     },
     {
       "id": "1_juniordebarranquillacucutadeportivo_2026-11-10_ktesly_dntetlenvagycucutadeportivo",
@@ -1364,7 +1632,11 @@
       "finalScore": "2-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_kolumbiai_bajnokság",
+      "categorySubName": "Kolumbiai bajnokság"
     },
     {
       "id": "1_juniordebarranquillacucutadeportivo_2026-11-10_1x2_juniordebarranquilla",
@@ -1383,7 +1655,11 @@
       "finalScore": "2-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_kolumbiai_bajnokság",
+      "categorySubName": "Kolumbiai bajnokság"
     },
     {
       "id": "1_spluquenocs2demayo_2026-11-09_glszm2525_kevesebbmint25",
@@ -1402,7 +1678,11 @@
       "finalScore": "1-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_paraguayi_bajnokság",
+      "categorySubName": "Paraguayi bajnokság"
     },
     {
       "id": "1_spluquenocs2demayo_2026-11-09_dntetlennlattvisszajr_spluqueno",
@@ -1421,7 +1701,11 @@
       "finalScore": "1-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_paraguayi_bajnokság",
+      "categorySubName": "Paraguayi bajnokság"
     },
     {
       "id": "1_independienteyumbounionmagdalena_2026-11-09_dntetlennlattvisszajr_independienteyumbo",
@@ -1440,7 +1724,11 @@
       "finalScore": "0-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_kolumbiai_2_",
+      "categorySubName": "Kolumbiai 2."
     },
     {
       "id": "1_tecnicounivambatomantafc_2026-11-09_ktesly_dntetlenvagymantafc",
@@ -1459,7 +1747,11 @@
       "finalScore": "1-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_ecuadori_bajnokság",
+      "categorySubName": "Ecuadori bajnokság"
     },
     {
       "id": "1_tecnicounivambatomantafc_2026-11-09_1x2_tecnicounivambato",
@@ -1478,7 +1770,11 @@
       "finalScore": "1-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_ecuadori_bajnokság",
+      "categorySubName": "Ecuadori bajnokság"
     },
     {
       "id": "1_torreenseleiria_2026-11-09_ktesly_dntetlenvagyleiria",
@@ -1497,7 +1793,11 @@
       "finalScore": "2-3",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_portugál_2_",
+      "categorySubName": "Portugál 2."
     },
     {
       "id": "1_torreenseleiria_2026-11-09_1x2_torreense",
@@ -1516,7 +1816,11 @@
       "finalScore": "2-3",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_portugál_2_",
+      "categorySubName": "Portugál 2."
     },
     {
       "id": "1_spsanlorenzorubionu_2026-11-09_ktesly_spsanlorenzovagydntetlen",
@@ -1535,7 +1839,11 @@
       "finalScore": "2-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_paraguayi_bajnokság",
+      "categorySubName": "Paraguayi bajnokság"
     },
     {
       "id": "1_spsanlorenzorubionu_2026-11-09_1x2_rubionu",
@@ -1554,7 +1862,11 @@
       "finalScore": "2-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_paraguayi_bajnokság",
+      "categorySubName": "Paraguayi bajnokság"
     },
     {
       "id": "1_deportivoacorunavalencia_2026-11-09_ktesly_dntetlenvagyvalencia",
@@ -1573,7 +1885,11 @@
       "finalScore": "0-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_spanyol_bajnokság_női",
+      "categorySubName": "Spanyol bajnokság, női"
     },
     {
       "id": "1_deportivoacorunavalencia_2026-11-09_1x2_deportivoacoruna",
@@ -1592,7 +1908,11 @@
       "finalScore": "0-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_spanyol_bajnokság_női",
+      "categorySubName": "Spanyol bajnokság, női"
     },
     {
       "id": "1_picernobari_2026-11-09_glszm2525_kevesebbmint25",
@@ -1611,7 +1931,11 @@
       "finalScore": "1-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_c",
+      "categorySubName": "Olasz C"
     },
     {
       "id": "1_picernobari_2026-11-09_dntetlennlattvisszajr_bari",
@@ -1630,7 +1954,11 @@
       "finalScore": "1-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_c",
+      "categorySubName": "Olasz C"
     },
     {
       "id": "1_pinetopesaro_2026-11-09_1x2_pineto",
@@ -1649,7 +1977,11 @@
       "finalScore": "1-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_c",
+      "categorySubName": "Olasz C"
     },
     {
       "id": "1_foggiabarletta_2026-11-09_glszm2525_kevesebbmint25",
@@ -1668,7 +2000,11 @@
       "finalScore": "0-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_c",
+      "categorySubName": "Olasz C"
     },
     {
       "id": "1_foggiabarletta_2026-11-09_ktesly_dntetlenvagybarletta",
@@ -1687,7 +2023,11 @@
       "finalScore": "0-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_c",
+      "categorySubName": "Olasz C"
     },
     {
       "id": "1_altamuracavese_2026-11-09_ktesly_altamuravagydntetlen",
@@ -1706,7 +2046,11 @@
       "finalScore": "0-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_c",
+      "categorySubName": "Olasz C"
     },
     {
       "id": "1_sabadellrealsociedad2_2026-11-09_ktesly_dntetlenvagyrealsociedad2",
@@ -1725,7 +2069,11 @@
       "finalScore": "0-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     },
     {
       "id": "1_sabadellrealsociedad2_2026-11-09_1x2_sabadell",
@@ -1744,7 +2092,11 @@
       "finalScore": "0-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     },
     {
       "id": "1_laspalmaseldense_2026-11-09_1x2_laspalmas",
@@ -1763,7 +2115,11 @@
       "finalScore": "2-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     },
     {
       "id": "1_mushucrunadelfinmanta_2026-11-09_ktesly_dntetlenvagydelfinmanta",
@@ -1782,7 +2138,11 @@
       "finalScore": "2-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_ecuadori_bajnokság",
+      "categorySubName": "Ecuadori bajnokság"
     },
     {
       "id": "1_mushucrunadelfinmanta_2026-11-09_1x2_mushucruna",
@@ -1801,7 +2161,11 @@
       "finalScore": "2-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_ecuadori_bajnokság",
+      "categorySubName": "Ecuadori bajnokság"
     },
     {
       "id": "1_atlmadridbadalona_2026-11-09_mindktcsapatszerezglt_nem",
@@ -1820,7 +2184,11 @@
       "finalScore": "3-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_spanyol_bajnokság_női",
+      "categorySubName": "Spanyol bajnokság, női"
     },
     {
       "id": "1_atlmadridbadalona_2026-11-09_zsiaiglszm33_tbbmint3",
@@ -1839,7 +2207,11 @@
       "finalScore": "3-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_spanyol_bajnokság_női",
+      "categorySubName": "Spanyol bajnokság, női"
     },
     {
       "id": "1_hvidovreaarhusfremad_2026-11-09_ktesly_dntetlenvagyaarhusfremad",
@@ -1858,7 +2230,11 @@
       "finalScore": "3-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_dán_2_",
+      "categorySubName": "Dán 2."
     },
     {
       "id": "1_hvidovreaarhusfremad_2026-11-09_1x2_hvidovre",
@@ -1877,7 +2253,11 @@
       "finalScore": "3-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_dán_2_",
+      "categorySubName": "Dán 2."
     },
     {
       "id": "1_botosaniotelulgalati_2026-11-09_ktesly_dntetlenvagyotelulgalati",
@@ -1896,7 +2276,11 @@
       "finalScore": "1-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_román_bajnokság",
+      "categorySubName": "Román bajnokság"
     },
     {
       "id": "1_botosaniotelulgalati_2026-11-09_1x2_botosani",
@@ -1915,7 +2299,11 @@
       "finalScore": "1-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_román_bajnokság",
+      "categorySubName": "Román bajnokság"
     },
     {
       "id": "1_ironimodiinhapoelakko_2026-11-09_glszm2525_tbbmint25",
@@ -1934,7 +2322,11 @@
       "finalScore": "2-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_izraeli_2_",
+      "categorySubName": "Izraeli 2."
     },
     {
       "id": "1_hapoelkfarsabamaccabibneireine_2026-11-09_dntetlennlattvisszajr_maccabibneireine",
@@ -1953,7 +2345,11 @@
       "finalScore": "1-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_izraeli_2_",
+      "categorySubName": "Izraeli 2."
     },
     {
       "id": "1_hapoelkfarsabamaccabibneireine_2026-11-09_1x2_maccabibneireine",
@@ -1972,7 +2368,11 @@
       "finalScore": "1-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_izraeli_2_",
+      "categorySubName": "Izraeli 2."
     },
     {
       "id": "1_kfarqasemhapoelafula_2026-11-09_dntetlennlattvisszajr_kfarqasem",
@@ -1991,7 +2391,11 @@
       "finalScore": "1-3",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_izraeli_2_",
+      "categorySubName": "Izraeli 2."
     },
     {
       "id": "1_1fcklnrbleipzig_2026-11-09_ktesly_dntetlenvagyrbleipzig",
@@ -2010,7 +2414,11 @@
       "finalScore": "3-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_német_bajnokság_női",
+      "categorySubName": "Német bajnokság, női"
     },
     {
       "id": "1_1fcklnrbleipzig_2026-11-09_1x2_1fckln",
@@ -2029,7 +2437,11 @@
       "finalScore": "3-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_német_bajnokság_női",
+      "categorySubName": "Német bajnokság, női"
     },
     {
       "id": "1_kristiansundvalerenga_2026-11-09_dntetlennlattvisszajr_valerenga",
@@ -2048,7 +2460,11 @@
       "finalScore": "1-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_norvég_bajnokság",
+      "categorySubName": "Norvég bajnokság"
     },
     {
       "id": "1_kristiansundvalerenga_2026-11-09_1x2_valerenga",
@@ -2067,7 +2483,11 @@
       "finalScore": "1-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_norvég_bajnokság",
+      "categorySubName": "Norvég bajnokság"
     },
     {
       "id": "1_kfarqasemhapoelafula_2026-11-09_glszm2525_tbbmint25",
@@ -2086,7 +2506,11 @@
       "finalScore": "1-3",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_izraeli_2_",
+      "categorySubName": "Izraeli 2."
     },
     {
       "id": "1_ironimodiinhapoelakko_2026-11-09_dntetlennlattvisszajr_ironimodiin",
@@ -2105,7 +2529,11 @@
       "finalScore": "2-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_izraeli_2_",
+      "categorySubName": "Izraeli 2."
     },
     {
       "id": "1_hapoelkfarsabamaccabibneireine_2026-11-09_mindktcsapatszerezglt_igen",
@@ -2124,7 +2552,11 @@
       "finalScore": "1-2",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_izraeli_2_",
+      "categorySubName": "Izraeli 2."
     },
     {
       "id": "1_1fcklnrbleipzig_2026-11-09_glszm2525_tbbmint25",
@@ -2143,7 +2575,11 @@
       "finalScore": "3-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categorySubKey": "w_német_bajnokság_női",
+      "categorySubName": "Német bajnokság, női"
     },
     {
       "id": "1_iberia1999gagra_2026-11-09_1x2_iberia1999",
@@ -2162,7 +2598,11 @@
       "finalScore": "1-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_georgiai_bajnokság",
+      "categorySubName": "Georgiai bajnokság"
     },
     {
       "id": "5_tmetcheverrymdahlin_2026-11-09_2jtszmagyztese2_tmetcheverry",
@@ -2181,7 +2621,11 @@
       "finalScore": "6-4, 6-7, 6-3",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "1_hvidovreaarhusfremad_2026-11-09_dntetlennlattvisszajr_hvidovre",
@@ -2200,7 +2644,11 @@
       "finalScore": "3-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_dán_2_",
+      "categorySubName": "Dán 2."
     },
     {
       "id": "1_kristiansundvalerenga_2026-11-09_1flidmindktcsapatszerezglt_nem",
@@ -2219,7 +2667,11 @@
       "finalScore": "1-0",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.323Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_norvég_bajnokság",
+      "categorySubName": "Norvég bajnokság"
     },
     {
       "id": "1_botosaniotelulgalati_2026-11-09_dntetlennlattvisszajr_botosani",
@@ -2238,7 +2690,11 @@
       "finalScore": "1-1",
       "verificationMethod": "web_verification",
       "evaluatedAt": "2026-11-10T07:32:44.323Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_román_bajnokság",
+      "categorySubName": "Román bajnokság"
     },
     {
       "id": "1_independienteyumbounionmagdalena_2026-11-09_glszm2525_kevesebbmint25",
@@ -2257,7 +2713,11 @@
       "finalScore": "0-1",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T22:39:33.265Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_kolumbiai_2_",
+      "categorySubName": "Kolumbiai 2."
     },
     {
       "id": "1_pinetopesaro_2026-11-09_ktesly_dntetlenvagypesaro",
@@ -2276,7 +2736,11 @@
       "finalScore": "1-0",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T21:30:47.466Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_c",
+      "categorySubName": "Olasz C"
     },
     {
       "id": "1_altamuracavese_2026-11-09_glszm2525_tbbmint25",
@@ -2295,7 +2759,11 @@
       "finalScore": "0-0",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T21:30:42.372Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_c",
+      "categorySubName": "Olasz C"
     },
     {
       "id": "1_laspalmaseldense_2026-11-09_ktesly_dntetlenvagyeldense",
@@ -2314,7 +2782,11 @@
       "finalScore": "1-2",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T21:30:37.295Z",
-      "status": "won"
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     },
     {
       "id": "1_laspalmaseldense_2026-11-09_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
@@ -2333,7 +2805,11 @@
       "finalScore": "1-0",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T21:28:14.567Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     },
     {
       "id": "5_leoborgtobysamuel_2026-11-09_leoborgnyerlegalbbegyjtszmt_nem",
@@ -2352,7 +2828,11 @@
       "finalScore": "6-4, 6-4",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T20:58:10.141Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
     },
     {
       "id": "5_ireneburilloescorihuelaylizarazo_2026-11-09_ireneburilloescorihuelajtkszm125_kevesebbmint125",
@@ -2371,7 +2851,11 @@
       "finalScore": "6-1, 6-2",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T20:48:13.049Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_wta_challenger_sopo",
+      "categorySubName": "WTA-Challenger - Sopo"
     },
     {
       "id": "5_skopplmikrut_2026-11-09_amrkzsgyztese_lmikrut",
@@ -2390,7 +2874,11 @@
       "finalScore": "6-4, 6-4",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T20:48:11.971Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_monasztir",
+      "categorySubName": "Challenger - Monasztir"
     },
     {
       "id": "5_mhoukestgentzsch_2026-11-09_amrkzsgyztese_tgentzsch",
@@ -2409,7 +2897,11 @@
       "finalScore": "6-4, 6-4",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T20:48:10.800Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_orleans",
+      "categorySubName": "Challenger - Orleans"
     },
     {
       "id": "1_iberia1999gagra_2026-11-09_ktesly_dntetlenvagygagra",
@@ -2428,7 +2920,11 @@
       "finalScore": "3-0",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T20:38:17.440Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_georgiai_bajnokság",
+      "categorySubName": "Georgiai bajnokság"
     },
     {
       "id": "5_ctaburlukneumayer_2026-11-09_ctaburjtkszm135_kevesebbmint135",
@@ -2446,7 +2942,11 @@
       "finalScore": "6-3, 6-2",
       "verificationMethod": "gemini_search",
       "evaluatedAt": "2026-11-09T18:30:30.014Z",
-      "status": "lost"
+      "status": "lost",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_orleans",
+      "categorySubName": "Challenger - Orleans"
     }
   ],
   "seenTipIds": [

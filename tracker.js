@@ -66,6 +66,11 @@ export async function initTracker() {
 
   // Mindig megpróbáljuk betölteni GitHubról (akár van token, akár nincs)
   await pullFromGitHub();
+
+  // Visszamenőlegesen is besoroljuk az összes már kiértékelt és függő tippet a liga/torna kategóriákba
+  if (enrichAllStateTips()) {
+    saveState();
+  }
 }
 
 function mergeSportStats(existing) {
@@ -153,6 +158,640 @@ export function determineRiskCategory(tip) {
   return { category: 'high', label: 'Magas', score: 7 };
 }
 
+// ============================================================================
+// HIERARCHIKUS LIGA- ÉS TORNA-KATEGORIZÁLÓ RENDSZER (FIX ERŐSSÉGI SORRENDBEN)
+// ============================================================================
+
+export const FOOTBALL_CATEGORY_SCHEMA = [
+  {
+    key: 'top5_1',
+    name: 'Top 5 Bajnokság (1. osztály)',
+    icon: '👑',
+    order: 1,
+    expandable: true,
+    fixedSubs: [
+      { key: 'eng_1', name: '🇬🇧 Premier League (Angol 1.)', order: 1 },
+      { key: 'esp_1', name: '🇪🇸 La Liga (Spanyol 1.)', order: 2 },
+      { key: 'ita_1', name: '🇮🇹 Serie A (Olasz 1.)', order: 3 },
+      { key: 'ger_1', name: '🇩🇪 Bundesliga (Német 1.)', order: 4 },
+      { key: 'fra_1', name: '🇫🇷 Ligue 1 (Francia 1.)', order: 5 }
+    ]
+  },
+  {
+    key: 'ucl',
+    name: 'Bajnokok Ligája (BL)',
+    icon: '🌟',
+    order: 2,
+    expandable: false,
+    fixedSubs: []
+  },
+  {
+    key: 'uel_uecl',
+    name: 'Európa Liga & Konferencia Liga',
+    icon: '🏆',
+    order: 3,
+    expandable: true,
+    fixedSubs: [
+      { key: 'uel', name: '🏆 Európa Liga (EL)', order: 1 },
+      { key: 'uecl', name: '🏆 Konferencia Liga (KL)', order: 2 }
+    ]
+  },
+  {
+    key: 'top5_2',
+    name: 'Top 5 Bajnokság (2. osztály)',
+    icon: '🥈',
+    order: 4,
+    expandable: true,
+    fixedSubs: [
+      { key: 'eng_2', name: '🇬🇧 Championship (Angol 2.)', order: 1 },
+      { key: 'esp_2', name: '🇪🇸 La Liga 2 (Spanyol 2.)', order: 2 },
+      { key: 'ita_2', name: '🇮🇹 Serie B (Olasz 2.)', order: 3 },
+      { key: 'ger_2', name: '🇩🇪 Bundesliga 2 (Német 2.)', order: 4 },
+      { key: 'fra_2', name: '🇫🇷 Ligue 2 (Francia 2.)', order: 5 }
+    ]
+  },
+  {
+    key: 'national',
+    name: 'Válogatott mérkőzések',
+    icon: '🌍',
+    order: 5,
+    expandable: true,
+    fixedSubs: []
+  },
+  {
+    key: 'hun_1',
+    name: 'Magyar NB I & Magyar Kupa',
+    icon: '🇭🇺',
+    order: 6,
+    expandable: false,
+    fixedSubs: []
+  },
+  {
+    key: 'hun_2',
+    name: 'Magyar NB II (2. osztály)',
+    icon: '🇭🇺',
+    order: 7,
+    expandable: false,
+    fixedSubs: []
+  },
+  {
+    key: 'women',
+    name: 'Női Labdarúgás (Összes)',
+    icon: '👩',
+    order: 8,
+    expandable: true,
+    fixedSubs: []
+  },
+  {
+    key: 'other',
+    name: 'Egyéb bajnokságok és kupák',
+    icon: '🌐',
+    order: 9,
+    expandable: true,
+    fixedSubs: []
+  }
+];
+
+export const TENNIS_CATEGORY_SCHEMA = [
+  {
+    key: 'tennis_top',
+    name: 'Top Tornák (Grand Slam / ATP / WTA)',
+    icon: '👑',
+    order: 1,
+    expandable: true,
+    fixedSubs: []
+  },
+  {
+    key: 'tennis_challenger',
+    name: 'Kisebb Tornák (Challenger / ITF)',
+    icon: '🎾',
+    order: 2,
+    expandable: true,
+    fixedSubs: []
+  }
+];
+
+export function cleanSubLeagueName(rawComp, sportId = 1) {
+  let s = String(rawComp || '').trim();
+  if (!s) return sportId === 5 ? 'Tenisz torna' : 'Egyéb mérkőzés';
+
+  if (Number(sportId) === 5) {
+    s = s.replace(/,\s*(férfi|női|vegyes)\s*(egyes|páros).*$/i, '').trim();
+    s = s.replace(/,\s*\d+\.\s*csop.*$/i, '').trim();
+    return s || 'Tenisz torna';
+  }
+
+  if (s.includes(' - ')) {
+    const parts = s.split(' - ').map(p => p.trim());
+    s = parts.slice(1).join(' - ');
+  }
+
+  const hasNoi = /női/i.test(s);
+  s = s.replace(/,\s*(alsóház|felsőház|rájátszás|alapszakasz|bajnoki ág|kiesési ág|észak|dél|kelet|nyugat|[a-z0-9]\s*csoport|[a-z0-9]\.\s*cs\.).*$/i, '').trim();
+  s = s.replace(/\bDél-koreai b\./i, 'Dél-koreai bajnokság');
+  if (hasNoi && !/női/i.test(s)) {
+    s += ', női';
+  }
+  return s || 'Egyéb bajnokság';
+}
+
+export function classifyTipCategory(tip) {
+  const sportId = Number(tip?.sportId || (tip?.sportName?.includes('Tenisz') ? 5 : (tip?.sportName?.includes('NFL') || tip?.sportName?.includes('futball') ? 16 : 1)));
+  const rawComp = String(tip?.competitionName || '').trim();
+  const comp = rawComp.toLowerCase();
+  const ev = String(tip?.eventName || '').toLowerCase();
+
+  if (sportId === 16) {
+    return {
+      groupKey: 'nfl_main',
+      groupName: 'NFL',
+      subKey: 'nfl_main',
+      subName: 'USA - NFL'
+    };
+  }
+
+  if (sportId === 5) {
+    const isChallenger = comp.includes('challenger') || comp.includes('itf') || comp.includes('wta 125') || comp.includes('futures');
+    const subName = cleanSubLeagueName(rawComp, 5);
+    const subKey = 'ten_' + subName.toLowerCase().replace(/[^a-z0-9áéíóöőúüű]/g, '_').replace(/_+/g, '_');
+    if (isChallenger) {
+      return {
+        groupKey: 'tennis_challenger',
+        groupName: 'Kisebb Tornák (Challenger / ITF)',
+        subKey,
+        subName
+      };
+    }
+    return {
+      groupKey: 'tennis_top',
+      groupName: 'Top Tornák (Grand Slam / ATP / WTA)',
+      subKey,
+      subName
+    };
+  }
+
+  // LABDARÚGÁS (sportId === 1)
+  // 1. Női foci (elsőként szűrjük, hogy pl. Spanyol bajnokság, női vagy BL, női ide kerüljön!)
+  if (
+    comp.includes('női') ||
+    comp.includes('women') ||
+    comp.includes('femenino') ||
+    comp.includes('frauen') ||
+    comp.includes('femminile') ||
+    ev.includes('(női)')
+  ) {
+    const subName = cleanSubLeagueName(rawComp || 'Női mérkőzés', 1);
+    const subKey = 'w_' + subName.toLowerCase().replace(/[^a-z0-9áéíóöőúüű]/g, '_').replace(/_+/g, '_');
+    return {
+      groupKey: 'women',
+      groupName: 'Női Labdarúgás (Összes)',
+      subKey,
+      subName
+    };
+  }
+
+  // 2. Válogatott mérkőzések
+  if (
+    comp.includes('válogatott') ||
+    comp.includes('nemzetek ligája') ||
+    comp.includes('vb-selejtező') ||
+    comp.includes('eb-selejtező') ||
+    comp.includes('világbajnokság') ||
+    comp.includes('európa-bajnokság') ||
+    comp.includes('copa america') ||
+    comp.includes('afrika kupa') ||
+    comp.includes('afrika-kupa') ||
+    comp.includes('ázsia kupa') ||
+    comp.includes('gold cup') ||
+    /\bu(1[5-9]|2[0-3])\b/i.test(comp) ||
+    /\bu(1[5-9]|2[0-3])[a-záéíóöőúüű]/i.test(ev)
+  ) {
+    const subName = cleanSubLeagueName(rawComp || 'Válogatott mérkőzés', 1);
+    const subKey = 'nat_' + subName.toLowerCase().replace(/[^a-z0-9áéíóöőúüű]/g, '_').replace(/_+/g, '_');
+    return {
+      groupKey: 'national',
+      groupName: 'Válogatott mérkőzések',
+      subKey,
+      subName
+    };
+  }
+
+  // 3. Bajnokok Ligája (Európai BL)
+  if (
+    (comp.includes('bajnokok ligája') || comp.includes('champions league') || /\bbl\b/.test(comp)) &&
+    !comp.includes('ázsia') &&
+    !comp.includes('afc') &&
+    !comp.includes('afrika') &&
+    !comp.includes('caf') &&
+    !comp.includes('concacaf') &&
+    !comp.includes('ifjúsági')
+  ) {
+    return {
+      groupKey: 'ucl',
+      groupName: 'Bajnokok Ligája (BL)',
+      subKey: 'ucl',
+      subName: '🌟 Bajnokok Ligája (BL)'
+    };
+  }
+
+  // 4. Európa Liga & Konferencia Liga
+  if (
+    comp.includes('európa liga') ||
+    comp.includes('európa-liga') ||
+    comp.includes('europa league') ||
+    comp.includes('konferencia liga') ||
+    comp.includes('konferencia-liga') ||
+    comp.includes('conference league') ||
+    /\b(el|kl)\b/.test(comp)
+  ) {
+    const isUecl = comp.includes('konferencia') || comp.includes('conference') || /\bkl\b/.test(comp);
+    return {
+      groupKey: 'uel_uecl',
+      groupName: 'Európa Liga & Konferencia Liga',
+      subKey: isUecl ? 'uecl' : 'uel',
+      subName: isUecl ? '🏆 Konferencia Liga (KL)' : '🏆 Európa Liga (EL)'
+    };
+  }
+
+  // 5. Magyar NB I és NB II
+  if (comp.includes('magyar 2') || comp.includes('nb ii') || comp.includes('nb 2') || comp.includes('merkantil')) {
+    return {
+      groupKey: 'hun_2',
+      groupName: 'Magyar NB II (2. osztály)',
+      subKey: 'hun_2',
+      subName: '🇭🇺 Magyar NB II'
+    };
+  }
+  if (
+    comp.includes('magyar bajnokság') ||
+    comp.includes('nb i') ||
+    comp.includes('nb 1') ||
+    comp.includes('otp bank') ||
+    comp.includes('fizz liga') ||
+    comp.includes('magyar kupa')
+  ) {
+    return {
+      groupKey: 'hun_1',
+      groupName: 'Magyar NB I & Magyar Kupa',
+      subKey: 'hun_1',
+      subName: cleanSubLeagueName(rawComp || 'Magyar NB I', 1)
+    };
+  }
+
+  // 6. Top 5 Bajnokság – 2. osztály
+  if ((comp.includes('angol 2') || comp.includes('championship')) && !comp.includes('skót')) {
+    return {
+      groupKey: 'top5_2',
+      groupName: 'Top 5 Bajnokság (2. osztály)',
+      subKey: 'eng_2',
+      subName: '🇬🇧 Championship (Angol 2.)'
+    };
+  }
+  if (comp.includes('spanyol 2') || comp.includes('laliga 2') || comp.includes('la liga 2') || comp.includes('segunda division') || comp.includes('hypermotion')) {
+    return {
+      groupKey: 'top5_2',
+      groupName: 'Top 5 Bajnokság (2. osztály)',
+      subKey: 'esp_2',
+      subName: '🇪🇸 La Liga 2 (Spanyol 2.)'
+    };
+  }
+  if ((comp.includes('olasz 2') || comp.includes('olasz b') || comp.includes('serie b')) && !comp.includes('brazil') && !comp.includes('ecuador') && !comp.includes('kolumbia')) {
+    return {
+      groupKey: 'top5_2',
+      groupName: 'Top 5 Bajnokság (2. osztály)',
+      subKey: 'ita_2',
+      subName: '🇮🇹 Serie B (Olasz 2.)'
+    };
+  }
+  if (comp.includes('német 2') || comp.includes('2. bundesliga') || comp.includes('bundesliga 2')) {
+    return {
+      groupKey: 'top5_2',
+      groupName: 'Top 5 Bajnokság (2. osztály)',
+      subKey: 'ger_2',
+      subName: '🇩🇪 Bundesliga 2 (Német 2.)'
+    };
+  }
+  if (comp.includes('francia 2') || comp.includes('ligue 2')) {
+    return {
+      groupKey: 'top5_2',
+      groupName: 'Top 5 Bajnokság (2. osztály)',
+      subKey: 'fra_2',
+      subName: '🇫🇷 Ligue 2 (Francia 2.)'
+    };
+  }
+
+  // 7. Top 5 Bajnokság – 1. osztály
+  const isLowerOrCup = /(\b[2345]\.|alacsony|amatőr|tartalék|ifjúsági|olasz c|liga 3|national|kupa|cup|pokal|coppa|coupe|copa|supercup|szuperkupa)/i.test(comp);
+  if (!isLowerOrCup) {
+    if ((comp.includes('angol bajnokság') || comp.includes('premier league')) && !comp.includes('skót') && !comp.includes('orosz') && !comp.includes('izrael') && !comp.includes('egyiptom') && !comp.includes('kanada')) {
+      return {
+        groupKey: 'top5_1',
+        groupName: 'Top 5 Bajnokság (1. osztály)',
+        subKey: 'eng_1',
+        subName: '🇬🇧 Premier League (Angol 1.)'
+      };
+    }
+    if (comp.includes('spanyol bajnokság') || comp.includes('laliga') || comp.includes('la liga')) {
+      return {
+        groupKey: 'top5_1',
+        groupName: 'Top 5 Bajnokság (1. osztály)',
+        subKey: 'esp_1',
+        subName: '🇪🇸 La Liga (Spanyol 1.)'
+      };
+    }
+    if ((comp.includes('olasz bajnokság') || comp.includes('serie a')) && !comp.includes('brazil') && !comp.includes('ecuador')) {
+      return {
+        groupKey: 'top5_1',
+        groupName: 'Top 5 Bajnokság (1. osztály)',
+        subKey: 'ita_1',
+        subName: '🇮🇹 Serie A (Olasz 1.)'
+      };
+    }
+    if ((comp.includes('német bajnokság') || comp.includes('bundesliga')) && !comp.includes('osztrák')) {
+      return {
+        groupKey: 'top5_1',
+        groupName: 'Top 5 Bajnokság (1. osztály)',
+        subKey: 'ger_1',
+        subName: '🇩🇪 Bundesliga (Német 1.)'
+      };
+    }
+    if (comp.includes('francia bajnokság') || comp.includes('ligue 1')) {
+      return {
+        groupKey: 'top5_1',
+        groupName: 'Top 5 Bajnokság (1. osztály)',
+        subKey: 'fra_1',
+        subName: '🇫🇷 Ligue 1 (Francia 1.)'
+      };
+    }
+  }
+
+  // 8. Egyéb bajnokságok és kupák
+  const subName = cleanSubLeagueName(rawComp || 'Egyéb bajnokság', 1);
+  const subKey = 'oth_' + subName.toLowerCase().replace(/[^a-z0-9áéíóöőúüű]/g, '_').replace(/_+/g, '_');
+  return {
+    groupKey: 'other',
+    groupName: 'Egyéb bajnokságok és kupák',
+    subKey,
+    subName
+  };
+}
+
+export function enrichTipWithCategory(tip) {
+  if (!tip) return tip;
+  const cat = classifyTipCategory(tip);
+  tip.categoryGroupKey = cat.groupKey;
+  tip.categoryGroupName = cat.groupName;
+  tip.categorySubKey = cat.subKey;
+  tip.categorySubName = cat.subName;
+  return tip;
+}
+
+function enrichAllStateTips() {
+  let changed = false;
+  if (Array.isArray(state.pendingTips)) {
+    for (const t of state.pendingTips) {
+      const prevGroup = t.categoryGroupKey;
+      const prevSub = t.categorySubKey;
+      enrichTipWithCategory(t);
+      if (t.categoryGroupKey !== prevGroup || t.categorySubKey !== prevSub) changed = true;
+    }
+  }
+  if (Array.isArray(state.history)) {
+    for (const h of state.history) {
+      const prevGroup = h.categoryGroupKey;
+      const prevSub = h.categorySubKey;
+      enrichTipWithCategory(h);
+      if (h.categoryGroupKey !== prevGroup || h.categorySubKey !== prevSub) changed = true;
+    }
+  }
+  return changed;
+}
+
+function classifyMarketBucket(marketName, sportId) {
+  const m = String(marketName || '').toLowerCase();
+  if (m === '1x2' || m.includes('mérkőzés győztese')) return { key: '1x2', name: '1X2 / Mérkőzés győztese', icon: '🏆' };
+  if (m.includes('kétesély')) return { key: 'double_chance', name: 'Kétesély (1X / X2 / 12)', icon: '🛡️' };
+  if (m.includes('tét visszajár')) return { key: 'dnb', name: 'Döntetlennél a tét visszajár (DNB)', icon: '🔄' };
+  if (m.includes('mindkét csapat')) return { key: 'btts', name: 'Mindkét csapat szerez gólt (BTTS)', icon: '⚽' };
+  if (m.includes('gólszám') || m.includes('pontszám')) return { key: 'over_under', name: 'Gólszám / Pontszám (Alatt/Felett)', icon: '📊' };
+  if (sportId === 5 || m.includes('játszma') || m.includes('játékszám')) return { key: 'tennis_sets_games', name: 'Tenisz Játszma / Játékszám', icon: '🎾' };
+  return { key: 'other_market', name: 'Egyéb speciális piacok', icon: '🎯' };
+}
+
+function createEmptyNodeStats(meta = {}) {
+  return {
+    ...meta,
+    totalChecked: 0,
+    won: 0,
+    lost: 0,
+    voidCount: 0,
+    winRate: 0,
+    pendingCount: 0,
+    netUnits: 0,
+    roi: 0,
+    byRisk: {
+      low: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0 },
+      medium: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0 },
+      high: { totalChecked: 0, won: 0, lost: 0, winRate: 0, pendingCount: 0, netUnits: 0 }
+    }
+  };
+}
+
+function addHistoryItemToNode(node, item) {
+  const riskCat = item.riskCategory || 'medium';
+  const rNode = node.byRisk[riskCat] || node.byRisk.medium;
+  const odds = Number(item.odds) || 1.5;
+
+  if (item.status === 'void') {
+    node.voidCount = (node.voidCount || 0) + 1;
+    return;
+  }
+
+  node.totalChecked++;
+  rNode.totalChecked++;
+
+  if (item.won) {
+    node.won++;
+    rNode.won++;
+    const profit = odds - 1;
+    node.netUnits = Number((node.netUnits + profit).toFixed(2));
+    rNode.netUnits = Number((rNode.netUnits + profit).toFixed(2));
+  } else {
+    node.lost++;
+    rNode.lost++;
+    node.netUnits = Number((node.netUnits - 1).toFixed(2));
+    rNode.netUnits = Number((rNode.netUnits - 1).toFixed(2));
+  }
+
+  node.winRate = Math.round((node.won / node.totalChecked) * 100);
+  rNode.winRate = Math.round((rNode.won / rNode.totalChecked) * 100);
+  node.roi = Math.round((node.netUnits / node.totalChecked) * 100);
+}
+
+function addPendingItemToNode(node, item) {
+  const riskCat = item.riskCategory || 'medium';
+  const rNode = node.byRisk[riskCat] || node.byRisk.medium;
+  node.pendingCount++;
+  rNode.pendingCount++;
+}
+
+export function buildCategoriesAndInsights() {
+  enrichAllStateTips();
+
+  const buildSportHierarchy = (sportId, schema) => {
+    const groupMap = new Map();
+    for (const g of schema) {
+      const groupNode = createEmptyNodeStats({
+        key: g.key,
+        name: g.name,
+        icon: g.icon,
+        order: g.order,
+        expandable: g.expandable
+      });
+      groupNode.subMap = new Map();
+      if (Array.isArray(g.fixedSubs)) {
+        for (const fsSub of g.fixedSubs) {
+          groupNode.subMap.set(
+            fsSub.key,
+            createEmptyNodeStats({
+              key: fsSub.key,
+              name: fsSub.name,
+              order: fsSub.order,
+              isFixed: true
+            })
+          );
+        }
+      }
+      groupMap.set(g.key, groupNode);
+    }
+
+    const histItems = (state.history || []).filter(h => Number(h.sportId) === sportId);
+    for (const h of histItems) {
+      const gKey = h.categoryGroupKey || classifyTipCategory(h).groupKey;
+      const sKey = h.categorySubKey || classifyTipCategory(h).subKey;
+      const sName = h.categorySubName || classifyTipCategory(h).subName;
+
+      const gNode = groupMap.get(gKey) || groupMap.get(sportId === 5 ? 'tennis_top' : 'other');
+      if (!gNode) continue;
+
+      addHistoryItemToNode(gNode, h);
+
+      if (!gNode.subMap.has(sKey)) {
+        gNode.subMap.set(
+          sKey,
+          createEmptyNodeStats({
+            key: sKey,
+            name: sName,
+            order: 100 + gNode.subMap.size,
+            isFixed: false
+          })
+        );
+      }
+      addHistoryItemToNode(gNode.subMap.get(sKey), h);
+    }
+
+    const pendItems = (state.pendingTips || []).filter(p => Number(p.sportId) === sportId);
+    for (const p of pendItems) {
+      const gKey = p.categoryGroupKey || classifyTipCategory(p).groupKey;
+      const sKey = p.categorySubKey || classifyTipCategory(p).subKey;
+      const sName = p.categorySubName || classifyTipCategory(p).subName;
+
+      const gNode = groupMap.get(gKey) || groupMap.get(sportId === 5 ? 'tennis_top' : 'other');
+      if (!gNode) continue;
+
+      addPendingItemToNode(gNode, p);
+
+      if (!gNode.subMap.has(sKey)) {
+        gNode.subMap.set(
+          sKey,
+          createEmptyNodeStats({
+            key: sKey,
+            name: sName,
+            order: 100 + gNode.subMap.size,
+            isFixed: false
+          })
+        );
+      }
+      addPendingItemToNode(gNode.subMap.get(sKey), p);
+    }
+
+    return Array.from(groupMap.values())
+      .sort((a, b) => a.order - b.order)
+      .map(gNode => {
+        const subCategories = Array.from(gNode.subMap.values()).sort((a, b) => {
+          if (a.isFixed && b.isFixed) return a.order - b.order;
+          if (a.isFixed) return -1;
+          if (b.isFixed) return 1;
+          const countDiff = (b.totalChecked + b.pendingCount) - (a.totalChecked + a.pendingCount);
+          if (countDiff !== 0) return countDiff;
+          return a.name.localeCompare(b.name, 'hu');
+        });
+        const { subMap, ...rest } = gNode;
+        return {
+          ...rest,
+          subCategories
+        };
+      });
+  };
+
+  const footballCategories = buildSportHierarchy(1, FOOTBALL_CATEGORY_SCHEMA);
+  const tennisCategories = buildSportHierarchy(5, TENNIS_CATEGORY_SCHEMA);
+
+  // Extra Insights (Profit / ROI & Piacok)
+  const overallNode = createEmptyNodeStats({ key: 'overall', name: 'Összesített' });
+  const sportNodes = {
+    football: createEmptyNodeStats({ key: 'football', name: 'Labdarúgás (Foci)' }),
+    tennis: createEmptyNodeStats({ key: 'tennis', name: 'Tenisz' }),
+    nfl: createEmptyNodeStats({ key: 'nfl', name: 'Amerikai futball (NFL)' })
+  };
+  const marketMap = new Map();
+  let wonOddsSum = 0;
+  let wonOddsCount = 0;
+
+  for (const h of state.history || []) {
+    addHistoryItemToNode(overallNode, h);
+    if (h.won && h.status !== 'void' && Number(h.odds) > 1) {
+      wonOddsSum += Number(h.odds);
+      wonOddsCount++;
+    }
+
+    const sId = Number(h.sportId || 1);
+    if (sId === 1) addHistoryItemToNode(sportNodes.football, h);
+    else if (sId === 5) addHistoryItemToNode(sportNodes.tennis, h);
+    else if (sId === 16) addHistoryItemToNode(sportNodes.nfl, h);
+
+    const mBucket = classifyMarketBucket(h.marketName, sId);
+    if (!marketMap.has(mBucket.key)) {
+      marketMap.set(mBucket.key, createEmptyNodeStats(mBucket));
+    }
+    addHistoryItemToNode(marketMap.get(mBucket.key), h);
+  }
+
+  for (const p of state.pendingTips || []) {
+    addPendingItemToNode(overallNode, p);
+    const sId = Number(p.sportId || 1);
+    if (sId === 1) addPendingItemToNode(sportNodes.football, p);
+    else if (sId === 5) addPendingItemToNode(sportNodes.tennis, p);
+    else if (sId === 16) addPendingItemToNode(sportNodes.nfl, p);
+  }
+
+  overallNode.avgWinOdds = wonOddsCount > 0 ? Number((wonOddsSum / wonOddsCount).toFixed(2)) : 0;
+
+  const byMarketType = Array.from(marketMap.values()).sort((a, b) => b.totalChecked - a.totalChecked);
+
+  return {
+    categories: {
+      football: footballCategories,
+      tennis: tennisCategories
+    },
+    extraInsights: {
+      overall: overallNode,
+      bySport: sportNodes,
+      byMarketType
+    }
+  };
+}
+
 // 4. Új tipp felvétele a várólistába (duplikáció szűréssel)
 export function recordTip(tip, source = 'manual') {
   if (!tip) return false;
@@ -185,7 +824,7 @@ export function recordTip(tip, source = 'manual') {
   if (sportId === 5) sportDisplayName = 'Tenisz';
   if (sportId === 16) sportDisplayName = 'Amerikai futball (NFL)';
 
-  state.pendingTips.push({
+  const newPendingItem = enrichTipWithCategory({
     id: tipId,
     sportId,
     sportName: sportDisplayName,
@@ -203,6 +842,8 @@ export function recordTip(tip, source = 'manual') {
     addedAt: new Date().toISOString(),
     status: 'pending'
   });
+
+  state.pendingTips.push(newPendingItem);
 
   saveState();
   return true;
@@ -244,43 +885,63 @@ export function getStats() {
     }
   };
 
+  const { categories, extraInsights } = buildCategoriesAndInsights();
+
   return {
     ok: true,
     updatedAt: state.updatedAt,
     resetAt: state.resetAt || null,
     stats: statsWithPending,
+    categories,
+    extraInsights,
     pendingCount: state.pendingTips.length,
     pendingBySport,
-    pendingTipsSummary: state.pendingTips.slice(0, 100).map(t => ({
-      id: t.id,
-      sportId: t.sportId,
-      sportName: t.sportName,
-      eventName: t.eventName,
-      eventDate: t.eventDate,
-      competitionName: t.competitionName || '',
-      marketName: t.marketName,
-      outcomeName: t.outcomeName,
-      odds: t.odds,
-      riskLevel: t.riskLevel,
-      riskCategory: t.riskCategory,
-      riskScore: t.riskScore,
-      source: t.source,
-      status: 'pending'
-    })),
+    pendingTipsSummary: state.pendingTips.slice(0, 150).map(t => {
+      enrichTipWithCategory(t);
+      return {
+        id: t.id,
+        sportId: t.sportId,
+        sportName: t.sportName,
+        eventName: t.eventName,
+        eventDate: t.eventDate,
+        competitionName: t.competitionName || '',
+        categoryGroupKey: t.categoryGroupKey || '',
+        categoryGroupName: t.categoryGroupName || '',
+        categorySubKey: t.categorySubKey || '',
+        categorySubName: t.categorySubName || '',
+        marketName: t.marketName,
+        outcomeName: t.outcomeName,
+        odds: t.odds,
+        riskLevel: t.riskLevel,
+        riskCategory: t.riskCategory,
+        riskScore: t.riskScore,
+        source: t.source,
+        status: 'pending'
+      };
+    }),
     historyCount: (state.history || []).length,
-    history: (state.history || []).slice(0, 200)
+    history: (state.history || []).slice(0, 300)
   };
 }
 
-// Lekérdezi az előzményeket (szűrhető: sportId, riskCategory, status)
+// Lekérdezi az előzményeket (szűrhető: sportId, riskCategory, status, categoryGroup, categorySub)
 export function getHistory(filters = {}) {
   let list = Array.isArray(state.history) ? [...state.history] : [];
+  for (const t of list) {
+    enrichTipWithCategory(t);
+  }
   if (filters.sportId && filters.sportId !== 'all') {
     const sId = Number(filters.sportId);
     list = list.filter(t => {
       const tipSportId = Number(t.sportId || (t.sportName?.includes('Tenisz') ? 5 : (t.sportName?.includes('futball') || t.sportName?.includes('NFL') ? 16 : 1)));
       return tipSportId === sId;
     });
+  }
+  if (filters.categoryGroup && filters.categoryGroup !== 'all') {
+    list = list.filter(t => t.categoryGroupKey === filters.categoryGroup);
+  }
+  if (filters.categorySub && filters.categorySub !== 'all') {
+    list = list.filter(t => t.categorySubKey === filters.categorySub);
   }
   if (filters.riskCategory && filters.riskCategory !== 'all') {
     list = list.filter(t => t.riskCategory === filters.riskCategory);
@@ -301,7 +962,7 @@ export function recordEvaluatedTip(item) {
   if (!Array.isArray(state.history)) state.history = [];
   const existingIndex = state.history.findIndex(h => h.id === tipId);
 
-  const historyItem = {
+  const historyItem = enrichTipWithCategory({
     id: tipId,
     sportId,
     sportName: item.sportName || (sportId === 5 ? 'Tenisz' : (sportId === 16 ? 'Amerikai futball (NFL)' : 'Labdarúgás (Foci)')),
@@ -313,13 +974,13 @@ export function recordEvaluatedTip(item) {
     odds: Number(item.odds) || 1.5,
     riskCategory: riskInfo.category,
     riskScore: riskInfo.score,
-    riskLevel: riskInfo.level,
+    riskLevel: riskInfo.level || riskInfo.label,
     won: Boolean(item.won),
     finalScore: item.finalScore || null,
     verificationMethod: item.verificationMethod || 'manual_sync',
     evaluatedAt: item.evaluatedAt || new Date().toISOString(),
     status: item.won ? 'won' : 'lost'
-  };
+  });
 
   if (existingIndex >= 0) {
     state.history[existingIndex] = historyItem;
@@ -438,7 +1099,7 @@ function applyEvaluationResult(tip, verificationResult) {
     console.log(`✅ TIPP KIÉRTÉKELVE: [${tip.sportName} - ${tip.riskLevel || riskCat}] ${tip.eventName} -> ${tip.marketName}: ${tip.outcomeName} | Eredmény: ${isWon ? 'NYERT 🟢' : 'VESZTETT 🔴'} (${verificationResult.method || 'tippmix_official'})`);
   }
 
-  const historyItem = {
+  const historyItem = enrichTipWithCategory({
     id: tip.id,
     sportId: tip.sportId,
     sportName: tip.sportName,
@@ -456,7 +1117,7 @@ function applyEvaluationResult(tip, verificationResult) {
     verificationMethod: verificationResult.method || 'tippmix_official',
     evaluatedAt: new Date().toISOString(),
     status: isVoid ? 'void' : (isWon ? 'won' : 'lost')
-  };
+  });
 
   if (!Array.isArray(state.history)) state.history = [];
   const existingHistIdx = state.history.findIndex(h => h.id === historyItem.id);
@@ -464,8 +1125,8 @@ function applyEvaluationResult(tip, verificationResult) {
     state.history[existingHistIdx] = historyItem;
   } else {
     state.history.unshift(historyItem);
-    if (state.history.length > 500) {
-      state.history = state.history.slice(0, 500);
+    if (state.history.length > 2500) {
+      state.history = state.history.slice(0, 2500);
     }
   }
 }
@@ -772,8 +1433,10 @@ async function pullFromGitHub() {
         }
         state.history = Array.from(histMap.values())
           .sort((a, b) => new Date(b.evaluatedAt || 0) - new Date(a.evaluatedAt || 0))
-          .slice(0, 300);
+          .slice(0, 2500);
       }
+
+      enrichAllStateTips();
 
       console.log(`☁️ Statisztikák, függő tippek és előzmények sikeresen beolvasva GitHubról: Foci ${state.stats.football.winRate}%, Tenisz ${state.stats.tennis.winRate}%, NFL ${state.stats.nfl.winRate}%, Függőben: ${state.pendingTips.length}, Előzmények: ${state.history.length}`);
     }

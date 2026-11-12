@@ -1290,10 +1290,391 @@ detailedModal.addEventListener('click', (e) => {
 });
 
 // ============================================================================
-// 6. INICIALIZÁLÁS
+// 6. STATISZTIKÁK, HIERARCHIKUS BAJNOKSÁG BONTÁS & EXTRA ÉRDEKESSÉGEK
 // ============================================================================
 
-// Találati arány & statisztika lekérése (Foci, Tenisz, NFL + Kockázati szintek)
+const footballCategoriesPanel = document.getElementById('footballCategoriesPanel');
+const tennisCategoriesPanel = document.getElementById('tennisCategoriesPanel');
+const extraInsightsPanel = document.getElementById('extraInsightsPanel');
+const toggleExtraInsightsBtn = document.getElementById('toggleExtraInsightsBtn');
+const extraInsightsChevron = document.getElementById('extraInsightsChevron');
+const footballStatCard = document.getElementById('footballStatCard');
+const tennisStatCard = document.getElementById('tennisStatCard');
+const footballAccordionChevron = document.getElementById('footballAccordionChevron');
+const tennisAccordionChevron = document.getElementById('tennisAccordionChevron');
+
+// Nyitott 2. szintű (Foci / Tenisz) és 3. szintű (Al-bajnokságok) panelek állapota
+let openSportAccordions = {
+  football: false,
+  tennis: false,
+  extra: false
+};
+const expandedSubCategoryGroups = new Set();
+let latestCategoriesData = { football: [], tennis: [] };
+let latestExtraInsightsData = null;
+
+function initStatsAccordions() {
+  // 1. szint: FOCI és TENISZ kártya fejlécére kattintva lenyílik / bezárul a kategória-bontás
+  document.querySelectorAll('[data-sport-accordion]').forEach(headerEl => {
+    headerEl.addEventListener('click', (e) => {
+      // Ha a belső 📋 gombra kattintott, ne az akkordiont nyissa
+      if (e.target.closest('[data-history-trigger]')) return;
+      const sportKey = headerEl.getAttribute('data-sport-accordion');
+      toggleSportAccordion(sportKey);
+    });
+  });
+
+  // Külön menüpont: Érdekességek & Extra Statok
+  if (toggleExtraInsightsBtn) {
+    toggleExtraInsightsBtn.addEventListener('click', () => {
+      openSportAccordions.extra = !openSportAccordions.extra;
+      if (extraInsightsPanel) {
+        extraInsightsPanel.classList.toggle('hidden', !openSportAccordions.extra);
+      }
+      if (extraInsightsChevron) {
+        extraInsightsChevron.style.transform = openSportAccordions.extra ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+    });
+  }
+}
+
+function toggleSportAccordion(sportKey) {
+  if (sportKey === 'football') {
+    openSportAccordions.football = !openSportAccordions.football;
+    if (footballCategoriesPanel) {
+      footballCategoriesPanel.classList.toggle('hidden', !openSportAccordions.football);
+    }
+    if (footballAccordionChevron) {
+      footballAccordionChevron.style.transform = openSportAccordions.football ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+    if (footballStatCard) {
+      footballStatCard.classList.toggle('border-emerald-500/60', openSportAccordions.football);
+      footballStatCard.classList.toggle('ring-1', openSportAccordions.football);
+      footballStatCard.classList.toggle('ring-emerald-500/30', openSportAccordions.football);
+    }
+  } else if (sportKey === 'tennis') {
+    openSportAccordions.tennis = !openSportAccordions.tennis;
+    if (tennisCategoriesPanel) {
+      tennisCategoriesPanel.classList.toggle('hidden', !openSportAccordions.tennis);
+    }
+    if (tennisAccordionChevron) {
+      tennisAccordionChevron.style.transform = openSportAccordions.tennis ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+    if (tennisStatCard) {
+      tennisStatCard.classList.toggle('border-emerald-500/60', openSportAccordions.tennis);
+      tennisStatCard.classList.toggle('ring-1', openSportAccordions.tennis);
+      tennisStatCard.classList.toggle('ring-emerald-500/30', openSportAccordions.tennis);
+    }
+  }
+}
+
+function renderRiskButtonsHtml(sportId, byRisk, groupKey, subKey, labelBreadCrumb) {
+  const low = byRisk?.low || { totalChecked: 0, won: 0, winRate: 0 };
+  const med = byRisk?.medium || { totalChecked: 0, won: 0, winRate: 0 };
+  const high = byRisk?.high || { totalChecked: 0, won: 0, winRate: 0 };
+
+  const lowText = low.totalChecked > 0 ? `${low.winRate}% (${low.won}/${low.totalChecked})` : `--% (0/0)`;
+  const medText = med.totalChecked > 0 ? `${med.winRate}% (${med.won}/${med.totalChecked})` : `--% (0/0)`;
+  const highText = high.totalChecked > 0 ? `${high.winRate}% (${high.won}/${high.totalChecked})` : `--% (0/0)`;
+
+  const gAttr = escapeHtml(groupKey || 'all');
+  const sAttr = escapeHtml(subKey || 'all');
+  const lAttr = escapeHtml(labelBreadCrumb || '');
+
+  return `
+    <div class="grid grid-cols-3 gap-1 sm:gap-1.5 text-[10px] shrink-0">
+      <button type="button"
+        data-cat-history-btn
+        data-sport="${sportId}"
+        data-risk="low"
+        data-group="${gAttr}"
+        data-sub="${sAttr}"
+        data-label="${lAttr}"
+        class="px-2 py-1 rounded-lg bg-emerald-950/35 hover:bg-emerald-900/60 border border-emerald-800/50 hover:border-emerald-400/70 transition cursor-pointer active:scale-95 text-center"
+        title="${lAttr} – Csak az Alacsony kockázatú tippek megnyitása">
+        <span class="text-emerald-400 font-semibold block leading-tight">Alacsony</span>
+        <span class="text-white font-bold text-[10px] sm:text-[11px]">${lowText}</span>
+      </button>
+      <button type="button"
+        data-cat-history-btn
+        data-sport="${sportId}"
+        data-risk="medium"
+        data-group="${gAttr}"
+        data-sub="${sAttr}"
+        data-label="${lAttr}"
+        class="px-2 py-1 rounded-lg bg-amber-950/35 hover:bg-amber-900/60 border border-amber-800/50 hover:border-amber-400/70 transition cursor-pointer active:scale-95 text-center"
+        title="${lAttr} – Csak a Közepes kockázatú tippek megnyitása">
+        <span class="text-amber-400 font-semibold block leading-tight">Közepes</span>
+        <span class="text-white font-bold text-[10px] sm:text-[11px]">${medText}</span>
+      </button>
+      <button type="button"
+        data-cat-history-btn
+        data-sport="${sportId}"
+        data-risk="high"
+        data-group="${gAttr}"
+        data-sub="${sAttr}"
+        data-label="${lAttr}"
+        class="px-2 py-1 rounded-lg bg-rose-950/35 hover:bg-rose-900/60 border border-rose-800/50 hover:border-rose-400/70 transition cursor-pointer active:scale-95 text-center"
+        title="${lAttr} – Csak a Magas kockázatú tippek megnyitása">
+        <span class="text-rose-400 font-semibold block leading-tight">Magas</span>
+        <span class="text-white font-bold text-[10px] sm:text-[11px]">${highText}</span>
+      </button>
+    </div>
+  `;
+}
+
+function renderSportCategoriesAccordion(sportId, sportKey, categoriesList, containerEl) {
+  if (!containerEl) return;
+  if (!Array.isArray(categoriesList) || categoriesList.length === 0) {
+    containerEl.innerHTML = `<div class="text-xs text-slate-400 p-3">Nem található kategória bontás.</div>`;
+    return;
+  }
+
+  const sportTitle = sportId === 1
+    ? '⚽ Labdarúgás – Bajnokságok és Sorozatok Szerinti Bontás (Liga-erősség sorrendben)'
+    : '🎾 Tenisz – Tornák Szerinti Bontás (Grand Slam / ATP / WTA vs. Challenger / ITF)';
+
+  const rowsHtml = categoriesList.map(cat => {
+    const groupId = `${sportKey}_${cat.key}`;
+    const isExpanded = expandedSubCategoryGroups.has(groupId);
+    const subs = Array.isArray(cat.subCategories) ? cat.subCategories : [];
+    const canExpand = Boolean(cat.expandable && subs.length > 0);
+
+    const rateBadge = cat.totalChecked > 0
+      ? `<span class="text-xs sm:text-sm font-black text-emerald-400">${cat.winRate}%</span> <span class="text-[10px] text-slate-400">(${cat.won}/${cat.totalChecked} nyert)</span>`
+      : `<span class="text-xs font-bold text-slate-500">--%</span> <span class="text-[10px] text-slate-500">(0/0)</span>`;
+
+    const pendingPill = cat.pendingCount > 0
+      ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-950/60 border border-amber-600/50 text-amber-300 font-bold">${cat.pendingCount} vár</span>`
+      : '';
+
+    const groupBreadcrumb = `${cat.icon || ''} ${cat.name}`.trim();
+
+    // 3. szintű al-bajnokságok renderelése
+    let subRowsHtml = '';
+    if (canExpand) {
+      const subItemsHtml = subs.map(sub => {
+        const subRate = sub.totalChecked > 0
+          ? `<span class="text-xs font-black text-emerald-400">${sub.winRate}%</span> <span class="text-[10px] text-slate-400">(${sub.won}/${sub.totalChecked})</span>`
+          : `<span class="text-xs font-bold text-slate-500">--%</span> <span class="text-[10px] text-slate-500">(0/0)</span>`;
+        const subPend = sub.pendingCount > 0
+          ? `<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-950/50 border border-amber-600/40 text-amber-300 font-bold">${sub.pendingCount} vár</span>`
+          : '';
+        const subBreadcrumb = `${groupBreadcrumb} › ${sub.name}`;
+
+        return `
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-2 p-2 sm:px-3 rounded-xl bg-slate-900/90 border border-slate-800/80 hover:border-slate-700 transition">
+            <div class="flex items-center justify-between lg:justify-start gap-2 min-w-0 cursor-pointer hover:opacity-90"
+              data-cat-history-btn
+              data-sport="${sportId}"
+              data-risk="all"
+              data-group="${escapeHtml(cat.key)}"
+              data-sub="${escapeHtml(sub.key)}"
+              data-label="${escapeHtml(subBreadcrumb)}"
+              title="Kattints a(z) ${escapeHtml(sub.name)} összes tippjének megnyitásához!">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span class="text-slate-500 text-xs">↳</span>
+                <span class="text-xs font-bold text-slate-200 truncate">${escapeHtml(sub.name)}</span>
+                ${subPend}
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0 ml-2">
+                ${subRate}
+              </div>
+            </div>
+            ${renderRiskButtonsHtml(sportId, sub.byRisk, cat.key, sub.key, subBreadcrumb)}
+          </div>
+        `;
+      }).join('');
+
+      subRowsHtml = `
+        <div id="subPanel_${escapeHtml(groupId)}" class="${isExpanded ? '' : 'hidden'} pl-2 sm:pl-4 pt-1.5 space-y-1.5 border-l-2 border-emerald-500/30 ml-2">
+          ${subItemsHtml}
+        </div>
+      `;
+    }
+
+    return `
+      <div class="rounded-xl bg-slate-950/90 border border-slate-800/90 p-2.5 sm:p-3 space-y-1.5">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-2">
+          <!-- Bal oldal: Kategória név + Összesített % -->
+          <div class="flex items-center justify-between lg:justify-start gap-2.5 min-w-0">
+            <div class="flex items-center gap-2 min-w-0 cursor-pointer hover:opacity-90"
+              data-cat-history-btn
+              data-sport="${sportId}"
+              data-risk="all"
+              data-group="${escapeHtml(cat.key)}"
+              data-sub="all"
+              data-label="${escapeHtml(groupBreadcrumb)}"
+              title="Kattints a(z) ${escapeHtml(cat.name)} kategória összes tippjének megtekintéséhez!">
+              <span class="text-base shrink-0">${cat.icon || '🏆'}</span>
+              <span class="text-xs sm:text-[13px] font-extrabold text-white hover:text-emerald-300 transition truncate">${escapeHtml(cat.name)}</span>
+              ${pendingPill}
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              ${rateBadge}
+            </div>
+          </div>
+
+          <!-- Jobb oldal: Alacsony / Közepes / Magas gombok + Lenyitó nyíl (ha van al-bajnokság) -->
+          <div class="flex items-center justify-between sm:justify-end gap-2">
+            <div class="flex-1 sm:flex-initial">
+              ${renderRiskButtonsHtml(sportId, cat.byRisk, cat.key, 'all', groupBreadcrumb)}
+            </div>
+            ${canExpand ? `
+              <button type="button"
+                data-sub-accordion-btn="${escapeHtml(groupId)}"
+                class="h-9 px-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-emerald-400 text-xs font-bold flex items-center gap-1 shrink-0 transition cursor-pointer active:scale-95"
+                title="Al-bajnokságok / egyedi ligák lenyitása (${subs.length} db)">
+                <span class="hidden sm:inline text-[10px] text-slate-300">${subs.length} liga</span>
+                <span data-sub-chevron="${escapeHtml(groupId)}" class="text-[11px] transition-transform duration-200" style="transform: ${isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'}">▼</span>
+              </button>
+            ` : `
+              <div class="w-9 hidden sm:block shrink-0"></div>
+            `}
+          </div>
+        </div>
+        ${subRowsHtml}
+      </div>
+    `;
+  }).join('');
+
+  containerEl.innerHTML = `
+    <div class="flex items-center justify-between gap-2 px-1 pb-1">
+      <div class="flex items-center gap-2">
+        <span class="text-xs sm:text-sm font-black text-emerald-400">${sportTitle}</span>
+      </div>
+      <button type="button" data-close-sport-panel="${sportKey}"
+        class="text-[11px] text-slate-400 hover:text-white bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800 cursor-pointer">
+        ✕ Bezárás
+      </button>
+    </div>
+    <div class="space-y-2">
+      ${rowsHtml}
+    </div>
+  `;
+
+  // Eseménykezelők a kategória és al-liga kockázati gombokra
+  containerEl.querySelectorAll('[data-cat-history-btn]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const sId = btn.getAttribute('data-sport') || 'all';
+      const risk = btn.getAttribute('data-risk') || 'all';
+      const group = btn.getAttribute('data-group') || 'all';
+      const sub = btn.getAttribute('data-sub') || 'all';
+      const label = btn.getAttribute('data-label') || '';
+      openTipHistoryModal(sId, risk, 'all', group, sub, label);
+    });
+  });
+
+  // Eseménykezelők a 3. szintű al-bajnokság lenyitó nyilakra
+  containerEl.querySelectorAll('[data-sub-accordion-btn]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const gId = btn.getAttribute('data-sub-accordion-btn');
+      const subPanel = document.getElementById(`subPanel_${gId}`);
+      const chevron = containerEl.querySelector(`[data-sub-chevron="${gId}"]`);
+      if (!subPanel) return;
+
+      const willOpen = subPanel.classList.contains('hidden');
+      subPanel.classList.toggle('hidden', !willOpen);
+      if (willOpen) {
+        expandedSubCategoryGroups.add(gId);
+      } else {
+        expandedSubCategoryGroups.delete(gId);
+      }
+      if (chevron) {
+        chevron.style.transform = willOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+    });
+  });
+
+  // Panel bezáró gomb
+  const closeBtn = containerEl.querySelector(`[data-close-sport-panel="${sportKey}"]`);
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => toggleSportAccordion(sportKey));
+  }
+}
+
+function renderExtraInsightsPanel(extraInsights) {
+  if (!extraInsightsPanel || !extraInsights) return;
+  const ov = extraInsights.overall || { totalChecked: 0, won: 0, lost: 0, winRate: 0, profitUnits: 0, roiPercent: 0, avgWinOdds: 0 };
+  const markets = Array.isArray(extraInsights.byMarketType) ? extraInsights.byMarketType : [];
+
+  const profitSign = ov.profitUnits > 0 ? '+' : '';
+  const profitColor = ov.profitUnits >= 0 ? 'text-emerald-400' : 'text-rose-400';
+  const roiSign = ov.roiPercent > 0 ? '+' : '';
+  const roiColor = ov.roiPercent >= 0 ? 'text-emerald-400' : 'text-rose-400';
+
+  const marketCardsHtml = markets.map(m => {
+    const pSign = m.profitUnits > 0 ? '+' : '';
+    const pColor = m.profitUnits >= 0 ? 'text-emerald-400' : 'text-rose-400';
+    return `
+      <div class="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800/80 flex items-center justify-between gap-2">
+        <div class="min-w-0">
+          <div class="text-xs font-bold text-white truncate">${m.icon || '📊'} ${escapeHtml(m.name)}</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">
+            Találat: <strong class="text-slate-200">${m.won}/${m.totalChecked}</strong> &bull; Profit: <strong class="${pColor}">${pSign}${Number(m.profitUnits || 0).toFixed(2)} u</strong>
+          </div>
+        </div>
+        <div class="text-right shrink-0">
+          <span class="text-sm font-black text-emerald-400">${m.winRate}%</span>
+          <span class="block text-[9px] text-slate-500">ROI: ${m.roiPercent > 0 ? '+' : ''}${m.roiPercent}%</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  extraInsightsPanel.innerHTML = `
+    <div class="flex items-center justify-between gap-2 px-1">
+      <div class="flex items-center gap-2">
+        <span class="text-xs sm:text-sm font-black text-indigo-300">📊 Érdekességek &amp; Extra Statisztikák (1 egység / tipp alapon)</span>
+      </div>
+      <button type="button" id="closeExtraInsightsBtn"
+        class="text-[11px] text-slate-400 hover:text-white bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800 cursor-pointer">
+        ✕ Bezárás
+      </button>
+    </div>
+
+    <!-- 4 Fő KPI kártya -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+      <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800">
+        <span class="text-[10px] text-slate-400 uppercase font-bold block">Összes Kiértékelt Tipp</span>
+        <span class="text-base sm:text-lg font-black text-white mt-0.5 block">${ov.winRate}% <span class="text-xs font-semibold text-slate-400">(${ov.won}/${ov.totalChecked})</span></span>
+      </div>
+      <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800">
+        <span class="text-[10px] text-slate-400 uppercase font-bold block">Virtuális Egyenleg (1u/tipp)</span>
+        <span class="text-base sm:text-lg font-black ${profitColor} mt-0.5 block">${profitSign}${Number(ov.profitUnits || 0).toFixed(2)} egység</span>
+      </div>
+      <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800">
+        <span class="text-[10px] text-slate-400 uppercase font-bold block">ROI (Megtérülési ráta)</span>
+        <span class="text-base sm:text-lg font-black ${roiColor} mt-0.5 block">${roiSign}${Number(ov.roiPercent || 0).toFixed(1)}%</span>
+      </div>
+      <div class="p-3 rounded-xl bg-slate-950/90 border border-slate-800">
+        <span class="text-[10px] text-slate-400 uppercase font-bold block">Átlagos Nyertes Odds</span>
+        <span class="text-base sm:text-lg font-black text-amber-300 mt-0.5 block">${Number(ov.avgWinOdds || 0).toFixed(2)}x</span>
+      </div>
+    </div>
+
+    <!-- Fogadási piacok szerinti bontás -->
+    <div class="space-y-1.5">
+      <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-1">Fogadási Piacok Szerinti Teljesítmény (Melyik piacon a legpontosabb az AI?)</h4>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+        ${marketCardsHtml || '<div class="text-xs text-slate-400 p-2">Még nincs elég kiértékelt piaci adat.</div>'}
+      </div>
+    </div>
+  `;
+
+  const closeExtraBtn = document.getElementById('closeExtraInsightsBtn');
+  if (closeExtraBtn) {
+    closeExtraBtn.addEventListener('click', () => {
+      openSportAccordions.extra = false;
+      extraInsightsPanel.classList.add('hidden');
+      if (extraInsightsChevron) extraInsightsChevron.style.transform = 'rotate(0deg)';
+    });
+  }
+}
+
+// Találati arány & statisztika lekérése (Foci, Tenisz, NFL + Kockázati szintek + Kategóriák)
 async function loadBettingStats() {
   try {
     const res = await fetch('/api/stats');
@@ -1341,15 +1722,24 @@ async function loadBettingStats() {
       pendingTipsBadge.textContent = `${pCount} ellenőrzésre vár`;
     }
 
+    if (data.categories) {
+      latestCategoriesData = data.categories;
+      renderSportCategoriesAccordion(1, 'football', data.categories.football || [], footballCategoriesPanel);
+      renderSportCategoriesAccordion(5, 'tennis', data.categories.tennis || [], tennisCategoriesPanel);
+    }
+
+    if (data.extraInsights) {
+      latestExtraInsightsData = data.extraInsights;
+      renderExtraInsightsPanel(data.extraInsights);
+    }
+
     // AUTOMATIKUS KLIENS-OLDALI HELYREÁLLÍTÁS (Render deploy és szerver restart ellen):
-    // A böngésző biztonsági mentésként megőrzi az utóbbi 48 óra tippjeit, és deploy után visszaszinkronizálja!
     const rawLocal = localStorage.getItem(LS_PENDING_KEY);
     if (rawLocal) {
       try {
         const localTips = JSON.parse(rawLocal);
         const now = Date.now();
 
-        // Kizárólag az elavult (48 óránál régebbi) tippeket szűrjük ki, a deploy NEM törli őket!
         const validTips = localTips.filter(t => {
           const tTime = t.savedAt || (t.eventDate ? new Date(t.eventDate).getTime() : now);
           return (now - tTime < 48 * 3600 * 1000);
@@ -1369,19 +1759,7 @@ async function loadBettingStats() {
             .then(syncData => {
               if (syncData && syncData.addedCount > 0) {
                 console.log(`🔄 [HELYREÁLLÍTÁS] ${syncData.addedCount} korábbi függő tipp visszaállítva a szerverre!`);
-                // Újratöltjük a sávot
-                fetch('/api/stats')
-                  .then(r => r.json())
-                  .then(updated => {
-                    if (updated && updated.stats) {
-                      renderSportStats(updated.stats.football, footballWinRate, footballWinCount, footballRiskLow, footballRiskMed, footballRiskHigh, footballPendingBadge);
-                      renderSportStats(updated.stats.tennis, tennisWinRate, tennisWinCount, tennisRiskLow, tennisRiskMed, tennisRiskHigh, tennisPendingBadge);
-                      renderSportStats(updated.stats.nfl, nflWinRate, nflWinCount, nflRiskLow, nflRiskMed, nflRiskHigh, nflPendingBadge);
-                      if (pendingTipsBadge) {
-                        pendingTipsBadge.textContent = `${updated.pendingCount || 0} ellenőrzésre vár`;
-                      }
-                    }
-                  });
+                loadBettingStats();
               }
             })
             .catch(() => {});
@@ -1394,7 +1772,7 @@ async function loadBettingStats() {
 }
 
 // ============================================================================
-// 7. TIPPNAPLÓ & ELŐZMÉNYEK MODAL (KOCKÁZATOK ÉS SPORTÁGAK SZERINT)
+// 7. TIPPNAPLÓ & ELŐZMÉNYEK MODAL (KOCKÁZATOK, KATEGÓRIÁK ÉS AL-LIGÁK SZERINT)
 // ============================================================================
 
 const tipHistoryModal = document.getElementById('tipHistoryModal');
@@ -1403,6 +1781,9 @@ const historyModalTitle = document.getElementById('historyModalTitle');
 const historyModalSubtitle = document.getElementById('historyModalSubtitle');
 const historySportSelect = document.getElementById('historySportSelect');
 const historyRiskSelect = document.getElementById('historyRiskSelect');
+const historyActiveCategoryPill = document.getElementById('historyActiveCategoryPill');
+const historyActiveCategoryLabel = document.getElementById('historyActiveCategoryLabel');
+const clearHistoryCategoryBtn = document.getElementById('clearHistoryCategoryBtn');
 const historyModalBody = document.getElementById('historyModalBody');
 const historyModalSummaryText = document.getElementById('historyModalSummaryText');
 const historyModalRefreshBtn = document.getElementById('historyModalRefreshBtn');
@@ -1416,20 +1797,33 @@ const historyStatusTabs = document.querySelectorAll('.history-status-tab');
 let currentHistoryFilter = {
   sportId: 'all',
   riskCategory: 'all',
-  status: 'all'
+  status: 'all',
+  categoryGroup: 'all',
+  categorySub: 'all',
+  categoryLabel: ''
 };
 
 function initTipHistoryModal() {
-  // Minden kattintható statisztikai doboz és gomb eseménykezelése
+  // Minden kattintható fő sportág kockázati gomb eseménykezelése
   document.querySelectorAll('[data-history-trigger]').forEach(trigger => {
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
       const sport = trigger.getAttribute('data-sport') || 'all';
       const risk = trigger.getAttribute('data-risk') || 'all';
       const status = trigger.getAttribute('data-status') || 'all';
-      openTipHistoryModal(sport, risk, status);
+      openTipHistoryModal(sport, risk, status, 'all', 'all', '');
     });
   });
+
+  if (clearHistoryCategoryBtn) {
+    clearHistoryCategoryBtn.addEventListener('click', () => {
+      currentHistoryFilter.categoryGroup = 'all';
+      currentHistoryFilter.categorySub = 'all';
+      currentHistoryFilter.categoryLabel = '';
+      updateHistoryModalTitle();
+      fetchAndRenderHistory();
+    });
+  }
 
   if (closeHistoryModalBtn) {
     closeHistoryModalBtn.addEventListener('click', closeTipHistoryModal);
@@ -1450,6 +1844,10 @@ function initTipHistoryModal() {
   if (historySportSelect) {
     historySportSelect.addEventListener('change', () => {
       currentHistoryFilter.sportId = historySportSelect.value;
+      // Sportág váltásakor töröljük az al-kategória szűrést
+      currentHistoryFilter.categoryGroup = 'all';
+      currentHistoryFilter.categorySub = 'all';
+      currentHistoryFilter.categoryLabel = '';
       updateHistoryModalTitle();
       fetchAndRenderHistory();
     });
@@ -1480,7 +1878,7 @@ function initTipHistoryModal() {
         await fetch('/api/stats/evaluate', { method: 'POST' });
       } catch (_) {}
       fetchAndRenderHistory();
-      if (typeof fetchStats === 'function') fetchStats();
+      loadBettingStats();
     });
   }
 }
@@ -1498,23 +1896,39 @@ function updateStatusTabsUI() {
 
 function updateHistoryModalTitle() {
   let sportName = 'Összes sportág';
-  if (currentHistoryFilter.sportId === '1') sportName = '⚽ Labdarúgás (Foci)';
+  if (currentHistoryFilter.sportId === '1') sportName = '⚽ Labdarúgás';
   if (currentHistoryFilter.sportId === '5') sportName = '🎾 Tenisz';
-  if (currentHistoryFilter.sportId === '16') sportName = '🏈 Amerikai futball (NFL)';
+  if (currentHistoryFilter.sportId === '16') sportName = '🏈 NFL';
 
-  let riskName = 'Minden kockázati szint';
-  if (currentHistoryFilter.riskCategory === 'low') riskName = '🟢 Alacsony kockázat (1-3)';
-  if (currentHistoryFilter.riskCategory === 'medium') riskName = '🟡 Közepes kockázat (4-6)';
-  if (currentHistoryFilter.riskCategory === 'high') riskName = '🔴 Magas kockázat (7-10)';
+  let riskName = 'Minden kockázat';
+  if (currentHistoryFilter.riskCategory === 'low') riskName = '🟢 Alacsony kockázat';
+  if (currentHistoryFilter.riskCategory === 'medium') riskName = '🟡 Közepes kockázat';
+  if (currentHistoryFilter.riskCategory === 'high') riskName = '🔴 Magas kockázat';
 
-  historyModalTitle.textContent = `${sportName} – ${riskName}`;
+  if (currentHistoryFilter.categoryLabel) {
+    historyModalTitle.textContent = `${sportName} › ${currentHistoryFilter.categoryLabel} – ${riskName}`;
+    if (historyActiveCategoryPill && historyActiveCategoryLabel) {
+      historyActiveCategoryLabel.textContent = currentHistoryFilter.categoryLabel;
+      historyActiveCategoryPill.classList.remove('hidden');
+      historyActiveCategoryPill.classList.add('inline-flex');
+    }
+  } else {
+    historyModalTitle.textContent = `${sportName} – ${riskName}`;
+    if (historyActiveCategoryPill) {
+      historyActiveCategoryPill.classList.add('hidden');
+      historyActiveCategoryPill.classList.remove('inline-flex');
+    }
+  }
   historyModalSubtitle.textContent = `A kiválasztott szűrésnek megfelelő lezárt és folyamatban lévő tippek`;
 }
 
-function openTipHistoryModal(sportId = 'all', riskCategory = 'all', status = 'all') {
+function openTipHistoryModal(sportId = 'all', riskCategory = 'all', status = 'all', categoryGroup = 'all', categorySub = 'all', categoryLabel = '') {
   currentHistoryFilter.sportId = sportId;
   currentHistoryFilter.riskCategory = riskCategory;
   currentHistoryFilter.status = status;
+  currentHistoryFilter.categoryGroup = categoryGroup || 'all';
+  currentHistoryFilter.categorySub = categorySub || 'all';
+  currentHistoryFilter.categoryLabel = categoryLabel || '';
 
   if (historySportSelect) historySportSelect.value = sportId;
   if (historyRiskSelect) historyRiskSelect.value = riskCategory;
@@ -1549,7 +1963,9 @@ async function fetchAndRenderHistory() {
     const params = new URLSearchParams({
       sportId: currentHistoryFilter.sportId,
       riskCategory: currentHistoryFilter.riskCategory,
-      status: currentHistoryFilter.status
+      status: currentHistoryFilter.status,
+      categoryGroup: currentHistoryFilter.categoryGroup || 'all',
+      categorySub: currentHistoryFilter.categorySub || 'all'
     });
 
     const res = await fetch(`/api/tips/history?${params.toString()}`);
@@ -1562,39 +1978,26 @@ async function fetchAndRenderHistory() {
     try {
       const rawStored = localStorage.getItem(LS_HISTORY_KEY);
       const storedList = rawStored ? JSON.parse(rawStored) : [];
-      if (historyItems.length > 0) {
+      if (historyItems.length > 0 && currentHistoryFilter.categoryGroup === 'all' && currentHistoryFilter.categorySub === 'all') {
         const hMap = new Map();
         storedList.forEach(item => { if (item && item.id) hMap.set(item.id, item); });
         historyItems.forEach(item => { if (item && item.id) hMap.set(item.id, item); });
-        localStorage.setItem(LS_HISTORY_KEY, JSON.stringify(Array.from(hMap.values()).slice(0, 300)));
-      } else if (storedList.length > 0) {
-        // A szerver újraindult, de csak a kiválasztott szűrésnek megfelelő helyi elemeket töltjük be!
-        const matchingLocal = storedList.filter(item => {
-          if (currentHistoryFilter.sportId !== 'all') {
-            const expSport = Number(currentHistoryFilter.sportId);
-            const itemSport = Number(item.sportId || (item.sportName?.includes('Tenisz') ? 5 : (item.sportName?.includes('futball') || item.sportName?.includes('NFL') ? 16 : 1)));
-            if (itemSport !== expSport) return false;
-          }
-          if (currentHistoryFilter.riskCategory !== 'all' && item.riskCategory !== currentHistoryFilter.riskCategory) {
-            return false;
-          }
-          return true;
-        });
-
-        for (const ml of matchingLocal) {
-          if (!historyItems.some(h => h.id === ml.id)) {
-            historyItems.push(ml);
-          }
-        }
+        localStorage.setItem(LS_HISTORY_KEY, JSON.stringify(Array.from(hMap.values()).slice(0, 400)));
       }
     } catch (_) {}
 
-    // Szigorú szűrőfüggvény a sportágra és a kockázatra
-    const filterBySportAndRisk = (list) => list.filter(item => {
+    // Szigorú szűrőfüggvény a sportágra, kategóriára, al-ligára és kockázatra
+    const filterByAllCriteria = (list) => list.filter(item => {
       if (currentHistoryFilter.sportId !== 'all') {
         const expectedSportId = Number(currentHistoryFilter.sportId);
         const itemSportId = Number(item.sportId || (item.sportName?.includes('Tenisz') ? 5 : (item.sportName?.includes('futball') || item.sportName?.includes('NFL') ? 16 : 1)));
         if (itemSportId !== expectedSportId) return false;
+      }
+      if (currentHistoryFilter.categoryGroup && currentHistoryFilter.categoryGroup !== 'all') {
+        if (item.categoryGroupKey !== currentHistoryFilter.categoryGroup) return false;
+      }
+      if (currentHistoryFilter.categorySub && currentHistoryFilter.categorySub !== 'all') {
+        if (item.categorySubKey !== currentHistoryFilter.categorySub) return false;
       }
       if (currentHistoryFilter.riskCategory !== 'all') {
         if (item.riskCategory !== currentHistoryFilter.riskCategory) return false;
@@ -1602,8 +2005,8 @@ async function fetchAndRenderHistory() {
       return true;
     });
 
-    const filteredHistory = filterBySportAndRisk(historyItems);
-    const filteredPending = filterBySportAndRisk(pendingItems);
+    const filteredHistory = filterByAllCriteria(historyItems);
+    const filteredPending = filterByAllCriteria(pendingItems);
 
     // Összesített elemek a választott státusz alapján
     let displayList = [];
@@ -1638,9 +2041,9 @@ async function fetchAndRenderHistory() {
       historyModalBody.innerHTML = `
         <div class="glass-card rounded-2xl p-8 text-center text-slate-400 space-y-2 border border-slate-800 my-4">
           <span class="text-3xl block mb-2">📋</span>
-          <h4 class="text-sm font-bold text-white">Még nem található tipp ebben a kategóriában</h4>
+          <h4 class="text-sm font-bold text-white">Még nem található tipp ebben a szűrésben</h4>
           <p class="text-xs text-slate-500 max-w-md mx-auto">
-            Amint az AI által elemzett tippek mérkőzései befejeződnek, a rendszer automatikusan kiértékeli őket és ide rögzíti a végeredményt.
+            Amint az AI által elemzett tippek mérkőzései befejeződnek ebben a bajnokságban és kockázati szinten, a rendszer automatikusan kiértékeli őket és ide rögzíti a végeredményt.
           </p>
         </div>
       `;
@@ -1651,7 +2054,6 @@ async function fetchAndRenderHistory() {
     displayList.forEach(item => {
       const isPending = item.status === 'pending';
       const isWon = item.won === true;
-      const isLost = !isPending && item.won === false;
 
       let statusBadgeHtml = '';
       let cardBorderClass = 'border-slate-800';
@@ -1673,14 +2075,18 @@ async function fetchAndRenderHistory() {
       const sportIcon = getSportIcon(item.sportId);
       const timeFormatted = formatHungarianDate(item.eventDate);
       const riskInfo = getRiskVisuals(item.riskLevel || (item.riskCategory === 'low' ? 'Alacsony' : (item.riskCategory === 'high' ? 'Magas' : 'Közepes')), item.riskScore);
+      const catBadgeHtml = item.categoryGroupName
+        ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700/80 text-emerald-300 font-semibold">${escapeHtml(item.categorySubName || item.categoryGroupName)}</span>`
+        : '';
 
       const card = document.createElement('div');
       card.className = `p-3.5 sm:p-4 rounded-2xl bg-slate-950/70 border ${cardBorderClass} space-y-2.5 transition hover:bg-slate-950/90`;
       card.innerHTML = `
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="flex items-center gap-2 min-w-0">
+          <div class="flex items-center gap-2 min-w-0 flex-wrap">
             <span class="text-sm">${sportIcon}</span>
             <span class="text-xs font-semibold text-slate-300 truncate">${escapeHtml(item.competitionName || item.sportName || '')}</span>
+            ${catBadgeHtml}
           </div>
           <div class="flex items-center gap-2">
             <span class="text-[11px] text-slate-400">🕒 ${escapeHtml(timeFormatted)}</span>
@@ -1715,7 +2121,7 @@ async function fetchAndRenderHistory() {
         ${item.finalScore ? `
           <div class="text-[11px] text-slate-300 bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-800 flex items-center justify-between">
             <span>⚽ <strong>Hivatalos végeredmény:</strong> ${escapeHtml(item.finalScore)}</span>
-            <span class="text-slate-500 text-[10px]">${item.verificationMethod === 'tippmix_api' ? 'TippmixPro API' : 'Webes ellenőrzés'}</span>
+            <span class="text-slate-500 text-[10px]">${item.verificationMethod === 'tippmix_official' || item.verificationMethod === 'tippmix_api' ? 'Tippmix Hivatalos' : 'Webes ellenőrzés'}</span>
           </div>
         ` : (isPending ? `
           <div class="text-[10px] text-amber-300/80 bg-amber-950/20 px-2.5 py-1 rounded-lg border border-amber-900/30 flex items-center gap-1.5">
@@ -1739,6 +2145,7 @@ async function fetchAndRenderHistory() {
 
 async function init() {
   initHomeControls();
+  initStatsAccordions();
   initTipHistoryModal();
   loadBettingStats();
 

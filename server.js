@@ -858,11 +858,11 @@ app.post('/api/tips/sync', (req, res) => {
   }
 });
 
-// TIPP ELŐZMÉNYEK ÉS FÜGGŐ TIPPEK LEKÉRDEZÉSE (Szűrés: sportId, riskCategory, status)
+// TIPP ELŐZMÉNYEK ÉS FÜGGŐ TIPPEK LEKÉRDEZÉSE (Szűrés: sportId, riskCategory, status, categoryGroup, categorySub)
 app.get('/api/tips/history', (req, res) => {
   try {
-    const { sportId, riskCategory, status } = req.query;
-    const historyList = getHistory({ sportId, riskCategory, status });
+    const { sportId, riskCategory, status, categoryGroup, categorySub } = req.query;
+    const historyList = getHistory({ sportId, riskCategory, status, categoryGroup, categorySub });
     const fullStats = getStats();
 
     // Függő tippek szűrése az ablakhoz
@@ -874,6 +874,12 @@ app.get('/api/tips/history', (req, res) => {
         return tipSportId === sId;
       });
     }
+    if (categoryGroup && categoryGroup !== 'all') {
+      pendingList = pendingList.filter(t => t.categoryGroupKey === categoryGroup);
+    }
+    if (categorySub && categorySub !== 'all') {
+      pendingList = pendingList.filter(t => t.categorySubKey === categorySub);
+    }
     if (riskCategory && riskCategory !== 'all') {
       pendingList = pendingList.filter(t => t.riskCategory === riskCategory);
     }
@@ -883,6 +889,8 @@ app.get('/api/tips/history', (req, res) => {
       history: historyList,
       pending: pendingList,
       stats: fullStats.stats,
+      categories: fullStats.categories,
+      extraInsights: fullStats.extraInsights,
       counts: {
         totalHistory: historyList.length,
         totalPending: pendingList.length
