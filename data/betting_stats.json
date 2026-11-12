@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-12T19:18:25.891Z",
+  "updatedAt": "2026-11-12T20:57:56.383Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 96,
+      "totalChecked": 97,
       "won": 62,
-      "lost": 34,
-      "winRate": 65,
+      "lost": 35,
+      "winRate": 64,
       "byRisk": {
         "low": {
           "totalChecked": 24,
@@ -15,10 +15,10 @@
           "winRate": 71
         },
         "medium": {
-          "totalChecked": 60,
+          "totalChecked": 61,
           "won": 40,
-          "lost": 20,
-          "winRate": 67
+          "lost": 21,
+          "winRate": 66
         },
         "high": {
           "totalChecked": 12,
@@ -169,28 +169,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    },
-    {
-      "id": "1_elefntcsontpartgambia_2026-11-12_hazaicsapatkapottglnlkljtsszaleamrkzst_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Elefántcsontpart - Gambia",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,C",
-      "eventDate": "2026-11-12T20:00:00+01:00",
-      "marketName": "Hazai csapat kapott gól nélkül játssza le a mérkőzést",
-      "outcomeName": "Igen",
-      "odds": 1.54,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T18:23:56.811Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
     },
     {
       "id": "1_montenegrlettorszg_2026-11-12_1flid1x2_montenegr",
@@ -348,6 +326,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_elefntcsontpartgambia_2026-11-12_hazaicsapatkapottglnlkljtsszaleamrkzst_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Elefántcsontpart - Gambia",
+      "eventDate": "2026-11-12T20:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,C",
+      "marketName": "Hazai csapat kapott gól nélkül játssza le a mérkőzést",
+      "outcomeName": "Igen",
+      "odds": 1.54,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T20:57:56.382Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
     {
       "id": "1_u20franciaorszgu20dnia_2026-11-12_1x2_u20franciaorszg",
       "sportId": 1,
