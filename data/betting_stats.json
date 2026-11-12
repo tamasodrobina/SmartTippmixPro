@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T21:01:47.689Z",
+  "updatedAt": "2026-11-12T07:02:24.651Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -81,7 +81,62 @@
       }
     }
   },
-  "pendingTips": [],
+  "pendingTips": [
+    {
+      "id": "16_nygiantswashington_2026-11-13_pontszm425425_kevesebbmint425",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "NY Giants - Washington",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-13T02:15:00+01:00",
+      "marketName": "Pontszám 42,5 (42.5)",
+      "outcomeName": "Kevesebb, mint 42,5",
+      "odds": 1.68,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T07:02:24.647Z",
+      "status": "pending"
+    },
+    {
+      "id": "16_nygiantswashington_2026-11-13_meznyglokszma2525_tbbmint25",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "NY Giants - Washington",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-13T02:15:00+01:00",
+      "marketName": "Mezőnygólok száma 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.38,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T07:02:24.649Z",
+      "status": "pending"
+    },
+    {
+      "id": "16_nygiantswashington_2026-11-13_hendikep3535_washington35",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "NY Giants - Washington",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-13T02:15:00+01:00",
+      "marketName": "Hendikep -3,5 (-3.5)",
+      "outcomeName": "Washington +3,5",
+      "odds": 1.58,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T07:02:24.651Z",
+      "status": "pending"
+    }
+  ],
   "history": [
     {
       "id": "5_mlcarlembassolsribera_2026-11-11_amrkzsgyztese_mbassolsribera",
@@ -2363,6 +2418,9 @@
     "1_fleury91toulouse_2026-11-11_1x2_fleury91",
     "1_liverpoolastonvilla_2026-11-11_1x2glszm1515_hazaistbb",
     "1_liverpoolastonvilla_2026-11-11_mindktcsapatszerezglt_igen",
-    "1_liverpoolastonvilla_2026-11-11_zsiaihendikep11_liverpool1"
+    "1_liverpoolastonvilla_2026-11-11_zsiaihendikep11_liverpool1",
+    "16_nygiantswashington_2026-11-13_pontszm425425_kevesebbmint425",
+    "16_nygiantswashington_2026-11-13_meznyglokszma2525_tbbmint25",
+    "16_nygiantswashington_2026-11-13_hendikep3535_washington35"
   ]
 }
