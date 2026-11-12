@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T07:04:57.466Z",
+  "updatedAt": "2026-11-12T08:29:44.114Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -224,6 +224,60 @@
       "riskLevel": "Közepes",
       "source": "homepage_interval",
       "addedAt": "2026-11-12T07:04:57.466Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_hwacheonkspogyeongju_2026-11-12_glszm2525_kevesebbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Hwacheon KSPO - Gyeongju",
+      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
+      "eventDate": "2026-11-12T11:00:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Kevesebb, mint 2,5",
+      "odds": 1.9,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T08:29:44.111Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_hwacheonkspogyeongju_2026-11-12_zsiaihendikep055_gyeongju05",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Hwacheon KSPO - Gyeongju",
+      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
+      "eventDate": "2026-11-12T11:00:00+01:00",
+      "marketName": "Ázsiai Hendikep -0,5 (-.5)",
+      "outcomeName": "Gyeongju +0,5",
+      "odds": 1.84,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T08:29:44.112Z",
+      "status": "pending"
+    },
+    {
+      "id": "1_hwacheonkspogyeongju_2026-11-12_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Hwacheon KSPO - Gyeongju",
+      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
+      "eventDate": "2026-11-12T11:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.91,
+      "riskCategory": "medium",
+      "riskScore": 6,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-12T08:29:44.114Z",
       "status": "pending"
     }
   ],
@@ -2516,6 +2570,9 @@
     "5_kfeldbauschmmalige_2026-11-12_jtszmkszma_2",
     "5_laurasamsonireneburilloescorihuela_2026-11-12_amrkzsgyztese_laurasamson",
     "5_froncadellifcomesana_2026-11-12_1jtszmagyztese1_fcomesana",
-    "5_lcarboniixilas_2026-11-12_ixilasjtkszm115115_tbbmint115"
+    "5_lcarboniixilas_2026-11-12_ixilasjtkszm115115_tbbmint115",
+    "1_hwacheonkspogyeongju_2026-11-12_glszm2525_kevesebbmint25",
+    "1_hwacheonkspogyeongju_2026-11-12_zsiaihendikep055_gyeongju05",
+    "1_hwacheonkspogyeongju_2026-11-12_mindktcsapatszerezglt_nem"
   ]
 }
