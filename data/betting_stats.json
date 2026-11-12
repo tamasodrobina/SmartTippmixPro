@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-12T18:39:39.131Z",
+  "updatedAt": "2026-11-12T18:48:16.722Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 91,
+      "totalChecked": 92,
       "won": 58,
-      "lost": 33,
-      "winRate": 64,
+      "lost": 34,
+      "winRate": 63,
       "byRisk": {
         "low": {
           "totalChecked": 21,
@@ -15,10 +15,10 @@
           "winRate": 67
         },
         "medium": {
-          "totalChecked": 58,
+          "totalChecked": 59,
           "won": 39,
-          "lost": 19,
-          "winRate": 67
+          "lost": 20,
+          "winRate": 66
         },
         "high": {
           "totalChecked": 12,
@@ -369,50 +369,6 @@
       "categorySubName": "BL, női"
     },
     {
-      "id": "1_u20franciaorszgu20dnia_2026-11-12_1x2_u20franciaorszg",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "U20Franciaország - U20Dánia",
-      "competitionName": "Nemzetközi utánpótlás - U20 válogatott mérkőzés",
-      "eventDate": "2026-11-12T17:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "U20Franciaország",
-      "odds": 1.43,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T13:35:55.193Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_u20_válogatott_mérkőzés",
-      "categorySubName": "U20 válogatott mérkőzés"
-    },
-    {
-      "id": "1_guineaeritrea_2026-11-12_mindktcsapatszerezglt_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Guinea - Eritrea",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
-      "eventDate": "2026-11-12T17:00:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Nem",
-      "odds": 1.54,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T13:35:55.196Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    },
-    {
       "id": "1_albniafinnorszg_2026-11-12_glszm2525_kevesebbmint25",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -477,9 +433,54 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_u20franciaorszgu20dnia_2026-11-12_1x2_u20franciaorszg",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "U20Franciaország - U20Dánia",
+      "competitionName": "Nemzetközi utánpótlás - U20 válogatott mérkőzés",
+      "eventDate": "2026-11-12T17:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "U20Franciaország",
+      "odds": 1.43,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-12T13:35:55.193Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_u20_válogatott_mérkőzés",
+      "categorySubName": "U20 válogatott mérkőzés"
     }
   ],
   "history": [
+    {
+      "id": "1_guineaeritrea_2026-11-12_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Guinea - Eritrea",
+      "eventDate": "2026-11-12T17:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.54,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T18:48:06.380Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
     {
       "id": "1_madagaszkrbissauguinea_2026-11-12_glszm25_kevesebbmint25",
       "sportId": 1,
