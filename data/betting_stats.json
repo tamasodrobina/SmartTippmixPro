@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-12T15:16:06.062Z",
+  "updatedAt": "2026-11-12T16:55:56.524Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 88,
+      "totalChecked": 89,
       "won": 57,
-      "lost": 31,
-      "winRate": 65,
+      "lost": 32,
+      "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 19,
+          "totalChecked": 20,
           "won": 14,
-          "lost": 5,
-          "winRate": 74
+          "lost": 6,
+          "winRate": 70
         },
         "medium": {
           "totalChecked": 57,
@@ -281,28 +281,6 @@
       "categorySubName": "Afrikai Nemzetek Kupája-sel."
     },
     {
-      "id": "1_u19portugliau19litvnia_2026-11-12_glszm35_tbbmint35",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "U19Portugália - U19Litvánia",
-      "competitionName": "Nemzetközi utánpótlás - U19 Eb-selejtező, A Liga, 3.cs",
-      "eventDate": "2026-11-12T16:00:00+01:00",
-      "marketName": "Gólszám 3,5",
-      "outcomeName": "Több, mint 3,5",
-      "odds": 1.45,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T13:35:55.202Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_u19_eb_selejtező",
-      "categorySubName": "U19 Eb-selejtező"
-    },
-    {
       "id": "1_trkorszgbelgium_2026-11-12_mindktcsapatszerezglt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -370,6 +348,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_u19portugliau19litvnia_2026-11-12_glszm35_tbbmint35",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "U19Portugália - U19Litvánia",
+      "eventDate": "2026-11-12T16:00:00+01:00",
+      "competitionName": "Nemzetközi utánpótlás - U19 Eb-selejtező, A Liga, 3.cs",
+      "marketName": "Gólszám 3,5",
+      "outcomeName": "Több, mint 3,5",
+      "odds": 1.45,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T16:55:56.524Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_u19_eb_selejtező",
+      "categorySubName": "U19 Eb-selejtező"
+    },
     {
       "id": "5_kfeldbauschmmalige_2026-11-12_jtszmkszma_2",
       "sportId": 5,
