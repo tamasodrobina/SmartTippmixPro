@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-12T21:58:05.425Z",
+  "updatedAt": "2026-11-12T22:07:55.782Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 104,
-      "won": 68,
+      "totalChecked": 105,
+      "won": 69,
       "lost": 36,
-      "winRate": 65,
+      "winRate": 66,
       "byRisk": {
         "low": {
           "totalChecked": 25,
@@ -15,10 +15,10 @@
           "winRate": 72
         },
         "medium": {
-          "totalChecked": 67,
-          "won": 45,
+          "totalChecked": 68,
+          "won": 46,
           "lost": 22,
-          "winRate": 67
+          "winRate": 68
         },
         "high": {
           "totalChecked": 12,
@@ -147,31 +147,32 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_benficaaustriawien_2026-11-12_1x2glszm1515_hazaistbb",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Benfica - Austria Wien",
-      "competitionName": "Nemzetközi klubcsapatok - BL, női",
       "eventDate": "2026-11-12T21:00:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
       "marketName": "1X2 + Gólszám 1,5 (1.5)",
       "outcomeName": "Hazai és több",
       "odds": 1.68,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-12T18:35:37.721Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "3-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T22:07:55.782Z",
+      "status": "won",
       "categoryGroupKey": "women",
       "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_bl_női",
       "categorySubName": "BL, női"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_albniafinnorszg_2026-11-12_melyikcsapatvgzielazelsszgletet_albnia",
       "sportId": 1,
