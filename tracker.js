@@ -212,7 +212,7 @@ export const FOOTBALL_CATEGORY_SCHEMA = [
   },
   {
     key: 'national',
-    name: 'Válogatott mérkőzések',
+    name: 'Válogatott mérkőzések (Férfi)',
     icon: '🌍',
     order: 5,
     expandable: true,
@@ -236,7 +236,7 @@ export const FOOTBALL_CATEGORY_SCHEMA = [
   },
   {
     key: 'women',
-    name: 'Női Labdarúgás (Összes)',
+    name: 'Női Labdarúgás (Klub & Válogatott)',
     icon: '👩',
     order: 8,
     expandable: true,
@@ -286,8 +286,9 @@ export function cleanSubLeagueName(rawComp, sportId = 1) {
     s = parts.slice(1).join(' - ');
   }
 
-  const hasNoi = /női/i.test(s);
-  s = s.replace(/,\s*(alsóház|felsőház|rájátszás|alapszakasz|bajnoki ág|kiesési ág|észak|dél|kelet|nyugat|[a-z0-9]\s*csoport|[a-z0-9]\.\s*cs\.).*$/i, '').trim();
+  const hasNoi = /női|\bnoi\b|women|femenin|frauen|femminil/i.test(s);
+  s = s.replace(/,\s*([a-d]\s*div.*|[a-d]\s*liga.*|alsóház|felsőház|rájátszás|alapszakasz|bajnoki ág|kiesési ág|észak|dél|kelet|nyugat|[a-z0-9]\s*csoport|[a-z0-9]\.\s*csop.*|[a-z0-9]\.\s*cs\.|[a-l])$/i, '').trim();
+  s = s.replace(/\s+[a-d]\s*div\.[a-z0-9]+$/i, '').trim();
   s = s.replace(/\bDél-koreai b\./i, 'Dél-koreai bajnokság');
   if (hasNoi && !/női/i.test(s)) {
     s += ', női';
@@ -331,29 +332,49 @@ export function classifyTipCategory(tip) {
   }
 
   // LABDARÚGÁS (sportId === 1)
-  // 1. Női foci (elsőként szűrjük, hogy pl. Spanyol bajnokság, női vagy BL, női ide kerüljön!)
-  if (
+  // 1. Női foci (MINDEN női klub- ÉS női válogatott mérkőzés ide kerül, elsőként szűrve!)
+  const isWomenMatch =
     comp.includes('női') ||
+    /\bnoi\b/.test(comp) ||
     comp.includes('women') ||
-    comp.includes('femenino') ||
+    comp.includes('woman') ||
+    comp.includes('ladies') ||
+    comp.includes('femenin') ||
+    comp.includes('féminin') ||
     comp.includes('frauen') ||
-    comp.includes('femminile') ||
-    ev.includes('(női)')
-  ) {
-    const subName = cleanSubLeagueName(rawComp || 'Női mérkőzés', 1);
+    comp.includes('femminil') ||
+    comp.includes('damer') ||
+    comp.includes('damallsvenskan') ||
+    comp.includes('nwsl') ||
+    comp.includes('algarve') ||
+    comp.includes('shebelieves') ||
+    comp.includes('arnold clark') ||
+    comp.includes('pinatar') ||
+    ev.includes('női') ||
+    /\bnoi\b/.test(ev) ||
+    /\((n|w|női|women)\)/i.test(ev) ||
+    /\((n|w|női|women)\)/i.test(comp);
+
+  if (isWomenMatch) {
+    let subName = cleanSubLeagueName(rawComp || 'Női mérkőzés', 1);
+    if (!/női/i.test(subName)) {
+      subName += ', női';
+    }
     const subKey = 'w_' + subName.toLowerCase().replace(/[^a-z0-9áéíóöőúüű]/g, '_').replace(/_+/g, '_');
     return {
       groupKey: 'women',
-      groupName: 'Női Labdarúgás (Összes)',
+      groupName: 'Női Labdarúgás (Klub & Válogatott)',
       subKey,
       subName
     };
   }
 
-  // 2. Válogatott mérkőzések
+  // 2. Férfi Válogatott mérkőzések (kizárólag férfi válogatottak, mivel a nőit fentebb már kiszűrtük!)
   if (
     comp.includes('válogatott') ||
     comp.includes('nemzetek ligája') ||
+    comp.includes('nemz.ligája') ||
+    comp.includes('nemzetek kupája') ||
     comp.includes('vb-selejtező') ||
     comp.includes('eb-selejtező') ||
     comp.includes('világbajnokság') ||
@@ -363,6 +384,7 @@ export function classifyTipCategory(tip) {
     comp.includes('afrika-kupa') ||
     comp.includes('ázsia kupa') ||
     comp.includes('gold cup') ||
+    comp.includes('nl (speciális)') ||
     /\bu(1[5-9]|2[0-3])\b/i.test(comp) ||
     /\bu(1[5-9]|2[0-3])[a-záéíóöőúüű]/i.test(ev)
   ) {
@@ -370,7 +392,7 @@ export function classifyTipCategory(tip) {
     const subKey = 'nat_' + subName.toLowerCase().replace(/[^a-z0-9áéíóöőúüű]/g, '_').replace(/_+/g, '_');
     return {
       groupKey: 'national',
-      groupName: 'Válogatott mérkőzések',
+      groupName: 'Válogatott mérkőzések (Férfi)',
       subKey,
       subName
     };
@@ -551,17 +573,35 @@ function enrichAllStateTips() {
   if (Array.isArray(state.pendingTips)) {
     for (const t of state.pendingTips) {
       const prevGroup = t.categoryGroupKey;
+      const prevGroupName = t.categoryGroupName;
       const prevSub = t.categorySubKey;
+      const prevSubName = t.categorySubName;
       enrichTipWithCategory(t);
-      if (t.categoryGroupKey !== prevGroup || t.categorySubKey !== prevSub) changed = true;
+      if (
+        t.categoryGroupKey !== prevGroup ||
+        t.categoryGroupName !== prevGroupName ||
+        t.categorySubKey !== prevSub ||
+        t.categorySubName !== prevSubName
+      ) {
+        changed = true;
+      }
     }
   }
   if (Array.isArray(state.history)) {
     for (const h of state.history) {
       const prevGroup = h.categoryGroupKey;
+      const prevGroupName = h.categoryGroupName;
       const prevSub = h.categorySubKey;
+      const prevSubName = h.categorySubName;
       enrichTipWithCategory(h);
-      if (h.categoryGroupKey !== prevGroup || h.categorySubKey !== prevSub) changed = true;
+      if (
+        h.categoryGroupKey !== prevGroup ||
+        h.categoryGroupName !== prevGroupName ||
+        h.categorySubKey !== prevSub ||
+        h.categorySubName !== prevSubName
+      ) {
+        changed = true;
+      }
     }
   }
   return changed;

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T10:45:48.478Z",
+  "updatedAt": "2026-11-12T11:14:54.860Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -254,7 +254,7 @@
       "addedAt": "2026-11-12T08:29:44.111Z",
       "status": "pending",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_dél_koreai_bajnokság_női",
       "categorySubName": "Dél-koreai bajnokság, női"
     },
@@ -276,7 +276,7 @@
       "addedAt": "2026-11-12T08:29:44.112Z",
       "status": "pending",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_dél_koreai_bajnokság_női",
       "categorySubName": "Dél-koreai bajnokság, női"
     },
@@ -298,7 +298,7 @@
       "addedAt": "2026-11-12T08:29:44.114Z",
       "status": "pending",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_dél_koreai_bajnokság_női",
       "categorySubName": "Dél-koreai bajnokság, női"
     }
@@ -369,7 +369,7 @@
       "evaluatedAt": "2026-11-11T21:01:46.690Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_angol_liga_kupa_női",
       "categorySubName": "Angol Liga-kupa, női"
     },
@@ -392,7 +392,7 @@
       "evaluatedAt": "2026-11-11T21:01:46.689Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_angol_liga_kupa_női",
       "categorySubName": "Angol Liga-kupa, női"
     },
@@ -415,7 +415,7 @@
       "evaluatedAt": "2026-11-11T21:01:46.689Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_angol_liga_kupa_női",
       "categorySubName": "Angol Liga-kupa, női"
     },
@@ -438,7 +438,7 @@
       "evaluatedAt": "2026-11-11T21:01:46.689Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_angol_liga_kupa_női",
       "categorySubName": "Angol Liga-kupa, női"
     },
@@ -461,7 +461,7 @@
       "evaluatedAt": "2026-11-11T19:31:46.493Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_európa_kupa_női",
       "categorySubName": "Európa Kupa, női"
     },
@@ -484,7 +484,7 @@
       "evaluatedAt": "2026-11-11T19:01:49.592Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_európa_kupa_női",
       "categorySubName": "Európa Kupa, női"
     },
@@ -507,7 +507,7 @@
       "evaluatedAt": "2026-11-11T19:01:49.591Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_európa_kupa_női",
       "categorySubName": "Európa Kupa, női"
     },
@@ -576,7 +576,7 @@
       "evaluatedAt": "2026-11-11T18:01:46.588Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_francia_bajnokság_női",
       "categorySubName": "Francia bajnokság, női"
     },
@@ -783,7 +783,7 @@
       "evaluatedAt": "2026-11-10T22:11:44.896Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_bl_női",
       "categorySubName": "BL, női"
     },
@@ -806,7 +806,7 @@
       "evaluatedAt": "2026-11-10T22:01:53.990Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_bl_női",
       "categorySubName": "BL, női"
     },
@@ -898,7 +898,7 @@
       "evaluatedAt": "2026-11-10T22:01:53.990Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_bl_női",
       "categorySubName": "BL, női"
     },
@@ -921,7 +921,7 @@
       "evaluatedAt": "2026-11-10T22:01:45.494Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_bl_női",
       "categorySubName": "BL, női"
     },
@@ -1059,7 +1059,7 @@
       "evaluatedAt": "2026-11-10T15:41:45.892Z",
       "status": "won",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1128,7 +1128,7 @@
       "evaluatedAt": "2026-11-10T14:01:47.396Z",
       "status": "lost",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1151,7 +1151,7 @@
       "evaluatedAt": "2026-11-10T14:01:47.396Z",
       "status": "lost",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1174,7 +1174,7 @@
       "evaluatedAt": "2026-11-10T14:01:47.395Z",
       "status": "lost",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1197,7 +1197,7 @@
       "evaluatedAt": "2026-11-10T14:01:47.395Z",
       "status": "won",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1220,7 +1220,7 @@
       "evaluatedAt": "2026-11-10T14:01:47.395Z",
       "status": "won",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1289,7 +1289,7 @@
       "evaluatedAt": "2026-11-10T14:01:45.816Z",
       "status": "won",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1427,7 +1427,7 @@
       "evaluatedAt": "2026-11-10T11:01:45.490Z",
       "status": "won",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1450,7 +1450,7 @@
       "evaluatedAt": "2026-11-10T11:01:45.489Z",
       "status": "won",
       "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u23_válogatott_mérkőzés",
       "categorySubName": "U23 válogatott mérkőzés"
     },
@@ -1727,8 +1727,8 @@
       "status": "lost",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_kolumbiai_2_",
-      "categorySubName": "Kolumbiai 2."
+      "categorySubKey": "oth_kolumbiai_2_rájátszás_a_cs_",
+      "categorySubName": "Kolumbiai 2., rájátszás, A cs."
     },
     {
       "id": "1_tecnicounivambatomantafc_2026-11-09_ktesly_dntetlenvagymantafc",
@@ -1887,7 +1887,7 @@
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_spanyol_bajnokság_női",
       "categorySubName": "Spanyol bajnokság, női"
     },
@@ -1910,7 +1910,7 @@
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
       "status": "lost",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_spanyol_bajnokság_női",
       "categorySubName": "Spanyol bajnokság, női"
     },
@@ -2186,7 +2186,7 @@
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_spanyol_bajnokság_női",
       "categorySubName": "Spanyol bajnokság, női"
     },
@@ -2209,7 +2209,7 @@
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
       "status": "lost",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_spanyol_bajnokság_női",
       "categorySubName": "Spanyol bajnokság, női"
     },
@@ -2416,7 +2416,7 @@
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
       "status": "lost",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_német_bajnokság_női",
       "categorySubName": "Német bajnokság, női"
     },
@@ -2439,7 +2439,7 @@
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_német_bajnokság_női",
       "categorySubName": "Német bajnokság, női"
     },
@@ -2577,7 +2577,7 @@
       "evaluatedAt": "2026-11-10T07:32:44.324Z",
       "status": "won",
       "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Összes)",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_német_bajnokság_női",
       "categorySubName": "Német bajnokság, női"
     },
@@ -2716,8 +2716,8 @@
       "status": "won",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_kolumbiai_2_",
-      "categorySubName": "Kolumbiai 2."
+      "categorySubKey": "oth_kolumbiai_2_rájátszás_a_cs_",
+      "categorySubName": "Kolumbiai 2., rájátszás, A cs."
     },
     {
       "id": "1_pinetopesaro_2026-11-09_ktesly_dntetlenvagypesaro",
