@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-12T11:56:09.535Z",
+  "updatedAt": "2026-11-12T12:15:56.027Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 87,
-      "won": 56,
+      "totalChecked": 88,
+      "won": 57,
       "lost": 31,
-      "winRate": 64,
+      "winRate": 65,
       "byRisk": {
         "low": {
           "totalChecked": 19,
@@ -15,10 +15,10 @@
           "winRate": 74
         },
         "medium": {
-          "totalChecked": 56,
-          "won": 37,
+          "totalChecked": 57,
+          "won": 38,
           "lost": 19,
-          "winRate": 66
+          "winRate": 67
         },
         "high": {
           "totalChecked": 12,
@@ -235,31 +235,32 @@
       "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
       "categorySubKey": "ten_challenger_lima",
       "categorySubName": "Challenger - Lima"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_hwacheonkspogyeongju_2026-11-12_zsiaihendikep055_gyeongju05",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Hwacheon KSPO - Gyeongju",
-      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
       "eventDate": "2026-11-12T11:00:00+01:00",
+      "competitionName": "Dél-Korea - Dél-koreai b., női, rájátszás",
       "marketName": "Ázsiai Hendikep -0,5 (-.5)",
       "outcomeName": "Gyeongju +0,5",
       "odds": 1.84,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-12T08:29:44.112Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T12:15:56.027Z",
+      "status": "won",
       "categoryGroupKey": "women",
       "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_dél_koreai_bajnokság_női",
       "categorySubName": "Dél-koreai bajnokság, női"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_hwacheonkspogyeongju_2026-11-12_mindktcsapatszerezglt_nem",
       "sportId": 1,
