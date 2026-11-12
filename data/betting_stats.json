@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T08:29:44.114Z",
+  "updatedAt": "2026-11-12T10:01:44.089Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,10 +29,10 @@
       }
     },
     "tennis": {
-      "totalChecked": 23,
+      "totalChecked": 24,
       "won": 10,
-      "lost": 13,
-      "winRate": 43,
+      "lost": 14,
+      "winRate": 42,
       "byRisk": {
         "low": {
           "totalChecked": 17,
@@ -41,10 +41,10 @@
           "winRate": 41
         },
         "medium": {
-          "totalChecked": 6,
+          "totalChecked": 7,
           "won": 3,
-          "lost": 3,
-          "winRate": 50
+          "lost": 4,
+          "winRate": 43
         },
         "high": {
           "totalChecked": 0,
@@ -209,24 +209,6 @@
       "status": "pending"
     },
     {
-      "id": "5_lcarboniixilas_2026-11-12_ixilasjtkszm115115_tbbmint115",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "L. Carboni - I. Xilas",
-      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
-      "eventDate": "2026-11-12T09:00:00+01:00",
-      "marketName": "I. Xilas - Játékszám 11,5 (11.5)",
-      "outcomeName": "Több, mint 11,5",
-      "odds": 1.33,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-12T07:04:57.466Z",
-      "status": "pending"
-    },
-    {
       "id": "1_hwacheonkspogyeongju_2026-11-12_glszm2525_kevesebbmint25",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -282,6 +264,25 @@
     }
   ],
   "history": [
+    {
+      "id": "5_lcarboniixilas_2026-11-12_ixilasjtkszm115115_tbbmint115",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "L. Carboni - I. Xilas",
+      "eventDate": "2026-11-12T09:00:00+01:00",
+      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
+      "marketName": "I. Xilas - Játékszám 11,5 (11.5)",
+      "outcomeName": "Több, mint 11,5",
+      "odds": 1.33,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-12T10:01:44.089Z",
+      "status": "lost"
+    },
     {
       "id": "5_mlcarlembassolsribera_2026-11-11_amrkzsgyztese_mbassolsribera",
       "sportId": 5,
