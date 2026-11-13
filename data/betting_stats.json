@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T09:11:15.648Z",
+  "updatedAt": "2026-11-13T12:48:00.658Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,10 +29,10 @@
       }
     },
     "tennis": {
-      "totalChecked": 28,
-      "won": 12,
+      "totalChecked": 29,
+      "won": 13,
       "lost": 16,
-      "winRate": 43,
+      "winRate": 45,
       "byRisk": {
         "low": {
           "totalChecked": 20,
@@ -41,10 +41,10 @@
           "winRate": 45
         },
         "medium": {
-          "totalChecked": 8,
-          "won": 3,
+          "totalChecked": 9,
+          "won": 4,
           "lost": 5,
-          "winRate": 38
+          "winRate": 44
         },
         "high": {
           "totalChecked": 0,
@@ -103,28 +103,6 @@
       "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
       "categorySubKey": "ten_atp_stockholm",
       "categorySubName": "ATP - Stockholm"
-    },
-    {
-      "id": "5_lcarboniphenning_2026-11-13_amrkzsgyztese_phenning",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "L. Carboni - P. Henning",
-      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
-      "eventDate": "2026-11-13T11:20:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "P. Henning",
-      "odds": 1.31,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:08:29.556Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_challenger",
-      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
-      "categorySubKey": "ten_challenger_herszonisszosz",
-      "categorySubName": "Challenger - Herszonisszosz"
     },
     {
       "id": "1_mozambiketipia_2026-11-13_1x2_mozambik",
@@ -191,28 +169,6 @@
       "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
       "categorySubKey": "ten_challenger_monasztir",
       "categorySubName": "Challenger - Monasztir"
-    },
-    {
-      "id": "5_fmaestrellisnagal_2026-11-13_amrkzsgyztese_fmaestrelli",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "F. Maestrelli - S. Nagal",
-      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
-      "eventDate": "2026-11-13T10:20:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "F. Maestrelli",
-      "odds": 1.6,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:11:15.635Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_challenger",
-      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
-      "categorySubKey": "ten_challenger_herszonisszosz",
-      "categorySubName": "Challenger - Herszonisszosz"
     },
     {
       "id": "5_marmllerlgiustino_2026-11-13_amrkzsgyztese_lgiustino",
@@ -301,9 +257,54 @@
       "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
       "categorySubKey": "ten_challenger_monasztir",
       "categorySubName": "Challenger - Monasztir"
+    },
+    {
+      "id": "5_lcarboniphenning_2026-11-13_amrkzsgyztese_phenning",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventId": null,
+      "eventName": "L. Carboni - P. Henning",
+      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
+      "eventDate": "2026-11-13T11:20:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "P. Henning",
+      "odds": 1.31,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-13T09:08:29.556Z",
+      "status": "pending",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_herszonisszosz",
+      "categorySubName": "Challenger - Herszonisszosz"
     }
   ],
   "history": [
+    {
+      "id": "5_fmaestrellisnagal_2026-11-13_amrkzsgyztese_fmaestrelli",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "F. Maestrelli - S. Nagal",
+      "eventDate": "2026-11-13T10:20:00+01:00",
+      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "F. Maestrelli",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T12:47:55.100Z",
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_herszonisszosz",
+      "categorySubName": "Challenger - Herszonisszosz"
+    },
     {
       "id": "16_nygiantswashington_2026-11-13_hendikep3535_washington35",
       "sportId": 16,
