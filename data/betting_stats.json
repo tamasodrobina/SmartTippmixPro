@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T15:24:05.897Z",
+  "updatedAt": "2026-11-13T15:27:59.304Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 34,
-      "won": 15,
+      "totalChecked": 36,
+      "won": 17,
       "lost": 19,
-      "winRate": 44,
+      "winRate": 47,
       "byRisk": {
         "low": {
-          "totalChecked": 23,
-          "won": 10,
+          "totalChecked": 25,
+          "won": 12,
           "lost": 13,
-          "winRate": 43
+          "winRate": 48
         },
         "medium": {
           "totalChecked": 11,
@@ -215,50 +215,6 @@
       "categorySubName": "Nemzetek Ligája"
     },
     {
-      "id": "5_kfeldbauschmikapetkovic_2026-11-13_amrkzsgyztese_kfeldbausch",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "K. Feldbausch - Mika Petkovic",
-      "competitionName": "Challenger - Monasztir, férfi egyes",
-      "eventDate": "2026-11-13T14:10:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "K. Feldbausch",
-      "odds": 1.3,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:08:29.601Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_challenger",
-      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
-      "categorySubKey": "ten_challenger_monasztir",
-      "categorySubName": "Challenger - Monasztir"
-    },
-    {
-      "id": "5_pvivesmarcosamorocanas_2026-11-13_amrkzsgyztese_amorocanas",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "P. Vives Marcos - A. Moro Canas",
-      "competitionName": "Challenger - Monasztir, férfi egyes",
-      "eventDate": "2026-11-13T14:10:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "A. Moro Canas",
-      "odds": 1.43,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:11:15.648Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_challenger",
-      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
-      "categorySubKey": "ten_challenger_monasztir",
-      "categorySubName": "Challenger - Monasztir"
-    },
-    {
       "id": "1_moldovakazahsztn_2026-11-13_dntetlennlattvisszajr_moldova",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -392,6 +348,52 @@
     }
   ],
   "history": [
+    {
+      "id": "5_pvivesmarcosamorocanas_2026-11-13_amrkzsgyztese_amorocanas",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "P. Vives Marcos - A. Moro Canas",
+      "eventDate": "2026-11-13T14:10:00+01:00",
+      "competitionName": "Challenger - Monasztir, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "A. Moro Canas",
+      "odds": 1.43,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "0-2",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-13T15:27:59.304Z",
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_monasztir",
+      "categorySubName": "Challenger - Monasztir"
+    },
+    {
+      "id": "5_kfeldbauschmikapetkovic_2026-11-13_amrkzsgyztese_kfeldbausch",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "K. Feldbausch - Mika Petkovic",
+      "eventDate": "2026-11-13T14:10:00+01:00",
+      "competitionName": "Challenger - Monasztir, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "K. Feldbausch",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-13T15:27:59.304Z",
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_monasztir",
+      "categorySubName": "Challenger - Monasztir"
+    },
     {
       "id": "1_zambiaburundi_2026-11-13_1x2_zambia",
       "sportId": 1,
