@@ -615,52 +615,92 @@ async function searchDuckDuckGoCached(query, maxResults = 4) {
 
 async function gatherWebResearchForMatches(eventsList, customQuery = '') {
   const allWebSources = [];
+  const seenUrls = new Set();
   const researchSections = [];
 
+  const dedupeAndCollect = (resultsArray) => {
+    const unique = [];
+    for (const r of resultsArray) {
+      if (!r || !r.title || !r.snippet) continue;
+      const key = r.url || `${r.title}_${r.snippet.slice(0, 40)}`;
+      if (seenUrls.has(key)) continue;
+      seenUrls.add(key);
+      unique.push(r);
+      if (r.url) allWebSources.push({ title: r.title, url: r.url });
+    }
+    return unique;
+  };
+
   if (eventsList && eventsList.length > 0) {
-    const topToSearch = eventsList.slice(0, 4);
+    const isSingleDeepMatch = eventsList.length === 1;
+    const topToSearch = eventsList.slice(0, 5);
+
     for (const ev of topToSearch) {
-      // 1. Általános forma és előrejelzés keresés
-      const qMain = `${ev.eventName} prediction stats H2H betting tips`;
-      // 2. Célzott játékvezető, lapok, kiállítás, 11-es, szögletek és gólszerzők keresése
-      let qSpecial = '';
-      if (Number(ev.sportId) === 1 || ev.sportName?.toLowerCase().includes('foci')) {
-        qSpecial = `${ev.eventName} referee cards red cards penalties corners goalscorers stats`;
-      } else if (Number(ev.sportId) === 16 || ev.sportName?.toLowerCase().includes('nfl')) {
-        qSpecial = `${ev.eventName} referee penalties touchdown pass yards betting stats`;
-      } else if (Number(ev.sportId) === 5 || ev.sportName?.toLowerCase().includes('tenisz')) {
-        qSpecial = `${ev.eventName} tennis predictions aces break points tiebreak stats`;
+      const sportIdNum = Number(ev.sportId);
+      const isFootball = sportIdNum === 1 || ev.sportName?.toLowerCase().includes('foci');
+      const isNfl = sportIdNum === 16 || ev.sportName?.toLowerCase().includes('nfl');
+
+      // 1. Általános forma, H2H és szakértői előrejelzés (5 oldal)
+      const qMain = `${ev.eventName} prediction stats H2H betting tips preview`;
+
+      // 2. Célzott SÉRÜLTEK, ELTILTOTTAK, HIÁNYZÓK és VÁRHATÓ KEZDŐCSAPATOK (5 oldal)
+      let qInjuries = '';
+      if (isFootball) {
+        qInjuries = `${ev.eventName} injuries suspensions missing players team news predicted lineups`;
+      } else if (isNfl) {
+        qInjuries = `${ev.eventName} injury report out questionable starters lineup team news`;
+      } else {
+        qInjuries = `${ev.eventName} tennis injury fitness form medical timeout head to head`;
       }
 
-      const searches = [searchDuckDuckGoCached(qMain, 3)];
-      if (qSpecial) searches.push(searchDuckDuckGoCached(qSpecial, 3));
+      // 3. Kulcsjátékosok (gólkirályok, védők osztályzatai) + Bíró, lapok, 11-es, szögletek (5 oldal)
+      let qSpecial = '';
+      if (isFootball) {
+        qSpecial = `${ev.eventName} key players top scorer player ratings referee cards corners stats`;
+      } else if (isNfl) {
+        qSpecial = `${ev.eventName} quarterback touchdown pass yards key players referee penalties stats`;
+      } else {
+        qSpecial = `${ev.eventName} tennis predictions aces break points tiebreak surface stats`;
+      }
+
+      const searches = [
+        searchDuckDuckGoCached(qMain, 5),
+        searchDuckDuckGoCached(qInjuries, 5),
+        searchDuckDuckGoCached(qSpecial, 5)
+      ];
+
+      // Egyedi / részletes meccselemzésnél 4. mélykeresés kifejezetten a várható kezdőkre és játékos-értékelésekre (összesen ~18 oldal)
+      if (isSingleDeepMatch && isFootball) {
+        searches.push(
+          searchDuckDuckGoCached(`${ev.eventName} starting XI lineup injured key defender striker ratings SportsMole WhoScored`, 4)
+        );
+      }
 
       const settled = await Promise.all(searches);
-      const combined = settled.flat();
-
-      for (const r of combined) {
-        if (r.url) allWebSources.push({ title: r.title, url: r.url });
-      }
+      const combined = dedupeAndCollect(settled.flat());
 
       if (combined.length > 0) {
         const lines = combined.map(r => `   • [${r.title}]: ${r.snippet}`).join('\n');
-        researchSections.push(`Mérkőzés internetes és statisztikai (forma, bíró, lapok, 11-es, szöglet, gól) találatok (${ev.sportName} - ${ev.eventName}):\n${lines}`);
+        researchSections.push(
+          `Mérkőzés internetes kutatása (${combined.length} forrás – forma, SÉRÜLTEK/HIÁNYZÓK, várható kezdők, kulcsjátékos osztályzatok, bíró/lapok/szögletek) [${ev.sportName} - ${ev.eventName}]:\n${lines}`
+        );
       }
     }
   } else if (customQuery) {
-    const q1 = `${customQuery} prediction stats H2H betting tips odds`;
-    const q2 = `${customQuery} referee cards red cards penalties corners goalscorers stats`;
-    const [res1, res2] = await Promise.all([
-      searchDuckDuckGoCached(q1, 4),
-      searchDuckDuckGoCached(q2, 4)
+    const q1 = `${customQuery} prediction stats H2H betting tips preview`;
+    const q2 = `${customQuery} injuries suspensions missing players team news predicted lineups`;
+    const q3 = `${customQuery} key players top scorer player ratings referee cards corners stats`;
+    const q4 = `${customQuery} starting XI lineup injured players WhoScored SportsMole`;
+    const settled = await Promise.all([
+      searchDuckDuckGoCached(q1, 5),
+      searchDuckDuckGoCached(q2, 5),
+      searchDuckDuckGoCached(q3, 5),
+      searchDuckDuckGoCached(q4, 4)
     ]);
-    const combined = [...res1, ...res2];
-    for (const r of combined) {
-      if (r.url) allWebSources.push({ title: r.title, url: r.url });
-    }
+    const combined = dedupeAndCollect(settled.flat());
     if (combined.length > 0) {
       researchSections.push(
-        `Internetes találatok ("${customQuery}"):\n` +
+        `Internetes kutatási találatok ("${customQuery}" – ${combined.length} szakoldal forrás, beleértve a sérülteket és kulcsjátékosokat):\n` +
         combined.map(r => `   • [${r.title}]: ${r.snippet}`).join('\n')
       );
     }
@@ -669,7 +709,7 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
   return {
     researchText: researchSections.length > 0
       ? researchSections.join('\n\n')
-      : 'Használd a nemzetközi sportstatisztikai, játékvezetői és fogadási tudásbázisodat.',
+      : 'Használd a nemzetközi sportstatisztikai, sérülési/keret, játékvezetői és fogadási tudásbázisodat.',
     webSources: allWebSources
   };
 }
@@ -1308,12 +1348,18 @@ KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
    - Ha a következő ${hours} órában kevés mérkőzés érhető el (pl. csak 1-2 meccs), akkor a megadott valós mérkőzések KÜLÖNBÖZŐ PIACAI közül válassz (pl. 1X2 kimenetel, gólszám, lapok, szöglet, büntető, gólszerző, hendikep).
    - Amennyiben nincs elegendő kimagasló fogadási érték a kínálatban, adj vissza KEVESEBB (akár csak 1 vagy 2) prémium tippet a kért ${tipsCount} helyett, de SOHA NE találj ki fantom mérkőzést!
 3. **PIACI SOKSZÍNŰSÉG**: A kínálatban mindenféle piac elérhető (1X2, Gólszám/Pontszám, Mindkét csapat szerez gólt, Gólszerző/Touchdown, Kiállítás, 11-es/Büntető, Szögletek, Lapok, Hendikep, Félidők). A fenti valós listában szereplő opciókból válogass!
-4. **RELEVANCIA-SZABÁLY**: Nem kell feleslegesen kiemelni a bírót, a lapokat vagy a szögleteket, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. bíró szigora lapos/11-es/kiállítás tippnél, szögletstatisztika sarokrúgás tippnél)! Csak releváns tényezőket említs!
-5. Legfeljebb ${tipsCount} prémium tippet adj vissza a fentiek szerint, szakmai indoklással és kockázati besorolással!
+4. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
+   - Minden mérkőzésnél vizsgáld meg az internetes találatok és a tudásbázisod alapján a **biztosan hiányzó (sérült vagy eltiltott) kulcsjátékosokat**:
+   - **Gólerős támadó / Házi gólkirály / Irányító hiánya:** Ha egy csapat legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá gólszerző tippet adni, és csökkentsd a csapat gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under vagy az ellenfél hendikepje).
+   - **Magas átlagosztályzatú vezérvédő vagy 1. számú kapus hiánya:** Ha a védelem legstabilabb, legjobbra értékelt belső védője vagy a kezdőkapus hiányzik, jelentősen nő a kapott gól esélye — ilyenkor felértékelődik a **Mindkét csapat szerez gólt (BTTS - Igen)**, a **Gólszám 2,5 felett**, vagy az ellenfél gólszerzési piaca!
+   - **NFL / Tenisz:** NFL-ben a hivatalos Injury Report (QB, WR1, RB1, kulcsvédők Out/Questionable státusza), teniszben a fizikai állapot / előző meccses ápolás (Medical Timeout) közvetlenül módosítsa a választott piacot és a kockázati pontszámot (1–10)!
+   - Ha van a mérkőzést érdemben befolyásoló sérült/eltiltott kulcsjátékos, azt tüntesd fel a "detailedReasoning.injuriesAndLineup" mezőben (névvel, poszttal és a tippre gyakorolt hatással; ha nincs érdemi hiányzó, hagyd üres stringként "").
+5. **RELEVANCIA-SZABÁLY**: Nem kell feleslegesen kiemelni a bírót, a lapokat vagy a szögleteket, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. bíró szigora lapos/11-es/kiállítás tippnél, szögletstatisztika sarokrúgás tippnél)! Csak releváns tényezőket említs!
+6. Legfeljebb ${tipsCount} prémium tippet adj vissza a fentiek szerint, szakmai indoklással és kockázati besorolással!
 
 ${matchesContextBlock}
 
-VALÓS IDEJŰ INTERNETES ELEMZŐ ÉS STATISZTIKAI TALÁLATOK:
+VALÓS IDEJŰ INTERNETES ELEMZŐ ÉS STATISZTIKAI TALÁLATOK (FORMA, SÉRÜLTEK, KEZDŐK, KULCSJÁTÉKOSOK):
 ${webResearch.researchText}
 
 VÁLASZ FORMÁTUMA:
@@ -1334,6 +1380,7 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       "shortSummary": "1-2 mondatos lényegretörő összegzés.",
       "detailedReasoning": {
         "mainThesis": "Részletes, lényegretörő szakmai indoklás a tipp valószínűsége mellett. Csak a tipp szempontjából releváns tényezőket fejtsd ki!",
+        "injuriesAndLineup": "Ha van fontos sérült/eltiltott kulcsjátékos (pl. házi gólkirály vagy magas osztályzatú vezérvédő/kapus) és annak hatása a tippre, írd le itt; ha nincs releváns hiányzó, legyen üres string \"\".",
         "keyFactors": ["1. releváns érv", "2. releváns érv", "3. releváns érv"]
       },
       "riskAssessment": {
@@ -1498,19 +1545,25 @@ KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG ÉS PIACI SOKSZÍNŰSÉG):
 1. **MINDEN ELÉRHETŐ FOGADÁSI PIAC ÉS LEHETŐSÉG ÁTTEKINTÉSE**:
    - A mérkőzéshez lent megadott TippmixPro kínálat a teljes odds-sávot tartalmazza: 1X2, Kétesély, Gólszám/Pontszám, Mindkét csapat gólt szerez, Góllövő / Gólszerző / Touchdown, Kiállítás / Piros lap, 11-es / Büntető, Szögletek, Lapok, Félidők, Hendikepek stb.!
    - Bátran és nyitottan válassz speciális piacokat is (pl. gólszerző, lapok, szöglet, 11-es/büntető, kiállítás, félidő), amennyiben a statisztikák, a forma vagy a bírói adatok alapján az képviseli a legnagyobb valószínűséget és értéket!
-2. **RELEVANCIA-SZABÁLY**:
+2. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
+   - Vizsgáld meg az internetes találatok és a tudásbázisod alapján a **biztosan hiányzó (sérült vagy eltiltott) kulcsjátékosokat** és várható kezdőcsapatokat:
+   - **Gólerős támadó / Házi gólkirály / Irányító hiánya:** Ha egy csapat legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá gólszerző tippet adni, és csökkentsd a csapat gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under vagy az ellenfél hendikepje).
+   - **Magas átlagosztályzatú vezérvédő vagy 1. számú kapus hiánya:** Ha a védelem legstabilabb, legjobbra értékelt belső védője vagy a kezdőkapus hiányzik, jelentősen nő a kapott gól esélye — ilyenkor felértékelődik a **Mindkét csapat szerez gólt (BTTS - Igen)**, a **Gólszám 2,5 felett**, vagy az ellenfél gólszerzési piaca!
+   - **NFL / Tenisz:** NFL-ben a hivatalos Injury Report (QB, WR1, RB1, kulcsvédők Out/Questionable státusza), teniszben a fizikai állapot / előző meccses ápolás (Medical Timeout) közvetlenül módosítsa a választott piacot és a kockázati pontszámot (1–10)!
+   - Ha van a mérkőzést érdemben befolyásoló sérült/eltiltott kulcsjátékos, azt részletesen tüntesd fel a "detailedReasoning.injuriesAndLineup" mezőben (névvel, poszttal és a tippre gyakorolt hatással; ha nincs érdemi hiányzó, hagyd üres stringként "").
+3. **RELEVANCIA-SZABÁLY**:
    - Nem kell külön kiemelni a játékvezetőt, sem a szögleteket vagy lapokat, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. ha lap/szöglet/11-es/kiállítás piacon van a tipp, vagy a bíró személye közvetlenül befolyásolja az adott piacot)!
-   - Minden információt (bíró, lapok, szögletek, sérülések, statisztikák) CSAK AKKOR adj a részletes leírásba, ha azok közvetlenül relevánsak a tippek szempontjából. Ha nem relevánsak, ne említsd őket!
-3. **TOP 3 LEGVALÓSZÍNŰBB TIPP (KÜLÖNBÖZŐ PIACI TÍPUSOKBÓL)**:
+   - Minden információt CSAK AKKOR adj a részletes leírásba, ha azok közvetlenül relevánsak a tippek szempontjából.
+4. **TOP 3 LEGVALÓSZÍNŰBB TIPP (KÜLÖNBÖZŐ PIACI TÍPUSOKBÓL)**:
    - Válassz ki pontosan **3 darab különböző piacú és jellegű tippet** a mérkőzésre, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**!
    - Ha a fenti TippmixPro adatokban szerepelnek opciók, KÖTELEZŐEN az ott lévő valós piacneveket és oddsokat válaszd ki!
-4. **KOCKÁZATI ÉRTÉKELÉS (1-10)**:
-   - Részletesen indokold meg a kockázat mértékét és a váratlan forgatókönyveket!
+5. **KOCKÁZATI ÉRTÉKELÉS (1-10)**:
+   - Részletesen indokold meg a kockázat mértékét és a váratlan forgatókönyveket (beleértve a kulcshiányzók hatását is)!
 
 TIPPMIXPRO ADATOK:
 ${tippmixContextText}
 
-INTERNETES ELEMZŐ ÉS STATISZTIKAI TALÁLATOK:
+INTERNETES ELEMZŐ ÉS STATISZTIKAI TALÁLATOK (15–18 SZAKOLDAL – FORMA, SÉRÜLTEK, KEZDŐK, KULCSJÁTÉKOSOK):
 ${webResearch.researchText}
 
 VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
@@ -1530,6 +1583,7 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       "shortSummary": "1-2 mondatos összegzés a kártyához.",
       "detailedReasoning": {
         "mainThesis": "Részletes fő indoklás: miért ez a legvalószínűbb tipp a mérkőzésre (kizárólag a tipp szempontjából releváns tényezőkkel!).",
+        "injuriesAndLineup": "Ha van fontos sérült/eltiltott kulcsjátékos (pl. házi gólkirály vagy magas osztályzatú vezérvédő/kapus) és annak hatása a tippre, írd le itt; ha nincs releváns hiányzó, legyen üres string \"\".",
         "keyFactors": ["1. releváns kulcsérv", "2. releváns kulcsérv", "3. releváns kulcsérv"]
       },
       "riskAssessment": {

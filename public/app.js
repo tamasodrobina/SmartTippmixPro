@@ -686,6 +686,19 @@ function renderAnalysisResults(payload, metaLabel) {
             </div>
           ` : ''}
 
+          <!-- 2b. Sérültek, hiányzók és kulcsjátékosok hatása (ha van) -->
+          ${reasoning.injuriesAndLineup ? `
+            <div class="space-y-1.5">
+              <h5 class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                <span>🏥</span>
+                <span>Sérültek, hiányzók &amp; kulcsjátékosok hatása</span>
+              </h5>
+              <p class="text-xs sm:text-sm text-amber-200/90 leading-relaxed bg-amber-950/25 p-3 rounded-xl border border-amber-500/30 break-words">
+                ${escapeHtml(reasoning.injuriesAndLineup)}
+              </p>
+            </div>
+          ` : ''}
+
           <!-- 3. Kulcsérvek (ha van) -->
           ${keyFactors.length > 0 ? `
             <div class="space-y-1.5">
@@ -1244,6 +1257,18 @@ function renderModalContent(result = {}) {
         <p class="text-xs text-slate-300 leading-relaxed bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
           ${escapeHtml(reasoning.mainThesis || t.shortSummary || '')}
         </p>
+
+        ${reasoning.injuriesAndLineup ? `
+          <div class="space-y-1">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1">
+              <span>🏥</span>
+              <span>Sérültek, hiányzók &amp; kulcsjátékosok hatása:</span>
+            </span>
+            <p class="text-xs text-amber-200/90 leading-relaxed bg-amber-950/25 p-2.5 rounded-lg border border-amber-500/30 break-words">
+              ${escapeHtml(reasoning.injuriesAndLineup)}
+            </p>
+          </div>
+        ` : ''}
 
         ${factors.length > 0 ? `
           <div class="space-y-1">
