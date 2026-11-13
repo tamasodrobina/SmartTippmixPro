@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T15:07:57.281Z",
+  "updatedAt": "2026-11-13T15:13:26.070Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -191,6 +191,72 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
+    },
+    {
+      "id": "1_szlovniasvjc_2026-11-13_1x2_svjc",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Szlovénia - Svájc",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, B div, 1.csop",
+      "eventDate": "2026-11-13T20:45:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Svájc",
+      "odds": 1.56,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-13T15:13:26.066Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_szlovniasvjc_2026-11-13_glszm2525_kevesebbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Szlovénia - Svájc",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, B div, 1.csop",
+      "eventDate": "2026-11-13T20:45:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Kevesebb, mint 2,5",
+      "odds": 1.55,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-13T15:13:26.067Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_szlovniasvjc_2026-11-13_melyikcsapatvgezeltbbszgletet_svjc",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Szlovénia - Svájc",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, B div, 1.csop",
+      "eventDate": "2026-11-13T20:45:00+01:00",
+      "marketName": "Melyik csapat végez el több szögletet?",
+      "outcomeName": "Svájc",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-13T15:13:26.070Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
     }
   ],
   "history": [
@@ -3799,6 +3865,9 @@
     "5_pvivesmarcosamorocanas_2026-11-13_amrkzsgyztese_amorocanas",
     "1_dlafrikakenya_2026-11-13_mindktcsapatszerezglt_nem",
     "1_tunzialbia_2026-11-13_mindktcsapatszerezglt_nem",
-    "1_szadarbiadlkorea_2026-11-13_1x2_dlkorea"
+    "1_szadarbiadlkorea_2026-11-13_1x2_dlkorea",
+    "1_szlovniasvjc_2026-11-13_1x2_svjc",
+    "1_szlovniasvjc_2026-11-13_glszm2525_kevesebbmint25",
+    "1_szlovniasvjc_2026-11-13_melyikcsapatvgezeltbbszgletet_svjc"
   ]
 }
