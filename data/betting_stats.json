@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-13T14:58:22.348Z",
+  "updatedAt": "2026-11-13T15:07:57.281Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 106,
+      "totalChecked": 107,
       "won": 69,
-      "lost": 37,
-      "winRate": 65,
+      "lost": 38,
+      "winRate": 64,
       "byRisk": {
         "low": {
           "totalChecked": 25,
@@ -15,10 +15,10 @@
           "winRate": 72
         },
         "medium": {
-          "totalChecked": 69,
+          "totalChecked": 70,
           "won": 46,
-          "lost": 23,
-          "winRate": 67
+          "lost": 24,
+          "winRate": 66
         },
         "high": {
           "totalChecked": 12,
@@ -29,10 +29,10 @@
       }
     },
     "tennis": {
-      "totalChecked": 33,
+      "totalChecked": 34,
       "won": 15,
-      "lost": 18,
-      "winRate": 45,
+      "lost": 19,
+      "winRate": 44,
       "byRisk": {
         "low": {
           "totalChecked": 23,
@@ -41,10 +41,10 @@
           "winRate": 43
         },
         "medium": {
-          "totalChecked": 10,
+          "totalChecked": 11,
           "won": 5,
-          "lost": 5,
-          "winRate": 50
+          "lost": 6,
+          "winRate": 45
         },
         "high": {
           "totalChecked": 0,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "5_atabilotatirante_2026-11-13_amrkzsgyztese_atabilo",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "A. Tabilo - T.A. Tirante",
-      "competitionName": "ATP - Stockholm, férfi egyes",
-      "eventDate": "2026-11-13T14:00:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "A. Tabilo",
-      "odds": 1.64,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:08:29.542Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_top",
-      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
-      "categorySubKey": "ten_atp_stockholm",
-      "categorySubName": "ATP - Stockholm"
-    },
     {
       "id": "5_kfeldbauschmikapetkovic_2026-11-13_amrkzsgyztese_kfeldbausch",
       "sportId": 5,
@@ -213,31 +191,55 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_zambiaburundi_2026-11-13_1x2_zambia",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Zambia - Burundi",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,I",
       "eventDate": "2026-11-13T14:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,I",
       "marketName": "1X2",
       "outcomeName": "Zambia",
       "odds": 1.43,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:08:29.594Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "1-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T15:07:57.281Z",
+      "status": "lost",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
       "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    }
-  ],
-  "history": [
+    },
+    {
+      "id": "5_atabilotatirante_2026-11-13_amrkzsgyztese_atabilo",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "A. Tabilo - T.A. Tirante",
+      "eventDate": "2026-11-13T14:00:00+01:00",
+      "competitionName": "ATP - Stockholm, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "A. Tabilo",
+      "odds": 1.64,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "0-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T15:07:52.693Z",
+      "status": "lost",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_stockholm",
+      "categorySubName": "ATP - Stockholm"
+    },
     {
       "id": "1_mozambiketipia_2026-11-13_1x2_mozambik",
       "sportId": 1,
