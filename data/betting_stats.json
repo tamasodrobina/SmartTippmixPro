@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-13T18:55:27.569Z",
+  "updatedAt": "2026-11-13T19:55:12.273Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 112,
+      "totalChecked": 113,
       "won": 72,
-      "lost": 40,
+      "lost": 41,
       "winRate": 64,
       "byRisk": {
         "low": {
@@ -15,10 +15,10 @@
           "winRate": 70
         },
         "medium": {
-          "totalChecked": 73,
+          "totalChecked": 74,
           "won": 48,
-          "lost": 25,
-          "winRate": 66
+          "lost": 26,
+          "winRate": 65
         },
         "high": {
           "totalChecked": 12,
@@ -213,31 +213,32 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_moldovakazahsztn_2026-11-13_hazaicsapatszgletszm4545_tbbmint45",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Moldova - Kazahsztán",
-      "competitionName": "Nemzetközi - Nemzetek Ligája, C div, 3.csop",
       "eventDate": "2026-11-13T18:00:00+01:00",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, C div, 3.csop",
       "marketName": "Hazai csapat szögletszám 4,5 (4.5)",
       "outcomeName": "Több, mint 4,5",
       "odds": 1.79,
       "riskCategory": "medium",
       "riskScore": 5,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-13T15:20:47.575Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T19:55:12.273Z",
+      "status": "lost",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_moldovakazahsztn_2026-11-13_zsiaiglszm22_tbbmint2",
       "sportId": 1,
