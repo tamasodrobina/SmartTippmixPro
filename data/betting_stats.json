@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T13:07:52.686Z",
+  "updatedAt": "2026-11-13T13:40:05.856Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -257,6 +257,72 @@
       "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
       "categorySubKey": "ten_challenger_monasztir",
       "categorySubName": "Challenger - Monasztir"
+    },
+    {
+      "id": "1_dlafrikakenya_2026-11-13_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Dél-Afrika - Kenya",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
+      "eventDate": "2026-11-13T17:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.43,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-13T13:40:05.852Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
+    {
+      "id": "1_tunzialbia_2026-11-13_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Tunézia - Líbia",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,H",
+      "eventDate": "2026-11-13T17:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-13T13:40:05.854Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
+    {
+      "id": "1_szadarbiadlkorea_2026-11-13_1x2_dlkorea",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Szaúd-Arábia - Dél-Korea",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "eventDate": "2026-11-13T15:30:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Dél-Korea",
+      "odds": 1.74,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-13T13:40:05.856Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
     }
   ],
   "history": [
@@ -3724,6 +3790,9 @@
     "5_marmllerlgiustino_2026-11-13_amrkzsgyztese_lgiustino",
     "5_jforejteklmikrut_2026-11-13_amrkzsgyztese_lmikrut",
     "5_piroszsombordaltmaier_2026-11-13_amrkzsgyztese_daltmaier",
-    "5_pvivesmarcosamorocanas_2026-11-13_amrkzsgyztese_amorocanas"
+    "5_pvivesmarcosamorocanas_2026-11-13_amrkzsgyztese_amorocanas",
+    "1_dlafrikakenya_2026-11-13_mindktcsapatszerezglt_nem",
+    "1_tunzialbia_2026-11-13_mindktcsapatszerezglt_nem",
+    "1_szadarbiadlkorea_2026-11-13_1x2_dlkorea"
   ]
 }
