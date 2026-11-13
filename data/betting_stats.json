@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-13T15:27:59.304Z",
+  "updatedAt": "2026-11-13T16:45:12.071Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 107,
+      "totalChecked": 108,
       "won": 69,
-      "lost": 38,
+      "lost": 39,
       "winRate": 64,
       "byRisk": {
         "low": {
@@ -15,10 +15,10 @@
           "winRate": 72
         },
         "medium": {
-          "totalChecked": 70,
+          "totalChecked": 71,
           "won": 46,
-          "lost": 24,
-          "winRate": 66
+          "lost": 25,
+          "winRate": 65
         },
         "high": {
           "totalChecked": 12,
@@ -125,28 +125,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
       "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    },
-    {
-      "id": "1_szadarbiadlkorea_2026-11-13_1x2_dlkorea",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Szaúd-Arábia - Dél-Korea",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-13T15:30:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Dél-Korea",
-      "odds": 1.74,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T13:40:05.856Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
     },
     {
       "id": "1_szlovniasvjc_2026-11-13_1x2_svjc",
@@ -348,6 +326,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_szadarbiadlkorea_2026-11-13_1x2_dlkorea",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Szaúd-Arábia - Dél-Korea",
+      "eventDate": "2026-11-13T15:30:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "1X2",
+      "outcomeName": "Dél-Korea",
+      "odds": 1.74,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "3-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T16:45:12.070Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "5_pvivesmarcosamorocanas_2026-11-13_amrkzsgyztese_amorocanas",
       "sportId": 5,
