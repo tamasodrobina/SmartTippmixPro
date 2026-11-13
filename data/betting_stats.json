@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-13T16:45:12.071Z",
+  "updatedAt": "2026-11-13T17:56:20.581Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 108,
+      "totalChecked": 109,
       "won": 69,
-      "lost": 39,
-      "winRate": 64,
+      "lost": 40,
+      "winRate": 63,
       "byRisk": {
         "low": {
-          "totalChecked": 25,
+          "totalChecked": 26,
           "won": 18,
-          "lost": 7,
-          "winRate": 72
+          "lost": 8,
+          "winRate": 69
         },
         "medium": {
           "totalChecked": 71,
@@ -82,50 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_dlafrikakenya_2026-11-13_mindktcsapatszerezglt_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Dél-Afrika - Kenya",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
-      "eventDate": "2026-11-13T17:00:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Nem",
-      "odds": 1.43,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T13:40:05.852Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    },
-    {
-      "id": "1_tunzialbia_2026-11-13_mindktcsapatszerezglt_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Tunézia - Líbia",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,H",
-      "eventDate": "2026-11-13T17:00:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Nem",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T13:40:05.854Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    },
     {
       "id": "1_szlovniasvjc_2026-11-13_1x2_svjc",
       "sportId": 1,
@@ -323,9 +279,54 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
+    },
+    {
+      "id": "1_tunzialbia_2026-11-13_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Tunézia - Líbia",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,H",
+      "eventDate": "2026-11-13T17:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-13T13:40:05.854Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
     }
   ],
   "history": [
+    {
+      "id": "1_dlafrikakenya_2026-11-13_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Dél-Afrika - Kenya",
+      "eventDate": "2026-11-13T17:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.43,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T17:55:39.975Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
     {
       "id": "1_szadarbiadlkorea_2026-11-13_1x2_dlkorea",
       "sportId": 1,
