@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T12:48:00.658Z",
+  "updatedAt": "2026-11-13T13:07:52.686Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 29,
-      "won": 13,
+      "totalChecked": 30,
+      "won": 14,
       "lost": 16,
-      "winRate": 45,
+      "winRate": 47,
       "byRisk": {
         "low": {
-          "totalChecked": 20,
-          "won": 9,
+          "totalChecked": 21,
+          "won": 10,
           "lost": 11,
-          "winRate": 45
+          "winRate": 48
         },
         "medium": {
           "totalChecked": 9,
@@ -257,31 +257,32 @@
       "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
       "categorySubKey": "ten_challenger_monasztir",
       "categorySubName": "Challenger - Monasztir"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "5_lcarboniphenning_2026-11-13_amrkzsgyztese_phenning",
       "sportId": 5,
       "sportName": "Tenisz",
-      "eventId": null,
       "eventName": "L. Carboni - P. Henning",
-      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
       "eventDate": "2026-11-13T11:20:00+01:00",
+      "competitionName": "Challenger - Herszonisszosz, férfi egyes",
       "marketName": "A mérkőzés győztese",
       "outcomeName": "P. Henning",
       "odds": 1.31,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:08:29.556Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T13:07:52.686Z",
+      "status": "won",
       "categoryGroupKey": "tennis_challenger",
       "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
       "categorySubKey": "ten_challenger_herszonisszosz",
       "categorySubName": "Challenger - Herszonisszosz"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "5_fmaestrellisnagal_2026-11-13_amrkzsgyztese_fmaestrelli",
       "sportId": 5,
