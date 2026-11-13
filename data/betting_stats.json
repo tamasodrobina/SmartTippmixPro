@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-13T14:27:52.781Z",
+  "updatedAt": "2026-11-13T14:58:22.348Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 105,
+      "totalChecked": 106,
       "won": 69,
-      "lost": 36,
-      "winRate": 66,
+      "lost": 37,
+      "winRate": 65,
       "byRisk": {
         "low": {
           "totalChecked": 25,
@@ -15,10 +15,10 @@
           "winRate": 72
         },
         "medium": {
-          "totalChecked": 68,
+          "totalChecked": 69,
           "won": 46,
-          "lost": 22,
-          "winRate": 68
+          "lost": 23,
+          "winRate": 67
         },
         "high": {
           "totalChecked": 12,
@@ -103,50 +103,6 @@
       "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
       "categorySubKey": "ten_atp_stockholm",
       "categorySubName": "ATP - Stockholm"
-    },
-    {
-      "id": "1_mozambiketipia_2026-11-13_1x2_mozambik",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Mozambik - Etiópia",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,J",
-      "eventDate": "2026-11-13T14:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Mozambik",
-      "odds": 1.42,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:08:29.579Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    },
-    {
-      "id": "1_zambiaburundi_2026-11-13_1x2_zambia",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Zambia - Burundi",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,I",
-      "eventDate": "2026-11-13T14:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Zambia",
-      "odds": 1.43,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:08:29.594Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
     },
     {
       "id": "5_kfeldbauschmikapetkovic_2026-11-13_amrkzsgyztese_kfeldbausch",
@@ -257,9 +213,54 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
+    },
+    {
+      "id": "1_zambiaburundi_2026-11-13_1x2_zambia",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Zambia - Burundi",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,I",
+      "eventDate": "2026-11-13T14:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Zambia",
+      "odds": 1.43,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-13T09:08:29.594Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
     }
   ],
   "history": [
+    {
+      "id": "1_mozambiketipia_2026-11-13_1x2_mozambik",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Mozambik - Etiópia",
+      "eventDate": "2026-11-13T14:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,J",
+      "marketName": "1X2",
+      "outcomeName": "Mozambik",
+      "odds": 1.42,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T14:58:02.580Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
     {
       "id": "5_marmllerlgiustino_2026-11-13_amrkzsgyztese_lgiustino",
       "sportId": 5,
