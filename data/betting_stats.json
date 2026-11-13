@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-13T17:56:20.581Z",
+  "updatedAt": "2026-11-13T18:05:12.767Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 109,
-      "won": 69,
+      "totalChecked": 110,
+      "won": 70,
       "lost": 40,
-      "winRate": 63,
+      "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 26,
-          "won": 18,
+          "totalChecked": 27,
+          "won": 19,
           "lost": 8,
-          "winRate": 69
+          "winRate": 70
         },
         "medium": {
           "totalChecked": 71,
@@ -279,31 +279,32 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_tunzialbia_2026-11-13_mindktcsapatszerezglt_nem",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Tunézia - Líbia",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,H",
       "eventDate": "2026-11-13T17:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,H",
       "marketName": "Mindkét csapat szerez gólt",
       "outcomeName": "Nem",
       "odds": 1.4,
       "riskCategory": "low",
       "riskScore": 2,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T13:40:05.854Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "0-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T18:05:12.767Z",
+      "status": "won",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
       "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_dlafrikakenya_2026-11-13_mindktcsapatszerezglt_nem",
       "sportId": 1,
