@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T14:08:07.648Z",
+  "updatedAt": "2026-11-13T14:27:52.781Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 32,
+      "totalChecked": 33,
       "won": 15,
-      "lost": 17,
-      "winRate": 47,
+      "lost": 18,
+      "winRate": 45,
       "byRisk": {
         "low": {
-          "totalChecked": 22,
+          "totalChecked": 23,
           "won": 10,
-          "lost": 12,
-          "winRate": 45
+          "lost": 13,
+          "winRate": 43
         },
         "medium": {
           "totalChecked": 10,
@@ -257,31 +257,32 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "5_marmllerlgiustino_2026-11-13_amrkzsgyztese_lgiustino",
       "sportId": 5,
       "sportName": "Tenisz",
-      "eventId": null,
       "eventName": "Mar. Möller - L. Giustino",
-      "competitionName": "Challenger - Monasztir, férfi egyes",
       "eventDate": "2026-11-13T13:00:00+01:00",
+      "competitionName": "Challenger - Monasztir, férfi egyes",
       "marketName": "A mérkőzés győztese",
       "outcomeName": "L. Giustino",
       "odds": 1.58,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-13T09:11:15.636Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-13T14:27:52.781Z",
+      "status": "lost",
       "categoryGroupKey": "tennis_challenger",
       "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
       "categorySubKey": "ten_challenger_monasztir",
       "categorySubName": "Challenger - Monasztir"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "5_piroszsombordaltmaier_2026-11-13_amrkzsgyztese_daltmaier",
       "sportId": 5,
