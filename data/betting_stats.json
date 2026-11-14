@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-14T14:48:01.787Z",
+  "updatedAt": "2026-11-14T14:55:21.999Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 123,
+      "totalChecked": 124,
       "won": 78,
-      "lost": 45,
+      "lost": 46,
       "winRate": 63,
       "byRisk": {
         "low": {
-          "totalChecked": 33,
+          "totalChecked": 34,
           "won": 24,
-          "lost": 9,
-          "winRate": 73
+          "lost": 10,
+          "winRate": 71
         },
         "medium": {
           "totalChecked": 78,
@@ -105,28 +105,6 @@
       "categorySubName": "Válogatott mérkőzés"
     },
     {
-      "id": "1_rudessegesta_2026-11-14_1x2_rudes",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Rudes - Segesta",
-      "competitionName": "Horvátország - Horvát Kupa",
-      "eventDate": "2026-11-14T14:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Rudes",
-      "odds": 1.33,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-14T11:32:34.196Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_horvát_kupa",
-      "categorySubName": "Horvát Kupa"
-    },
-    {
       "id": "1_rochdaleyork_2026-11-14_dntetlennlattvisszajr_york",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -215,28 +193,6 @@
       "categorySubName": "Angol Liga 2."
     },
     {
-      "id": "1_valladolidcastellon_2026-11-14_ktesly_dntetlenvagycastellon",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Valladolid - Castellon",
-      "competitionName": "Spanyolország - Spanyol 2.",
-      "eventDate": "2026-11-14T14:00:00+01:00",
-      "marketName": "Kétesély",
-      "outcomeName": "Döntetlen vagy Castellon",
-      "odds": 1.31,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-14T11:32:34.209Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "esp_2",
-      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
-    },
-    {
       "id": "1_portvaleaccrington_2026-11-14_zsiaihendikep02525_portvale025",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -323,9 +279,54 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_valladolidcastellon_2026-11-14_ktesly_dntetlenvagycastellon",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Valladolid - Castellon",
+      "competitionName": "Spanyolország - Spanyol 2.",
+      "eventDate": "2026-11-14T14:00:00+01:00",
+      "marketName": "Kétesély",
+      "outcomeName": "Döntetlen vagy Castellon",
+      "odds": 1.31,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-14T11:32:34.209Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     }
   ],
   "history": [
+    {
+      "id": "1_rudessegesta_2026-11-14_1x2_rudes",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Rudes - Segesta",
+      "eventDate": "2026-11-14T14:00:00+01:00",
+      "competitionName": "Horvátország - Horvát Kupa",
+      "marketName": "1X2",
+      "outcomeName": "Rudes",
+      "odds": 1.33,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T14:55:11.570Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_horvát_kupa",
+      "categorySubName": "Horvát Kupa"
+    },
     {
       "id": "1_manchesterutdcrystalpalace_2026-11-14_mindktcsapatszerezgltglszm2525_igenstbbmint25",
       "sportId": 1,
