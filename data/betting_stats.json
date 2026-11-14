@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-13T21:45:12.664Z",
+  "updatedAt": "2026-11-14T01:15:22.181Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 116,
+      "totalChecked": 117,
       "won": 74,
-      "lost": 42,
-      "winRate": 64,
+      "lost": 43,
+      "winRate": 63,
       "byRisk": {
         "low": {
           "totalChecked": 29,
@@ -15,10 +15,10 @@
           "winRate": 72
         },
         "medium": {
-          "totalChecked": 75,
+          "totalChecked": 76,
           "won": 48,
-          "lost": 27,
-          "winRate": 64
+          "lost": 28,
+          "winRate": 63
         },
         "high": {
           "totalChecked": 12,
@@ -83,28 +83,6 @@
   },
   "pendingTips": [
     {
-      "id": "1_argentnauruguay_2026-11-14_glszm2525_kevesebbmint25",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Argentína - Uruguay",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-14T00:00:00+01:00",
-      "marketName": "Gólszám 2,5 (2.5)",
-      "outcomeName": "Kevesebb, mint 2,5",
-      "odds": 1.75,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-13T15:24:05.893Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
-    },
-    {
       "id": "1_argentnauruguay_2026-11-14_bntetlapszm3535_tbbmint35",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -150,6 +128,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_argentnauruguay_2026-11-14_glszm2525_kevesebbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Argentína - Uruguay",
+      "eventDate": "2026-11-14T00:00:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Kevesebb, mint 2,5",
+      "odds": 1.75,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "1-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T01:15:12.469Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "1_szlovniasvjc_2026-11-13_melyikcsapatvgezeltbbszgletet_svjc",
       "sportId": 1,
