@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-14T17:05:11.168Z",
+  "updatedAt": "2026-11-14T17:15:10.964Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 130,
-      "won": 84,
+      "totalChecked": 131,
+      "won": 85,
       "lost": 46,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 40,
-          "won": 30,
+          "totalChecked": 41,
+          "won": 31,
           "lost": 10,
-          "winRate": 75
+          "winRate": 76
         },
         "medium": {
           "totalChecked": 78,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_realsociedad2spgijon_2026-11-14_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Real Sociedad 2 - Sp. Gijon",
-      "competitionName": "Spanyolország - Spanyol 2.",
-      "eventDate": "2026-11-14T16:15:00+01:00",
-      "marketName": "Hazai csapat kapott gól nélkül játssza le a mérkőzést",
-      "outcomeName": "Nem",
-      "odds": 1.34,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-14T11:32:34.201Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "esp_2",
-      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
-    },
     {
       "id": "1_portugliadnia_2026-11-14_mindktcsapatszerezglt_igen",
       "sportId": 1,
@@ -304,6 +282,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_realsociedad2spgijon_2026-11-14_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Real Sociedad 2 - Sp. Gijon",
+      "eventDate": "2026-11-14T16:15:00+01:00",
+      "competitionName": "Spanyolország - Spanyol 2.",
+      "marketName": "Hazai csapat kapott gól nélkül játssza le a mérkőzést",
+      "outcomeName": "Nem",
+      "odds": 1.34,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T17:15:10.964Z",
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
+    },
     {
       "id": "1_colchestergillingham_2026-11-14_zsiaihendikep02525_colchester025",
       "sportId": 1,
