@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T14:45:12.762Z",
+  "updatedAt": "2026-11-14T14:48:01.787Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -257,6 +257,72 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_angol_liga_2_",
       "categorySubName": "Angol Liga 2."
+    },
+    {
+      "id": "1_portugliadnia_2026-11-14_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Portugália - Dánia",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 4.csop",
+      "eventDate": "2026-11-14T20:45:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.45,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-14T14:48:01.784Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_almerafcandorra_2026-11-14_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Almería - FC Andorra",
+      "competitionName": "Spanyolország - Spanyol 2.",
+      "eventDate": "2026-11-14T18:30:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.58,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-14T14:48:01.785Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
+    },
+    {
+      "id": "1_romnialengyelorszg_2026-11-14_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Románia - Lengyelország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, B div, 4.csop",
+      "eventDate": "2026-11-14T20:45:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.64,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-14T14:48:01.787Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
     }
   ],
   "history": [
@@ -4324,6 +4390,9 @@
     "1_portvaleaccrington_2026-11-14_zsiaihendikep02525_portvale025",
     "1_manchesterutdcrystalpalace_2026-11-14_1x2glszm2525_hazaistbb",
     "1_manchesterutdcrystalpalace_2026-11-14_flidvgeredmny_manchesterutdmanchesterutd",
-    "1_manchesterutdcrystalpalace_2026-11-14_mindktcsapatszerezgltglszm2525_igenstbbmint25"
+    "1_manchesterutdcrystalpalace_2026-11-14_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+    "1_portugliadnia_2026-11-14_mindktcsapatszerezglt_igen",
+    "1_almerafcandorra_2026-11-14_mindktcsapatszerezglt_igen",
+    "1_romnialengyelorszg_2026-11-14_mindktcsapatszerezglt_igen"
   ]
 }
