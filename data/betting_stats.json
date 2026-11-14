@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-14T12:25:36.736Z",
+  "updatedAt": "2026-11-14T13:55:12.662Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 119,
-      "won": 76,
+      "totalChecked": 120,
+      "won": 77,
       "lost": 43,
       "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 31,
-          "won": 23,
+          "totalChecked": 32,
+          "won": 24,
           "lost": 8,
-          "winRate": 74
+          "winRate": 75
         },
         "medium": {
           "totalChecked": 76,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_tajvankirgizisztn_2026-11-14_1flid1x2_kirgizisztn",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Tajvan - Kirgizisztán",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-14T13:00:00+01:00",
-      "marketName": "1. félidő - 1X2",
-      "outcomeName": "Kirgizisztán",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-14T11:32:34.189Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
-    },
     {
       "id": "1_palesztinairn_2026-11-14_1x2_irn",
       "sportId": 1,
@@ -213,28 +191,6 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_angol_liga_1_",
       "categorySubName": "Angol Liga 1."
-    },
-    {
-      "id": "1_bijelobrdohnkgorica_2026-11-14_dntetlennlattvisszajr_hnkgorica",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Bijelo Brdo - HNK Gorica",
-      "competitionName": "Horvátország - Horvát Kupa",
-      "eventDate": "2026-11-14T13:00:00+01:00",
-      "marketName": "Döntetlennél a tét visszajár",
-      "outcomeName": "HNK Gorica",
-      "odds": 1.35,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-14T11:32:34.205Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_horvát_kupa",
-      "categorySubName": "Horvát Kupa"
     },
     {
       "id": "1_colchestergillingham_2026-11-14_zsiaihendikep02525_colchester025",
@@ -370,6 +326,52 @@
     }
   ],
   "history": [
+    {
+      "id": "1_bijelobrdohnkgorica_2026-11-14_dntetlennlattvisszajr_hnkgorica",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Bijelo Brdo - HNK Gorica",
+      "eventDate": "2026-11-14T13:00:00+01:00",
+      "competitionName": "Horvátország - Horvát Kupa",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "HNK Gorica",
+      "odds": 1.35,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T13:55:12.662Z",
+      "status": "void",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_horvát_kupa",
+      "categorySubName": "Horvát Kupa"
+    },
+    {
+      "id": "1_tajvankirgizisztn_2026-11-14_1flid1x2_kirgizisztn",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Tajvan - Kirgizisztán",
+      "eventDate": "2026-11-14T13:00:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "1. félidő - 1X2",
+      "outcomeName": "Kirgizisztán",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T13:55:12.475Z",
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "1_argentnauruguay_2026-11-14_melyikcsapatvgezeltbbszgletet_argentna",
       "sportId": 1,
