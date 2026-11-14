@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-14T17:15:10.964Z",
+  "updatedAt": "2026-11-14T19:35:11.963Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 131,
-      "won": 85,
+      "totalChecked": 132,
+      "won": 86,
       "lost": 46,
       "winRate": 65,
       "byRisk": {
@@ -15,8 +15,8 @@
           "winRate": 76
         },
         "medium": {
-          "totalChecked": 78,
-          "won": 49,
+          "totalChecked": 79,
+          "won": 50,
           "lost": 29,
           "winRate": 63
         },
@@ -103,28 +103,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    },
-    {
-      "id": "1_almerafcandorra_2026-11-14_mindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Almería - FC Andorra",
-      "competitionName": "Spanyolország - Spanyol 2.",
-      "eventDate": "2026-11-14T18:30:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.58,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-14T14:48:01.785Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "esp_2",
-      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     },
     {
       "id": "1_romnialengyelorszg_2026-11-14_mindktcsapatszerezglt_igen",
@@ -282,6 +260,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_almerafcandorra_2026-11-14_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Almería - FC Andorra",
+      "eventDate": "2026-11-14T18:30:00+01:00",
+      "competitionName": "Spanyolország - Spanyol 2.",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.58,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T19:35:11.963Z",
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
+    },
     {
       "id": "1_realsociedad2spgijon_2026-11-14_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
       "sportId": 1,
