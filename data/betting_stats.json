@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T11:32:34.211Z",
+  "updatedAt": "2026-11-14T12:25:36.736Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -301,6 +301,72 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_angol_liga_2_",
       "categorySubName": "Angol Liga 2."
+    },
+    {
+      "id": "1_manchesterutdcrystalpalace_2026-11-14_1x2glszm2525_hazaistbb",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Manchester Utd. - Crystal Palace",
+      "competitionName": "Angol amatőr - Angol bajnokság, női",
+      "eventDate": "2026-11-14T13:45:00+01:00",
+      "marketName": "1X2 + Gólszám 2,5 (2.5)",
+      "outcomeName": "Hazai és több",
+      "odds": 1.39,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-14T12:25:36.734Z",
+      "status": "pending",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
+      "categorySubKey": "w_angol_bajnokság_női",
+      "categorySubName": "Angol bajnokság, női"
+    },
+    {
+      "id": "1_manchesterutdcrystalpalace_2026-11-14_flidvgeredmny_manchesterutdmanchesterutd",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Manchester Utd. - Crystal Palace",
+      "competitionName": "Angol amatőr - Angol bajnokság, női",
+      "eventDate": "2026-11-14T13:45:00+01:00",
+      "marketName": "Félidő/végeredmény",
+      "outcomeName": "Manchester Utd./Manchester Utd.",
+      "odds": 1.47,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-14T12:25:36.735Z",
+      "status": "pending",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
+      "categorySubKey": "w_angol_bajnokság_női",
+      "categorySubName": "Angol bajnokság, női"
+    },
+    {
+      "id": "1_manchesterutdcrystalpalace_2026-11-14_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Manchester Utd. - Crystal Palace",
+      "competitionName": "Angol amatőr - Angol bajnokság, női",
+      "eventDate": "2026-11-14T13:45:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
+      "outcomeName": "Igen és több, mint 2,5",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-14T12:25:36.736Z",
+      "status": "pending",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
+      "categorySubKey": "w_angol_bajnokság_női",
+      "categorySubName": "Angol bajnokság, női"
     }
   ],
   "history": [
@@ -4250,6 +4316,9 @@
     "1_bijelobrdohnkgorica_2026-11-14_dntetlennlattvisszajr_hnkgorica",
     "1_colchestergillingham_2026-11-14_zsiaihendikep02525_colchester025",
     "1_valladolidcastellon_2026-11-14_ktesly_dntetlenvagycastellon",
-    "1_portvaleaccrington_2026-11-14_zsiaihendikep02525_portvale025"
+    "1_portvaleaccrington_2026-11-14_zsiaihendikep02525_portvale025",
+    "1_manchesterutdcrystalpalace_2026-11-14_1x2glszm2525_hazaistbb",
+    "1_manchesterutdcrystalpalace_2026-11-14_flidvgeredmny_manchesterutdmanchesterutd",
+    "1_manchesterutdcrystalpalace_2026-11-14_mindktcsapatszerezgltglszm2525_igenstbbmint25"
   ]
 }
