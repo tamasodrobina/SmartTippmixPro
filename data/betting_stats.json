@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-14T14:55:21.999Z",
+  "updatedAt": "2026-11-14T15:05:12.768Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 124,
-      "won": 78,
+      "totalChecked": 125,
+      "won": 79,
       "lost": 46,
       "winRate": 63,
       "byRisk": {
         "low": {
-          "totalChecked": 34,
-          "won": 24,
+          "totalChecked": 35,
+          "won": 25,
           "lost": 10,
           "winRate": 71
         },
@@ -279,31 +279,32 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_valladolidcastellon_2026-11-14_ktesly_dntetlenvagycastellon",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Valladolid - Castellon",
-      "competitionName": "Spanyolország - Spanyol 2.",
       "eventDate": "2026-11-14T14:00:00+01:00",
+      "competitionName": "Spanyolország - Spanyol 2.",
       "marketName": "Kétesély",
       "outcomeName": "Döntetlen vagy Castellon",
       "odds": 1.31,
       "riskCategory": "low",
       "riskScore": 2,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-14T11:32:34.209Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T15:05:12.768Z",
+      "status": "won",
       "categoryGroupKey": "top5_2",
       "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
       "categorySubKey": "esp_2",
       "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_rudessegesta_2026-11-14_1x2_rudes",
       "sportId": 1,
