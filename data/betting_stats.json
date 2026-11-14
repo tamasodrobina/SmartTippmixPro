@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-14T01:15:22.181Z",
+  "updatedAt": "2026-11-14T01:25:11.663Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 117,
-      "won": 74,
+      "totalChecked": 119,
+      "won": 76,
       "lost": 43,
-      "winRate": 63,
+      "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 29,
-          "won": 21,
+          "totalChecked": 31,
+          "won": 23,
           "lost": 8,
-          "winRate": 72
+          "winRate": 74
         },
         "medium": {
           "totalChecked": 76,
@@ -81,53 +81,54 @@
       }
     }
   },
-  "pendingTips": [
-    {
-      "id": "1_argentnauruguay_2026-11-14_bntetlapszm3535_tbbmint35",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Argentína - Uruguay",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-14T00:00:00+01:00",
-      "marketName": "Büntetőlap-szám 3,5 (3.5)",
-      "outcomeName": "Több, mint 3,5",
-      "odds": 1.39,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-13T15:24:05.894Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
-    },
+  "pendingTips": [],
+  "history": [
     {
       "id": "1_argentnauruguay_2026-11-14_melyikcsapatvgezeltbbszgletet_argentna",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Argentína - Uruguay",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
       "eventDate": "2026-11-14T00:00:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
       "marketName": "Melyik csapat végez el több szögletet?",
       "outcomeName": "Argentína",
       "odds": 1.34,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-13T15:24:05.897Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "1-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T01:25:11.663Z",
+      "status": "won",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
-    }
-  ],
-  "history": [
+    },
+    {
+      "id": "1_argentnauruguay_2026-11-14_bntetlapszm3535_tbbmint35",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Argentína - Uruguay",
+      "eventDate": "2026-11-14T00:00:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "Büntetőlap-szám 3,5 (3.5)",
+      "outcomeName": "Több, mint 3,5",
+      "odds": 1.39,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "1-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-14T01:25:11.663Z",
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "1_argentnauruguay_2026-11-14_glszm2525_kevesebbmint25",
       "sportId": 1,
