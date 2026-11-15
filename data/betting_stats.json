@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T12:52:45.357Z",
+  "updatedAt": "2026-11-15T12:54:05.577Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -604,6 +604,28 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-15T12:52:45.357Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_belgiumolaszorszg_2026-11-15_ktesly_belgiumvagydntetlen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Belgium - Olaszország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 1.csop",
+      "eventDate": "2026-11-15T20:45:00+01:00",
+      "marketName": "Kétesély",
+      "outcomeName": "Belgium vagy Döntetlen",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T12:54:05.577Z",
       "status": "pending",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
@@ -5100,6 +5122,7 @@
     "16_arizonalarams_2026-11-15_1flid1x2_larams",
     "16_dallassanfrancisco_2026-11-15_amrkzsgyztese_sanfrancisco",
     "1_belgiumolaszorszg_2026-11-15_dntetlennlattvisszajr_belgium",
-    "1_belgiumolaszorszg_2026-11-15_szgletszm8585_tbbmint85"
+    "1_belgiumolaszorszg_2026-11-15_szgletszm8585_tbbmint85",
+    "1_belgiumolaszorszg_2026-11-15_ktesly_belgiumvagydntetlen"
   ]
 }
