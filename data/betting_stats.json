@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T08:04:58.261Z",
+  "updatedAt": "2026-11-15T09:13:10.005Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -147,6 +147,72 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_holland_2_",
       "categorySubName": "Holland 2."
+    },
+    {
+      "id": "1_lettorszgrmnyorszg_2026-11-15_dntetlennlattvisszajr_rmnyorszg",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Lettország - Örményország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, C div, 2.csop",
+      "eventDate": "2026-11-15T15:00:00+01:00",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Örményország",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T09:13:10.001Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_lettorszgrmnyorszg_2026-11-15_glszm2525_kevesebbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Lettország - Örményország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, C div, 2.csop",
+      "eventDate": "2026-11-15T15:00:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Kevesebb, mint 2,5",
+      "odds": 1.57,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T09:13:10.004Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_lettorszgrmnyorszg_2026-11-15_vendgcsapatglszm055_tbbmint05",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Lettország - Örményország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, C div, 2.csop",
+      "eventDate": "2026-11-15T15:00:00+01:00",
+      "marketName": "Vendégcsapat - Gólszám 0,5 (.5)",
+      "outcomeName": "Több, mint 0,5",
+      "odds": 1.31,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T09:13:10.005Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
     }
   ],
   "history": [
@@ -4617,6 +4683,9 @@
     "1_ausztriarorszg_2026-11-14_bntetlapszm3535_tbbmint35",
     "1_tenerifeceuta_2026-11-15_1x2_tenerife",
     "1_paris13atlredstar_2026-11-15_1x2_redstar",
-    "1_maastrichtvitesse_2026-11-15_1x2_vitesse"
+    "1_maastrichtvitesse_2026-11-15_1x2_vitesse",
+    "1_lettorszgrmnyorszg_2026-11-15_dntetlennlattvisszajr_rmnyorszg",
+    "1_lettorszgrmnyorszg_2026-11-15_glszm2525_kevesebbmint25",
+    "1_lettorszgrmnyorszg_2026-11-15_vendgcsapatglszm055_tbbmint05"
   ]
 }
