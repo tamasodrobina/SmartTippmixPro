@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T21:55:11.570Z",
+  "updatedAt": "2026-11-15T22:09:40.292Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -235,6 +235,72 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Németország - Hollandia",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 2.csop",
+      "eventDate": "2026-11-16T20:45:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
+      "outcomeName": "Igen és több, mint 2,5",
+      "odds": 1.48,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T22:09:40.288Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_nmetorszghollandia_2026-11-16_1x2_nmetorszg",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Németország - Hollandia",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 2.csop",
+      "eventDate": "2026-11-16T20:45:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Németország",
+      "odds": 1.85,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T22:09:40.289Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_nmetorszghollandia_2026-11-16_hazaicsapatglszm1515_tbbmint15",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Németország - Hollandia",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 2.csop",
+      "eventDate": "2026-11-16T20:45:00+01:00",
+      "marketName": "Hazai csapat - Gólszám 1,5 (1.5)",
+      "outcomeName": "Több, mint 1,5",
+      "odds": 1.5,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T22:09:40.292Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
     }
   ],
   "history": [
@@ -5501,6 +5567,9 @@
     "16_lasvegasseattle_2026-11-15_flidvgeredmny_seattleseattle",
     "16_lasvegasseattle_2026-11-15_hendikep5555_seattle55",
     "16_lasvegasseattle_2026-11-15_pontszm425425_kevesebbmint425",
-    "16_lasvegasseattle_2026-11-15_touchdownokszma3535_tbbmint35"
+    "16_lasvegasseattle_2026-11-15_touchdownokszma3535_tbbmint35",
+    "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+    "1_nmetorszghollandia_2026-11-16_1x2_nmetorszg",
+    "1_nmetorszghollandia_2026-11-16_hazaicsapatglszm1515_tbbmint15"
   ]
 }
