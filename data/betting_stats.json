@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-15T15:55:23.925Z",
+  "updatedAt": "2026-11-15T16:35:13.067Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 144,
-      "won": 93,
+      "totalChecked": 145,
+      "won": 94,
       "lost": 51,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 45,
-          "won": 33,
+          "totalChecked": 46,
+          "won": 34,
           "lost": 12,
-          "winRate": 73
+          "winRate": 74
         },
         "medium": {
           "totalChecked": 87,
@@ -829,31 +829,32 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_paris13atlredstar_2026-11-15_1x2_redstar",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Paris 13 Atl. - Red Star",
-      "competitionName": "Franciaország - Francia Kupa",
       "eventDate": "2026-11-15T14:00:00+01:00",
+      "competitionName": "Franciaország - Francia Kupa",
       "marketName": "1X2",
       "outcomeName": "Red Star",
       "odds": 1.49,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-15T08:04:58.260Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "0-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-15T16:35:13.066Z",
+      "status": "won",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_francia_kupa",
       "categorySubName": "Francia Kupa"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_lettorszgrmnyorszg_2026-11-15_vendgcsapatglszm055_tbbmint05",
       "sportId": 1,
