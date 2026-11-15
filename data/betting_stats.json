@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T21:45:11.662Z",
+  "updatedAt": "2026-11-15T08:04:58.261Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -81,7 +81,74 @@
       }
     }
   },
-  "pendingTips": [],
+  "pendingTips": [
+    {
+      "id": "1_tenerifeceuta_2026-11-15_1x2_tenerife",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Tenerife - Ceuta",
+      "competitionName": "Spanyolország - Spanyol 2.",
+      "eventDate": "2026-11-15T14:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Tenerife",
+      "odds": 1.7,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-15T08:04:58.257Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
+    },
+    {
+      "id": "1_paris13atlredstar_2026-11-15_1x2_redstar",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Paris 13 Atl. - Red Star",
+      "competitionName": "Franciaország - Francia Kupa",
+      "eventDate": "2026-11-15T14:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Red Star",
+      "odds": 1.49,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-15T08:04:58.260Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_francia_kupa",
+      "categorySubName": "Francia Kupa"
+    },
+    {
+      "id": "1_maastrichtvitesse_2026-11-15_1x2_vitesse",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Maastricht - Vitesse",
+      "competitionName": "Hollandia - Holland 2.",
+      "eventDate": "2026-11-15T14:30:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Vitesse",
+      "odds": 1.96,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-15T08:04:58.261Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_holland_2_",
+      "categorySubName": "Holland 2."
+    }
+  ],
   "history": [
     {
       "id": "1_ausztriarorszg_2026-11-14_bntetlapszm3535_tbbmint35",
@@ -4547,6 +4614,9 @@
     "1_szakrorszgukrajna_2026-11-14_vendgcsapatglszm055_tbbmint05",
     "1_ausztriarorszg_2026-11-14_1x2_ausztria",
     "1_ausztriarorszg_2026-11-14_hazaicsapatglszm1515_tbbmint15",
-    "1_ausztriarorszg_2026-11-14_bntetlapszm3535_tbbmint35"
+    "1_ausztriarorszg_2026-11-14_bntetlapszm3535_tbbmint35",
+    "1_tenerifeceuta_2026-11-15_1x2_tenerife",
+    "1_paris13atlredstar_2026-11-15_1x2_redstar",
+    "1_maastrichtvitesse_2026-11-15_1x2_vitesse"
   ]
 }
