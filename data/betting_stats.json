@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T13:01:51.765Z",
+  "updatedAt": "2026-11-15T13:10:53.754Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -653,6 +653,72 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "16_detroitnewengland_2026-11-15_amrkzsgyztese_detroit",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Detroit - New England",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-15T15:30:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "Detroit",
+      "odds": 1.61,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T13:10:53.752Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_detroitnewengland_2026-11-15_pontszm495495_tbbmint495",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Detroit - New England",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-15T15:30:00+01:00",
+      "marketName": "Pontszám 49,5 (49.5)",
+      "outcomeName": "Több, mint 49,5",
+      "odds": 1.7,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T13:10:53.753Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_detroitnewengland_2026-11-15_hendikep1515_detroit15",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Detroit - New England",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-15T15:30:00+01:00",
+      "marketName": "Hendikep -1,5 (-1.5)",
+      "outcomeName": "Detroit -1,5",
+      "odds": 1.68,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T13:10:53.754Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     }
   ],
   "history": [
@@ -5146,6 +5212,9 @@
     "1_belgiumolaszorszg_2026-11-15_dntetlennlattvisszajr_belgium",
     "1_belgiumolaszorszg_2026-11-15_szgletszm8585_tbbmint85",
     "1_belgiumolaszorszg_2026-11-15_ktesly_belgiumvagydntetlen",
-    "1_spanyolorszganglia_2026-11-15_szgletszm8585_tbbmint85"
+    "1_spanyolorszganglia_2026-11-15_szgletszm8585_tbbmint85",
+    "16_detroitnewengland_2026-11-15_amrkzsgyztese_detroit",
+    "16_detroitnewengland_2026-11-15_pontszm495495_tbbmint495",
+    "16_detroitnewengland_2026-11-15_hendikep1515_detroit15"
   ]
 }
