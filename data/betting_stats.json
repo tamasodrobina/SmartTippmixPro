@@ -1,24 +1,24 @@
 {
-  "updatedAt": "2026-11-15T21:45:22.867Z",
+  "updatedAt": "2026-11-15T21:55:11.570Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 153,
+      "totalChecked": 155,
       "won": 101,
-      "lost": 52,
-      "winRate": 66,
+      "lost": 54,
+      "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 48,
+          "totalChecked": 49,
           "won": 35,
-          "lost": 13,
-          "winRate": 73
+          "lost": 14,
+          "winRate": 71
         },
         "medium": {
-          "totalChecked": 93,
+          "totalChecked": 94,
           "won": 61,
-          "lost": 32,
-          "winRate": 66
+          "lost": 33,
+          "winRate": 65
         },
         "high": {
           "totalChecked": 12,
@@ -235,53 +235,55 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    },
-    {
-      "id": "1_spanyolorszganglia_2026-11-15_melyikcsapatvgezeltbbszgletet_spanyolorszg",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Spanyolország - Anglia",
-      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 3.csop",
-      "eventDate": "2026-11-15T20:45:00+01:00",
-      "marketName": "Melyik csapat végez el több szögletet?",
-      "outcomeName": "Spanyolország",
-      "odds": 1.56,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-15T10:40:06.132Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_nemzetek_ligája",
-      "categorySubName": "Nemzetek Ligája"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_spanyolorszganglia_2026-11-15_dntetlennlattvisszajr_spanyolorszg",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Spanyolország - Anglia",
-      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 3.csop",
       "eventDate": "2026-11-15T20:45:00+01:00",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 3.csop",
       "marketName": "Döntetlennél a tét visszajár",
       "outcomeName": "Spanyolország",
       "odds": 1.41,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-15T10:40:06.136Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "2-3",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-15T21:55:11.570Z",
+      "status": "lost",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    }
-  ],
-  "history": [
+    },
+    {
+      "id": "1_spanyolorszganglia_2026-11-15_melyikcsapatvgezeltbbszgletet_spanyolorszg",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Spanyolország - Anglia",
+      "eventDate": "2026-11-15T20:45:00+01:00",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 3.csop",
+      "marketName": "Melyik csapat végez el több szögletet?",
+      "outcomeName": "Spanyolország",
+      "odds": 1.56,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "2-3",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-15T21:55:11.570Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
     {
       "id": "1_spanyolorszganglia_2026-11-15_szgletszm8585_tbbmint85",
       "sportId": 1,
