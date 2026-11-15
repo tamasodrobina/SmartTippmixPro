@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-15T13:29:40.551Z",
+  "updatedAt": "2026-11-15T15:05:31.076Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 140,
-      "won": 91,
+      "totalChecked": 141,
+      "won": 92,
       "lost": 49,
       "winRate": 65,
       "byRisk": {
@@ -15,8 +15,8 @@
           "winRate": 74
         },
         "medium": {
-          "totalChecked": 85,
-          "won": 54,
+          "totalChecked": 86,
+          "won": 55,
           "lost": 31,
           "winRate": 64
         },
@@ -82,50 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_tenerifeceuta_2026-11-15_1x2_tenerife",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Tenerife - Ceuta",
-      "competitionName": "Spanyolország - Spanyol 2.",
-      "eventDate": "2026-11-15T14:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Tenerife",
-      "odds": 1.7,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-15T08:04:58.257Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "esp_2",
-      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
-    },
-    {
-      "id": "1_paris13atlredstar_2026-11-15_1x2_redstar",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Paris 13 Atl. - Red Star",
-      "competitionName": "Franciaország - Francia Kupa",
-      "eventDate": "2026-11-15T14:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Red Star",
-      "odds": 1.49,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-15T08:04:58.260Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_francia_kupa",
-      "categorySubName": "Francia Kupa"
-    },
     {
       "id": "1_maastrichtvitesse_2026-11-15_1x2_vitesse",
       "sportId": 1,
@@ -961,9 +917,54 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "1_paris13atlredstar_2026-11-15_1x2_redstar",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Paris 13 Atl. - Red Star",
+      "competitionName": "Franciaország - Francia Kupa",
+      "eventDate": "2026-11-15T14:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Red Star",
+      "odds": 1.49,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-15T08:04:58.260Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_francia_kupa",
+      "categorySubName": "Francia Kupa"
     }
   ],
   "history": [
+    {
+      "id": "1_tenerifeceuta_2026-11-15_1x2_tenerife",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Tenerife - Ceuta",
+      "eventDate": "2026-11-15T14:00:00+01:00",
+      "competitionName": "Spanyolország - Spanyol 2.",
+      "marketName": "1X2",
+      "outcomeName": "Tenerife",
+      "odds": 1.7,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-15T15:05:12.768Z",
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "esp_2",
+      "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
+    },
     {
       "id": "1_ausztriarorszg_2026-11-14_bntetlapszm3535_tbbmint35",
       "sportId": 1,
