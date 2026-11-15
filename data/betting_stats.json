@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-15T15:05:31.076Z",
+  "updatedAt": "2026-11-15T15:25:23.238Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 141,
+      "totalChecked": 142,
       "won": 92,
-      "lost": 49,
+      "lost": 50,
       "winRate": 65,
       "byRisk": {
         "low": {
@@ -15,10 +15,10 @@
           "winRate": 74
         },
         "medium": {
-          "totalChecked": 86,
+          "totalChecked": 87,
           "won": 55,
-          "lost": 31,
-          "winRate": 64
+          "lost": 32,
+          "winRate": 63
         },
         "high": {
           "totalChecked": 12,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_maastrichtvitesse_2026-11-15_1x2_vitesse",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Maastricht - Vitesse",
-      "competitionName": "Hollandia - Holland 2.",
-      "eventDate": "2026-11-15T14:30:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Vitesse",
-      "odds": 1.96,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-15T08:04:58.261Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_holland_2_",
-      "categorySubName": "Holland 2."
-    },
     {
       "id": "1_lettorszgrmnyorszg_2026-11-15_dntetlennlattvisszajr_rmnyorszg",
       "sportId": 1,
@@ -942,6 +920,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_maastrichtvitesse_2026-11-15_1x2_vitesse",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Maastricht - Vitesse",
+      "eventDate": "2026-11-15T14:30:00+01:00",
+      "competitionName": "Hollandia - Holland 2.",
+      "marketName": "1X2",
+      "outcomeName": "Vitesse",
+      "odds": 1.96,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-15T15:25:12.464Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_holland_2_",
+      "categorySubName": "Holland 2."
+    },
     {
       "id": "1_tenerifeceuta_2026-11-15_1x2_tenerife",
       "sportId": 1,
