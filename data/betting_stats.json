@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T13:10:53.754Z",
+  "updatedAt": "2026-11-15T13:11:35.470Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -714,6 +714,50 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-15T13:10:53.754Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_detroitnewengland_2026-11-15_pontszm485485_tbbmint485",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Detroit - New England",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-15T15:30:00+01:00",
+      "marketName": "Pontszám 48,5 (48.5)",
+      "outcomeName": "Több, mint 48,5",
+      "odds": 1.63,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T13:11:35.468Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_detroitnewengland_2026-11-15_vendgcsapatpontszm235235_tbbmint235",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Detroit - New England",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-15T15:30:00+01:00",
+      "marketName": "Vendégcsapat - Pontszám 23,5 (23.5)",
+      "outcomeName": "Több, mint 23,5",
+      "odds": 1.73,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T13:11:35.470Z",
       "status": "pending",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
@@ -5215,6 +5259,8 @@
     "1_spanyolorszganglia_2026-11-15_szgletszm8585_tbbmint85",
     "16_detroitnewengland_2026-11-15_amrkzsgyztese_detroit",
     "16_detroitnewengland_2026-11-15_pontszm495495_tbbmint495",
-    "16_detroitnewengland_2026-11-15_hendikep1515_detroit15"
+    "16_detroitnewengland_2026-11-15_hendikep1515_detroit15",
+    "16_detroitnewengland_2026-11-15_pontszm485485_tbbmint485",
+    "16_detroitnewengland_2026-11-15_vendgcsapatpontszm235235_tbbmint235"
   ]
 }
