@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T13:28:53.316Z",
+  "updatedAt": "2026-11-15T13:29:40.551Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -912,6 +912,50 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-15T13:28:53.316Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_lasvegasseattle_2026-11-15_pontszm425425_kevesebbmint425",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Las Vegas - Seattle",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-15T22:05:00+01:00",
+      "marketName": "Pontszám 42,5 (42.5)",
+      "outcomeName": "Kevesebb, mint 42,5",
+      "odds": 1.64,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T13:29:40.549Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_lasvegasseattle_2026-11-15_touchdownokszma3535_tbbmint35",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Las Vegas - Seattle",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-15T22:05:00+01:00",
+      "marketName": "Touchdown-ok száma 3,5 (3.5)",
+      "outcomeName": "Több, mint 3,5",
+      "odds": 1.41,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T13:29:40.551Z",
       "status": "pending",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
@@ -5422,6 +5466,8 @@
     "16_atlantakansascity_2026-11-15_pontszm485485_kevesebbmint485",
     "16_atlantakansascity_2026-11-15_hendikep4545_atlanta45",
     "16_lasvegasseattle_2026-11-15_flidvgeredmny_seattleseattle",
-    "16_lasvegasseattle_2026-11-15_hendikep5555_seattle55"
+    "16_lasvegasseattle_2026-11-15_hendikep5555_seattle55",
+    "16_lasvegasseattle_2026-11-15_pontszm425425_kevesebbmint425",
+    "16_lasvegasseattle_2026-11-15_touchdownokszma3535_tbbmint35"
   ]
 }
