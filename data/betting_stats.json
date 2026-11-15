@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-15T10:44:20.762Z",
+  "updatedAt": "2026-11-15T12:52:45.357Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -565,6 +565,50 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "1_belgiumolaszorszg_2026-11-15_dntetlennlattvisszajr_belgium",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Belgium - Olaszország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 1.csop",
+      "eventDate": "2026-11-15T20:45:00+01:00",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Belgium",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T12:52:45.355Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_belgiumolaszorszg_2026-11-15_szgletszm8585_tbbmint85",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Belgium - Olaszország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 1.csop",
+      "eventDate": "2026-11-15T20:45:00+01:00",
+      "marketName": "Szögletszám 8,5 (8.5)",
+      "outcomeName": "Több, mint 8,5",
+      "odds": 1.48,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-15T12:52:45.357Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
     }
   ],
   "history": [
@@ -5054,6 +5098,8 @@
     "16_neworleanscarolina_2026-11-15_amrkzsgyztese_carolina",
     "16_lasvegasseattle_2026-11-15_1x2_seattle",
     "16_arizonalarams_2026-11-15_1flid1x2_larams",
-    "16_dallassanfrancisco_2026-11-15_amrkzsgyztese_sanfrancisco"
+    "16_dallassanfrancisco_2026-11-15_amrkzsgyztese_sanfrancisco",
+    "1_belgiumolaszorszg_2026-11-15_dntetlennlattvisszajr_belgium",
+    "1_belgiumolaszorszg_2026-11-15_szgletszm8585_tbbmint85"
   ]
 }
