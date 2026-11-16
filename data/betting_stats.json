@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T15:03:25.068Z",
+  "updatedAt": "2026-11-16T15:08:41.931Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 36,
-      "won": 17,
+      "totalChecked": 37,
+      "won": 18,
       "lost": 19,
-      "winRate": 47,
+      "winRate": 49,
       "byRisk": {
         "low": {
-          "totalChecked": 25,
-          "won": 12,
+          "totalChecked": 26,
+          "won": 13,
           "lost": 13,
-          "winRate": 48
+          "winRate": 50
         },
         "medium": {
           "totalChecked": 11,
@@ -169,28 +169,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
       "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    },
-    {
-      "id": "5_calcarazgarfiaftiafoe_2026-11-16_jtszmkszma_2",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "C. Alcaraz Garfia - F. Tiafoe",
-      "competitionName": "ATP - ATP-vb, férfi egyes, B csoport",
-      "eventDate": "2026-11-16T14:00:00+01:00",
-      "marketName": "Játszmák száma",
-      "outcomeName": "2",
-      "odds": 1.3,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-16T11:52:17.591Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_top",
-      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
-      "categorySubKey": "ten_atp_atp_vb",
-      "categorySubName": "ATP - ATP-vb"
     },
     {
       "id": "5_iivashkatobysamuel_2026-11-16_amrkzsgyztese_tobysamuel",
@@ -348,6 +326,29 @@
     }
   ],
   "history": [
+    {
+      "id": "5_calcarazgarfiaftiafoe_2026-11-16_jtszmkszma_2",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "C. Alcaraz Garfia - F. Tiafoe",
+      "eventDate": "2026-11-16T14:00:00+01:00",
+      "competitionName": "ATP - ATP-vb, férfi egyes, B csoport",
+      "marketName": "Játszmák száma",
+      "outcomeName": "2",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-16T15:08:41.931Z",
+      "status": "won",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_atp_vb",
+      "categorySubName": "ATP - ATP-vb"
+    },
     {
       "id": "1_nambiakamerun_2026-11-16_1x2_kamerun",
       "sportId": 1,
