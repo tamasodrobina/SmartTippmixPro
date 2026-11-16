@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-16T17:28:42.233Z",
+  "updatedAt": "2026-11-16T17:58:46.035Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 132,
-      "won": 86,
+      "totalChecked": 133,
+      "won": 87,
       "lost": 46,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 44,
-          "won": 32,
+          "totalChecked": 45,
+          "won": 33,
           "lost": 12,
           "winRate": 73
         },
@@ -125,28 +125,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    },
-    {
-      "id": "1_eritreaguinea_2026-11-16_1x2_guinea",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Eritrea - Guinea",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
-      "eventDate": "2026-11-16T17:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Guinea",
-      "odds": 1.34,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-16T11:52:17.590Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
     },
     {
       "id": "16_baltimorelachargers_2026-11-17_hendikep3535_baltimore35",
@@ -282,6 +260,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_eritreaguinea_2026-11-16_1x2_guinea",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Eritrea - Guinea",
+      "eventDate": "2026-11-16T17:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
+      "marketName": "1X2",
+      "outcomeName": "Guinea",
+      "odds": 1.34,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "1-3",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-16T17:58:46.035Z",
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
     {
       "id": "5_iivashkatobysamuel_2026-11-16_amrkzsgyztese_tobysamuel",
       "sportId": 5,
