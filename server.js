@@ -858,8 +858,8 @@ function parseJsonFromAiResponse(text) {
 // 7. REST API VÉGPONTOK
 // ============================================================================
 
-// Health check végpont (UptimeRobot pinghez)
-app.get('/api/health', (req, res) => {
+// Health check végpont (UptimeRobot / Render pinghez: /api/health és /health is él)
+app.get(['/api/health', '/health'], (req, res) => {
   res.json({ ok: true, status: 'alive', time: new Date().toISOString() });
 });
 
