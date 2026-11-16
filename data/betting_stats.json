@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-16T15:08:41.931Z",
+  "updatedAt": "2026-11-16T16:58:45.428Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 131,
+      "totalChecked": 132,
       "won": 86,
-      "lost": 45,
-      "winRate": 66,
+      "lost": 46,
+      "winRate": 65,
       "byRisk": {
         "low": {
           "totalChecked": 44,
@@ -15,9 +15,9 @@
           "winRate": 73
         },
         "medium": {
-          "totalChecked": 79,
+          "totalChecked": 80,
           "won": 50,
-          "lost": 29,
+          "lost": 30,
           "winRate": 63
         },
         "high": {
@@ -120,28 +120,6 @@
       "riskLevel": "Közepes",
       "source": "homepage_custom",
       "addedAt": "2026-11-15T22:10:22.754Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_nemzetek_ligája",
-      "categorySubName": "Nemzetek Ligája"
-    },
-    {
-      "id": "1_kazahsztnszlovkia_2026-11-16_1x2_szlovkia",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Kazahsztán - Szlovákia",
-      "competitionName": "Nemzetközi - Nemzetek Ligája, C div, 3.csop",
-      "eventDate": "2026-11-16T16:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Szlovákia",
-      "odds": 1.76,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-16T11:52:17.588Z",
       "status": "pending",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
@@ -326,6 +304,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_kazahsztnszlovkia_2026-11-16_1x2_szlovkia",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Kazahsztán - Szlovákia",
+      "eventDate": "2026-11-16T16:00:00+01:00",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, C div, 3.csop",
+      "marketName": "1X2",
+      "outcomeName": "Szlovákia",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-16T16:58:45.340Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
     {
       "id": "5_calcarazgarfiaftiafoe_2026-11-16_jtszmkszma_2",
       "sportId": 5,
