@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T11:52:17.597Z",
+  "updatedAt": "2026-11-16T11:53:01.879Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -301,6 +301,72 @@
       "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
       "categorySubKey": "ten_challenger_helsinki",
       "categorySubName": "Challenger - Helsinki"
+    },
+    {
+      "id": "16_baltimorelachargers_2026-11-17_amrkzsgyztese_baltimore",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Baltimore - LA Chargers",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-17T02:15:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "Baltimore",
+      "odds": 1.38,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-16T11:53:01.875Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_baltimorelachargers_2026-11-17_1flid1x2_baltimore",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Baltimore - LA Chargers",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-17T02:15:00+01:00",
+      "marketName": "1. félidő - 1X2",
+      "outcomeName": "Baltimore",
+      "odds": 1.59,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-16T11:53:01.876Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_baltimorelachargers_2026-11-17_vendgcsapatpontszm165165_tbbmint165",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Baltimore - LA Chargers",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-17T02:15:00+01:00",
+      "marketName": "Vendégcsapat - Pontszám 16,5 (16.5)",
+      "outcomeName": "Több, mint 16,5",
+      "odds": 1.77,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-16T11:53:01.879Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     }
   ],
   "history": [
@@ -5738,6 +5804,9 @@
     "1_eritreaguinea_2026-11-16_1x2_guinea",
     "5_calcarazgarfiaftiafoe_2026-11-16_jtszmkszma_2",
     "1_nambiakamerun_2026-11-16_1x2_kamerun",
-    "5_iivashkatobysamuel_2026-11-16_amrkzsgyztese_tobysamuel"
+    "5_iivashkatobysamuel_2026-11-16_amrkzsgyztese_tobysamuel",
+    "16_baltimorelachargers_2026-11-17_amrkzsgyztese_baltimore",
+    "16_baltimorelachargers_2026-11-17_1flid1x2_baltimore",
+    "16_baltimorelachargers_2026-11-17_vendgcsapatpontszm165165_tbbmint165"
   ]
 }
