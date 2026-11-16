@@ -686,8 +686,8 @@ function renderAnalysisResults(payload, metaLabel) {
             </div>
           ` : ''}
 
-          <!-- 2b. Sérültek, hiányzók és kulcsjátékosok hatása (ha van) -->
-          ${reasoning.injuriesAndLineup ? `
+          <!-- 2b. Sérültek, hiányzók és kulcsjátékosok hatása (ha van valódi hiányzó) -->
+          ${(reasoning.injuriesAndLineup && !/^(nincs|nincsenek)\b/i.test(String(reasoning.injuriesAndLineup).trim())) ? `
             <div class="space-y-1.5">
               <h5 class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
                 <span>🏥</span>
@@ -1258,7 +1258,7 @@ function renderModalContent(result = {}) {
           ${escapeHtml(reasoning.mainThesis || t.shortSummary || '')}
         </p>
 
-        ${reasoning.injuriesAndLineup ? `
+        ${(reasoning.injuriesAndLineup && !/^(nincs|nincsenek)\b/i.test(String(reasoning.injuriesAndLineup).trim())) ? `
           <div class="space-y-1">
             <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1">
               <span>🏥</span>

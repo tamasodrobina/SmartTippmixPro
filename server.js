@@ -547,67 +547,427 @@ async function enrichCandidateEvents(candidateEvents, minOdds = 1.30, maxOdds = 
 }
 
 // ============================================================================
-// 5. VALÓS IDEJŰ INTERNETES KUTATÓ (JÁTÉKVEZETŐ, LAPOK, SZÖGLETEK)
+// ============================================================================
+// 5. VALÓS IDEJŰ INTERNETES KUTATÓ & HIVATALOS ESPN SÉRÜLT/FORMA ADATBÁZIS
 // ============================================================================
 
 function decodeHtmlEntities(str = '') {
   return str
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#x27;/g, "'")
     .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
-    .replace(/<[^>]+>/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
     .trim();
 }
 
-async function searchDuckDuckGoCached(query, maxResults = 4) {
-  const cacheKey = query.toLowerCase().trim();
+const HU_TO_EN_TEAMS = {
+  'magyarország': 'Hungary',
+  'németország': 'Germany',
+  'hollandia': 'Netherlands',
+  'spanyolország': 'Spain',
+  'olaszország': 'Italy',
+  'franciaország': 'France',
+  'anglia': 'England',
+  'portugália': 'Portugal',
+  'horvátország': 'Croatia',
+  'szerbia': 'Serbia',
+  'görögország': 'Greece',
+  'skócia': 'Scotland',
+  'svájc': 'Switzerland',
+  'lengyelország': 'Poland',
+  'dánia': 'Denmark',
+  'svédország': 'Sweden',
+  'norvégia': 'Norway',
+  'ausztria': 'Austria',
+  'szlovénia': 'Slovenia',
+  'szlovákia': 'Slovakia',
+  'csehország': 'Czech Republic',
+  'románia': 'Romania',
+  'törökország': 'Turkey',
+  'belgium': 'Belgium',
+  'wales': 'Wales',
+  'írország': 'Republic of Ireland',
+  'észak-írország': 'Northern Ireland',
+  'izland': 'Iceland',
+  'finnország': 'Finland',
+  'ukrajna': 'Ukraine',
+  'grúzia': 'Georgia',
+  'albánia': 'Albania',
+  'észak-macedónia': 'North Macedonia',
+  'bosznia-hercegovina': 'Bosnia and Herzegovina',
+  'montenegró': 'Montenegro',
+  'koszovó': 'Kosovo',
+  'bulgária': 'Bulgaria',
+  'észtország': 'Estonia',
+  'lettország': 'Latvia',
+  'litvánia': 'Lithuania',
+  'fehéroroszország': 'Belarus',
+  'moldova': 'Moldova',
+  'feröer-szigetek': 'Faroe Islands',
+  'ciprus': 'Cyprus',
+  'málta': 'Malta',
+  'gibraltár': 'Gibraltar',
+  'luxemburg': 'Luxembourg',
+  'liechtenstein': 'Liechtenstein',
+  'andorra': 'Andorra',
+  'san marino': 'San Marino',
+  'kazahsztán': 'Kazakhstan',
+  'azerbajdzsán': 'Azerbaijan',
+  'örményország': 'Armenia',
+  'izrael': 'Israel',
+  'brazília': 'Brazil',
+  'argentína': 'Argentina',
+  'kolumbia': 'Colombia',
+  'mexikó': 'Mexico',
+  'kanada': 'Canada',
+  'japán': 'Japan',
+  'dél-korea': 'South Korea',
+  'ausztrália': 'Australia',
+  'marokkó': 'Morocco',
+  'egyiptom': 'Egypt',
+  'szenegál': 'Senegal',
+  'nigéria': 'Nigeria',
+  'kamerun': 'Cameroon',
+  'ghána': 'Ghana',
+  'elefántcsontpart': 'Ivory Coast',
+  'algéria': 'Algeria',
+  'tunézia': 'Tunisia'
+};
+
+const NFL_TEAM_MAP = {
+  'baltimore': 'Baltimore Ravens',
+  'la chargers': 'Los Angeles Chargers',
+  'los angeles chargers': 'Los Angeles Chargers',
+  'la rams': 'Los Angeles Rams',
+  'los angeles rams': 'Los Angeles Rams',
+  'kansas city': 'Kansas City Chiefs',
+  'buffalo': 'Buffalo Bills',
+  'detroit': 'Detroit Lions',
+  'san francisco': 'San Francisco 49ers',
+  'philadelphia': 'Philadelphia Eagles',
+  'dallas': 'Dallas Cowboys',
+  'green bay': 'Green Bay Packers',
+  'minnesota': 'Minnesota Vikings',
+  'chicago': 'Chicago Bears',
+  'pittsburgh': 'Pittsburgh Steelers',
+  'cincinnati': 'Cincinnati Bengals',
+  'cleveland': 'Cleveland Browns',
+  'houston': 'Houston Texans',
+  'indianapolis': 'Indianapolis Colts',
+  'jacksonville': 'Jacksonville Jaguars',
+  'tennessee': 'Tennessee Titans',
+  'miami': 'Miami Dolphins',
+  'new england': 'New England Patriots',
+  'ny jets': 'New York Jets',
+  'new york jets': 'New York Jets',
+  'ny giants': 'New York Giants',
+  'new york giants': 'New York Giants',
+  'washington': 'Washington Commanders',
+  'atlanta': 'Atlanta Falcons',
+  'new orleans': 'New Orleans Saints',
+  'tampa bay': 'Tampa Bay Buccaneers',
+  'carolina': 'Carolina Panthers',
+  'seattle': 'Seattle Seahawks',
+  'arizona': 'Arizona Cardinals',
+  'denver': 'Denver Broncos',
+  'las vegas': 'Las Vegas Raiders'
+};
+
+function translateTeamNameToEnglish(rawTeam = '', isNfl = false) {
+  let clean = rawTeam.trim();
+  const lower = clean.toLowerCase();
+
+  if (isNfl) {
+    for (const [key, full] of Object.entries(NFL_TEAM_MAP)) {
+      if (lower === key || lower.includes(key) || full.toLowerCase().includes(lower)) {
+        return full;
+      }
+    }
+  }
+
+  const u21Suffix = /\bu21\b/i.test(clean) ? ' U21' : (/\bu19\b/i.test(clean) ? ' U19' : '');
+  const baseLower = lower.replace(/\bu21\b|\bu19\b|\(női\)|\bnői\b/gi, '').trim();
+
+  if (HU_TO_EN_TEAMS[baseLower]) {
+    return `${HU_TO_EN_TEAMS[baseLower]}${u21Suffix}`;
+  }
+  for (const [hu, en] of Object.entries(HU_TO_EN_TEAMS)) {
+    if (baseLower.includes(hu)) {
+      return `${en}${u21Suffix}`;
+    }
+  }
+  return clean;
+}
+
+function parseMatchTeams(eventName = '', isNfl = false) {
+  const parts = eventName.split(/\s+[-–vs.]+\s+/i).map(s => s.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    const homeHu = parts[0];
+    const awayHu = parts[1];
+    const homeEn = translateTeamNameToEnglish(homeHu, isNfl);
+    const awayEn = translateTeamNameToEnglish(awayHu, isNfl);
+    return {
+      homeHu,
+      awayHu,
+      homeEn,
+      awayEn,
+      englishMatchup: `${homeEn} vs ${awayEn}`
+    };
+  }
+  const singleEn = translateTeamNameToEnglish(eventName, isNfl);
+  return { homeHu: eventName, awayHu: '', homeEn: singleEn, awayEn: '', englishMatchup: singleEn };
+}
+
+let espnCache = {
+  nflInjuries: { timestamp: 0, data: null },
+  nflScoreboard: { timestamp: 0, data: null },
+  soccerScoreboard: { timestamp: 0, data: null },
+  summaries: new Map()
+};
+
+async function fetchJsonWithTimeout(url, timeoutMs = 6000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const r = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*'
+      }
+    });
+    if (!r.ok) return null;
+    return await r.json();
+  } catch (_) {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl) {
+  const now = Date.now();
+  const lines = [];
+  const sources = [];
+
+  try {
+    if (isNfl) {
+      if (!espnCache.nflInjuries.data || now - espnCache.nflInjuries.timestamp > 20 * 60 * 1000) {
+        const injData = await fetchJsonWithTimeout('https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries');
+        if (injData) espnCache.nflInjuries = { timestamp: now, data: injData };
+      }
+      if (!espnCache.nflScoreboard.data || now - espnCache.nflScoreboard.timestamp > 15 * 60 * 1000) {
+        const sbData = await fetchJsonWithTimeout('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard');
+        if (sbData) espnCache.nflScoreboard = { timestamp: now, data: sbData };
+      }
+
+      const targetTeams = [parsedTeams.homeEn, parsedTeams.awayEn].filter(Boolean);
+      const allTeamInjuries = espnCache.nflInjuries.data?.injuries || [];
+
+      for (const tName of targetTeams) {
+        const tLower = tName.toLowerCase();
+        const foundTeam = allTeamInjuries.find(ti => {
+          const dn = (ti.displayName || '').toLowerCase();
+          return dn === tLower || dn.includes(tLower) || tLower.includes(dn);
+        });
+
+        if (foundTeam && Array.isArray(foundTeam.injuries)) {
+          // Fontos sérültek: Injured Reserve, Out, Doubtful, Questionable + kulcsposztok (QB, RB, WR, TE, CB, S, LB, DE, OT)
+          const relevantInjuries = foundTeam.injuries.filter(inj => {
+            const st = (inj.status || '').toLowerCase();
+            const pos = (inj.athlete?.position?.abbreviation || '').toUpperCase();
+            if (st.includes('injured reserve') || st === 'out' || st === 'doubtful' || st === 'questionable') return true;
+            if ((pos === 'QB' || pos === 'RB' || pos === 'WR' || pos === 'PK') && (inj.shortComment || inj.longComment)) return true;
+            return false;
+          });
+
+          if (relevantInjuries.length > 0) {
+            lines.push(`   🏥 [HIVATALOS ESPN NFL SÉRÜLTJELENTÉS – ${foundTeam.displayName}]:`);
+            for (const inj of relevantInjuries.slice(0, 12)) {
+              const player = inj.athlete?.displayName || 'Ismeretlen';
+              const pos = inj.athlete?.position?.abbreviation || '?';
+              const status = inj.status || 'Unknown';
+              const comment = (inj.shortComment || inj.longComment || '').replace(/\s+/g, ' ').trim();
+              lines.push(`      - ${player} (${pos}) — Státusz: ${status.toUpperCase()}${comment ? ` | Megjegyzés: ${comment.slice(0, 220)}` : ''}`);
+            }
+            sources.push({ title: `ESPN Official NFL Injury Report – ${foundTeam.displayName}`, url: 'https://www.espn.com/nfl/injuries' });
+          }
+        }
+      }
+
+      const sbEvents = espnCache.nflScoreboard.data?.events || [];
+      const matchedSb = sbEvents.find(e => {
+        const en = (e.name || '').toLowerCase();
+        return targetTeams.some(t => en.includes(t.toLowerCase().split(' ').pop()));
+      });
+
+      if (matchedSb) {
+        const comp = matchedSb.competitions?.[0];
+        if (comp?.competitors) {
+          lines.push(`   🏈 [ESPN NFL CSAPAT STATISZTIKÁK ÉS VEZÉRJÁTÉKOSOK – ${matchedSb.name}]:`);
+          for (const c of comp.competitors) {
+            const tName = c.team?.displayName || '';
+            const rec = c.records?.[0]?.summary || '';
+            const leaders = (c.leaders || [])
+              .map(l => `${l.displayName}: ${l.leaders?.[0]?.athlete?.displayName || ''} (${l.leaders?.[0]?.displayValue || ''})`)
+              .join('; ');
+            lines.push(`      - ${tName} (Mérleg: ${rec}) | Aktuális statisztikai vezetők: ${leaders}`);
+          }
+        }
+      }
+    } else if (isFootball) {
+      if (!espnCache.soccerScoreboard.data || now - espnCache.soccerScoreboard.timestamp > 15 * 60 * 1000) {
+        const sbData = await fetchJsonWithTimeout('https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard');
+        if (sbData) espnCache.soccerScoreboard = { timestamp: now, data: sbData };
+      }
+
+      const sbEvents = espnCache.soccerScoreboard.data?.events || [];
+      const homeKey = parsedTeams.homeEn.toLowerCase();
+      const awayKey = parsedTeams.awayEn.toLowerCase();
+
+      const matchedSb = sbEvents.find(e => {
+        const en = (e.name || '').toLowerCase();
+        return (homeKey && en.includes(homeKey)) || (awayKey && en.includes(awayKey));
+      });
+
+      if (matchedSb && matchedSb.id) {
+        let summaryData = espnCache.summaries.get(matchedSb.id);
+        if (!summaryData || now - summaryData.timestamp > 20 * 60 * 1000) {
+          const fetched = await fetchJsonWithTimeout(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/summary?event=${matchedSb.id}`);
+          if (fetched) {
+            summaryData = { timestamp: now, data: fetched };
+            espnCache.summaries.set(matchedSb.id, summaryData);
+          }
+        }
+
+        const sum = summaryData?.data;
+        if (sum) {
+          if (Array.isArray(sum.leaders) && sum.leaders.length > 0) {
+            lines.push(`   ⚽ [ESPN HIVATALOS CSAPAT KULCSJÁTÉKOSOK & GÓLSZERZŐK – ${matchedSb.name}]:`);
+            for (const tl of sum.leaders) {
+              const tName = tl.team?.displayName || '';
+              const lStr = (tl.leaders || [])
+                .map(x => `${x.displayName}: ${x.leaders?.[0]?.athlete?.displayName || ''} (${x.leaders?.[0]?.displayValue || ''})`)
+                .filter(Boolean)
+                .join(' | ');
+              if (lStr) lines.push(`      - ${tName}: ${lStr}`);
+            }
+          }
+          if (Array.isArray(sum.lastFiveGames) && sum.lastFiveGames.length > 0) {
+            lines.push(`   📈 [UTOLSÓ 5 MÉRKŐZÉS FORMA – ${matchedSb.name}]:`);
+            for (const g of sum.lastFiveGames) {
+              const tName = g.team?.displayName || '';
+              const evStr = (g.events || [])
+                .slice(0, 5)
+                .map(e => `${e.gameResult || ''} vs ${e.opponent?.displayName || ''} (${e.score || ''})`)
+                .join(', ');
+              if (evStr) lines.push(`      - ${tName}: ${evStr}`);
+            }
+          }
+          sources.push({ title: `ESPN Match Center – ${matchedSb.name}`, url: `https://www.espn.com/soccer/match/_/gameId/${matchedSb.id}` });
+        }
+      }
+    }
+  } catch (_) {
+    // ignore ESPN fallback errors
+  }
+
+  // TippmixPro aktív játékos-piacok kivonatolása (kik azok a játékosok, akikre a TippmixPro ma ténylegesen kínál oddsot)
+  if (Array.isArray(ev.allMarketsList) && ev.allMarketsList.length > 0) {
+    const playerMarkets = ev.allMarketsList.filter(m => {
+      const mn = (m.marketName || '').toLowerCase();
+      return mn.includes('gólszerző') || mn.includes('touchdown') || mn.includes('passzolt yard') || mn.includes('futott yard') || mn.includes('elkapott yard');
+    });
+    if (playerMarkets.length > 0) {
+      const samplePlayers = [...new Set(playerMarkets.slice(0, 14).map(m => `${m.outcomeName} (${m.marketName}: ${m.odds})`))];
+      if (samplePlayers.length > 0) {
+        lines.push(`   🎯 [TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK A MAI MECCSRE (Kik szerepelnek a mai keretben)]: ${samplePlayers.join(', ')}`);
+      }
+    }
+  }
+
+  return { lines, sources };
+}
+
+async function searchLiveNewsRssCached(query, maxResults = 5, recentDays = 10) {
+  const cacheKey = `rss_${query.toLowerCase().trim()}_${recentDays}`;
   const now = Date.now();
   const cached = webResearchCache.get(cacheKey);
   if (cached && now - cached.timestamp < WEB_RESEARCH_CACHE_TTL_MS) {
     return cached.results;
   }
 
+  const results = [];
+  const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+  };
+
   try {
-    const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-        'Accept-Language': 'en-US,en;q=0.9,hu;q=0.8'
-      }
-    });
-    if (!response.ok) return [];
-    const html = await response.text();
+    const bingUrl = `https://www.bing.com/news/search?q=${encodeURIComponent(query)}&format=rss`;
+    const googleUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query + (recentDays ? ` when:${recentDays}d` : ''))}&hl=en-US&gl=US&ceid=US:en`;
 
-    const results = [];
-    const blockRegex = /<div class="links_main[\s\S]*?<\/div>\s*<\/div>/g;
-    const blocks = html.match(blockRegex) || [];
+    const [bingRes, googleRes] = await Promise.allSettled([
+      fetch(bingUrl, { headers }),
+      fetch(googleUrl, { headers })
+    ]);
 
-    for (const block of blocks.slice(0, maxResults)) {
-      const titleMatch = block.match(/class="result__a"[^>]*>([\s\S]*?)<\/a>/);
-      const snippetMatch = block.match(/class="result__snippet"[^>]*>([\s\S]*?)<\/a>/);
-      const urlMatch = block.match(/uddg=([^&"]+)/);
-
-      const title = titleMatch ? decodeHtmlEntities(titleMatch[1]) : '';
-      const snippet = snippetMatch ? decodeHtmlEntities(snippetMatch[1]) : '';
-      let targetUrl = '';
-      if (urlMatch && urlMatch[1]) {
-        try {
-          targetUrl = decodeURIComponent(urlMatch[1]);
-        } catch (_) {
-          targetUrl = '';
+    if (bingRes.status === 'fulfilled' && bingRes.value.ok) {
+      const xml = await bingRes.value.text();
+      const itemMatches = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
+      for (const m of itemMatches.slice(0, maxResults)) {
+        const block = m[1];
+        const title = decodeHtmlEntities((block.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '');
+        const desc = decodeHtmlEntities((block.match(/<description>([\s\S]*?)<\/description>/) || [])[1] || '');
+        const link = decodeHtmlEntities((block.match(/<link>([\s\S]*?)<\/link>/) || [])[1] || '');
+        const pubDate = decodeHtmlEntities((block.match(/<pubDate>([\s\S]*?)<\/pubDate>/) || [])[1] || '');
+        if (title && (desc || pubDate)) {
+          results.push({
+            title,
+            snippet: `${desc || title}${pubDate ? ` (${pubDate.slice(0, 16)})` : ''}`,
+            url: link
+          });
         }
-      }
-
-      if (title && snippet) {
-        results.push({ title, snippet, url: targetUrl });
       }
     }
 
-    webResearchCache.set(cacheKey, { timestamp: now, results });
-    return results;
+    if (googleRes.status === 'fulfilled' && googleRes.value.ok) {
+      const xml = await googleRes.value.text();
+      const itemMatches = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
+      for (const m of itemMatches.slice(0, maxResults)) {
+        const block = m[1];
+        const title = decodeHtmlEntities((block.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '');
+        const desc = decodeHtmlEntities((block.match(/<description>([\s\S]*?)<\/description>/) || [])[1] || '');
+        const link = decodeHtmlEntities((block.match(/<link>([\s\S]*?)<\/link>/) || [])[1] || '');
+        const pubDate = decodeHtmlEntities((block.match(/<pubDate>([\s\S]*?)<\/pubDate>/) || [])[1] || '');
+        if (title) {
+          results.push({
+            title,
+            snippet: `${desc && desc !== title ? desc : title}${pubDate ? ` (${pubDate.slice(0, 16)})` : ''}`,
+            url: link
+          });
+        }
+      }
+    }
+
+    const deduped = [];
+    const seen = new Set();
+    for (const r of results) {
+      const k = r.title.toLowerCase().slice(0, 55);
+      if (seen.has(k)) continue;
+      seen.add(k);
+      deduped.push(r);
+      if (deduped.length >= maxResults) break;
+    }
+
+    webResearchCache.set(cacheKey, { timestamp: now, results: deduped });
+    return deduped;
   } catch (_) {
     return [];
   }
@@ -622,7 +982,7 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
     const unique = [];
     for (const r of resultsArray) {
       if (!r || !r.title || !r.snippet) continue;
-      const key = r.url || `${r.title}_${r.snippet.slice(0, 40)}`;
+      const key = r.title.toLowerCase().slice(0, 55);
       if (seenUrls.has(key)) continue;
       seenUrls.add(key);
       unique.push(r);
@@ -637,71 +997,90 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
 
     for (const ev of topToSearch) {
       const sportIdNum = Number(ev.sportId);
-      const isFootball = sportIdNum === 1 || ev.sportName?.toLowerCase().includes('foci');
-      const isNfl = sportIdNum === 16 || ev.sportName?.toLowerCase().includes('nfl');
+      const isFootball = sportIdNum === 1 || ev.sportName?.toLowerCase().includes('foci') || ev.sportName?.toLowerCase().includes('labdarúgás');
+      const isNfl = sportIdNum === 16 || ev.sportName?.toLowerCase().includes('nfl') || ev.sportName?.toLowerCase().includes('amerikai');
 
-      // 1. Általános forma, H2H és szakértői előrejelzés (5 oldal)
-      const qMain = `${ev.eventName} prediction stats H2H betting tips preview`;
+      const parsedTeams = parseMatchTeams(ev.eventName, isNfl);
+      const enMatch = parsedTeams.englishMatchup;
 
-      // 2. Célzott SÉRÜLTEK, ELTILTOTTAK, HIÁNYZÓK és VÁRHATÓ KEZDŐCSAPATOK (5 oldal)
+      // 1. Általános előrejelzés, forma és fogadási tippek (angolra fordított csapatnevekkel!)
+      const qMain = `${enMatch} preview prediction betting tips stats`;
+
+      // 2. Célzott SÉRÜLTEK, ELTILTOTTAK, HIÁNYZÓK és VÁRHATÓ KEZDŐCSAPATOK
       let qInjuries = '';
       if (isFootball) {
-        qInjuries = `${ev.eventName} injuries suspensions missing players team news predicted lineups`;
+        qInjuries = `${enMatch} team news injuries suspensions predicted lineup`;
       } else if (isNfl) {
-        qInjuries = `${ev.eventName} injury report out questionable starters lineup team news`;
+        qInjuries = `${enMatch} injury report out questionable quarterback starters`;
       } else {
-        qInjuries = `${ev.eventName} tennis injury fitness form medical timeout head to head`;
+        qInjuries = `${enMatch} tennis preview injury form head to head`;
       }
 
-      // 3. Kulcsjátékosok (gólkirályok, védők osztályzatai) + Bíró, lapok, 11-es, szögletek (5 oldal)
-      let qSpecial = '';
-      if (isFootball) {
-        qSpecial = `${ev.eventName} key players top scorer player ratings referee cards corners stats`;
-      } else if (isNfl) {
-        qSpecial = `${ev.eventName} quarterback touchdown pass yards key players referee penalties stats`;
+      // 3. Csapatonkénti célzott sérült és kulcsjátékos keresés
+      let qTeamSpecific = '';
+      if (isNfl && parsedTeams.homeEn && parsedTeams.awayEn) {
+        qTeamSpecific = `${parsedTeams.homeEn} ${parsedTeams.awayEn} quarterback injury report lineup`;
+      } else if (isFootball && parsedTeams.homeEn && parsedTeams.awayEn) {
+        qTeamSpecific = `${parsedTeams.homeEn} vs ${parsedTeams.awayEn} starting XI lineup key players`;
       } else {
-        qSpecial = `${ev.eventName} tennis predictions aces break points tiebreak surface stats`;
+        qTeamSpecific = `${enMatch} key players stats`;
       }
 
       const searches = [
-        searchDuckDuckGoCached(qMain, 5),
-        searchDuckDuckGoCached(qInjuries, 5),
-        searchDuckDuckGoCached(qSpecial, 5)
+        fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl),
+        searchLiveNewsRssCached(qMain, 6, 10),
+        searchLiveNewsRssCached(qInjuries, 6, 10),
+        searchLiveNewsRssCached(qTeamSpecific, 5, 14)
       ];
 
-      // Egyedi / részletes meccselemzésnél 4. mélykeresés kifejezetten a várható kezdőkre és játékos-értékelésekre (összesen ~18 oldal)
       if (isSingleDeepMatch && isFootball) {
         searches.push(
-          searchDuckDuckGoCached(`${ev.eventName} starting XI lineup injured key defender striker ratings SportsMole WhoScored`, 4)
+          searchLiveNewsRssCached(`${enMatch} SportsMole WhoScored lineup injuries prediction`, 4, 10)
         );
       }
 
-      const settled = await Promise.all(searches);
-      const combined = dedupeAndCollect(settled.flat());
+      const [espnIntel, ...rssResults] = await Promise.all(searches);
+      const combined = dedupeAndCollect(rssResults.flat());
 
+      if (espnIntel?.sources?.length > 0) {
+        allWebSources.push(...espnIntel.sources);
+      }
+
+      const sectionLines = [];
+      if (espnIntel?.lines?.length > 0) {
+        sectionLines.push(...espnIntel.lines);
+      }
       if (combined.length > 0) {
-        const lines = combined.map(r => `   • [${r.title}]: ${r.snippet}`).join('\n');
+        sectionLines.push(`   📰 [FRISS NEMZETKÖZI SZAKCIKKEK ÉS SÉRÜLÉSI HÍREK (${combined.length} cikk az elmúlt napokból – ${enMatch})]:`);
+        for (const r of combined) {
+          sectionLines.push(`      • [${r.title}]: ${r.snippet}`);
+        }
+      }
+
+      if (sectionLines.length > 0) {
         researchSections.push(
-          `Mérkőzés internetes kutatása (${combined.length} forrás – forma, SÉRÜLTEK/HIÁNYZÓK, várható kezdők, kulcsjátékos osztályzatok, bíró/lapok/szögletek) [${ev.sportName} - ${ev.eventName}]:\n${lines}`
+          `Mérkőzés valós idejű kutatása [${ev.sportName} - ${ev.eventName} (${enMatch})]:\n${sectionLines.join('\n')}`
         );
       }
     }
   } else if (customQuery) {
-    const q1 = `${customQuery} prediction stats H2H betting tips preview`;
-    const q2 = `${customQuery} injuries suspensions missing players team news predicted lineups`;
-    const q3 = `${customQuery} key players top scorer player ratings referee cards corners stats`;
-    const q4 = `${customQuery} starting XI lineup injured players WhoScored SportsMole`;
-    const settled = await Promise.all([
-      searchDuckDuckGoCached(q1, 5),
-      searchDuckDuckGoCached(q2, 5),
-      searchDuckDuckGoCached(q3, 5),
-      searchDuckDuckGoCached(q4, 4)
+    const parsedTeams = parseMatchTeams(customQuery, true);
+    const enMatch = parsedTeams.englishMatchup;
+    const [espnNfl, r1, r2, r3] = await Promise.all([
+      fetchEspnMatchIntelligence({ eventName: customQuery }, parsedTeams, false, true),
+      searchLiveNewsRssCached(`${enMatch} preview prediction betting tips`, 6, 10),
+      searchLiveNewsRssCached(`${enMatch} injury report team news predicted lineup`, 6, 10),
+      searchLiveNewsRssCached(`${enMatch} key players quarterback striker stats`, 5, 14)
     ]);
-    const combined = dedupeAndCollect(settled.flat());
+    const combined = dedupeAndCollect([r1, r2, r3].flat());
+    const sectionLines = [];
+    if (espnNfl?.lines?.length > 0) sectionLines.push(...espnNfl.lines);
     if (combined.length > 0) {
+      sectionLines.push(...combined.map(r => `   • [${r.title}]: ${r.snippet}`));
+    }
+    if (sectionLines.length > 0) {
       researchSections.push(
-        `Internetes kutatási találatok ("${customQuery}" – ${combined.length} szakoldal forrás, beleértve a sérülteket és kulcsjátékosokat):\n` +
-        combined.map(r => `   • [${r.title}]: ${r.snippet}`).join('\n')
+        `Internetes és ESPN kutatási találatok ("${customQuery}" / "${enMatch}"):\n${sectionLines.join('\n')}`
       );
     }
   }
@@ -709,7 +1088,7 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
   return {
     researchText: researchSections.length > 0
       ? researchSections.join('\n\n')
-      : 'Használd a nemzetközi sportstatisztikai, sérülési/keret, játékvezetői és fogadási tudásbázisodat.',
+      : 'Nem érkezett friss külső sérültjelentés ehhez a mérkőzéshez.',
     webSources: allWebSources
   };
 }
@@ -1349,11 +1728,10 @@ KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
    - Amennyiben nincs elegendő kimagasló fogadási érték a kínálatban, adj vissza KEVESEBB (akár csak 1 vagy 2) prémium tippet a kért ${tipsCount} helyett, de SOHA NE találj ki fantom mérkőzést!
 3. **PIACI SOKSZÍNŰSÉG**: A kínálatban mindenféle piac elérhető (1X2, Gólszám/Pontszám, Mindkét csapat szerez gólt, Gólszerző/Touchdown, Kiállítás, 11-es/Büntető, Szögletek, Lapok, Hendikep, Félidők). A fenti valós listában szereplő opciókból válogass!
 4. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
-   - Minden mérkőzésnél vizsgáld meg az internetes találatok és a tudásbázisod alapján a **biztosan hiányzó (sérült vagy eltiltott) kulcsjátékosokat**:
-   - **Gólerős támadó / Házi gólkirály / Irányító hiánya:** Ha egy csapat legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá gólszerző tippet adni, és csökkentsd a csapat gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under vagy az ellenfél hendikepje).
-   - **Magas átlagosztályzatú vezérvédő vagy 1. számú kapus hiánya:** Ha a védelem legstabilabb, legjobbra értékelt belső védője vagy a kezdőkapus hiányzik, jelentősen nő a kapott gól esélye — ilyenkor felértékelődik a **Mindkét csapat szerez gólt (BTTS - Igen)**, a **Gólszám 2,5 felett**, vagy az ellenfél gólszerzési piaca!
-   - **NFL / Tenisz:** NFL-ben a hivatalos Injury Report (QB, WR1, RB1, kulcsvédők Out/Questionable státusza), teniszben a fizikai állapot / előző meccses ápolás (Medical Timeout) közvetlenül módosítsa a választott piacot és a kockázati pontszámot (1–10)!
-   - Ha van a mérkőzést érdemben befolyásoló sérült/eltiltott kulcsjátékos, azt tüntesd fel a "detailedReasoning.injuriesAndLineup" mezőben (névvel, poszttal és a tippre gyakorolt hatással; ha nincs érdemi hiányzó, hagyd üres stringként "").
+   - Minden mérkőzésnél vizsgáld meg a lenti **HIVATALOS ESPN SÉRÜLTJELENTÉS**, a **TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK** és a **FRISS NEMZETKÖZI SZAKCIKKEK** alapján a **biztosan hiányzó (Injured Reserve / Out / eltiltott) vagy kérdéses (Questionable) kulcsjátékosokat**:
+   - **Gólerős támadó / Házi gólkirály / Kezdő QB / Irányító hiánya:** Ha egy csapat kezdő irányítója (QB, pl. Injured Reserve státuszban), legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá játékos-tippet adni, és csökkentsd a csapat pont-/gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under, a csereirányító/futójáték sajátosságai vagy az ellenfél hendikepje).
+   - **Magas átlagosztályzatú vezérvédő vagy 1. számú kapus hiánya:** Ha a védelem legstabilabb belső védője/safety-je vagy a kezdőkapus hiányzik, jelentősen nő a kapott gól/pont esélye — ilyenkor felértékelődik a **Mindkét csapat szerez gólt (BTTS - Igen)**, a **Gólszám 2,5 felett**, vagy az ellenfél gólszerzési piaca!
+   - **SZIGORÚ HALLUCINÁCIÓ-TILALOM A SÉRÜLTEKNÉL:** SOHA ne írj általános töltelékszöveget (pl. TILOS olyat írni, hogy "Nincsenek váratlan kulcs-sérülések" vagy "a megszokott kezdőcsapat lép pályára")! A "detailedReasoning.injuriesAndLineup" mezőben KIZÁRÓLAG konkrét, névvel és poszttal megnevezett sérült/hiányzó játékosokat (pl. "Lamar Jackson (QB - Injured Reserve), Jaylinn Hawkins (S - Out)...") és azok hatását írd le! Ha nincs konkrétan ismert sérült kulcsjátékos a megadott adatokban, a "detailedReasoning.injuriesAndLineup" mező KÖTELEZŐEN üres string "" legyen!
 5. **RELEVANCIA-SZABÁLY**: Nem kell feleslegesen kiemelni a bírót, a lapokat vagy a szögleteket, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. bíró szigora lapos/11-es/kiállítás tippnél, szögletstatisztika sarokrúgás tippnél)! Csak releváns tényezőket említs!
 6. Legfeljebb ${tipsCount} prémium tippet adj vissza a fentiek szerint, szakmai indoklással és kockázati besorolással!
 
@@ -1546,11 +1924,10 @@ KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG ÉS PIACI SOKSZÍNŰSÉG):
    - A mérkőzéshez lent megadott TippmixPro kínálat a teljes odds-sávot tartalmazza: 1X2, Kétesély, Gólszám/Pontszám, Mindkét csapat gólt szerez, Góllövő / Gólszerző / Touchdown, Kiállítás / Piros lap, 11-es / Büntető, Szögletek, Lapok, Félidők, Hendikepek stb.!
    - Bátran és nyitottan válassz speciális piacokat is (pl. gólszerző, lapok, szöglet, 11-es/büntető, kiállítás, félidő), amennyiben a statisztikák, a forma vagy a bírói adatok alapján az képviseli a legnagyobb valószínűséget és értéket!
 2. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
-   - Vizsgáld meg az internetes találatok és a tudásbázisod alapján a **biztosan hiányzó (sérült vagy eltiltott) kulcsjátékosokat** és várható kezdőcsapatokat:
-   - **Gólerős támadó / Házi gólkirály / Irányító hiánya:** Ha egy csapat legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá gólszerző tippet adni, és csökkentsd a csapat gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under vagy az ellenfél hendikepje).
-   - **Magas átlagosztályzatú vezérvédő vagy 1. számú kapus hiánya:** Ha a védelem legstabilabb, legjobbra értékelt belső védője vagy a kezdőkapus hiányzik, jelentősen nő a kapott gól esélye — ilyenkor felértékelődik a **Mindkét csapat szerez gólt (BTTS - Igen)**, a **Gólszám 2,5 felett**, vagy az ellenfél gólszerzési piaca!
-   - **NFL / Tenisz:** NFL-ben a hivatalos Injury Report (QB, WR1, RB1, kulcsvédők Out/Questionable státusza), teniszben a fizikai állapot / előző meccses ápolás (Medical Timeout) közvetlenül módosítsa a választott piacot és a kockázati pontszámot (1–10)!
-   - Ha van a mérkőzést érdemben befolyásoló sérült/eltiltott kulcsjátékos, azt részletesen tüntesd fel a "detailedReasoning.injuriesAndLineup" mezőben (névvel, poszttal és a tippre gyakorolt hatással; ha nincs érdemi hiányzó, hagyd üres stringként "").
+   - Vizsgáld meg a lenti **HIVATALOS ESPN SÉRÜLTJELENTÉS**, a **TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK** és a **FRISS NEMZETKÖZI SZAKCIKKEK** alapján a **biztosan hiányzó (Injured Reserve / Out / eltiltott) vagy kérdéses (Questionable) kulcsjátékosokat** és várható kezdőcsapatokat:
+   - **Gólerős támadó / Házi gólkirály / Kezdő QB / Irányító hiánya:** Ha egy csapat kezdő irányítója (QB, pl. Injured Reserve státuszban), legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá játékos-tippet adni, és csökkentsd a csapat pont-/gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under, a csereirányító/futójáték sajátosságai vagy az ellenfél hendikepje).
+   - **Magas átlagosztályzatú vezérvédő vagy 1. számú kapus hiánya:** Ha a védelem legstabilabb belső védője/safety-je vagy a kezdőkapus hiányzik, jelentősen nő a kapott gól/pont esélye — ilyenkor felértékelődik a **Mindkét csapat szerez gólt (BTTS - Igen)**, a **Gólszám 2,5 felett**, vagy az ellenfél gólszerzési piaca!
+   - **SZIGORÚ HALLUCINÁCIÓ-TILALOM A SÉRÜLTEKNÉL:** SOHA ne írj általános töltelékszöveget (pl. TILOS olyat írni, hogy "Nincsenek váratlan kulcs-sérülések" vagy "a megszokott kezdőcsapat lép pályára")! A "detailedReasoning.injuriesAndLineup" mezőben KIZÁRÓLAG konkrét, névvel és poszttal megnevezett sérült/hiányzó játékosokat (pl. "Lamar Jackson (QB - Injured Reserve), Jaylinn Hawkins (S - Out)...") és azok hatását írd le! Ha nincs konkrétan ismert sérült kulcsjátékos a megadott adatokban, a "detailedReasoning.injuriesAndLineup" mező KÖTELEZŐEN üres string "" legyen!
 3. **RELEVANCIA-SZABÁLY**:
    - Nem kell külön kiemelni a játékvezetőt, sem a szögleteket vagy lapokat, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. ha lap/szöglet/11-es/kiállítás piacon van a tipp, vagy a bíró személye közvetlenül befolyásolja az adott piacot)!
    - Minden információt CSAK AKKOR adj a részletes leírásba, ha azok közvetlenül relevánsak a tippek szempontjából.
