@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T00:35:08.664Z",
+  "updatedAt": "2026-11-16T00:55:08.365Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,10 +55,10 @@
       }
     },
     "nfl": {
-      "totalChecked": 31,
-      "won": 20,
+      "totalChecked": 32,
+      "won": 21,
       "lost": 11,
-      "winRate": 65,
+      "winRate": 66,
       "byRisk": {
         "low": {
           "totalChecked": 5,
@@ -67,10 +67,10 @@
           "winRate": 60
         },
         "medium": {
-          "totalChecked": 26,
-          "won": 17,
+          "totalChecked": 27,
+          "won": 18,
           "lost": 9,
-          "winRate": 65
+          "winRate": 67
         },
         "high": {
           "totalChecked": 0,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "16_dallassanfrancisco_2026-11-15_amrkzsgyztese_sanfrancisco",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "Dallas - San Francisco",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-15T22:25:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "San Francisco",
-      "odds": 1.41,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-15T10:44:20.762Z",
-      "status": "pending",
-      "categoryGroupKey": "nfl_main",
-      "categoryGroupName": "NFL",
-      "categorySubKey": "nfl_main",
-      "categorySubName": "USA - NFL"
-    },
     {
       "id": "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
       "sportId": 1,
@@ -216,6 +194,29 @@
     }
   ],
   "history": [
+    {
+      "id": "16_dallassanfrancisco_2026-11-15_amrkzsgyztese_sanfrancisco",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventName": "Dallas - San Francisco",
+      "eventDate": "2026-11-15T22:25:00+01:00",
+      "competitionName": "USA - NFL",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "San Francisco",
+      "odds": 1.41,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "40-46",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-16T00:55:08.365Z",
+      "status": "won",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
     {
       "id": "16_lasvegasseattle_2026-11-15_touchdownokszma3535_tbbmint35",
       "sportId": 16,
