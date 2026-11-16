@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-16T14:27:34.032Z",
+  "updatedAt": "2026-11-16T14:58:45.934Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 130,
-      "won": 85,
+      "totalChecked": 131,
+      "won": 86,
       "lost": 45,
-      "winRate": 65,
+      "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 43,
-          "won": 31,
+          "totalChecked": 44,
+          "won": 32,
           "lost": 12,
-          "winRate": 72
+          "winRate": 73
         },
         "medium": {
           "totalChecked": 79,
@@ -193,28 +193,6 @@
       "categorySubName": "ATP - ATP-vb"
     },
     {
-      "id": "1_nambiakamerun_2026-11-16_1x2_kamerun",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Namíbia - Kamerun",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,G",
-      "eventDate": "2026-11-16T14:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Kamerun",
-      "odds": 1.3,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-16T11:52:17.594Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    },
-    {
       "id": "5_iivashkatobysamuel_2026-11-16_amrkzsgyztese_tobysamuel",
       "sportId": 5,
       "sportName": "Tenisz",
@@ -304,6 +282,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_nambiakamerun_2026-11-16_1x2_kamerun",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Namíbia - Kamerun",
+      "eventDate": "2026-11-16T14:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,G",
+      "marketName": "1X2",
+      "outcomeName": "Kamerun",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-16T14:58:45.929Z",
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
     {
       "id": "16_dallassanfrancisco_2026-11-15_amrkzsgyztese_sanfrancisco",
       "sportId": 16,
