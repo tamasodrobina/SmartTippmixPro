@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T16:58:45.428Z",
+  "updatedAt": "2026-11-16T17:28:42.233Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 37,
-      "won": 18,
+      "totalChecked": 38,
+      "won": 19,
       "lost": 19,
-      "winRate": 49,
+      "winRate": 50,
       "byRisk": {
         "low": {
-          "totalChecked": 26,
-          "won": 13,
+          "totalChecked": 27,
+          "won": 14,
           "lost": 13,
-          "winRate": 50
+          "winRate": 52
         },
         "medium": {
           "totalChecked": 11,
@@ -147,28 +147,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
       "categorySubName": "Afrikai Nemzetek Kupája-sel."
-    },
-    {
-      "id": "5_iivashkatobysamuel_2026-11-16_amrkzsgyztese_tobysamuel",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "I. Ivashka - Toby Samuel",
-      "competitionName": "Challenger - Helsinki, férfi egyes",
-      "eventDate": "2026-11-16T16:00:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "Toby Samuel",
-      "odds": 1.3,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-16T11:52:17.597Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_challenger",
-      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
-      "categorySubKey": "ten_challenger_helsinki",
-      "categorySubName": "Challenger - Helsinki"
     },
     {
       "id": "16_baltimorelachargers_2026-11-17_hendikep3535_baltimore35",
@@ -304,6 +282,29 @@
     }
   ],
   "history": [
+    {
+      "id": "5_iivashkatobysamuel_2026-11-16_amrkzsgyztese_tobysamuel",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "I. Ivashka - Toby Samuel",
+      "eventDate": "2026-11-16T16:00:00+01:00",
+      "competitionName": "Challenger - Helsinki, férfi egyes",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "Toby Samuel",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "1-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-16T17:28:42.233Z",
+      "status": "won",
+      "categoryGroupKey": "tennis_challenger",
+      "categoryGroupName": "Kisebb Tornák (Challenger / ITF)",
+      "categorySubKey": "ten_challenger_helsinki",
+      "categorySubName": "Challenger - Helsinki"
+    },
     {
       "id": "1_kazahsztnszlovkia_2026-11-16_1x2_szlovkia",
       "sportId": 1,
