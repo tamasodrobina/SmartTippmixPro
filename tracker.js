@@ -594,6 +594,65 @@ function enrichAllStateTips() {
     }
   }
   if (Array.isArray(state.history)) {
+    if (!Array.isArray(state.replacedTipIds)) state.replacedTipIds = [];
+    const replacedSet = new Set(state.replacedTipIds);
+    const seen = Array.isArray(state.seenTipIds) ? state.seenTipIds : [];
+
+    // 1. Kiszűrjük a már lecserélt tippeket és mérkőzésenként csak a legfrissebb elemzést (max 3 nem-ellentmondó tippet) tartjuk meg
+    const byMatch = new Map();
+    for (const h of state.history) {
+      if (!h || !h.id) continue;
+      if (replacedSet.has(h.id)) {
+        changed = true;
+        continue;
+      }
+      const k = `${h.sportId || 1}|${normalizeMatchKey(h.eventName)}|${String(h.eventDate || '').slice(0, 10)}`;
+      if (!byMatch.has(k)) byMatch.set(k, []);
+      byMatch.get(k).push(h);
+    }
+
+    const dedupedHistory = [];
+    for (const [, list] of byMatch.entries()) {
+      if (list.length === 1) {
+        dedupedHistory.push(list[0]);
+        continue;
+      }
+      const sorted = [...list].sort((a, b) => seen.indexOf(b.id) - seen.indexOf(a.id));
+      const matchKept = [];
+      const seenMarketTypes = new Set();
+
+      for (const item of sorted) {
+        const m = String(item.marketName || '').toLowerCase();
+        const o = String(item.outcomeName || '').toLowerCase();
+        let mGroup = m.replace(/\([^)]*\)/g, '').replace(/[0-9,.]+/g, '').trim();
+        if (
+          m === '1x2' ||
+          m === 'a mérkőzés győztese' ||
+          (m === 'kétesély' && list.some(x => x.marketName === '1X2' && !o.includes(String(x.outcomeName || '').toLowerCase())))
+        ) {
+          mGroup = 'main_winner_contradiction';
+        }
+
+        if (seenMarketTypes.has(mGroup) || matchKept.length >= 3) {
+          changed = true;
+          if (!replacedSet.has(item.id)) {
+            replacedSet.add(item.id);
+            state.replacedTipIds.push(item.id);
+          }
+          continue;
+        }
+        seenMarketTypes.add(mGroup);
+        matchKept.push(item);
+      }
+      dedupedHistory.push(...matchKept);
+    }
+
+    dedupedHistory.sort((a, b) => new Date(b.evaluatedAt || 0) - new Date(a.evaluatedAt || 0));
+    if (dedupedHistory.length !== state.history.length) {
+      state.history = dedupedHistory;
+      changed = true;
+    }
+
     for (const h of state.history) {
       const prevGroup = h.categoryGroupKey;
       const prevGroupName = h.categoryGroupName;
@@ -608,6 +667,38 @@ function enrichAllStateTips() {
       ) {
         changed = true;
       }
+    }
+
+    // 2. Újraszámoljuk a fő sportág statisztikákat közvetlenül a megtisztított history-ból, hogy 100%-ig egyezzenek!
+    const freshStats = {
+      football: createSportStats(),
+      tennis: createSportStats(),
+      nfl: createSportStats()
+    };
+
+    for (const h of state.history) {
+      if (h.status === 'void') continue;
+      const sId = Number(h.sportId || 1);
+      const sKey = sId === 5 ? 'tennis' : (sId === 16 ? 'nfl' : 'football');
+      const target = freshStats[sKey];
+      const isWon = h.status === 'won' || Boolean(h.won);
+
+      target.totalChecked++;
+      if (isWon) target.won++;
+      else target.lost++;
+      target.winRate = Math.round((target.won / target.totalChecked) * 100);
+
+      const rCat = h.riskCategory || 'medium';
+      const rObj = target.byRisk[rCat] || target.byRisk.medium;
+      rObj.totalChecked++;
+      if (isWon) rObj.won++;
+      else rObj.lost++;
+      rObj.winRate = Math.round((rObj.won / rObj.totalChecked) * 100);
+    }
+
+    if (JSON.stringify(state.stats) !== JSON.stringify(freshStats)) {
+      state.stats = freshStats;
+      changed = true;
     }
   }
   return changed;
@@ -1560,14 +1651,14 @@ async function pullFromGitHub() {
         state.seenTipIds = Array.from(seenSet).slice(-3000);
       }
 
-      // ELŐZMÉNYEK UNIÓJA
+      // ELŐZMÉNYEK UNIÓJA (a lecserélt/törölt duplikátumok kihagyásával)
       if (Array.isArray(remoteState.history)) {
         const histMap = new Map();
         for (const h of state.history || []) {
-          if (h && h.id) histMap.set(h.id, h);
+          if (h && h.id && !replacedSet.has(h.id)) histMap.set(h.id, h);
         }
         for (const h of remoteState.history) {
-          if (h && h.id && !histMap.has(h.id)) {
+          if (h && h.id && !histMap.has(h.id) && !replacedSet.has(h.id)) {
             histMap.set(h.id, h);
           }
         }
