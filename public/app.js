@@ -532,14 +532,29 @@ function getRiskVisuals(level = '', score = 4) {
 const LS_PENDING_KEY = 'smart_tippmix_saved_tips';
 const LS_HISTORY_KEY = 'smart_tippmix_saved_history';
 
-function saveQueriedTipsLocally(tips = []) {
+function normClientMatchKey(name = '') {
+  return String(name || '').toLowerCase().replace(/[^a-z0-9\u00C0-\u017F]/g, '');
+}
+
+function saveQueriedTipsLocally(tips = [], extraMatchNames = []) {
   if (!Array.isArray(tips) || tips.length === 0) return;
   try {
     const raw = localStorage.getItem(LS_PENDING_KEY);
     const existing = raw ? JSON.parse(raw) : [];
+
+    // Újraelemzéskor az adott mérkőzés(ek) korábbi tippjeit töröljük a helyi tárolóból, hogy kizárólag az új elemzés maradjon meg
+    const incomingMatchKeys = new Set(
+      [
+        ...tips.map(t => normClientMatchKey(t?.eventName)),
+        ...extraMatchNames.map(n => normClientMatchKey(n))
+      ].filter(Boolean)
+    );
+
     const map = new Map();
     for (const t of existing) {
       if (t && (t.id || (t.eventName && t.outcomeName))) {
+        const mKey = normClientMatchKey(t.eventName);
+        if (mKey && incomingMatchKeys.has(mKey)) continue;
         const key = t.id || `${t.eventName}-${t.marketName}-${t.outcomeName}`;
         map.set(key, t);
       }
@@ -1171,6 +1186,11 @@ async function openDetailedModal(eventId, eventName, matchObj, forceRefresh = fa
       } else {
         modalCacheBadge.classList.add('hidden');
       }
+    }
+
+    if (Array.isArray(data.result?.tips) && data.result.tips.length > 0) {
+      saveQueriedTipsLocally(data.result.tips, [eventName]);
+      setTimeout(loadBettingStats, 600);
     }
 
     renderModalContent(data.result);

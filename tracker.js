@@ -37,8 +37,13 @@ let state = {
   },
   pendingTips: [],
   history: [],
-  seenTipIds: []
+  seenTipIds: [],
+  replacedTipIds: []
 };
+
+function normalizeMatchKey(name = '') {
+  return String(name || '').toLowerCase().replace(/[^a-z0-9\u00C0-\u017F]/g, '');
+}
 
 // 1. Állapot betöltése
 export async function initTracker() {
@@ -56,7 +61,8 @@ export async function initTracker() {
         },
         pendingTips: Array.isArray(parsed.pendingTips) ? parsed.pendingTips : [],
         history: Array.isArray(parsed.history) ? parsed.history : [],
-        seenTipIds: Array.isArray(parsed.seenTipIds) ? parsed.seenTipIds : []
+        seenTipIds: Array.isArray(parsed.seenTipIds) ? parsed.seenTipIds : [],
+        replacedTipIds: Array.isArray(parsed.replacedTipIds) ? parsed.replacedTipIds : []
       };
       console.log(`📊 Tracker betöltve: Foci ${state.stats.football.winRate}%, Tenisz ${state.stats.tennis.winRate}%, NFL ${state.stats.nfl.winRate}%, Függőben: ${state.pendingTips.length}, Előzmények: ${state.history.length}`);
     }
@@ -838,7 +844,7 @@ export function buildCategoriesAndInsights() {
 }
 
 // 4. Új tipp felvétele a várólistába (duplikáció szűréssel)
-export function recordTip(tip, source = 'manual') {
+export function recordTip(tip, source = 'manual', skipSave = false) {
   if (!tip) return false;
 
   const sportId = normalizeSportId(tip.sportId || tip.sportName);
@@ -853,6 +859,13 @@ export function recordTip(tip, source = 'manual') {
   if (!eventName || !marketName || !outcomeName) return false;
 
   const tipId = generateTipId(sportId, eventName, eventDate, marketName, outcomeName);
+
+  // Ha kliens-szinkronból jön egy már felülírt/lecserélt régi tipp, vagy olyan meccsre, aminek már van frissebb elemzése a szerveren, ignoráljuk!
+  if (source === 'client_sync') {
+    if (Array.isArray(state.replacedTipIds) && state.replacedTipIds.includes(tipId)) return false;
+    const mKey = normalizeMatchKey(eventName);
+    if (mKey && state.pendingTips.some(t => normalizeMatchKey(t.eventName) === mKey)) return false;
+  }
 
   // DUPLIKÁCIÓ SZŰRÉS: Ha már szerepel a várólistában vagy korábban már ellenőriztük, ignoráljuk!
   if (state.seenTipIds.includes(tipId)) return false;
@@ -890,18 +903,86 @@ export function recordTip(tip, source = 'manual') {
 
   state.pendingTips.push(newPendingItem);
 
-  saveState();
+  if (!skipSave) {
+    saveState();
+  }
   return true;
 }
 
-// Kötegelt tipp felvétel
-export function recordTipsBatch(tipsList = [], source = 'batch') {
+// Kötegelt tipp felvétel (újraelemzéskor a korábbi függő tippek lecserélésével!)
+export function recordTipsBatch(tipsList = [], source = 'batch', options = {}) {
   if (!Array.isArray(tipsList) || tipsList.length === 0) return 0;
+
+  if (!Array.isArray(state.replacedTipIds)) state.replacedTipIds = [];
+  let stateModified = false;
+
+  // Ha nem pusztán kliens-szinkronról van szó, akkor az adott mérkőzések korábbi függő (pending) tippjeit lecseréljük az új elemzésre!
+  if (source !== 'client_sync') {
+    const incomingMatchKeys = new Set(
+      [
+        ...tipsList.map(t => normalizeMatchKey(t?.eventName || t?.matchName || '')),
+        ...(Array.isArray(options.targetEventNames) ? options.targetEventNames.map(n => normalizeMatchKey(n)) : [])
+      ].filter(Boolean)
+    );
+
+    const replaceInterval = Boolean(options.replaceInterval && source === 'homepage_interval');
+    const targetSportId = options.sportId && options.sportId !== 'all' ? Number(options.sportId) : null;
+
+    // Kiszámoljuk az új elemzésben érkező tipId-kat
+    const incomingTipIds = new Set();
+    for (const tip of tipsList) {
+      const sId = normalizeSportId(tip?.sportId || tip?.sportName);
+      const evName = tip?.eventName || tip?.matchName || '';
+      const evDate = tip?.eventDate || '';
+      const mName = tip?.marketName || tip?.market || '';
+      const oName = tip?.outcomeName || tip?.outcome || '';
+      if (sId && evName && mName && oName) {
+        incomingTipIds.add(generateTipId(sId, evName, evDate, mName, oName));
+      }
+    }
+
+    // Megkeressük a lecserélendő régi függő tippeket
+    const remainingPending = [];
+    for (const pt of state.pendingTips) {
+      const ptMatchKey = normalizeMatchKey(pt.eventName);
+      const sameMatch = ptMatchKey && incomingMatchKeys.has(ptMatchKey);
+      const sameIntervalBatch = replaceInterval && pt.source === 'homepage_interval' && (!targetSportId || Number(pt.sportId) === targetSportId);
+
+      if (sameMatch || sameIntervalBatch) {
+        stateModified = true;
+        if (pt.id && !incomingTipIds.has(pt.id)) {
+          if (!state.replacedTipIds.includes(pt.id)) {
+            state.replacedTipIds.push(pt.id);
+          }
+        }
+        state.seenTipIds = state.seenTipIds.filter(id => id !== pt.id);
+      } else {
+        remainingPending.push(pt);
+      }
+    }
+    state.pendingTips = remainingPending;
+
+    // Biztosítjuk, hogy az új elemzés tippjei (még ha valamelyik szerepelt is korábban) bekerüljenek!
+    for (const newId of incomingTipIds) {
+      state.seenTipIds = state.seenTipIds.filter(id => id !== newId);
+      state.replacedTipIds = state.replacedTipIds.filter(id => id !== newId);
+    }
+
+    if (state.replacedTipIds.length > 2000) {
+      state.replacedTipIds = state.replacedTipIds.slice(-2000);
+    }
+  }
+
   let addedCount = 0;
   for (const tip of tipsList) {
-    if (recordTip(tip, source)) {
+    if (recordTip(tip, source, true)) {
       addedCount++;
+      stateModified = true;
     }
+  }
+
+  if (stateModified) {
+    saveState();
   }
   return addedCount;
 }
@@ -1446,11 +1527,25 @@ async function pullFromGitHub() {
         nfl: combineSportStats(state.stats?.nfl, remoteState.stats?.nfl)
       };
 
-      // FÜGGŐ TIPPEK UNIÓJA: Soha semmit nem írunk felül üressel!
+      if (Array.isArray(remoteState.replacedTipIds)) {
+        const repSet = new Set(state.replacedTipIds || []);
+        for (const rid of remoteState.replacedTipIds) {
+          repSet.add(rid);
+        }
+        state.replacedTipIds = Array.from(repSet).slice(-2000);
+      }
+
+      // FÜGGŐ TIPPEK UNIÓJA (a már lecserélt/felülírt régi tippek kihagyásával):
+      const replacedSet = new Set(state.replacedTipIds || []);
+      state.pendingTips = (state.pendingTips || []).filter(t => t && !replacedSet.has(t.id));
       const existingIds = new Set(state.pendingTips.map(t => t.id));
+      const existingMatchKeys = new Set(state.pendingTips.map(t => normalizeMatchKey(t.eventName)).filter(Boolean));
       if (Array.isArray(remoteState.pendingTips)) {
         for (const rt of remoteState.pendingTips) {
-          if (rt && rt.id && !existingIds.has(rt.id)) {
+          if (rt && rt.id && !existingIds.has(rt.id) && !replacedSet.has(rt.id)) {
+            const rtMatchKey = normalizeMatchKey(rt.eventName);
+            // Ha helyben már van frissebb elemzés ugyanarra a meccsre, ne tegyük vissza a régit
+            if (rtMatchKey && existingMatchKeys.has(rtMatchKey)) continue;
             state.pendingTips.push(rt);
             existingIds.add(rt.id);
           }

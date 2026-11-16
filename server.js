@@ -1789,9 +1789,12 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       fromCache: false
     };
 
-    // Automatikus tipp-mentés és duplikációmentes regisztráció (Foci és NFL esetén)
+    // Automatikus tipp-mentés (újraelemzéskor lecseréli a korábbi függő tippeket az új elemzésre)
     if (Array.isArray(aiResult.data?.tips)) {
-      recordTipsBatch(aiResult.data.tips, 'homepage_interval');
+      recordTipsBatch(aiResult.data.tips, 'homepage_interval', {
+        replaceInterval: Boolean(forceRefresh),
+        sportId
+      });
     }
 
     if (Array.isArray(aiResult.data?.tips) && aiResult.data.tips.length > 0) {
@@ -1991,9 +1994,21 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       fromCache: false
     };
 
-    // Automatikus tipp-mentés és duplikációmentes regisztráció (Foci és NFL esetén)
+    // Automatikus tipp-mentés (egyedi meccs újraelemzésekor lecseréli a meccs korábbi függő tippjeit kizárólag az új elemzésre)
     if (Array.isArray(aiResult.data?.tips)) {
-      recordTipsBatch(aiResult.data.tips, 'homepage_custom');
+      if (matchedEvents.length === 1 && matchedEvents[0]?.eventName) {
+        const officialEvent = matchedEvents[0];
+        for (const t of aiResult.data.tips) {
+          if (t) {
+            t.eventName = officialEvent.eventName;
+            if (!t.eventDate && officialEvent.eventDate) t.eventDate = officialEvent.eventDate;
+            if (!t.eventId && officialEvent.eventId) t.eventId = officialEvent.eventId;
+          }
+        }
+      }
+      recordTipsBatch(aiResult.data.tips, 'homepage_custom', {
+        targetEventNames: [query, ...matchedEvents.map(e => e.eventName)].filter(Boolean)
+      });
     }
 
     if (Array.isArray(aiResult.data?.tips) && aiResult.data.tips.length > 0) {
