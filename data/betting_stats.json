@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-17T18:30:19.475Z",
+  "updatedAt": "2026-11-17T19:30:18.568Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 142,
+      "totalChecked": 143,
       "won": 92,
-      "lost": 50,
-      "winRate": 65,
+      "lost": 51,
+      "winRate": 64,
       "byRisk": {
         "low": {
           "totalChecked": 49,
@@ -15,9 +15,9 @@
           "winRate": 71
         },
         "medium": {
-          "totalChecked": 85,
+          "totalChecked": 86,
           "won": 53,
-          "lost": 32,
+          "lost": 33,
           "winRate": 62
         },
         "high": {
@@ -147,28 +147,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
-    },
-    {
-      "id": "1_u21hollandiau21dnia_2026-11-17_1x2_u21hollandia",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "U21Hollandia - U21Dánia",
-      "competitionName": "Nemzetközi utánpótlás - U21 Eb-selejtező, rájátszás",
-      "eventDate": "2026-11-17T18:30:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "U21Hollandia",
-      "odds": 1.41,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-17T13:06:28.642Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_u21_eb_selejtező",
-      "categorySubName": "U21 Eb-selejtező"
     },
     {
       "id": "1_lengyelorszgsvdorszg_2026-11-17_mindktcsapatszerezglt_igen",
@@ -436,6 +414,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_u21hollandiau21dnia_2026-11-17_1x2_u21hollandia",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "U21Hollandia - U21Dánia",
+      "eventDate": "2026-11-17T18:30:00+01:00",
+      "competitionName": "Nemzetközi utánpótlás - U21 Eb-selejtező, rájátszás",
+      "marketName": "1X2",
+      "outcomeName": "U21Hollandia",
+      "odds": 1.41,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-17T19:30:18.568Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_u21_eb_selejtező",
+      "categorySubName": "U21 Eb-selejtező"
+    },
     {
       "id": "1_kuvaithonduras_2026-11-17_dntetlennlattvisszajr_honduras",
       "sportId": 1,
