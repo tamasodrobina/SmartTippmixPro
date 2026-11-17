@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T13:06:28.642Z",
+  "updatedAt": "2026-11-17T13:15:09.713Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -301,6 +301,72 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
       "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
+    {
+      "id": "1_lengyelorszgsvdorszg_2026-11-17_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5590171,
+      "eventName": "Lengyelország - Svédország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, B div, 4.csop",
+      "eventDate": "2026-11-17T20:45:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.37,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-17T13:15:09.713Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_lengyelorszgsvdorszg_2026-11-17_dntetlennlattvisszajr_lengyelorszg",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5590171,
+      "eventName": "Lengyelország - Svédország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, B div, 4.csop",
+      "eventDate": "2026-11-17T20:45:00+01:00",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Lengyelország",
+      "odds": 1.65,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-17T13:15:09.713Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
+    },
+    {
+      "id": "1_lengyelorszgsvdorszg_2026-11-17_glszm2525_tbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5590171,
+      "eventName": "Lengyelország - Svédország",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, B div, 4.csop",
+      "eventDate": "2026-11-17T20:45:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.47,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-17T13:15:09.713Z",
+      "status": "pending",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_nemzetek_ligája",
+      "categorySubName": "Nemzetek Ligája"
     }
   ],
   "history": [
@@ -5245,7 +5311,10 @@
     "1_u21hollandiau21dnia_2026-11-17_1x2_u21hollandia",
     "1_irakirn_2026-11-17_dntetlennlattvisszajr_irn",
     "1_kuvaithonduras_2026-11-17_dntetlennlattvisszajr_honduras",
-    "1_kenyadlafrika_2026-11-17_1x2_dlafrika"
+    "1_kenyadlafrika_2026-11-17_1x2_dlafrika",
+    "1_lengyelorszgsvdorszg_2026-11-17_mindktcsapatszerezglt_igen",
+    "1_lengyelorszgsvdorszg_2026-11-17_dntetlennlattvisszajr_lengyelorszg",
+    "1_lengyelorszgsvdorszg_2026-11-17_glszm2525_tbbmint25"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
