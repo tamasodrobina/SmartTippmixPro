@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-17T21:50:28.260Z",
+  "updatedAt": "2026-11-17T22:10:33.659Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 154,
+      "totalChecked": 155,
       "won": 100,
-      "lost": 54,
+      "lost": 55,
       "winRate": 65,
       "byRisk": {
         "low": {
@@ -15,10 +15,10 @@
           "winRate": 73
         },
         "medium": {
-          "totalChecked": 91,
+          "totalChecked": 92,
           "won": 56,
-          "lost": 35,
-          "winRate": 62
+          "lost": 36,
+          "winRate": 61
         },
         "high": {
           "totalChecked": 8,
@@ -125,31 +125,32 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_dnianorvgia_2026-11-17_hazaicsapatszgletszm4545_tbbmint45",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": 5590174,
       "eventName": "Dánia - Norvégia",
-      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 4.csop",
       "eventDate": "2026-11-17T20:45:00+01:00",
+      "competitionName": "Nemzetközi - Nemzetek Ligája, A div, 4.csop",
       "marketName": "Hazai csapat szögletszám 4,5 (4.5)",
       "outcomeName": "Több, mint 4,5",
       "odds": 1.78,
       "riskCategory": "medium",
       "riskScore": 5,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-17T17:19:30.721Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "2-3",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-17T22:10:27.369Z",
+      "status": "lost",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_nemzetek_ligája",
       "categorySubName": "Nemzetek Ligája"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_dnianorvgia_2026-11-17_melyikflidbenlesztbbgl_2flidben",
       "sportId": 1,
