@@ -207,6 +207,125 @@ function enforceTipRiskFilter(tips = [], riskFilter = 'all') {
   }
 }
 
+// Kockázati szint és Odds-sáv összeférhetőség vizsgálata + javaslatok generálása
+function evaluateRiskAndOddsConflict(riskFilter = 'all', minOdds = 1.30, maxOdds = 2.00) {
+  // 1. Melyik kockázati szint illik legjobban a jelenlegi minOdds–maxOdds sávhoz?
+  let suggestedRiskForOdds = { key: 'medium', label: '🟡 Közepes kockázat (4–6)' };
+  if (maxOdds <= 1.60 || (minOdds + maxOdds) / 2 <= 1.48) {
+    suggestedRiskForOdds = { key: 'low', label: '🟢 Alacsony kockázat (1–3)' };
+  } else if (minOdds >= 1.80 || (minOdds + maxOdds) / 2 >= 1.95) {
+    suggestedRiskForOdds = { key: 'high', label: '🔴 Magas kockázat (7–10)' };
+  }
+
+  // 2. Milyen odds-sáv illik a kiválasztott kockázati szinthez?
+  let suggestedOddsForRisk = { min: 1.30, max: 2.00, label: '1.30 – 2.00' };
+  let currentRiskLabel = '🎯 Minden szint';
+  if (riskFilter === 'low') {
+    suggestedOddsForRisk = { min: 1.20, max: 1.60, label: '1.20 – 1.60' };
+    currentRiskLabel = '🟢 Alacsony kockázat (1–3)';
+  } else if (riskFilter === 'medium') {
+    suggestedOddsForRisk = { min: 1.45, max: 2.10, label: '1.45 – 2.10' };
+    currentRiskLabel = '🟡 Közepes kockázat (4–6)';
+  } else if (riskFilter === 'high') {
+    suggestedOddsForRisk = { min: 1.80, max: 3.20, label: '1.80 – 3.20' };
+    currentRiskLabel = '🔴 Magas kockázat (7–10)';
+  }
+
+  if (riskFilter === 'all') {
+    return { hasConflict: false, suggestedRiskForOdds, suggestedOddsForRisk, currentRiskLabel };
+  }
+
+  let hasConflict = false;
+  let conflictMessage = '';
+
+  if (riskFilter === 'high' && maxOdds < 1.60) {
+    hasConflict = true;
+    conflictMessage = `Nincs találat a beállított ${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} szorzósáv és a 🔴 Magas kockázat (7–10) kombinációjával, mert ${maxOdds.toFixed(2)} alatti szorzóknál nagy valószínűségű (Alacsony vagy Közepes kockázatú) kimenetelek szerepelnek.`;
+  } else if (riskFilter === 'low' && minOdds > 1.90) {
+    hasConflict = true;
+    conflictMessage = `Nincs találat a beállított ${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} szorzósáv és a 🟢 Alacsony kockázat (1–3) kombinációjával, mert ${minOdds.toFixed(2)} feletti szorzóknál a matematikai találati esély már a Közepes vagy Magas kockázati sávba esik.`;
+  } else if (riskFilter === 'medium' && maxOdds < 1.35) {
+    hasConflict = true;
+    conflictMessage = `Nincs találat a beállított ${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} szorzósáv és a 🟡 Közepes kockázat (4–6) kombinációjával, mert ez az alacsony szorzósáv a 🟢 Alacsony kockázatú biztonsági tippeknek felel meg.`;
+  } else if (riskFilter === 'medium' && minOdds > 2.45) {
+    hasConflict = true;
+    conflictMessage = `Nincs találat a beállított ${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} szorzósáv és a 🟡 Közepes kockázat (4–6) kombinációjával, mert ${minOdds.toFixed(2)} feletti szorzóknál a tippek már a 🔴 Magas kockázati kategóriába tartoznak.`;
+  }
+
+  return {
+    hasConflict,
+    conflictMessage,
+    currentRiskKey: riskFilter,
+    currentRiskLabel,
+    currentOddsLabel: `${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}`,
+    suggestedRiskForOdds,
+    suggestedOddsForRisk
+  };
+}
+
+// Diagnosztika generálása, ha 0 piac esik a beállított minOdds–maxOdds sávba
+function buildNoMarketsDiagnostics(enrichedEvents = [], minOdds = 1.30, maxOdds = 2.00, riskFilter = 'all') {
+  const allOdds = [];
+  for (const ev of enrichedEvents) {
+    for (const m of (ev.allMarketsList || [])) {
+      const o = Number(m.odds);
+      if (o > 1.0) allOdds.push(o);
+    }
+  }
+  allOdds.sort((a, b) => a - b);
+
+  const totalAllMarkets = allOdds.length;
+  const isTooNarrow = (maxOdds - minOdds) < 0.10;
+  const minAvail = totalAllMarkets > 0 ? allOdds[0] : null;
+  const maxAvail = totalAllMarkets > 0 ? allOdds[allOdds.length - 1] : null;
+
+  let nearestLower = null;
+  let nearestHigher = null;
+  for (const o of allOdds) {
+    if (o < minOdds) nearestLower = o;
+    if (o > maxOdds && nearestHigher === null) nearestHigher = o;
+  }
+
+  const riskConflict = evaluateRiskAndOddsConflict(riskFilter, minOdds, maxOdds);
+
+  let suggestedMin = 1.25;
+  let suggestedMax = 2.20;
+  if (nearestLower !== null && nearestHigher !== null) {
+    suggestedMin = Math.max(1.05, Number((nearestLower - 0.05).toFixed(2)));
+    suggestedMax = Number((nearestHigher + 0.15).toFixed(2));
+  } else if (nearestLower !== null) {
+    suggestedMin = Math.max(1.05, Number(( Math.min(nearestLower, minAvail || nearestLower) ).toFixed(2)));
+    suggestedMax = Number((nearestLower + 0.30).toFixed(2));
+  } else if (nearestHigher !== null) {
+    suggestedMin = Math.max(1.05, Number((nearestHigher - 0.10).toFixed(2)));
+    suggestedMax = Number((nearestHigher + 0.50).toFixed(2));
+  }
+
+  let detailMsg = '';
+  if (isTooNarrow) {
+    detailMsg = `A beállított szorzósáv (${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}) túl szűk (kevesebb mint 0.10 különbség), ezért egyetlen fogadási opció sem esett bele.`;
+  } else if (totalAllMarkets > 0) {
+    const nearParts = [];
+    if (nearestLower !== null) nearParts.push(`${nearestLower.toFixed(2)} (alatta)`);
+    if (nearestHigher !== null) nearParts.push(`${nearestHigher.toFixed(2)} (felette)`);
+    detailMsg = `Összesen ${totalAllMarkets} fogadási opció érhető el a TippmixPro-n, de egyik sem esik a beállított ${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} szorzósávba.${nearParts.length > 0 ? ` A legközelebbi elérhető szorzók: ${nearParts.join(' és ')}.` : ''}`;
+  } else {
+    detailMsg = `A mérkőzéshez jelenleg nem található nyitott mérkőzés előtti fogadási piac a TippmixPro kínálatában.`;
+  }
+
+  return {
+    totalAllMarkets,
+    isTooNarrow,
+    minAvail,
+    maxAvail,
+    nearestLower,
+    nearestHigher,
+    detailMsg,
+    suggestedOddsRange: { min: suggestedMin, max: suggestedMax },
+    riskConflict
+  };
+}
+
 // ============================================================================
 // 4. TIPPMIX / TIPPMIXPRO ADATLEKÉRŐ
 // ============================================================================
@@ -1726,22 +1845,49 @@ app.post('/api/analyze/interval', async (req, res) => {
       ? await enrichCandidateEvents(topCandidates, minOdds, maxOdds, forceRefresh, 25)
       : [];
 
-    const totalAvailableMarkets = enrichedEvents.reduce((acc, ev) => acc + (ev.availableTargetMarkets?.length || 0), 0);
-    if (totalAvailableMarkets === 0) {
-      const sportLabel = selectedSportMeta ? selectedSportMeta.name : (sportId === 'all' ? 'Összes sportág' : 'a kiválasztott sportág');
+    const riskConflictCheck = evaluateRiskAndOddsConflict(riskFilter, minOdds, maxOdds);
+    if (riskConflictCheck.hasConflict) {
       return res.json({
         ok: true,
         mode: 'interval',
         noMatches: true,
+        reasonCode: 'risk_odds_conflict',
         hours,
         sportId,
         minOdds,
         maxOdds,
         tipsCount,
-        sportName: selectedSportMeta ? selectedSportMeta.name : 'NFL, Foci, Tenisz',
-        noMatchesMessage: `Bár van mérkőzés a következő ${hours} órában (${windowEvents.length} db), a beállított szigorú ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} közötti odds sávban egyetlen fogadási piac sem érhető el. Próbáld tágítani az odds határokat!`,
+        riskFilter,
+        riskOddsConflict: riskConflictCheck,
+        noMatchesMessage: riskConflictCheck.conflictMessage,
         result: {
-          analysisOverview: `A következő ${hours} óra mérkőzéseinél a beállított ${minOdds.toFixed(2)} - ${maxOdds.toFixed(2)} szorzóhatárok között jelenleg nem található fogadható piac.`,
+          analysisOverview: riskConflictCheck.conflictMessage,
+          tips: []
+        },
+        fromCache: false
+      });
+    }
+
+    const totalAvailableMarkets = enrichedEvents.reduce((acc, ev) => acc + (ev.availableTargetMarkets?.length || 0), 0);
+    if (totalAvailableMarkets === 0) {
+      const diag = buildNoMarketsDiagnostics(enrichedEvents, minOdds, maxOdds, riskFilter);
+      return res.json({
+        ok: true,
+        mode: 'interval',
+        noMatches: true,
+        reasonCode: diag.isTooNarrow ? 'odds_too_narrow' : 'no_markets_in_odds_range',
+        hours,
+        sportId,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        riskFilter,
+        diagnostics: diag,
+        riskOddsConflict: diag.riskConflict,
+        sportName: selectedSportMeta ? selectedSportMeta.name : 'NFL, Foci, Tenisz',
+        noMatchesMessage: `A következő ${hours} órában van ${windowEvents.length} mérkőzés, de: ${diag.detailMsg}`,
+        result: {
+          analysisOverview: diag.detailMsg,
           tips: []
         },
         fromCache: false
@@ -1831,6 +1977,12 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       enforceTipRiskFilter(aiResult.data.tips, riskFilter);
     }
 
+    const returnedTips = Array.isArray(aiResult.data?.tips) ? aiResult.data.tips : [];
+    let fewerTipsReason = null;
+    if (returnedTips.length > 0 && returnedTips.length < tipsCount) {
+      fewerTipsReason = `A kért ${tipsCount} tipp helyett ${returnedTips.length} tipp jelenik meg, mert a megadott feltételeknek (Következő ${hours} óra • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds${riskFilter !== 'all' ? ` • ${riskConflictCheck.currentRiskLabel}` : ''} • ${windowEvents.length} elérhető mérkőzés) összesen ez a(z) ${returnedTips.length} opció felelt meg.`;
+    }
+
     const responsePayload = {
       ok: true,
       mode: 'interval',
@@ -1840,6 +1992,12 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       maxOdds,
       tipsCount,
       riskFilter,
+      fewerTipsReason,
+      riskOddsConflict: returnedTips.length === 0 && riskFilter !== 'all' ? {
+        ...riskConflictCheck,
+        hasConflict: true,
+        conflictMessage: `A megadott ${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} szorzósávban és a kiválasztott ${riskConflictCheck.currentRiskLabel} szűrővel jelenleg nem található megfelelő tipp a következő ${hours} órában.`
+      } : null,
       sportName: selectedSportMeta ? selectedSportMeta.name : 'NFL, Foci, Tenisz',
       result: aiResult.data,
       fromCache: false
@@ -1963,6 +2121,83 @@ app.post('/api/analyze/custom', async (req, res) => {
       ? await enrichCandidateEvents(matchedEvents, minOdds, maxOdds, forceRefresh, 80)
       : [];
 
+    // 1. Ellenőrzés: Már elkezdődött a mérkőzés vagy lezárultak a piacai?
+    const nowMs = Date.now();
+    const allStarted = matchedEvents.every(ev => ev.eventDate && new Date(ev.eventDate).getTime() <= nowMs - 2 * 60 * 1000);
+    const totalAllMarkets = enrichedEvents.reduce((acc, ev) => acc + (ev.allMarketsList?.length || 0), 0);
+
+    if (allStarted || totalAllMarkets === 0) {
+      const mName = matchedEvents[0]?.eventName || query;
+      const startedMsg = allStarted
+        ? `⏱️ A kiválasztott mérkőzés ("${mName}") már elkezdődött (vagy véget ért), ezért a mérkőzés előtti fogadási piacok lezárultak a TippmixPro-n.`
+        : `⏱️ A kiválasztott mérkőzéshez ("${mName}") jelenleg nem érhető el nyitott mérkőzés előtti fogadási piac a TippmixPro kínálatában.`;
+      return res.json({
+        ok: true,
+        mode: 'custom',
+        noMatches: true,
+        reasonCode: 'match_started',
+        query,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        riskFilter,
+        noMatchesMessage: startedMsg,
+        result: {
+          analysisOverview: startedMsg,
+          tips: []
+        },
+        fromCache: false
+      });
+    }
+
+    // 2. Ellenőrzés: Kockázati szint és Odds-sáv ellentmondás
+    const riskConflictCheck = evaluateRiskAndOddsConflict(riskFilter, minOdds, maxOdds);
+    if (riskConflictCheck.hasConflict) {
+      return res.json({
+        ok: true,
+        mode: 'custom',
+        noMatches: true,
+        reasonCode: 'risk_odds_conflict',
+        query,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        riskFilter,
+        riskOddsConflict: riskConflictCheck,
+        noMatchesMessage: riskConflictCheck.conflictMessage,
+        result: {
+          analysisOverview: riskConflictCheck.conflictMessage,
+          tips: []
+        },
+        fromCache: false
+      });
+    }
+
+    // 3. Ellenőrzés: Van-e egyáltalán piac a beállított minOdds–maxOdds sávban ezen a meccsen?
+    const totalAvailableTargetMarkets = enrichedEvents.reduce((acc, ev) => acc + (ev.availableTargetMarkets?.length || 0), 0);
+    if (totalAvailableTargetMarkets === 0) {
+      const diag = buildNoMarketsDiagnostics(enrichedEvents, minOdds, maxOdds, riskFilter);
+      return res.json({
+        ok: true,
+        mode: 'custom',
+        noMatches: true,
+        reasonCode: diag.isTooNarrow ? 'odds_too_narrow' : 'no_markets_in_odds_range',
+        query,
+        minOdds,
+        maxOdds,
+        tipsCount,
+        riskFilter,
+        diagnostics: diag,
+        riskOddsConflict: diag.riskConflict,
+        noMatchesMessage: diag.detailMsg,
+        result: {
+          analysisOverview: diag.detailMsg,
+          tips: []
+        },
+        fromCache: false
+      });
+    }
+
     console.log(`🌐 [RÉSZLETES ELEMZÉS] Internetes kutatás indítása: "${query}" (Bíró, lapok, 11-es, szögletek, gólszerzők, forma)...`);
     const webResearch = await gatherWebResearchForMatches(enrichedEvents, query);
 
@@ -2046,6 +2281,12 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       enforceTipRiskFilter(aiResult.data.tips, riskFilter);
     }
 
+    const returnedTips = Array.isArray(aiResult.data?.tips) ? aiResult.data.tips : [];
+    let fewerTipsReason = null;
+    if (returnedTips.length > 0 && returnedTips.length < tipsCount) {
+      fewerTipsReason = `A kért ${tipsCount} tipp helyett ${returnedTips.length} tipp jelenik meg, mert ezen a mérkőzésen a beállított feltételeknek (${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds${riskFilter !== 'all' ? ` • ${riskConflictCheck.currentRiskLabel}` : ''} • ${totalAvailableTargetMarkets} elérhető piaci opció) csak ez a(z) ${returnedTips.length} különböző kimenetel felelt meg.`;
+    }
+
     const responsePayload = {
       ok: true,
       mode: 'custom',
@@ -2054,6 +2295,12 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       maxOdds,
       tipsCount,
       riskFilter,
+      fewerTipsReason,
+      riskOddsConflict: returnedTips.length === 0 && riskFilter !== 'all' ? {
+        ...riskConflictCheck,
+        hasConflict: true,
+        conflictMessage: `Ezen a mérkőzésen a beállított ${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} szorzósávban és a kiválasztott ${riskConflictCheck.currentRiskLabel} szűrővel nem található megfelelő tipp.`
+      } : null,
       matchedTippmixEventsCount: enrichedEvents.length,
       modelUsed: aiResult.modelUsed,
       result: aiResult.data,
