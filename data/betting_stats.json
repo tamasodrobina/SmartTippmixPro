@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-17T18:10:19.075Z",
+  "updatedAt": "2026-11-17T18:30:19.475Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 141,
-      "won": 91,
+      "totalChecked": 142,
+      "won": 92,
       "lost": 50,
       "winRate": 65,
       "byRisk": {
@@ -15,8 +15,8 @@
           "winRate": 71
         },
         "medium": {
-          "totalChecked": 84,
-          "won": 52,
+          "totalChecked": 85,
+          "won": 53,
           "lost": 32,
           "winRate": 62
         },
@@ -169,28 +169,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_u21_eb_selejtező",
       "categorySubName": "U21 Eb-selejtező"
-    },
-    {
-      "id": "1_kuvaithonduras_2026-11-17_dntetlennlattvisszajr_honduras",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Kuvait - Honduras",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-17T17:30:00+01:00",
-      "marketName": "Döntetlennél a tét visszajár",
-      "outcomeName": "Honduras",
-      "odds": 1.39,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-17T13:06:28.642Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
     },
     {
       "id": "1_lengyelorszgsvdorszg_2026-11-17_mindktcsapatszerezglt_igen",
@@ -458,6 +436,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_kuvaithonduras_2026-11-17_dntetlennlattvisszajr_honduras",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Kuvait - Honduras",
+      "eventDate": "2026-11-17T17:30:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Honduras",
+      "odds": 1.39,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "0-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-17T18:30:19.475Z",
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "1_kenyadlafrika_2026-11-17_1x2_dlafrika",
       "sportId": 1,
