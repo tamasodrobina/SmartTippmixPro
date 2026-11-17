@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T13:16:36.657Z",
+  "updatedAt": "2026-11-17T13:16:44.805Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -357,11 +357,11 @@
       "marketName": "Gólszám 2,5 (2.5)",
       "outcomeName": "Kevesebb, mint 2,5",
       "odds": 1.52,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-17T13:16:36.657Z",
+      "addedAt": "2026-11-17T13:16:44.805Z",
       "status": "pending",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
@@ -369,21 +369,21 @@
       "categorySubName": "Nemzetek Ligája"
     },
     {
-      "id": "1_magyarorszgszakrorszg_2026-11-17_dntetlennlattvisszajr_magyarorszg",
+      "id": "1_magyarorszgszakrorszg_2026-11-17_mindktcsapatszerezglt_nem",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": 5590169,
       "eventName": "Magyarország - Észak-Írország",
       "competitionName": "Nemzetközi - Nemzetek Ligája, B div, 2.csop",
       "eventDate": "2026-11-17T20:45:00+01:00",
-      "marketName": "Döntetlennél a tét visszajár",
-      "outcomeName": "Magyarország",
-      "odds": 1.34,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.68,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-17T13:16:36.657Z",
+      "addedAt": "2026-11-17T13:16:44.805Z",
       "status": "pending",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
@@ -401,11 +401,11 @@
       "marketName": "1. félidő - Gólszám 0,5 (.5)",
       "outcomeName": "Több, mint 0,5",
       "odds": 1.46,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-17T13:16:36.657Z",
+      "addedAt": "2026-11-17T13:16:44.805Z",
       "status": "pending",
       "categoryGroupKey": "national",
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
@@ -5359,7 +5359,7 @@
     "1_lengyelorszgsvdorszg_2026-11-17_dntetlennlattvisszajr_lengyelorszg",
     "1_lengyelorszgsvdorszg_2026-11-17_glszm2525_tbbmint25",
     "1_magyarorszgszakrorszg_2026-11-17_glszm2525_kevesebbmint25",
-    "1_magyarorszgszakrorszg_2026-11-17_dntetlennlattvisszajr_magyarorszg",
+    "1_magyarorszgszakrorszg_2026-11-17_mindktcsapatszerezglt_nem",
     "1_magyarorszgszakrorszg_2026-11-17_1flidglszm055_tbbmint05"
   ],
   "replacedTipIds": [
@@ -5403,6 +5403,7 @@
     "1_hvidovreaarhusfremad_2026-11-09_1x2_hvidovre",
     "1_botosaniotelulgalati_2026-11-09_1x2_botosani",
     "1_1fcklnrbleipzig_2026-11-09_1x2_1fckln",
-    "1_iberia1999gagra_2026-11-09_1x2_iberia1999"
+    "1_iberia1999gagra_2026-11-09_1x2_iberia1999",
+    "1_magyarorszgszakrorszg_2026-11-17_dntetlennlattvisszajr_magyarorszg"
   ]
 }
