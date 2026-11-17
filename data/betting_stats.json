@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-17T17:19:30.722Z",
+  "updatedAt": "2026-11-17T18:10:19.075Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 140,
-      "won": 90,
+      "totalChecked": 141,
+      "won": 91,
       "lost": 50,
-      "winRate": 64,
+      "winRate": 65,
       "byRisk": {
         "low": {
           "totalChecked": 49,
@@ -15,10 +15,10 @@
           "winRate": 71
         },
         "medium": {
-          "totalChecked": 83,
-          "won": 51,
+          "totalChecked": 84,
+          "won": 52,
           "lost": 32,
-          "winRate": 61
+          "winRate": 62
         },
         "high": {
           "totalChecked": 8,
@@ -171,28 +171,6 @@
       "categorySubName": "U21 Eb-selejtező"
     },
     {
-      "id": "1_irakirn_2026-11-17_dntetlennlattvisszajr_irn",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Irak - Irán",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-17T17:15:00+01:00",
-      "marketName": "Döntetlennél a tét visszajár",
-      "outcomeName": "Irán",
-      "odds": 1.36,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-17T13:06:28.642Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
-    },
-    {
       "id": "1_kuvaithonduras_2026-11-17_dntetlennlattvisszajr_honduras",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -213,28 +191,6 @@
       "categoryGroupName": "Válogatott mérkőzések (Férfi)",
       "categorySubKey": "nat_válogatott_mérkőzés",
       "categorySubName": "Válogatott mérkőzés"
-    },
-    {
-      "id": "1_kenyadlafrika_2026-11-17_1x2_dlafrika",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Kenya - Dél-Afrika",
-      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
-      "eventDate": "2026-11-17T17:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Dél-Afrika",
-      "odds": 1.6,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-17T13:06:28.642Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
-      "categorySubName": "Afrikai Nemzetek Kupája-sel."
     },
     {
       "id": "1_lengyelorszgsvdorszg_2026-11-17_mindktcsapatszerezglt_igen",
@@ -502,6 +458,52 @@
     }
   ],
   "history": [
+    {
+      "id": "1_kenyadlafrika_2026-11-17_1x2_dlafrika",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Kenya - Dél-Afrika",
+      "eventDate": "2026-11-17T17:00:00+01:00",
+      "competitionName": "Nemzetközi - Afrikai Nemzetek Kupája-sel.,D",
+      "marketName": "1X2",
+      "outcomeName": "Dél-Afrika",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "1-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-17T18:10:19.075Z",
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_afrikai_nemzetek_kupája_sel_",
+      "categorySubName": "Afrikai Nemzetek Kupája-sel."
+    },
+    {
+      "id": "1_irakirn_2026-11-17_dntetlennlattvisszajr_irn",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Irak - Irán",
+      "eventDate": "2026-11-17T17:15:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Irán",
+      "odds": 1.36,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-17T18:10:19.074Z",
+      "status": "void",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "1_katardlkorea_2026-11-17_1x2_dlkorea",
       "sportId": 1,
