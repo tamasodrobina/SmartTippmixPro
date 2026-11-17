@@ -53,7 +53,9 @@ const minOddsInput = document.getElementById('minOddsInput');
 const maxOddsInput = document.getElementById('maxOddsInput');
 const tipsCountSelect = document.getElementById('tipsCountSelect');
 const oddsPresetBtns = document.querySelectorAll('.odds-preset-btn');
+const riskFilterBtns = document.querySelectorAll('.risk-filter-btn');
 const catalogStatusText = document.getElementById('catalogStatusText');
+let selectedRiskFilter = 'all'; // 'all' | 'low' | 'medium' | 'high'
 
 // Főoldal elemek (Intervallum + Egyedi meccskereső)
 const hoursSelect = document.getElementById('hoursSelect');
@@ -148,6 +150,13 @@ function getSportIcon(sportId) {
   return '🏅';
 }
 
+function getRiskFilterShortLabel(rf) {
+  if (rf === 'low') return '🟢 Alacsony kockázat';
+  if (rf === 'medium') return '🟡 Közepes kockázat';
+  if (rf === 'high') return '🔴 Magas kockázat';
+  return '';
+}
+
 function getFilterSettings() {
   const rawMin = Number(minOddsInput.value) || 1.30;
   const rawMax = Number(maxOddsInput.value) || 2.00;
@@ -155,7 +164,8 @@ function getFilterSettings() {
   return {
     minOdds: Math.min(rawMin, rawMax),
     maxOdds: Math.max(rawMin, rawMax),
-    tipsCount
+    tipsCount,
+    riskFilter: selectedRiskFilter || 'all'
   };
 }
 
@@ -232,11 +242,44 @@ function initHomeControls() {
   }
 
   function syncLabels() {
-    const { minOdds, maxOdds, tipsCount } = getFilterSettings();
-    headerOddsBadge.textContent = `${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} Odds • Top ${tipsCount}`;
-    analyzeIntervalBtnLabel.textContent = `Időintervallum Elemzése (Top ${tipsCount} • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)})`;
-    analyzeCustomBtnLabel.textContent = `Mérkőzés Elemzése (Top ${tipsCount} Tipp)`;
+    const { minOdds, maxOdds, tipsCount, riskFilter } = getFilterSettings();
+    const riskSuffix = getRiskFilterShortLabel(riskFilter);
+    headerOddsBadge.textContent = `${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)} Odds • Top ${tipsCount}${riskSuffix ? ` • ${riskSuffix}` : ''}`;
+    analyzeIntervalBtnLabel.textContent = `Időintervallum Elemzése (Top ${tipsCount} • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)}${riskSuffix ? ` • ${riskSuffix}` : ''})`;
+    analyzeCustomBtnLabel.textContent = `Mérkőzés Elemzése (Top ${tipsCount} Tipp${riskSuffix ? ` • ${riskSuffix}` : ''})`;
   }
+
+  function updateRiskFilterBtnsUI() {
+    riskFilterBtns.forEach(btn => {
+      const rf = btn.getAttribute('data-risk-filter') || 'all';
+      const isSelected = rf === selectedRiskFilter;
+      if (rf === 'low') {
+        btn.className = isSelected
+          ? 'risk-filter-btn h-9 px-2.5 rounded-lg text-xs font-black bg-emerald-500/25 text-emerald-200 border border-emerald-400/70 shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer truncate'
+          : 'risk-filter-btn h-9 px-2.5 rounded-lg text-xs font-semibold text-emerald-300/90 hover:text-emerald-200 hover:bg-emerald-950/50 border border-transparent transition flex items-center justify-center gap-1.5 cursor-pointer truncate';
+      } else if (rf === 'medium') {
+        btn.className = isSelected
+          ? 'risk-filter-btn h-9 px-2.5 rounded-lg text-xs font-black bg-amber-500/25 text-amber-200 border border-amber-400/70 shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer truncate'
+          : 'risk-filter-btn h-9 px-2.5 rounded-lg text-xs font-semibold text-amber-300/90 hover:text-amber-200 hover:bg-amber-950/50 border border-transparent transition flex items-center justify-center gap-1.5 cursor-pointer truncate';
+      } else if (rf === 'high') {
+        btn.className = isSelected
+          ? 'risk-filter-btn h-9 px-2.5 rounded-lg text-xs font-black bg-rose-500/25 text-rose-200 border border-rose-400/70 shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer truncate'
+          : 'risk-filter-btn h-9 px-2.5 rounded-lg text-xs font-semibold text-rose-300/90 hover:text-rose-200 hover:bg-rose-950/50 border border-transparent transition flex items-center justify-center gap-1.5 cursor-pointer truncate';
+      } else {
+        btn.className = isSelected
+          ? 'risk-filter-btn h-9 px-2.5 rounded-lg text-xs font-black bg-slate-700/80 text-white border border-slate-500/60 shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer truncate'
+          : 'risk-filter-btn h-9 px-2.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 border border-transparent transition flex items-center justify-center gap-1.5 cursor-pointer truncate';
+      }
+    });
+  }
+
+  riskFilterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedRiskFilter = btn.getAttribute('data-risk-filter') || 'all';
+      updateRiskFilterBtnsUI();
+      syncLabels();
+    });
+  });
 
   tipsCountSelect.addEventListener('change', syncLabels);
   minOddsInput.addEventListener('input', syncLabels);
@@ -295,10 +338,11 @@ async function runIntervalAnalysis(forceRefresh = false) {
   lastExecutedMode = 'interval';
   const hours = Number(hoursSelect.value) || 6;
   const sportId = homeSportSelect.value || 'all';
-  const { minOdds, maxOdds, tipsCount } = getFilterSettings();
+  const { minOdds, maxOdds, tipsCount, riskFilter } = getFilterSettings();
+  const riskLabel = getRiskFilterShortLabel(riskFilter);
   const sportLabel = homeSportSelect.options[homeSportSelect.selectedIndex]?.textContent || 'Összes sportág';
 
-  startLoadingAnimation('interval', `Következő ${hours} óra elemzése (${sportLabel})...`);
+  startLoadingAnimation('interval', `Következő ${hours} óra elemzése (${sportLabel}${riskLabel ? ` • ${riskLabel}` : ''})...`);
   analyzeIntervalBtn.disabled = true;
   analyzeCustomBtn.disabled = true;
 
@@ -312,6 +356,7 @@ async function runIntervalAnalysis(forceRefresh = false) {
         minOdds,
         maxOdds,
         tipsCount,
+        riskFilter,
         forceRefresh: Boolean(forceRefresh)
       })
     });
@@ -321,7 +366,7 @@ async function runIntervalAnalysis(forceRefresh = false) {
     stopLoadingAnimation();
     renderAnalysisResults(
       data,
-      `Következő ${hours} óra • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds • Top ${tipsCount} tipp`
+      `Következő ${hours} óra • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds • Top ${tipsCount} tipp${riskLabel ? ` • ${riskLabel}` : ''}`
     );
   } catch (err) {
     showError(err.message);
@@ -341,9 +386,10 @@ async function runCustomAnalysis(forceRefresh = false) {
   }
 
   lastExecutedMode = 'custom';
-  const { minOdds, maxOdds, tipsCount } = getFilterSettings();
+  const { minOdds, maxOdds, tipsCount, riskFilter } = getFilterSettings();
+  const riskLabel = getRiskFilterShortLabel(riskFilter);
 
-  startLoadingAnimation('custom', `"${query}" részletes elemzése...`);
+  startLoadingAnimation('custom', `"${query}" részletes elemzése${riskLabel ? ` (${riskLabel})` : ''}...`);
   analyzeIntervalBtn.disabled = true;
   analyzeCustomBtn.disabled = true;
 
@@ -357,6 +403,7 @@ async function runCustomAnalysis(forceRefresh = false) {
         minOdds,
         maxOdds,
         tipsCount,
+        riskFilter,
         forceRefresh: Boolean(forceRefresh)
       })
     });
@@ -366,7 +413,7 @@ async function runCustomAnalysis(forceRefresh = false) {
     stopLoadingAnimation();
     renderAnalysisResults(
       data,
-      `Keresés: "${query}" • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds • Top ${tipsCount} tipp`
+      `Keresés: "${query}" • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds • Top ${tipsCount} tipp${riskLabel ? ` • ${riskLabel}` : ''}`
     );
   } catch (err) {
     showError(err.message);
@@ -1164,7 +1211,7 @@ async function openDetailedModal(eventId, eventName, matchObj, forceRefresh = fa
   `;
 
   try {
-    const { minOdds, maxOdds } = getFilterSettings();
+    const { minOdds, maxOdds, riskFilter } = getFilterSettings();
     const res = await fetch('/api/analyze/custom', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1174,6 +1221,7 @@ async function openDetailedModal(eventId, eventName, matchObj, forceRefresh = fa
         minOdds,
         maxOdds,
         tipsCount: 3,
+        riskFilter,
         forceRefresh: Boolean(forceRefresh)
       })
     });

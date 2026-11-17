@@ -148,17 +148,63 @@ function cleanExpiredCaches() {
 
 setInterval(cleanExpiredCaches, 5 * 60 * 1000).unref();
 
-function createAnalysisFingerprint({ mode, sportId, minOdds, maxOdds, tipsCount, eventIds = [], customQuery = '' }) {
+function createAnalysisFingerprint({ mode, sportId, minOdds, maxOdds, tipsCount, riskFilter = 'all', eventIds = [], customQuery = '' }) {
   const raw = JSON.stringify({
+    v: 'v3_risk',
     mode,
     sportId,
     minOdds: Number(minOdds).toFixed(2),
     maxOdds: Number(maxOdds).toFixed(2),
     tipsCount: Number(tipsCount),
+    riskFilter: String(riskFilter || 'all'),
     eventIds: [...eventIds].sort(),
     customQuery: customQuery.toLowerCase().trim()
   });
   return crypto.createHash('sha1').update(raw).digest('hex');
+}
+
+function getRiskFilterPromptBlock(riskFilter = 'all', minOdds = 1.3, maxOdds = 2.0) {
+  if (riskFilter === 'low') {
+    return `
+KÖTELEZŐ KOCKÁZATI SZINT SZŰRÉS — KIZÁRÓLAG ALACSONY KOCKÁZATÚ (1–3 / 10) BIZTONSÁGI TIPPEK:
+- A felhasználó kifejezetten **ALACSONY KOCKÁZATÚ (1–3/10)** tippeket kér a megadott **${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}** odds-sávon belül!
+- Kizárólag a legbiztonságosabb, legmagasabb találati valószínűségű piacokból válassz (pl. Kétesély 1X/X2, Döntetlennél a tét visszajár / DNB, óvatos Gólszám/Pontszám határok, stabil hazai/vendég favoritok, ahol nincs kulcssérült)!
+- Minden visszaadott tippnél a "riskAssessment.level" értéke KÖTELEZŐEN "Alacsony", a "riskAssessment.score" értéke pedig szigorúan 1, 2 vagy 3 legyen!`;
+  }
+  if (riskFilter === 'medium') {
+    return `
+KÖTELEZŐ KOCKÁZATI SZINT SZŰRÉS — KIZÁRÓLAG KÖZEPES KOCKÁZATÚ (4–6 / 10) KIEGYENSÚLYOZOTT TIPPEK:
+- A felhasználó kifejezetten **KÖZEPES KOCKÁZATÚ (4–6/10)** értékalapú tippeket kér a megadott **${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}** odds-sávon belül!
+- Klasszikus, jó értéket képviselő piacokból válassz (pl. 1X2, Mindkét csapat szerez gólt / BTTS, Gólszám 2,5, Csapat gólszám, Szögletszám, Büntetőlapok)!
+- Minden visszaadott tippnél a "riskAssessment.level" értéke KÖTELEZŐEN "Közepes", a "riskAssessment.score" értéke pedig szigorúan 4, 5 vagy 6 legyen!`;
+  }
+  if (riskFilter === 'high') {
+    return `
+KÖTELEZŐ KOCKÁZATI SZINT SZŰRÉS — KIZÁRÓLAG MAGAS KOCKÁZATÚ (7–10 / 10) MERÉSZEBB TIPPEK:
+- A felhasználó kifejezetten **MAGAS KOCKÁZATÚ (7–10/10)** merészebb / speciális piaci tippeket kér a megadott **${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}** odds-sávon belül!
+- Merészebb, nagyobb kockázatú vagy kombinált/speciális piacokból válassz (pl. Hendikep, 1X2 + Gólszám kombináció, Félidő/Végeredmény, Gólszerző / Touchdown szerző, magasabb gól-/pontszám határ vagy esélytelenebb csapat pontszerzése)!
+- Minden visszaadott tippnél a "riskAssessment.level" értéke KÖTELEZŐEN "Magas", a "riskAssessment.score" értéke pedig szigorúan 7, 8, 9 vagy 10 legyen!`;
+  }
+  return '';
+}
+
+function enforceTipRiskFilter(tips = [], riskFilter = 'all') {
+  if (!Array.isArray(tips) || riskFilter === 'all') return;
+  for (const t of tips) {
+    if (!t) continue;
+    if (!t.riskAssessment) t.riskAssessment = {};
+    const rawScore = Number(t.riskAssessment.score) || 4;
+    if (riskFilter === 'low') {
+      t.riskAssessment.level = 'Alacsony';
+      t.riskAssessment.score = Math.min(3, Math.max(1, rawScore <= 3 ? rawScore : 2));
+    } else if (riskFilter === 'medium') {
+      t.riskAssessment.level = 'Közepes';
+      t.riskAssessment.score = Math.min(6, Math.max(4, (rawScore >= 4 && rawScore <= 6) ? rawScore : 5));
+    } else if (riskFilter === 'high') {
+      t.riskAssessment.level = 'Magas';
+      t.riskAssessment.score = Math.min(10, Math.max(7, rawScore >= 7 ? rawScore : 7));
+    }
+  }
 }
 
 // ============================================================================
@@ -1612,6 +1658,7 @@ app.post('/api/analyze/interval', async (req, res) => {
     const minOdds = Math.min(rawMinOdds, rawMaxOdds);
     const maxOdds = Math.max(rawMinOdds, rawMaxOdds);
     const tipsCount = Math.min(10, Math.max(1, Number(req.body.tipsCount) || 3));
+    const riskFilter = ['low', 'medium', 'high'].includes(req.body.riskFilter) ? req.body.riskFilter : 'all';
     const forceRefresh = Boolean(req.body.forceRefresh);
     const apiKey = req.body.apiKey || process.env.GEMINI_API_KEY;
 
@@ -1660,6 +1707,7 @@ app.post('/api/analyze/interval', async (req, res) => {
       minOdds,
       maxOdds,
       tipsCount,
+      riskFilter,
       eventIds: topCandidates.map(e => e.eventId)
     });
 
@@ -1716,9 +1764,12 @@ app.post('/api/analyze/interval', async (req, res) => {
         }).join('\n\n');
     }
 
+    const riskFilterInstruction = getRiskFilterPromptBlock(riskFilter, minOdds, maxOdds);
+
     const prompt = `Te egy profi sportfogadási és statisztikai elemző vagy (kiemelt szakterületeid: Labdarúgás, Tenisz, Amerikai futball / NFL).
 A felhasználó a következő ${hours} órában keresi a **legfeljebb ${tipsCount} LEGVALÓSZÍNŰBB fogadási tippet**, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**.
 Kiválasztott sportág: ${selectedSportMeta ? selectedSportMeta.name : 'Foci, Tenisz vagy NFL'}.
+${riskFilterInstruction}
 
 KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
 1. **SZIGORÚAN VALÓDI MÉRKŐZÉSEK ÉS PIACOK**:
@@ -1776,6 +1827,10 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       precollectedSources: webResearch.webSources
     });
 
+    if (Array.isArray(aiResult.data?.tips)) {
+      enforceTipRiskFilter(aiResult.data.tips, riskFilter);
+    }
+
     const responsePayload = {
       ok: true,
       mode: 'interval',
@@ -1784,6 +1839,7 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
       minOdds,
       maxOdds,
       tipsCount,
+      riskFilter,
       sportName: selectedSportMeta ? selectedSportMeta.name : 'NFL, Foci, Tenisz',
       result: aiResult.data,
       fromCache: false
@@ -1821,6 +1877,7 @@ app.post('/api/analyze/custom', async (req, res) => {
     const minOdds = Math.min(rawMinOdds, rawMaxOdds);
     const maxOdds = Math.max(rawMinOdds, rawMaxOdds);
     const tipsCount = Math.min(10, Math.max(1, Number(req.body.tipsCount) || 3));
+    const riskFilter = ['low', 'medium', 'high'].includes(req.body.riskFilter) ? req.body.riskFilter : 'all';
     const forceRefresh = Boolean(req.body.forceRefresh);
     const apiKey = req.body.apiKey || process.env.GEMINI_API_KEY;
 
@@ -1886,6 +1943,7 @@ app.post('/api/analyze/custom', async (req, res) => {
       minOdds,
       maxOdds,
       tipsCount,
+      riskFilter,
       eventIds: matchedEvents.map(e => e.eventId),
       customQuery: query
     });
@@ -1919,8 +1977,11 @@ app.post('/api/analyze/custom', async (req, res) => {
         }).join('\n\n');
     }
 
+    const riskFilterInstruction = getRiskFilterPromptBlock(riskFilter, minOdds, maxOdds);
+
     const prompt = `Te egy kiemelkedő felkészültségű sportfogadási szakértő és statisztikai elemző vagy (Labdarúgás, Tenisz, Amerikai futball / NFL).
 A felhasználó az alábbi konkrét mérkőzés mélyreható szakmai elemzését kéri: "${query}".
+${riskFilterInstruction}
 
 KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG ÉS PIACI SOKSZÍNŰSÉG):
 1. **MINDEN ELÉRHETŐ FOGADÁSI PIAC ÉS LEHETŐSÉG ÁTTEKINTÉSE**:
@@ -1981,6 +2042,10 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       precollectedSources: webResearch.webSources
     });
 
+    if (Array.isArray(aiResult.data?.tips)) {
+      enforceTipRiskFilter(aiResult.data.tips, riskFilter);
+    }
+
     const responsePayload = {
       ok: true,
       mode: 'custom',
@@ -1988,6 +2053,7 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
       minOdds,
       maxOdds,
       tipsCount,
+      riskFilter,
       matchedTippmixEventsCount: enrichedEvents.length,
       modelUsed: aiResult.modelUsed,
       result: aiResult.data,
