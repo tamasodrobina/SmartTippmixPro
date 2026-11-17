@@ -166,23 +166,23 @@ function createAnalysisFingerprint({ mode, sportId, minOdds, maxOdds, tipsCount,
 function getRiskFilterPromptBlock(riskFilter = 'all', minOdds = 1.3, maxOdds = 2.0) {
   if (riskFilter === 'low') {
     return `
-KÖTELEZŐ KOCKÁZATI SZINT SZŰRÉS — KIZÁRÓLAG ALACSONY KOCKÁZATÚ (1–3 / 10) BIZTONSÁGI TIPPEK:
+KÖTELEZŐ KOCKÁZATI SZINT SZŰRÉS — KIZÁRÓLAG ALACSONY KOCKÁZATÚ (1–3 / 10) TIPPEK:
 - A felhasználó kifejezetten **ALACSONY KOCKÁZATÚ (1–3/10)** tippeket kér a megadott **${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}** odds-sávon belül!
-- Kizárólag a legbiztonságosabb, legmagasabb találati valószínűségű piacokból válassz (pl. Kétesély 1X/X2, Döntetlennél a tét visszajár / DNB, óvatos Gólszám/Pontszám határok, stabil hazai/vendég favoritok, ahol nincs kulcssérült)!
+- **NE SKATULYÁZD BE A PIACOKAT!** Bármilyen piactípus (pl. Mindkét csapat szerez gólt / BTTS, Gólszám 2,5 felett/alatt, 1X2, Kétesély, DNB, Csapat gólszám, Szögletszám, Büntetőlapok, Hendikep stb.) lehet Alacsony kockázatú, amennyiben az adott mérkőzésen a két csapat formája, statisztikája, egymás elleni eredményei (H2H) és a hiányzók/kezdők alapján az a kimenetel kiemelkedően magas valószínűséggel (erős statisztikai megalapozottsággal, minimális bizonytalansággal) várható!
 - Minden visszaadott tippnél a "riskAssessment.level" értéke KÖTELEZŐEN "Alacsony", a "riskAssessment.score" értéke pedig szigorúan 1, 2 vagy 3 legyen!`;
   }
   if (riskFilter === 'medium') {
     return `
-KÖTELEZŐ KOCKÁZATI SZINT SZŰRÉS — KIZÁRÓLAG KÖZEPES KOCKÁZATÚ (4–6 / 10) KIEGYENSÚLYOZOTT TIPPEK:
-- A felhasználó kifejezetten **KÖZEPES KOCKÁZATÚ (4–6/10)** értékalapú tippeket kér a megadott **${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}** odds-sávon belül!
-- Klasszikus, jó értéket képviselő piacokból válassz (pl. 1X2, Mindkét csapat szerez gólt / BTTS, Gólszám 2,5, Csapat gólszám, Szögletszám, Büntetőlapok)!
+KÖTELEZŐ KOCKÁZATI SZINT SZŰRÉS — KIZÁRÓLAG KÖZEPES KOCKÁZATÚ (4–6 / 10) TIPPEK:
+- A felhasználó kifejezetten **KÖZEPES KOCKÁZATÚ (4–6/10)** tippeket kér a megadott **${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}** odds-sávon belül!
+- **NE SKATULYÁZD BE A PIACOKAT!** Bármilyen elérhető piactípusból (1X2, Mindkét csapat szerez gólt, Gólszám/Pontszám, Kétesély, DNB, Szögletek, Lapok, Hendikep, Játékos piacok stb.) szabadon választhatsz, ahol a statisztikák, a forma és a keretek alapján a tipp jó értéket képvisel, de mérsékelt (4–6/10-es) kockázati faktorral bír!
 - Minden visszaadott tippnél a "riskAssessment.level" értéke KÖTELEZŐEN "Közepes", a "riskAssessment.score" értéke pedig szigorúan 4, 5 vagy 6 legyen!`;
   }
   if (riskFilter === 'high') {
     return `
-KÖTELEZŐ KOCKÁZATI SZINT SZŰRÉS — KIZÁRÓLAG MAGAS KOCKÁZATÚ (7–10 / 10) MERÉSZEBB TIPPEK:
-- A felhasználó kifejezetten **MAGAS KOCKÁZATÚ (7–10/10)** merészebb / speciális piaci tippeket kér a megadott **${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}** odds-sávon belül!
-- Merészebb, nagyobb kockázatú vagy kombinált/speciális piacokból válassz (pl. Hendikep, 1X2 + Gólszám kombináció, Félidő/Végeredmény, Gólszerző / Touchdown szerző, magasabb gól-/pontszám határ vagy esélytelenebb csapat pontszerzése)!
+KÖTELEZŐ KOCKÁZATI SZŰRÉS — KIZÁRÓLAG MAGAS KOCKÁZATÚ (7–10 / 10) TIPPEK:
+- A felhasználó kifejezetten **MAGAS KOCKÁZATÚ (7–10/10)** tippeket kér a megadott **${minOdds.toFixed(2)} – ${maxOdds.toFixed(2)}** odds-sávon belül!
+- **NE SKATULYÁZD BE A PIACOKAT!** Bármilyen piactípusból (1X2, Mindkét csapat szerez gólt, Gólszám/Pontszám, Hendikep, Kombinált piacok, Félidő, Gólszerző/Touchdown, Szöglet, Lapok stb.) választhatsz olyan kimenetelt, amely a statisztikák alapján reális értéket hordoz, de a mérkőzés képe vagy a szorzó alapján magasabb (7–10/10-es) kockázati szintű!
 - Minden visszaadott tippnél a "riskAssessment.level" értéke KÖTELEZŐEN "Magas", a "riskAssessment.score" értéke pedig szigorúan 7, 8, 9 vagy 10 legyen!`;
   }
   return '';
