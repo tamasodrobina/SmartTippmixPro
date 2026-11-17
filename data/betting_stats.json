@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-17T13:17:36.110Z",
+  "updatedAt": "2026-11-17T15:10:18.675Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 138,
+      "totalChecked": 139,
       "won": 89,
-      "lost": 49,
+      "lost": 50,
       "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 47,
+          "totalChecked": 48,
           "won": 34,
-          "lost": 13,
-          "winRate": 72
+          "lost": 14,
+          "winRate": 71
         },
         "medium": {
           "totalChecked": 83,
@@ -137,28 +137,6 @@
       "marketName": "1X2",
       "outcomeName": "Dél-Korea",
       "odds": 1.33,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-17T13:06:28.641Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
-    },
-    {
-      "id": "1_japnparaguay_2026-11-17_1fliddntetlennlattvisszajr_japn",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Japán - Paraguay",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-17T14:10:00+01:00",
-      "marketName": "1. félidő - Döntetlennél a tét visszajár",
-      "outcomeName": "Japán",
-      "odds": 1.34,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
@@ -480,6 +458,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_japnparaguay_2026-11-17_1fliddntetlennlattvisszajr_japn",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Japán - Paraguay",
+      "eventDate": "2026-11-17T14:10:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "1. félidő - Döntetlennél a tét visszajár",
+      "outcomeName": "Japán",
+      "odds": 1.34,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-17T15:10:18.675Z",
+      "status": "lost",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "16_baltimorelachargers_2026-11-17_1flidpontszm165165_tbbmint165",
       "sportId": 16,
