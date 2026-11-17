@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-17T15:10:18.675Z",
+  "updatedAt": "2026-11-17T16:00:19.272Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 139,
-      "won": 89,
+      "totalChecked": 140,
+      "won": 90,
       "lost": 50,
       "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 48,
-          "won": 34,
+          "totalChecked": 49,
+          "won": 35,
           "lost": 14,
           "winRate": 71
         },
@@ -117,28 +117,6 @@
       "odds": 1.32,
       "riskCategory": "low",
       "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-17T13:06:28.641Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
-    },
-    {
-      "id": "1_katardlkorea_2026-11-17_1x2_dlkorea",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Katar - Dél-Korea",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-17T15:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Dél-Korea",
-      "odds": 1.33,
-      "riskCategory": "low",
-      "riskScore": 3,
       "riskLevel": "Alacsony",
       "source": "homepage_interval",
       "addedAt": "2026-11-17T13:06:28.641Z",
@@ -458,6 +436,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_katardlkorea_2026-11-17_1x2_dlkorea",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Katar - Dél-Korea",
+      "eventDate": "2026-11-17T15:00:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "1X2",
+      "outcomeName": "Dél-Korea",
+      "odds": 1.33,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-17T16:00:19.272Z",
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "1_japnparaguay_2026-11-17_1fliddntetlennlattvisszajr_japn",
       "sportId": 1,
