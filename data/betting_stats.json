@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-17T22:10:33.659Z",
+  "updatedAt": "2026-11-18T01:00:28.153Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 155,
-      "won": 100,
+      "totalChecked": 156,
+      "won": 101,
       "lost": 55,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 55,
-          "won": 40,
+          "totalChecked": 56,
+          "won": 41,
           "lost": 15,
           "winRate": 73
         },
@@ -83,28 +83,6 @@
   },
   "pendingTips": [
     {
-      "id": "1_argentnacostarica_2026-11-18_1flid1x2_argentna",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Argentína - Costa Rica",
-      "competitionName": "Nemzetközi - Válogatott mérkőzés",
-      "eventDate": "2026-11-18T00:00:00+01:00",
-      "marketName": "1. félidő - 1X2",
-      "outcomeName": "Argentína",
-      "odds": 1.32,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-17T13:06:28.641Z",
-      "status": "pending",
-      "categoryGroupKey": "national",
-      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
-      "categorySubKey": "nat_válogatott_mérkőzés",
-      "categorySubName": "Válogatott mérkőzés"
-    },
-    {
       "id": "1_ukrajnageorgia_2026-11-17_bntetlapszm4545_tbbmint35",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -128,6 +106,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_argentnacostarica_2026-11-18_1flid1x2_argentna",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Argentína - Costa Rica",
+      "eventDate": "2026-11-18T00:00:00+01:00",
+      "competitionName": "Nemzetközi - Válogatott mérkőzés",
+      "marketName": "1. félidő - 1X2",
+      "outcomeName": "Argentína",
+      "odds": 1.32,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "7-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-18T01:00:18.069Z",
+      "status": "won",
+      "categoryGroupKey": "national",
+      "categoryGroupName": "Válogatott mérkőzések (Férfi)",
+      "categorySubKey": "nat_válogatott_mérkőzés",
+      "categorySubName": "Válogatott mérkőzés"
+    },
     {
       "id": "1_dnianorvgia_2026-11-17_hazaicsapatszgletszm4545_tbbmint45",
       "sportId": 1,
