@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-18T18:47:30.325Z",
+  "updatedAt": "2026-11-18T19:27:23.067Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 159,
+      "totalChecked": 160,
       "won": 103,
-      "lost": 56,
-      "winRate": 65,
+      "lost": 57,
+      "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 59,
+          "totalChecked": 60,
           "won": 43,
-          "lost": 16,
-          "winRate": 73
+          "lost": 17,
+          "winRate": 72
         },
         "medium": {
           "totalChecked": 92,
@@ -103,28 +103,6 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    },
-    {
-      "id": "1_zemunradnicki1923_2026-11-18_dntetlennlattvisszajr_radnicki1923",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Zemun - Radnicki 1923",
-      "competitionName": "Szerbia - Szerb Kupa",
-      "eventDate": "2026-11-18T18:30:00+01:00",
-      "marketName": "Döntetlennél a tét visszajár",
-      "outcomeName": "Radnicki 1923",
-      "odds": 1.33,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:57:27.766Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_szerb_kupa",
-      "categorySubName": "Szerb Kupa"
     },
     {
       "id": "1_realmadridinternazionale_2026-11-18_1x2glszm25_hazaistbb",
@@ -414,6 +392,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_zemunradnicki1923_2026-11-18_dntetlennlattvisszajr_radnicki1923",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Zemun - Radnicki 1923",
+      "eventDate": "2026-11-18T18:30:00+01:00",
+      "competitionName": "Szerbia - Szerb Kupa",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Radnicki 1923",
+      "odds": 1.33,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "1-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-18T19:27:12.061Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_szerb_kupa",
+      "categorySubName": "Szerb Kupa"
+    },
     {
       "id": "1_constantinebenaknoun_2026-11-18_dntetlennlattvisszajr_constantine",
       "sportId": 1,
