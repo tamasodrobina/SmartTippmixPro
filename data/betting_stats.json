@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-18T20:57:26.111Z",
+  "updatedAt": "2026-11-18T21:57:21.781Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 167,
-      "won": 110,
+      "totalChecked": 169,
+      "won": 112,
       "lost": 57,
       "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 64,
-          "won": 47,
+          "totalChecked": 66,
+          "won": 49,
           "lost": 17,
-          "winRate": 73
+          "winRate": 74
         },
         "medium": {
           "totalChecked": 95,
@@ -105,28 +105,6 @@
       "categorySubName": "Brazil bajnokság"
     },
     {
-      "id": "1_alianzaatleticomelgar_2026-11-18_1flidktesly_dntetlenvagymelgar",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Alianza Atletico - Melgar",
-      "competitionName": "Peru - Perui bajnokság",
-      "eventDate": "2026-11-18T21:00:00+01:00",
-      "marketName": "1. félidő - Kétesély",
-      "outcomeName": "Döntetlen vagy Melgar",
-      "odds": 1.3,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:57:27.766Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_perui_bajnokság",
-      "categorySubName": "Perui bajnokság"
-    },
-    {
       "id": "1_coritibasantossp_2026-11-18_melyikcsapatszerziaz1glt1_santossp",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -193,28 +171,6 @@
       "categorySubName": "Brazil bajnokság"
     },
     {
-      "id": "1_juventusohleuven_2026-11-18_zsiaihendikep1515_juventus15",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Juventus - OH Leuven",
-      "competitionName": "Nemzetközi klubcsapatok - BL, női",
-      "eventDate": "2026-11-18T21:00:00+01:00",
-      "marketName": "Ázsiai Hendikep -1,5 (-1.5)",
-      "outcomeName": "Juventus -1,5",
-      "odds": 1.64,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:59:17.065Z",
-      "status": "pending",
-      "categoryGroupKey": "women",
-      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
-      "categorySubKey": "w_bl_női",
-      "categorySubName": "BL, női"
-    },
-    {
       "id": "1_chelseaparissg_2026-11-18_zsiaihendikep125125_chelsea125",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -238,6 +194,52 @@
     }
   ],
   "history": [
+    {
+      "id": "1_juventusohleuven_2026-11-18_zsiaihendikep1515_juventus15",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Juventus - OH Leuven",
+      "eventDate": "2026-11-18T21:00:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
+      "marketName": "Ázsiai Hendikep -1,5 (-1.5)",
+      "outcomeName": "Juventus -1,5",
+      "odds": 1.64,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-18T21:57:11.763Z",
+      "status": "won",
+      "categoryGroupKey": "women",
+      "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
+      "categorySubKey": "w_bl_női",
+      "categorySubName": "BL, női"
+    },
+    {
+      "id": "1_alianzaatleticomelgar_2026-11-18_1flidktesly_dntetlenvagymelgar",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Alianza Atletico - Melgar",
+      "eventDate": "2026-11-18T21:00:00+01:00",
+      "competitionName": "Peru - Perui bajnokság",
+      "marketName": "1. félidő - Kétesély",
+      "outcomeName": "Döntetlen vagy Melgar",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-18T21:57:11.763Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_perui_bajnokság",
+      "categorySubName": "Perui bajnokság"
+    },
     {
       "id": "1_taborsezanafuzinarravne_2026-11-18_zsiaihendikep125125_taborsezana125",
       "sportId": 1,
