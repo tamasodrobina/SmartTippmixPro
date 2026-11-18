@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-18T21:57:21.781Z",
+  "updatedAt": "2026-11-18T22:07:12.764Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 169,
+      "totalChecked": 170,
       "won": 112,
-      "lost": 57,
+      "lost": 58,
       "winRate": 66,
       "byRisk": {
         "low": {
@@ -15,10 +15,10 @@
           "winRate": 74
         },
         "medium": {
-          "totalChecked": 95,
+          "totalChecked": 96,
           "won": 59,
-          "lost": 36,
-          "winRate": 62
+          "lost": 37,
+          "winRate": 61
         },
         "high": {
           "totalChecked": 8,
@@ -169,31 +169,32 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_chelseaparissg_2026-11-18_zsiaihendikep125125_chelsea125",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Chelsea - Paris SG",
-      "competitionName": "Nemzetközi klubcsapatok - BL, női",
       "eventDate": "2026-11-18T21:00:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
       "marketName": "Ázsiai Hendikep -1,25 (-1.25)",
       "outcomeName": "Chelsea -1,25",
       "odds": 1.54,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:59:17.065Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "1-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-18T22:07:12.763Z",
+      "status": "lost",
       "categoryGroupKey": "women",
       "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_bl_női",
       "categorySubName": "BL, női"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_juventusohleuven_2026-11-18_zsiaihendikep1515_juventus15",
       "sportId": 1,
