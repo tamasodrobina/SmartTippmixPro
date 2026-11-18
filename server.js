@@ -207,6 +207,53 @@ function enforceTipRiskFilter(tips = [], riskFilter = 'all') {
   }
 }
 
+// Hivatalos TippmixPro piac+kimenetel párosítás (megelőzi, hogy az AI eltérő határértéket írjon a piacnévbe és a kimenetelbe)
+function snapTipsToOfficialMarkets(tips = [], enrichedEvents = []) {
+  if (!Array.isArray(tips) || !Array.isArray(enrichedEvents) || enrichedEvents.length === 0) return;
+  const norm = s => String(s || '').toLowerCase().replace(/[^a-z0-9\u00C0-\u017F]/g, '');
+  const baseType = m => String(m || '').split('(')[0].replace(/[0-9,.\-+]+/g, '').trim().toLowerCase();
+
+  for (const t of tips) {
+    if (!t || !t.marketName || !t.outcomeName) continue;
+    const ev = enrichedEvents.find(e => norm(e.eventName) === norm(t.eventName)) || (enrichedEvents.length === 1 ? enrichedEvents[0] : null);
+    if (!ev) continue;
+
+    const pool = [...(ev.availableTargetMarkets || []), ...(ev.allMarketsList || [])];
+    if (pool.length === 0) continue;
+
+    // 1. Pontos egyezés (piac + kimenetel)
+    const exact = pool.find(m => norm(m.marketName) === norm(t.marketName) && norm(m.outcomeName) === norm(t.outcomeName));
+    if (exact) {
+      t.marketName = exact.marketName;
+      t.outcomeName = exact.outcomeName;
+      t.odds = exact.odds;
+      continue;
+    }
+
+    // 2. Ha a piactípus egyezik (pl. "Büntetőlap-szám"), és a kimenetel (pl. "Több, mint 3,5") pontosan szerepel egy másik határértékű piacon
+    const tBase = baseType(t.marketName);
+    const byOutcomeAndBase = pool.find(m => baseType(m.marketName) === tBase && norm(m.outcomeName) === norm(t.outcomeName));
+    if (byOutcomeAndBase) {
+      t.marketName = byOutcomeAndBase.marketName;
+      t.outcomeName = byOutcomeAndBase.outcomeName;
+      t.odds = byOutcomeAndBase.odds;
+      continue;
+    }
+
+    // 3. Ha a piacnév pontosan egyezik (pl. "Büntetőlap-szám 4,5 (4.5)"), és a kimenetel "Több, mint..." vagy "Kevesebb, mint..."
+    const outLower = String(t.outcomeName).toLowerCase();
+    if (outLower.startsWith('több, mint') || outLower.startsWith('kevesebb, mint')) {
+      const dir = outLower.startsWith('több, mint') ? 'több, mint' : 'kevesebb, mint';
+      const byMarketAndDir = pool.find(m => norm(m.marketName) === norm(t.marketName) && String(m.outcomeName).toLowerCase().startsWith(dir));
+      if (byMarketAndDir) {
+        t.marketName = byMarketAndDir.marketName;
+        t.outcomeName = byMarketAndDir.outcomeName;
+        t.odds = byMarketAndDir.odds;
+      }
+    }
+  }
+}
+
 // Kockázati szint és Odds-sáv összeférhetőség vizsgálata + javaslatok generálása
 function evaluateRiskAndOddsConflict(riskFilter = 'all', minOdds = 1.30, maxOdds = 2.00) {
   // 1. Melyik kockázati szint illik legjobban a jelenlegi minOdds–maxOdds sávhoz?
@@ -1974,6 +2021,7 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
     });
 
     if (Array.isArray(aiResult.data?.tips)) {
+      snapTipsToOfficialMarkets(aiResult.data.tips, enrichedEvents);
       enforceTipRiskFilter(aiResult.data.tips, riskFilter);
     }
 
@@ -2278,6 +2326,7 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
     });
 
     if (Array.isArray(aiResult.data?.tips)) {
+      snapTipsToOfficialMarkets(aiResult.data.tips, enrichedEvents);
       enforceTipRiskFilter(aiResult.data.tips, riskFilter);
     }
 

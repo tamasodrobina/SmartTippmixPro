@@ -1394,8 +1394,9 @@ export async function evaluatePendingTips(fetchEventDetailsFn, callGeminiFn) {
     const unverifiedTips = [];
 
     // 2. LÉPÉS: HIVATALOS TIPPMIX EREDMÉNYEK (0 AI token, automatikus winner/loser/void)
-    const norm = s => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const norm = s => String(s || '').toLowerCase().replace(/[^a-z0-9\u00C0-\u017F]/g, '');
     const cleanMarket = m => String(m || '').split('(')[0].trim().toLowerCase();
+    const baseMarketType = m => cleanMarket(m).replace(/[0-9,.\-+]+/g, '').replace(/\s+/g, ' ').trim();
 
     for (const tip of readyTips) {
       let verified = false;
@@ -1420,30 +1421,56 @@ export async function evaluatePendingTips(fetchEventDetailsFn, callGeminiFn) {
         );
 
         if (matchedEv && Array.isArray(matchedEv.markets)) {
-          const market = matchedEv.markets.find(m => 
+          let market = matchedEv.markets.find(m => 
             cleanMarket(m.name) === cleanMarket(tip.marketName) ||
             norm(m.name) === norm(tip.marketName)
           );
 
+          let outcome = null;
           if (market && Array.isArray(market.outcomes)) {
-            const outcome = market.outcomes.find(o => 
-              norm(o.name) === norm(tip.outcomeName)
-            );
+            outcome = market.outcomes.find(o => norm(o.name) === norm(tip.outcomeName));
+          }
 
-            if (outcome && (outcome.result === 'winner' || outcome.result === 'loser' || outcome.result === 'void')) {
-              let score = null;
-              if (matchedEv.fulltimeScore && typeof matchedEv.fulltimeScore.participant1Score !== 'undefined') {
-                score = `${matchedEv.fulltimeScore.participant1Score}-${matchedEv.fulltimeScore.participant2Score}`;
-              }
-              applyEvaluationResult(tip, {
-                won: outcome.result === 'winner',
-                isVoid: outcome.result === 'void',
-                score,
-                method: 'tippmix_official'
-              });
-              statsChanged = true;
-              verified = true;
+          // Fallback A: Ha az AI a piac nevében és a kimenetelben eltérő határértéket írt (pl. "Büntetőlap-szám 4,5" + "Több, mint 3,5"),
+          // megkeressük ugyanazon piactípuson belül a pontos kimenetelt (pl. "Büntetőlap-szám 3,5" -> "Több, mint 3,5")!
+          if (!outcome) {
+            const targetBase = baseMarketType(tip.marketName);
+            const sameTypeMarketWithOutcome = matchedEv.markets.find(m =>
+              baseMarketType(m.name) === targetBase &&
+              Array.isArray(m.outcomes) &&
+              m.outcomes.some(o => norm(o.name) === norm(tip.outcomeName))
+            );
+            if (sameTypeMarketWithOutcome) {
+              market = sameTypeMarketWithOutcome;
+              outcome = sameTypeMarketWithOutcome.outcomes.find(o => norm(o.name) === norm(tip.outcomeName));
+              tip.marketName = sameTypeMarketWithOutcome.name;
             }
+          }
+
+          // Fallback B: Ha a piac pontosan megvan (pl. "Büntetőlap-szám 4,5"), és a kimenetel "Több, mint..." vagy "Kevesebb, mint...",
+          // az irány ("több, mint" / "kevesebb, mint") alapján párosítjuk a piac kimenetelével
+          if (!outcome && market && Array.isArray(market.outcomes)) {
+            const outLower = String(tip.outcomeName || '').toLowerCase();
+            if (outLower.startsWith('több, mint') || outLower.startsWith('kevesebb, mint')) {
+              const dirPrefix = outLower.startsWith('több, mint') ? 'több, mint' : 'kevesebb, mint';
+              outcome = market.outcomes.find(o => String(o.name || '').toLowerCase().startsWith(dirPrefix));
+              if (outcome) tip.outcomeName = outcome.name;
+            }
+          }
+
+          if (outcome && (outcome.result === 'winner' || outcome.result === 'loser' || outcome.result === 'void')) {
+            let score = null;
+            if (matchedEv.fulltimeScore && typeof matchedEv.fulltimeScore.participant1Score !== 'undefined') {
+              score = `${matchedEv.fulltimeScore.participant1Score}-${matchedEv.fulltimeScore.participant2Score}`;
+            }
+            applyEvaluationResult(tip, {
+              won: outcome.result === 'winner',
+              isVoid: outcome.result === 'void',
+              score,
+              method: 'tippmix_official'
+            });
+            statsChanged = true;
+            verified = true;
           }
         }
       }
@@ -1666,6 +1693,10 @@ async function pullFromGitHub() {
           .sort((a, b) => new Date(b.evaluatedAt || 0) - new Date(a.evaluatedAt || 0))
           .slice(0, 2500);
       }
+
+      // Biztosítjuk, hogy ami már bekerült a kiértékelt history-ba, az soha ne maradjon bent a pendingTips-ben!
+      const evaluatedIds = new Set((state.history || []).map(h => h?.id).filter(Boolean));
+      state.pendingTips = (state.pendingTips || []).filter(p => p && !evaluatedIds.has(p.id));
 
       enrichAllStateTips();
 
