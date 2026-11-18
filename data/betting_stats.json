@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-18T14:05:21.913Z",
+  "updatedAt": "2026-11-18T17:57:29.807Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 157,
+      "totalChecked": 158,
       "won": 102,
-      "lost": 55,
+      "lost": 56,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 57,
+          "totalChecked": 58,
           "won": 42,
-          "lost": 15,
-          "winRate": 74
+          "lost": 16,
+          "winRate": 72
         },
         "medium": {
           "totalChecked": 92,
@@ -215,28 +215,6 @@
       "categorySubName": "Algériai bajnokság"
     },
     {
-      "id": "1_racekalcerradomlje_2026-11-18_1flidktesly_racevagykalcerradomlje",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Race - Kalcer Radomlje",
-      "competitionName": "Szlovénia - Szlovén Kupa",
-      "eventDate": "2026-11-18T17:00:00+01:00",
-      "marketName": "1. félidő - Kétesély",
-      "outcomeName": "Race vagy Kalcer Radomlje",
-      "odds": 1.32,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:57:27.766Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_szlovén_kupa",
-      "categorySubName": "Szlovén Kupa"
-    },
-    {
       "id": "1_coritibasantossp_2026-11-18_melyikcsapatszerziaz1glt1_santossp",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -347,28 +325,6 @@
       "categorySubName": "Spanyol Kupa"
     },
     {
-      "id": "1_taborsezanafuzinarravne_2026-11-18_zsiaihendikep125125_taborsezana125",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Tabor Sezana - Fuzinar Ravne",
-      "competitionName": "Szlovénia - Szlovén Kupa",
-      "eventDate": "2026-11-18T17:00:00+01:00",
-      "marketName": "Ázsiai Hendikep -1,25 (-1.25)",
-      "outcomeName": "Tabor Sezana -1,25",
-      "odds": 1.52,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:59:17.065Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_szlovén_kupa",
-      "categorySubName": "Szlovén Kupa"
-    },
-    {
       "id": "1_hckenmanchestercity_2026-11-18_zsiaiglszm425425_kevesebbmint425",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -455,9 +411,54 @@
       "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_angol_liga_kupa_női",
       "categorySubName": "Angol Liga-kupa, női"
+    },
+    {
+      "id": "1_taborsezanafuzinarravne_2026-11-18_zsiaihendikep125125_taborsezana125",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Tabor Sezana - Fuzinar Ravne",
+      "competitionName": "Szlovénia - Szlovén Kupa",
+      "eventDate": "2026-11-18T17:00:00+01:00",
+      "marketName": "Ázsiai Hendikep -1,25 (-1.25)",
+      "outcomeName": "Tabor Sezana -1,25",
+      "odds": 1.52,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-18T13:59:17.065Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_szlovén_kupa",
+      "categorySubName": "Szlovén Kupa"
     }
   ],
   "history": [
+    {
+      "id": "1_racekalcerradomlje_2026-11-18_1flidktesly_racevagykalcerradomlje",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Race - Kalcer Radomlje",
+      "eventDate": "2026-11-18T17:00:00+01:00",
+      "competitionName": "Szlovénia - Szlovén Kupa",
+      "marketName": "1. félidő - Kétesély",
+      "outcomeName": "Race vagy Kalcer Radomlje",
+      "odds": 1.32,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-18T17:57:12.563Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_szlovén_kupa",
+      "categorySubName": "Szlovén Kupa"
+    },
     {
       "id": "1_ukrajnageorgia_2026-11-17_bntetlapszm4545_tbbmint35",
       "sportId": 1,
