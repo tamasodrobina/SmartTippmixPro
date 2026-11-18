@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-18T17:57:29.807Z",
+  "updatedAt": "2026-11-18T18:47:30.325Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 158,
-      "won": 102,
+      "totalChecked": 159,
+      "won": 103,
       "lost": 56,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 58,
-          "won": 42,
+          "totalChecked": 59,
+          "won": 43,
           "lost": 16,
-          "winRate": 72
+          "winRate": 73
         },
         "medium": {
           "totalChecked": 92,
@@ -191,28 +191,6 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_perui_bajnokság",
       "categorySubName": "Perui bajnokság"
-    },
-    {
-      "id": "1_constantinebenaknoun_2026-11-18_dntetlennlattvisszajr_constantine",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Constantine - Ben Aknoun",
-      "competitionName": "Algéria - Algériai bajnokság",
-      "eventDate": "2026-11-18T17:45:00+01:00",
-      "marketName": "Döntetlennél a tét visszajár",
-      "outcomeName": "Constantine",
-      "odds": 1.39,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:57:27.766Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_algériai_bajnokság",
-      "categorySubName": "Algériai bajnokság"
     },
     {
       "id": "1_coritibasantossp_2026-11-18_melyikcsapatszerziaz1glt1_santossp",
@@ -436,6 +414,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_constantinebenaknoun_2026-11-18_dntetlennlattvisszajr_constantine",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Constantine - Ben Aknoun",
+      "eventDate": "2026-11-18T17:45:00+01:00",
+      "competitionName": "Algéria - Algériai bajnokság",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Constantine",
+      "odds": 1.39,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "1-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-18T18:47:12.863Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_algériai_bajnokság",
+      "categorySubName": "Algériai bajnokság"
+    },
     {
       "id": "1_racekalcerradomlje_2026-11-18_1flidktesly_racevagykalcerradomlje",
       "sportId": 1,
