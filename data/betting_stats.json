@@ -1,23 +1,23 @@
 {
-  "updatedAt": "2026-11-19T01:07:11.868Z",
+  "updatedAt": "2026-11-19T01:37:11.563Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 172,
-      "won": 114,
-      "lost": 58,
+      "totalChecked": 174,
+      "won": 115,
+      "lost": 59,
       "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 68,
-          "won": 51,
+          "totalChecked": 69,
+          "won": 52,
           "lost": 17,
           "winRate": 75
         },
         "medium": {
-          "totalChecked": 96,
+          "totalChecked": 97,
           "won": 59,
-          "lost": 37,
+          "lost": 38,
           "winRate": 61
         },
         "high": {
@@ -81,53 +81,54 @@
       }
     }
   },
-  "pendingTips": [
-    {
-      "id": "1_cruzeiromgpalmeirassp_2026-11-19_mindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Cruzeiro MG - Palmeiras SP",
-      "competitionName": "Brazília - Brazil bajnokság",
-      "eventDate": "2026-11-19T00:30:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.51,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:59:17.065Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_brazil_bajnokság",
-      "categorySubName": "Brazil bajnokság"
-    },
+  "pendingTips": [],
+  "history": [
     {
       "id": "1_flamengorjathlticopr_2026-11-19_zsiaihendikep1515_flamengorj15",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Flamengo RJ - Athlético PR",
-      "competitionName": "Brazília - Brazil bajnokság",
       "eventDate": "2026-11-19T00:30:00+01:00",
+      "competitionName": "Brazília - Brazil bajnokság",
       "marketName": "Ázsiai Hendikep -1,5 (-1.5)",
       "outcomeName": "Flamengo RJ -1,5",
       "odds": 1.52,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:59:17.065Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-19T01:37:11.563Z",
+      "status": "lost",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    }
-  ],
-  "history": [
+    },
+    {
+      "id": "1_cruzeiromgpalmeirassp_2026-11-19_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Cruzeiro MG - Palmeiras SP",
+      "eventDate": "2026-11-19T00:30:00+01:00",
+      "competitionName": "Brazília - Brazil bajnokság",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.51,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-19T01:37:11.563Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_brazil_bajnokság",
+      "categorySubName": "Brazil bajnokság"
+    },
     {
       "id": "1_remochapecoense_2026-11-19_1x2_remo",
       "sportId": 1,
