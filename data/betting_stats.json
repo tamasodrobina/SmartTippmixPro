@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-19T10:45:11.496Z",
+  "updatedAt": "2026-11-19T14:47:12.961Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 174,
-      "won": 115,
+      "totalChecked": 175,
+      "won": 116,
       "lost": 59,
       "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 69,
-          "won": 52,
+          "totalChecked": 70,
+          "won": 53,
           "lost": 17,
-          "winRate": 75
+          "winRate": 76
         },
         "medium": {
           "totalChecked": 97,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_alwaslhatta_2026-11-19_1flid1x2_alwasl",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Al-Wasl - Hatta",
-      "competitionName": "Egyesült Arab Emirátusok - Egyesült Arab Emir. bajnokság",
-      "eventDate": "2026-11-19T13:45:00+01:00",
-      "marketName": "1. félidő - 1X2",
-      "outcomeName": "Al-Wasl",
-      "odds": 1.35,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-19T10:45:11.495Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_egyesült_arab_emir_bajnokság",
-      "categorySubName": "Egyesült Arab Emir. bajnokság"
-    },
     {
       "id": "5_bsheltonrjodar_2026-11-19_amrkzsgyztese_bshelton",
       "sportId": 5,
@@ -194,6 +172,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_alwaslhatta_2026-11-19_1flid1x2_alwasl",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Al-Wasl - Hatta",
+      "eventDate": "2026-11-19T13:45:00+01:00",
+      "competitionName": "Egyesült Arab Emirátusok - Egyesült Arab Emir. bajnokság",
+      "marketName": "1. félidő - 1X2",
+      "outcomeName": "Al-Wasl",
+      "odds": 1.35,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-19T14:47:12.961Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_egyesült_arab_emir_bajnokság",
+      "categorySubName": "Egyesült Arab Emir. bajnokság"
+    },
     {
       "id": "1_flamengorjathlticopr_2026-11-19_zsiaihendikep1515_flamengorj15",
       "sportId": 1,
