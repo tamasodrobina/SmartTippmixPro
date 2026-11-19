@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-19T18:47:13.163Z",
+  "updatedAt": "2026-11-19T21:27:12.261Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 176,
-      "won": 116,
+      "totalChecked": 177,
+      "won": 117,
       "lost": 60,
       "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 71,
-          "won": 53,
+          "totalChecked": 72,
+          "won": 54,
           "lost": 18,
           "winRate": 75
         },
@@ -83,28 +83,6 @@
   },
   "pendingTips": [
     {
-      "id": "1_penarolmontevideocerrolargomelo_2026-11-19_1x2_penarolmontevideo",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Penarol Montevideo - Cerro Largo Melo",
-      "competitionName": "Uruguay - Uruguayi bajnokság",
-      "eventDate": "2026-11-19T20:30:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Penarol Montevideo",
-      "odds": 1.31,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-19T10:45:11.496Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_uruguayi_bajnokság",
-      "categorySubName": "Uruguayi bajnokság"
-    },
-    {
       "id": "1_barcelonaservette_2026-11-19_glszm5555_tbbmint55",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -128,6 +106,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_penarolmontevideocerrolargomelo_2026-11-19_1x2_penarolmontevideo",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Penarol Montevideo - Cerro Largo Melo",
+      "eventDate": "2026-11-19T20:30:00+01:00",
+      "competitionName": "Uruguay - Uruguayi bajnokság",
+      "marketName": "1X2",
+      "outcomeName": "Penarol Montevideo",
+      "odds": 1.31,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "3-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-19T21:27:12.173Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_uruguayi_bajnokság",
+      "categorySubName": "Uruguayi bajnokság"
+    },
     {
       "id": "1_mcalgerolympiqueakbou_2026-11-19_1x2_mcalger",
       "sportId": 1,
