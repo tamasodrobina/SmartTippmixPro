@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-19T21:27:12.261Z",
+  "updatedAt": "2026-11-19T21:57:12.463Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 177,
-      "won": 117,
+      "totalChecked": 178,
+      "won": 118,
       "lost": 60,
       "winRate": 66,
       "byRisk": {
@@ -15,8 +15,8 @@
           "winRate": 75
         },
         "medium": {
-          "totalChecked": 97,
-          "won": 59,
+          "totalChecked": 98,
+          "won": 60,
           "lost": 38,
           "winRate": 61
         },
@@ -81,31 +81,31 @@
       }
     }
   },
-  "pendingTips": [
+  "pendingTips": [],
+  "history": [
     {
       "id": "1_barcelonaservette_2026-11-19_glszm5555_tbbmint55",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Barcelona - Servette",
-      "competitionName": "Nemzetközi klubcsapatok - BL, női",
       "eventDate": "2026-11-19T21:00:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - BL, női",
       "marketName": "Gólszám 5,5 (5.5)",
       "outcomeName": "Több, mint 5,5",
       "odds": 1.61,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-19T10:45:11.496Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "6-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-19T21:57:12.463Z",
+      "status": "won",
       "categoryGroupKey": "women",
       "categoryGroupName": "Női Labdarúgás (Klub & Válogatott)",
       "categorySubKey": "w_bl_női",
       "categorySubName": "BL, női"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_penarolmontevideocerrolargomelo_2026-11-19_1x2_penarolmontevideo",
       "sportId": 1,
