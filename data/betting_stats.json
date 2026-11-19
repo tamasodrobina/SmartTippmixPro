@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T14:47:12.961Z",
+  "updatedAt": "2026-11-19T15:27:08.764Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -29,16 +29,16 @@
       }
     },
     "tennis": {
-      "totalChecked": 38,
-      "won": 19,
+      "totalChecked": 39,
+      "won": 20,
       "lost": 19,
-      "winRate": 50,
+      "winRate": 51,
       "byRisk": {
         "low": {
-          "totalChecked": 27,
-          "won": 14,
+          "totalChecked": 28,
+          "won": 15,
           "lost": 13,
-          "winRate": 52
+          "winRate": 54
         },
         "medium": {
           "totalChecked": 11,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "5_bsheltonrjodar_2026-11-19_amrkzsgyztese_bshelton",
-      "sportId": 5,
-      "sportName": "Tenisz",
-      "eventId": null,
-      "eventName": "B. Shelton - R. Jodar",
-      "competitionName": "ATP - ATP-vb, férfi egyes, A csoport",
-      "eventDate": "2026-11-19T14:00:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "B. Shelton",
-      "odds": 1.33,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-19T10:45:11.496Z",
-      "status": "pending",
-      "categoryGroupKey": "tennis_top",
-      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
-      "categorySubKey": "ten_atp_atp_vb",
-      "categorySubName": "ATP - ATP-vb"
-    },
     {
       "id": "1_mcalgerolympiqueakbou_2026-11-19_1x2_mcalger",
       "sportId": 1,
@@ -172,6 +150,29 @@
     }
   ],
   "history": [
+    {
+      "id": "5_bsheltonrjodar_2026-11-19_amrkzsgyztese_bshelton",
+      "sportId": 5,
+      "sportName": "Tenisz",
+      "eventName": "B. Shelton - R. Jodar",
+      "eventDate": "2026-11-19T14:00:00+01:00",
+      "competitionName": "ATP - ATP-vb, férfi egyes, A csoport",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "B. Shelton",
+      "odds": 1.33,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-19T15:27:08.764Z",
+      "status": "won",
+      "categoryGroupKey": "tennis_top",
+      "categoryGroupName": "Top Tornák (Grand Slam / ATP / WTA)",
+      "categorySubKey": "ten_atp_atp_vb",
+      "categorySubName": "ATP - ATP-vb"
+    },
     {
       "id": "1_alwaslhatta_2026-11-19_1flid1x2_alwasl",
       "sportId": 1,
