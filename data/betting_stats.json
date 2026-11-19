@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-19T15:27:08.764Z",
+  "updatedAt": "2026-11-19T18:47:13.163Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 175,
+      "totalChecked": 176,
       "won": 116,
-      "lost": 59,
+      "lost": 60,
       "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 70,
+          "totalChecked": 71,
           "won": 53,
-          "lost": 17,
-          "winRate": 76
+          "lost": 18,
+          "winRate": 75
         },
         "medium": {
           "totalChecked": 97,
@@ -83,28 +83,6 @@
   },
   "pendingTips": [
     {
-      "id": "1_mcalgerolympiqueakbou_2026-11-19_1x2_mcalger",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "MC Alger - Olympique Akbou",
-      "competitionName": "Algéria - Algériai bajnokság",
-      "eventDate": "2026-11-19T17:45:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "MC Alger",
-      "odds": 1.35,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-19T10:45:11.496Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_algériai_bajnokság",
-      "categorySubName": "Algériai bajnokság"
-    },
-    {
       "id": "1_penarolmontevideocerrolargomelo_2026-11-19_1x2_penarolmontevideo",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -150,6 +128,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_mcalgerolympiqueakbou_2026-11-19_1x2_mcalger",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "MC Alger - Olympique Akbou",
+      "eventDate": "2026-11-19T17:45:00+01:00",
+      "competitionName": "Algéria - Algériai bajnokság",
+      "marketName": "1X2",
+      "outcomeName": "MC Alger",
+      "odds": 1.35,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-19T18:47:13.163Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_algériai_bajnokság",
+      "categorySubName": "Algériai bajnokság"
+    },
     {
       "id": "5_bsheltonrjodar_2026-11-19_amrkzsgyztese_bshelton",
       "sportId": 5,
