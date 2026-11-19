@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-19T00:57:19.924Z",
+  "updatedAt": "2026-11-19T01:07:11.868Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 171,
-      "won": 113,
+      "totalChecked": 172,
+      "won": 114,
       "lost": 58,
       "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 67,
-          "won": 50,
+          "totalChecked": 68,
+          "won": 51,
           "lost": 17,
           "winRate": 75
         },
@@ -125,31 +125,32 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_remochapecoense_2026-11-19_1x2_remo",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Remo - Chapecoense",
-      "competitionName": "Brazília - Brazil bajnokság",
       "eventDate": "2026-11-19T00:00:00+01:00",
+      "competitionName": "Brazília - Brazil bajnokság",
       "marketName": "1X2",
       "outcomeName": "Remo",
       "odds": 1.32,
       "riskCategory": "low",
       "riskScore": 2,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-18T13:57:27.766Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-19T01:07:11.867Z",
+      "status": "won",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_coritibasantossp_2026-11-18_melyikcsapatszerziaz1glt1_santossp",
       "sportId": 1,
