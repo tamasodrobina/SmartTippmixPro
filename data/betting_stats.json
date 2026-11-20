@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-20T17:27:14.487Z",
+  "updatedAt": "2026-11-20T19:27:15.065Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 179,
-      "won": 119,
+      "totalChecked": 181,
+      "won": 121,
       "lost": 60,
-      "winRate": 66,
+      "winRate": 67,
       "byRisk": {
         "low": {
-          "totalChecked": 72,
-          "won": 54,
+          "totalChecked": 74,
+          "won": 56,
           "lost": 18,
-          "winRate": 75
+          "winRate": 76
         },
         "medium": {
           "totalChecked": 99,
@@ -127,28 +127,6 @@
       "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
     },
     {
-      "id": "1_alahliksaalnassr_2026-11-20_mindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Al-Ahli (KSA) - Al-Nassr",
-      "competitionName": "Szaúd-Arábia - Szaúdi bajnokság",
-      "eventDate": "2026-11-20T18:30:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.45,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-20T09:03:05.108Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_szaúdi_bajnokság",
-      "categorySubName": "Szaúdi bajnokság"
-    },
-    {
       "id": "1_fcandorraleganes_2026-11-20_hazaicsapatglszm1515_tbbmint15",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -169,28 +147,6 @@
       "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
       "categorySubKey": "esp_2",
       "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
-    },
-    {
-      "id": "1_darmstadtheidenheim_2026-11-20_mindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Darmstadt - Heidenheim",
-      "competitionName": "Németország - Bundesliga 2.",
-      "eventDate": "2026-11-20T18:30:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.44,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-20T09:03:05.108Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "ger_2",
-      "categorySubName": "🇩🇪 Bundesliga 2 (Német 2.)"
     },
     {
       "id": "1_moldebodglimt_2026-11-20_1x2_bodglimt",
@@ -282,6 +238,52 @@
     }
   ],
   "history": [
+    {
+      "id": "1_darmstadtheidenheim_2026-11-20_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Darmstadt - Heidenheim",
+      "eventDate": "2026-11-20T18:30:00+01:00",
+      "competitionName": "Németország - Bundesliga 2.",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.44,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "3-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-20T19:27:15.065Z",
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "ger_2",
+      "categorySubName": "🇩🇪 Bundesliga 2 (Német 2.)"
+    },
+    {
+      "id": "1_alahliksaalnassr_2026-11-20_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Al-Ahli (KSA) - Al-Nassr",
+      "eventDate": "2026-11-20T18:30:00+01:00",
+      "competitionName": "Szaúd-Arábia - Szaúdi bajnokság",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.45,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-20T19:27:15.065Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_szaúdi_bajnokság",
+      "categorySubName": "Szaúdi bajnokság"
+    },
     {
       "id": "1_botosanivoluntari_2026-11-20_mindktcsapatszerezglt_igen",
       "sportId": 1,
