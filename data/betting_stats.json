@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-20T09:03:05.108Z",
+  "updatedAt": "2026-11-20T17:27:14.487Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 178,
-      "won": 118,
+      "totalChecked": 179,
+      "won": 119,
       "lost": 60,
       "winRate": 66,
       "byRisk": {
@@ -15,10 +15,10 @@
           "winRate": 75
         },
         "medium": {
-          "totalChecked": 98,
-          "won": 60,
+          "totalChecked": 99,
+          "won": 61,
           "lost": 38,
-          "winRate": 61
+          "winRate": 62
         },
         "high": {
           "totalChecked": 8,
@@ -171,28 +171,6 @@
       "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     },
     {
-      "id": "1_botosanivoluntari_2026-11-20_mindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Botosani - Voluntari",
-      "competitionName": "Románia - Román bajnokság",
-      "eventDate": "2026-11-20T16:30:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.57,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-20T09:03:05.108Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_román_bajnokság",
-      "categorySubName": "Román bajnokság"
-    },
-    {
       "id": "1_darmstadtheidenheim_2026-11-20_mindktcsapatszerezglt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -304,6 +282,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_botosanivoluntari_2026-11-20_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Botosani - Voluntari",
+      "eventDate": "2026-11-20T16:30:00+01:00",
+      "competitionName": "Románia - Román bajnokság",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.57,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-20T17:27:14.487Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_román_bajnokság",
+      "categorySubName": "Román bajnokság"
+    },
     {
       "id": "1_barcelonaservette_2026-11-19_glszm5555_tbbmint55",
       "sportId": 1,
