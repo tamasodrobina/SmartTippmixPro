@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-20T20:07:15.462Z",
+  "updatedAt": "2026-11-20T20:57:13.662Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 183,
+      "totalChecked": 184,
       "won": 123,
-      "lost": 60,
+      "lost": 61,
       "winRate": 67,
       "byRisk": {
         "low": {
@@ -15,9 +15,9 @@
           "winRate": 76
         },
         "medium": {
-          "totalChecked": 101,
+          "totalChecked": 102,
           "won": 63,
-          "lost": 38,
+          "lost": 39,
           "winRate": 62
         },
         "high": {
@@ -149,28 +149,6 @@
       "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
     },
     {
-      "id": "1_nancydijon_2026-11-20_mindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Nancy - Dijon",
-      "competitionName": "Franciaország - Francia 2.",
-      "eventDate": "2026-11-20T20:00:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.62,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-20T09:03:05.108Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "fra_2",
-      "categorySubName": "🇫🇷 Ligue 2 (Francia 2.)"
-    },
-    {
       "id": "1_hellasveronacesena_2026-11-20_1x2_hellasverona",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -194,6 +172,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_nancydijon_2026-11-20_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Nancy - Dijon",
+      "eventDate": "2026-11-20T20:00:00+01:00",
+      "competitionName": "Franciaország - Francia 2.",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.62,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-20T20:57:13.662Z",
+      "status": "lost",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "fra_2",
+      "categorySubName": "🇫🇷 Ligue 2 (Francia 2.)"
+    },
     {
       "id": "1_moldebodglimt_2026-11-20_1x2_bodglimt",
       "sportId": 1,
