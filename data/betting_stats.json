@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T21:57:12.463Z",
+  "updatedAt": "2026-11-20T08:57:51.152Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -81,7 +81,74 @@
       }
     }
   },
-  "pendingTips": [],
+  "pendingTips": [
+    {
+      "id": "1_athbilbaoespanyol_2026-11-20_1x2_athbilbao",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5586834,
+      "eventName": "Ath. Bilbao - Espanyol",
+      "competitionName": "Spanyolország - Spanyol bajnokság",
+      "eventDate": "2026-11-20T21:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Ath. Bilbao",
+      "odds": 1.48,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-20T08:57:51.152Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
+    },
+    {
+      "id": "1_athbilbaoespanyol_2026-11-20_hazaicsapatglszm1515_tbbmint15",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5586834,
+      "eventName": "Ath. Bilbao - Espanyol",
+      "competitionName": "Spanyolország - Spanyol bajnokság",
+      "eventDate": "2026-11-20T21:00:00+01:00",
+      "marketName": "Hazai csapat - Gólszám 1,5 (1.5)",
+      "outcomeName": "Több, mint 1,5",
+      "odds": 1.52,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-20T08:57:51.152Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
+    },
+    {
+      "id": "1_athbilbaoespanyol_2026-11-20_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5586834,
+      "eventName": "Ath. Bilbao - Espanyol",
+      "competitionName": "Spanyolország - Spanyol bajnokság",
+      "eventDate": "2026-11-20T21:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-20T08:57:51.152Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
+    }
+  ],
   "history": [
     {
       "id": "1_barcelonaservette_2026-11-19_glszm5555_tbbmint55",
@@ -6046,7 +6113,10 @@
     "5_bsheltonrjodar_2026-11-19_amrkzsgyztese_bshelton",
     "1_mcalgerolympiqueakbou_2026-11-19_1x2_mcalger",
     "1_penarolmontevideocerrolargomelo_2026-11-19_1x2_penarolmontevideo",
-    "1_barcelonaservette_2026-11-19_glszm5555_tbbmint55"
+    "1_barcelonaservette_2026-11-19_glszm5555_tbbmint55",
+    "1_athbilbaoespanyol_2026-11-20_1x2_athbilbao",
+    "1_athbilbaoespanyol_2026-11-20_hazaicsapatglszm1515_tbbmint15",
+    "1_athbilbaoespanyol_2026-11-20_mindktcsapatszerezglt_igen"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
