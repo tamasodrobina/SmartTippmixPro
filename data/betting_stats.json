@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-20T21:37:14.169Z",
+  "updatedAt": "2026-11-20T21:47:14.662Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 186,
-      "won": 123,
+      "totalChecked": 187,
+      "won": 124,
       "lost": 63,
       "winRate": 66,
       "byRisk": {
@@ -15,8 +15,8 @@
           "winRate": 76
         },
         "medium": {
-          "totalChecked": 104,
-          "won": 63,
+          "totalChecked": 105,
+          "won": 64,
           "lost": 41,
           "winRate": 61
         },
@@ -83,28 +83,6 @@
   },
   "pendingTips": [
     {
-      "id": "1_troyeslehavre_2026-11-20_mindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Troyes - Le Havre",
-      "competitionName": "Franciaország - Francia bajnokság",
-      "eventDate": "2026-11-20T20:45:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.65,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-20T09:03:05.108Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_1",
-      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
-      "categorySubKey": "fra_1",
-      "categorySubName": "🇫🇷 Ligue 1 (Francia 1.)"
-    },
-    {
       "id": "1_athbilbaoespanyol_2026-11-20_1x2_athbilbao",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -128,6 +106,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_troyeslehavre_2026-11-20_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Troyes - Le Havre",
+      "eventDate": "2026-11-20T20:45:00+01:00",
+      "competitionName": "Franciaország - Francia bajnokság",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.65,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "3-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-20T21:47:14.662Z",
+      "status": "won",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "fra_1",
+      "categorySubName": "🇫🇷 Ligue 1 (Francia 1.)"
+    },
     {
       "id": "1_fcandorraleganes_2026-11-20_hazaicsapatglszm1515_tbbmint15",
       "sportId": 1,
