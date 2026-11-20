@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-20T20:57:13.662Z",
+  "updatedAt": "2026-11-20T21:27:25.453Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 184,
+      "totalChecked": 185,
       "won": 123,
-      "lost": 61,
-      "winRate": 67,
+      "lost": 62,
+      "winRate": 66,
       "byRisk": {
         "low": {
           "totalChecked": 74,
@@ -15,10 +15,10 @@
           "winRate": 76
         },
         "medium": {
-          "totalChecked": 102,
+          "totalChecked": 103,
           "won": 63,
-          "lost": 39,
-          "winRate": 62
+          "lost": 40,
+          "winRate": 61
         },
         "high": {
           "totalChecked": 8,
@@ -147,31 +147,32 @@
       "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
       "categorySubKey": "esp_2",
       "categorySubName": "🇪🇸 La Liga 2 (Spanyol 2.)"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_hellasveronacesena_2026-11-20_1x2_hellasverona",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Hellas Verona - Cesena",
-      "competitionName": "Olaszország - Olasz B",
       "eventDate": "2026-11-20T20:30:00+01:00",
+      "competitionName": "Olaszország - Olasz B",
       "marketName": "1X2",
       "outcomeName": "Hellas Verona",
       "odds": 1.68,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-20T09:03:05.108Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "0-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-20T21:27:24.061Z",
+      "status": "lost",
       "categoryGroupKey": "top5_2",
       "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
       "categorySubKey": "ita_2",
       "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_nancydijon_2026-11-20_mindktcsapatszerezglt_igen",
       "sportId": 1,
