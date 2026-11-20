@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-20T21:47:14.662Z",
+  "updatedAt": "2026-11-20T21:57:14.661Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 187,
+      "totalChecked": 188,
       "won": 124,
-      "lost": 63,
+      "lost": 64,
       "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 74,
+          "totalChecked": 75,
           "won": 56,
-          "lost": 18,
-          "winRate": 76
+          "lost": 19,
+          "winRate": 75
         },
         "medium": {
           "totalChecked": 105,
@@ -81,31 +81,31 @@
       }
     }
   },
-  "pendingTips": [
+  "pendingTips": [],
+  "history": [
     {
       "id": "1_athbilbaoespanyol_2026-11-20_1x2_athbilbao",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Ath. Bilbao - Espanyol",
-      "competitionName": "Spanyolország - Spanyol bajnokság",
       "eventDate": "2026-11-20T21:00:00+01:00",
+      "competitionName": "Spanyolország - Spanyol bajnokság",
       "marketName": "1X2",
       "outcomeName": "Ath. Bilbao",
       "odds": 1.48,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-20T09:03:05.108Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-20T21:57:14.570Z",
+      "status": "lost",
       "categoryGroupKey": "top5_1",
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
       "categorySubKey": "esp_1",
       "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_troyeslehavre_2026-11-20_mindktcsapatszerezglt_igen",
       "sportId": 1,
