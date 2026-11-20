@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-20T19:57:27.691Z",
+  "updatedAt": "2026-11-20T20:07:15.462Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 182,
-      "won": 122,
+      "totalChecked": 183,
+      "won": 123,
       "lost": 60,
       "winRate": 67,
       "byRisk": {
@@ -15,8 +15,8 @@
           "winRate": 76
         },
         "medium": {
-          "totalChecked": 100,
-          "won": 62,
+          "totalChecked": 101,
+          "won": 63,
           "lost": 38,
           "winRate": 62
         },
@@ -191,31 +191,32 @@
       "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
       "categorySubKey": "ita_2",
       "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_moldebodglimt_2026-11-20_1x2_bodglimt",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Molde - Bodö/Glimt",
-      "competitionName": "Norvégia - Norvég bajnokság",
       "eventDate": "2026-11-20T19:00:00+01:00",
+      "competitionName": "Norvégia - Norvég bajnokság",
       "marketName": "1X2",
       "outcomeName": "Bodö/Glimt",
       "odds": 1.58,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-20T09:03:05.108Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "2-4",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-20T20:07:15.461Z",
+      "status": "won",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_norvég_bajnokság",
       "categorySubName": "Norvég bajnokság"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_aarhusgflyngby_2026-11-20_1x2_aarhusgf",
       "sportId": 1,
