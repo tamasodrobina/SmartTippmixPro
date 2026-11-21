@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T07:59:38.261Z",
+  "updatedAt": "2026-11-21T08:04:10.384Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -367,6 +367,72 @@
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
       "categorySubKey": "ger_1",
       "categorySubName": "🇩🇪 Bundesliga (Német 1.)"
+    },
+    {
+      "id": "1_newcastlearsenal_2026-11-21_1x2_arsenal",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5596809,
+      "eventName": "Newcastle - Arsenal",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-21T18:30:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Arsenal",
+      "odds": 1.46,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T08:04:10.384Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
+    },
+    {
+      "id": "1_newcastlearsenal_2026-11-21_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5596809,
+      "eventName": "Newcastle - Arsenal",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-21T18:30:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.7,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T08:04:10.384Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
+    },
+    {
+      "id": "1_newcastlearsenal_2026-11-21_melyikcsapatszerziaz1glt1_arsenal",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5596809,
+      "eventName": "Newcastle - Arsenal",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-21T18:30:00+01:00",
+      "marketName": "Melyik csapat szerzi a(z) 1. gólt? (1)",
+      "outcomeName": "Arsenal",
+      "odds": 1.42,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T08:04:10.384Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
     }
   ],
   "history": [
@@ -6586,7 +6652,10 @@
     "1_stokebirmingham_2026-11-21_mindktcsapatszerezglt_nem",
     "1_elversbergfreiburg_2026-11-21_1x2_freiburg",
     "1_elversbergfreiburg_2026-11-21_mindktcsapatszerezglt_igen",
-    "1_elversbergfreiburg_2026-11-21_glszm2525_tbbmint25"
+    "1_elversbergfreiburg_2026-11-21_glszm2525_tbbmint25",
+    "1_newcastlearsenal_2026-11-21_1x2_arsenal",
+    "1_newcastlearsenal_2026-11-21_mindktcsapatszerezglt_igen",
+    "1_newcastlearsenal_2026-11-21_melyikcsapatszerziaz1glt1_arsenal"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
