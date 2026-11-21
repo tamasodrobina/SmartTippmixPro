@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T07:52:03.463Z",
+  "updatedAt": "2026-11-21T07:57:12.938Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -235,6 +235,72 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_olasz_a",
       "categorySubName": "Olasz A"
+    },
+    {
+      "id": "1_stokebirmingham_2026-11-21_dntetlennlattvisszajr_birmingham",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5596278,
+      "eventName": "Stoke - Birmingham",
+      "competitionName": "Anglia - Angol Liga bajnokság",
+      "eventDate": "2026-11-21T16:00:00+01:00",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Birmingham",
+      "odds": 1.71,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T07:57:12.938Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_angol_liga_bajnokság",
+      "categorySubName": "Angol Liga bajnokság"
+    },
+    {
+      "id": "1_stokebirmingham_2026-11-21_glszm2525_kevesebbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5596278,
+      "eventName": "Stoke - Birmingham",
+      "competitionName": "Anglia - Angol Liga bajnokság",
+      "eventDate": "2026-11-21T16:00:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Kevesebb, mint 2,5",
+      "odds": 1.63,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T07:57:12.938Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_angol_liga_bajnokság",
+      "categorySubName": "Angol Liga bajnokság"
+    },
+    {
+      "id": "1_stokebirmingham_2026-11-21_mindktcsapatszerezglt_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5596278,
+      "eventName": "Stoke - Birmingham",
+      "competitionName": "Anglia - Angol Liga bajnokság",
+      "eventDate": "2026-11-21T16:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Nem",
+      "odds": 1.77,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T07:57:12.938Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_angol_liga_bajnokság",
+      "categorySubName": "Angol Liga bajnokság"
     }
   ],
   "history": [
@@ -6448,7 +6514,10 @@
     "1_wolfsburgholsteinkiel_2026-11-21_1x2_wolfsburg",
     "1_napolitorino_2026-11-21_mindktcsapatszerezglt_igen",
     "1_napolitorino_2026-11-21_glszm2525_tbbmint25",
-    "1_napolitorino_2026-11-21_hazaicsapatglszm1515_tbbmint15"
+    "1_napolitorino_2026-11-21_hazaicsapatglszm1515_tbbmint15",
+    "1_stokebirmingham_2026-11-21_dntetlennlattvisszajr_birmingham",
+    "1_stokebirmingham_2026-11-21_glszm2525_kevesebbmint25",
+    "1_stokebirmingham_2026-11-21_mindktcsapatszerezglt_nem"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
