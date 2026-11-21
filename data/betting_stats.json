@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-21T14:27:16.264Z",
+  "updatedAt": "2026-11-21T14:57:17.169Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 191,
-      "won": 125,
+      "totalChecked": 192,
+      "won": 126,
       "lost": 66,
-      "winRate": 65,
+      "winRate": 66,
       "byRisk": {
         "low": {
           "totalChecked": 77,
@@ -15,10 +15,10 @@
           "winRate": 74
         },
         "medium": {
-          "totalChecked": 106,
-          "won": 64,
+          "totalChecked": 107,
+          "won": 65,
           "lost": 42,
-          "winRate": 60
+          "winRate": 61
         },
         "high": {
           "totalChecked": 8,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_galatasaraysamsunspor_2026-11-21_mindktcsapatszerezgltglszm2525_igenstbbmint25",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Galatasaray - Samsunspor",
-      "competitionName": "Törökország - Török bajnokság",
-      "eventDate": "2026-11-21T14:00:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
-      "outcomeName": "Igen és több, mint 2,5",
-      "odds": 1.82,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-21T07:39:54.585Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_török_bajnokság",
-      "categorySubName": "Török bajnokság"
-    },
     {
       "id": "1_napolitorino_2026-11-21_mindktcsapatszerezglt_igen",
       "sportId": 1,
@@ -436,6 +414,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_galatasaraysamsunspor_2026-11-21_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Galatasaray - Samsunspor",
+      "eventDate": "2026-11-21T14:00:00+01:00",
+      "competitionName": "Törökország - Török bajnokság",
+      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
+      "outcomeName": "Igen és több, mint 2,5",
+      "odds": 1.82,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-21T14:57:17.169Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_török_bajnokság",
+      "categorySubName": "Török bajnokság"
+    },
     {
       "id": "1_pusksakadmiamtk_2026-11-21_1x2_pusksakadmia",
       "sportId": 1,
