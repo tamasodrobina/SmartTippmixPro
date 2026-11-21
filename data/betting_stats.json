@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T08:04:10.384Z",
+  "updatedAt": "2026-11-21T08:06:36.567Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -433,6 +433,72 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_premier_liga",
       "categorySubName": "Premier Liga"
+    },
+    {
+      "id": "1_mnchengladbachdortmund_2026-11-21_1x2_dortmund",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5584009,
+      "eventName": "Mönchengladbach - Dortmund",
+      "competitionName": "Németország - Bundesliga 1.",
+      "eventDate": "2026-11-21T15:30:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Dortmund",
+      "odds": 1.47,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T08:06:36.567Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "ger_1",
+      "categorySubName": "🇩🇪 Bundesliga (Német 1.)"
+    },
+    {
+      "id": "1_mnchengladbachdortmund_2026-11-21_glszm2525_tbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5584009,
+      "eventName": "Mönchengladbach - Dortmund",
+      "competitionName": "Németország - Bundesliga 1.",
+      "eventDate": "2026-11-21T15:30:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.42,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T08:06:36.567Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "ger_1",
+      "categorySubName": "🇩🇪 Bundesliga (Német 1.)"
+    },
+    {
+      "id": "1_mnchengladbachdortmund_2026-11-21_kezdknthnygltszerez_guirassyserhou1",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": 5584009,
+      "eventName": "Mönchengladbach - Dortmund",
+      "competitionName": "Németország - Bundesliga 1.",
+      "eventDate": "2026-11-21T15:30:00+01:00",
+      "marketName": "Kezdőként hány gólt szerez?",
+      "outcomeName": "Guirassy, Serhou 1+",
+      "odds": 1.72,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-21T08:06:36.567Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "ger_1",
+      "categorySubName": "🇩🇪 Bundesliga (Német 1.)"
     }
   ],
   "history": [
@@ -6655,7 +6721,10 @@
     "1_elversbergfreiburg_2026-11-21_glszm2525_tbbmint25",
     "1_newcastlearsenal_2026-11-21_1x2_arsenal",
     "1_newcastlearsenal_2026-11-21_mindktcsapatszerezglt_igen",
-    "1_newcastlearsenal_2026-11-21_melyikcsapatszerziaz1glt1_arsenal"
+    "1_newcastlearsenal_2026-11-21_melyikcsapatszerziaz1glt1_arsenal",
+    "1_mnchengladbachdortmund_2026-11-21_1x2_dortmund",
+    "1_mnchengladbachdortmund_2026-11-21_glszm2525_tbbmint25",
+    "1_mnchengladbachdortmund_2026-11-21_kezdknthnygltszerez_guirassyserhou1"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
