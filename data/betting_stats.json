@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-21T13:57:15.766Z",
+  "updatedAt": "2026-11-21T14:27:16.264Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 190,
+      "totalChecked": 191,
       "won": 125,
-      "lost": 65,
-      "winRate": 66,
+      "lost": 66,
+      "winRate": 65,
       "byRisk": {
         "low": {
           "totalChecked": 77,
@@ -15,10 +15,10 @@
           "winRate": 74
         },
         "medium": {
-          "totalChecked": 105,
+          "totalChecked": 106,
           "won": 64,
-          "lost": 41,
-          "winRate": 61
+          "lost": 42,
+          "winRate": 60
         },
         "high": {
           "totalChecked": 8,
@@ -103,28 +103,6 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_török_bajnokság",
       "categorySubName": "Török bajnokság"
-    },
-    {
-      "id": "1_pusksakadmiamtk_2026-11-21_1x2_pusksakadmia",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Puskás Akadémia - MTK",
-      "competitionName": "Magyarország - NB I",
-      "eventDate": "2026-11-21T13:30:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Puskás Akadémia",
-      "odds": 1.9,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-21T07:39:54.585Z",
-      "status": "pending",
-      "categoryGroupKey": "hun_1",
-      "categoryGroupName": "Magyar NB I & Magyar Kupa",
-      "categorySubKey": "hun_1",
-      "categorySubName": "NB I"
     },
     {
       "id": "1_napolitorino_2026-11-21_mindktcsapatszerezglt_igen",
@@ -458,6 +436,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_pusksakadmiamtk_2026-11-21_1x2_pusksakadmia",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Puskás Akadémia - MTK",
+      "eventDate": "2026-11-21T13:30:00+01:00",
+      "competitionName": "Magyarország - NB I",
+      "marketName": "1X2",
+      "outcomeName": "Puskás Akadémia",
+      "odds": 1.9,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "1-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-21T14:27:16.264Z",
+      "status": "lost",
+      "categoryGroupKey": "hun_1",
+      "categoryGroupName": "Magyar NB I & Magyar Kupa",
+      "categorySubKey": "hun_1",
+      "categorySubName": "NB I"
+    },
     {
       "id": "1_wolfsburgholsteinkiel_2026-11-21_1x2_wolfsburg",
       "sportId": 1,
