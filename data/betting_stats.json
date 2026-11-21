@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-21T19:27:26.980Z",
+  "updatedAt": "2026-11-21T19:37:16.172Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 202,
+      "totalChecked": 203,
       "won": 132,
-      "lost": 70,
+      "lost": 71,
       "winRate": 65,
       "byRisk": {
         "low": {
@@ -15,9 +15,9 @@
           "winRate": 73
         },
         "medium": {
-          "totalChecked": 113,
+          "totalChecked": 114,
           "won": 69,
-          "lost": 44,
+          "lost": 45,
           "winRate": 61
         },
         "high": {
@@ -147,31 +147,32 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_olasz_a",
       "categorySubName": "Olasz A"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_newcastlearsenal_2026-11-21_1x2_arsenal",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": 5596809,
       "eventName": "Newcastle - Arsenal",
-      "competitionName": "Anglia - Premier Liga",
       "eventDate": "2026-11-21T18:30:00+01:00",
+      "competitionName": "Anglia - Premier Liga",
       "marketName": "1X2",
       "outcomeName": "Arsenal",
       "odds": 1.46,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-21T08:04:10.384Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "2-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-21T19:37:16.172Z",
+      "status": "lost",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_premier_liga",
       "categorySubName": "Premier Liga"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_newcastlearsenal_2026-11-21_melyikcsapatszerziaz1glt1_arsenal",
       "sportId": 1,
