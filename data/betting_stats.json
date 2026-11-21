@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-21T16:27:30.011Z",
+  "updatedAt": "2026-11-21T16:47:15.766Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -279,31 +279,32 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_premier_liga",
       "categorySubName": "Premier Liga"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_mnchengladbachdortmund_2026-11-21_kezdknthnygltszerez_guirassyserhou1",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": 5584009,
       "eventName": "Mönchengladbach - Dortmund",
-      "competitionName": "Németország - Bundesliga 1.",
       "eventDate": "2026-11-21T15:30:00+01:00",
+      "competitionName": "Németország - Bundesliga 1.",
       "marketName": "Kezdőként hány gólt szerez?",
       "outcomeName": "Guirassy, Serhou 1+",
       "odds": 1.72,
       "riskCategory": "medium",
       "riskScore": 5,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-21T08:06:36.567Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-21T16:47:15.766Z",
+      "status": "void",
       "categoryGroupKey": "top5_1",
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
       "categorySubKey": "ger_1",
       "categorySubName": "🇩🇪 Bundesliga (Német 1.)"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_mnchengladbachdortmund_2026-11-21_glszm2525_tbbmint25",
       "sportId": 1,
