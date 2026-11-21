@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T21:57:14.661Z",
+  "updatedAt": "2026-11-21T07:39:54.585Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -81,7 +81,96 @@
       }
     }
   },
-  "pendingTips": [],
+  "pendingTips": [
+    {
+      "id": "1_galatasaraysamsunspor_2026-11-21_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Galatasaray - Samsunspor",
+      "competitionName": "Törökország - Török bajnokság",
+      "eventDate": "2026-11-21T14:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
+      "outcomeName": "Igen és több, mint 2,5",
+      "odds": 1.82,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-21T07:39:54.585Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_török_bajnokság",
+      "categorySubName": "Török bajnokság"
+    },
+    {
+      "id": "1_pusksakadmiamtk_2026-11-21_1x2_pusksakadmia",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Puskás Akadémia - MTK",
+      "competitionName": "Magyarország - NB I",
+      "eventDate": "2026-11-21T13:30:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Puskás Akadémia",
+      "odds": 1.9,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-21T07:39:54.585Z",
+      "status": "pending",
+      "categoryGroupKey": "hun_1",
+      "categoryGroupName": "Magyar NB I & Magyar Kupa",
+      "categorySubKey": "hun_1",
+      "categorySubName": "NB I"
+    },
+    {
+      "id": "1_nrnbergbraunschweig_2026-11-21_1x2_nrnberg",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Nürnberg - Braunschweig",
+      "competitionName": "Németország - Bundesliga 2.",
+      "eventDate": "2026-11-21T13:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Nürnberg",
+      "odds": 1.6,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-21T07:39:54.585Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "ger_2",
+      "categorySubName": "🇩🇪 Bundesliga 2 (Német 2.)"
+    },
+    {
+      "id": "1_wolfsburgholsteinkiel_2026-11-21_1x2_wolfsburg",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": null,
+      "eventName": "Wolfsburg - Holstein Kiel",
+      "competitionName": "Németország - Bundesliga 2.",
+      "eventDate": "2026-11-21T13:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Wolfsburg",
+      "odds": 1.44,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-21T07:39:54.585Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "ger_2",
+      "categorySubName": "🇩🇪 Bundesliga 2 (Német 2.)"
+    }
+  ],
   "history": [
     {
       "id": "1_athbilbaoespanyol_2026-11-20_1x2_athbilbao",
@@ -6286,7 +6375,11 @@
     "1_moldebodglimt_2026-11-20_1x2_bodglimt",
     "1_nancydijon_2026-11-20_mindktcsapatszerezglt_igen",
     "1_hellasveronacesena_2026-11-20_1x2_hellasverona",
-    "1_aarhusgflyngby_2026-11-20_1x2_aarhusgf"
+    "1_aarhusgflyngby_2026-11-20_1x2_aarhusgf",
+    "1_galatasaraysamsunspor_2026-11-21_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+    "1_pusksakadmiamtk_2026-11-21_1x2_pusksakadmia",
+    "1_nrnbergbraunschweig_2026-11-21_1x2_nrnberg",
+    "1_wolfsburgholsteinkiel_2026-11-21_1x2_wolfsburg"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
