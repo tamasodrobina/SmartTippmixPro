@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-11-22T16:00:04.768Z",
+  "updatedAt": "2026-11-22T16:08:29.664Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 216,
-      "won": 140,
+      "totalChecked": 217,
+      "won": 141,
       "lost": 76,
       "winRate": 65,
       "byRisk": {
@@ -15,8 +15,8 @@
           "winRate": 72
         },
         "medium": {
-          "totalChecked": 120,
-          "won": 73,
+          "totalChecked": 121,
+          "won": 74,
           "lost": 47,
           "winRate": 61
         },
@@ -807,31 +807,32 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_román_bajnokság",
       "categorySubName": "Román bajnokság"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_hullcitybrighton_2026-11-22_mindktflidbenkevesebbmint15gllesz15_nem",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Hull City - Brighton",
-      "competitionName": "Anglia - Premier Liga",
       "eventDate": "2026-11-22T15:00:00+01:00",
+      "competitionName": "Anglia - Premier Liga",
       "marketName": "Mindkét félidőben kevesebb, mint 1,5 gól lesz? (1.5)",
       "outcomeName": "Nem",
       "odds": 1.42,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T10:52:07.349Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "2-0",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-22T16:08:29.663Z",
+      "status": "won",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_premier_liga",
       "categorySubName": "Premier Liga"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_parisfcangers_2026-11-22_bntetlapszm3535_kevesebbmint35",
       "sportId": 1,
