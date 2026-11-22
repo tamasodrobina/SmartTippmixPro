@@ -1,22 +1,22 @@
 {
-  "updatedAt": "2026-11-22T16:08:29.664Z",
+  "updatedAt": "2026-11-22T16:27:35.759Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 217,
-      "won": 141,
+      "totalChecked": 219,
+      "won": 143,
       "lost": 76,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 88,
-          "won": 63,
+          "totalChecked": 89,
+          "won": 64,
           "lost": 25,
           "winRate": 72
         },
         "medium": {
-          "totalChecked": 121,
-          "won": 74,
+          "totalChecked": 122,
+          "won": 75,
           "lost": 47,
           "winRate": 61
         },
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_augsburgmainz_2026-11-22_mindktcsapatszerezgltglszm2525_igenstbbmint25",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Augsburg - Mainz",
-      "competitionName": "Németország - Bundesliga 1.",
-      "eventDate": "2026-11-22T15:30:00+01:00",
-      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
-      "outcomeName": "Igen és több, mint 2,5",
-      "odds": 1.46,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T10:52:07.349Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_1",
-      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
-      "categorySubKey": "ger_1",
-      "categorySubName": "🇩🇪 Bundesliga (Német 1.)"
-    },
     {
       "id": "16_dallastennessee_2026-11-22_1flid1x2_dallas",
       "sportId": 16,
@@ -721,28 +699,6 @@
       "categorySubName": "Brazil bajnokság"
     },
     {
-      "id": "1_fckosiceskalica_2026-11-22_zsiaihendikep175175_skalica175",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "FC Kosice - Skalica",
-      "competitionName": "Szlovákia - Szlovák bajnokság",
-      "eventDate": "2026-11-22T15:30:00+01:00",
-      "marketName": "Ázsiai Hendikep -1,75 (-1.75)",
-      "outcomeName": "Skalica +1,75",
-      "odds": 1.41,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T14:27:33.441Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_szlovák_bajnokság",
-      "categorySubName": "Szlovák bajnokság"
-    },
-    {
       "id": "1_panetolikoszvolosznfc_2026-11-22_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -810,6 +766,52 @@
     }
   ],
   "history": [
+    {
+      "id": "1_fckosiceskalica_2026-11-22_zsiaihendikep175175_skalica175",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "FC Kosice - Skalica",
+      "eventDate": "2026-11-22T15:30:00+01:00",
+      "competitionName": "Szlovákia - Szlovák bajnokság",
+      "marketName": "Ázsiai Hendikep -1,75 (-1.75)",
+      "outcomeName": "Skalica +1,75",
+      "odds": 1.41,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "1-1",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-22T16:27:35.759Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_szlovák_bajnokság",
+      "categorySubName": "Szlovák bajnokság"
+    },
+    {
+      "id": "1_augsburgmainz_2026-11-22_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Augsburg - Mainz",
+      "eventDate": "2026-11-22T15:30:00+01:00",
+      "competitionName": "Németország - Bundesliga 1.",
+      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
+      "outcomeName": "Igen és több, mint 2,5",
+      "odds": 1.46,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "3-1",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-22T16:27:30.163Z",
+      "status": "won",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "ger_1",
+      "categorySubName": "🇩🇪 Bundesliga (Német 1.)"
+    },
     {
       "id": "1_hullcitybrighton_2026-11-22_mindktflidbenkevesebbmint15gllesz15_nem",
       "sportId": 1,
