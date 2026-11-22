@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-22T21:40:50.156Z",
+  "updatedAt": "2026-11-22T21:49:08.177Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 228,
+      "totalChecked": 229,
       "won": 148,
-      "lost": 80,
+      "lost": 81,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 96,
+          "totalChecked": 97,
           "won": 67,
-          "lost": 29,
-          "winRate": 70
+          "lost": 30,
+          "winRate": 69
         },
         "medium": {
           "totalChecked": 124,
@@ -171,28 +171,6 @@
       "categorySubName": "USA - NFL"
     },
     {
-      "id": "1_atalantainternazionale_2026-11-22_1x2_internazionale",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Atalanta - Internazionale",
-      "competitionName": "Olaszország - Olasz A",
-      "eventDate": "2026-11-22T20:45:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Internazionale",
-      "odds": 1.42,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T14:27:33.441Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_olasz_a",
-      "categorySubName": "Olasz A"
-    },
-    {
       "id": "1_getafeatlmadrid_2026-11-22_melyikcsapatszerziaz1glt1_atlmadrid",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -238,6 +216,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_atalantainternazionale_2026-11-22_1x2_internazionale",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Atalanta - Internazionale",
+      "eventDate": "2026-11-22T20:45:00+01:00",
+      "competitionName": "Olaszország - Olasz A",
+      "marketName": "1X2",
+      "outcomeName": "Internazionale",
+      "odds": 1.42,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "4-4",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-22T21:48:16.465Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_a",
+      "categorySubName": "Olasz A"
+    },
     {
       "id": "16_chicagoneworleans_2026-11-22_hendikep9595_chicago95",
       "sportId": 16,
