@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T11:12:06.492Z",
+  "updatedAt": "2026-11-22T11:14:43.077Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -604,6 +604,72 @@
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
       "addedAt": "2026-11-22T11:12:06.492Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_chicagoneworleans_2026-11-22_hendikep9595_chicago95",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5611630",
+      "eventName": "Chicago - New Orleans",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-22T19:00:00+01:00",
+      "marketName": "Hendikep -9,5 (-9.5)",
+      "outcomeName": "Chicago -9,5",
+      "odds": 1.59,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:14:43.077Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_chicagoneworleans_2026-11-22_touchdownokszma4545_tbbmint45",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5611630",
+      "eventName": "Chicago - New Orleans",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-22T19:00:00+01:00",
+      "marketName": "Touchdown-ok száma 4,5 (4.5)",
+      "outcomeName": "Több, mint 4,5",
+      "odds": 1.38,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:14:43.077Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_chicagoneworleans_2026-11-22_meznyglokszma2525_tbbmint25",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5611630",
+      "eventName": "Chicago - New Orleans",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-22T19:00:00+01:00",
+      "marketName": "Mezőnygólok száma 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.37,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:14:43.077Z",
       "status": "pending",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
@@ -7295,7 +7361,10 @@
     "16_carolinabaltimore_2026-11-22_amrkzsgyztese_carolina",
     "16_buffalomiami_2026-11-22_amrkzsgyztesepontszm445445_hazaistbb",
     "16_buffalomiami_2026-11-22_vendgcsapatpontszm135135_kevesebbmint135",
-    "16_buffalomiami_2026-11-22_touchdownokszma4545_tbbmint45"
+    "16_buffalomiami_2026-11-22_touchdownokszma4545_tbbmint45",
+    "16_chicagoneworleans_2026-11-22_hendikep9595_chicago95",
+    "16_chicagoneworleans_2026-11-22_touchdownokszma4545_tbbmint45",
+    "16_chicagoneworleans_2026-11-22_meznyglokszma2525_tbbmint25"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -7362,6 +7431,9 @@
     "16_carolinabaltimore_2026-11-22_hendikep1515_carolina15",
     "16_buffalomiami_2026-11-22_meznyglokszma2525_tbbmint25",
     "16_buffalomiami_2026-11-22_pontszm435435_tbbmint435",
-    "16_buffalomiami_2026-11-22_hendikep145145_buffalo145"
+    "16_buffalomiami_2026-11-22_hendikep145145_buffalo145",
+    "1_chicagoneworleans_2026-11-22_flidvgeredmny_chicagochicago",
+    "1_chicagoneworleans_2026-11-22_pontszm465465_tbbmint465",
+    "1_chicagoneworleans_2026-11-22_hendikep9595_chicago95"
   ]
 }
