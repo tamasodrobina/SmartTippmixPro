@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T09:38:01.977Z",
+  "updatedAt": "2026-11-22T09:42:35.606Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -367,6 +367,72 @@
       "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
       "categorySubKey": "ger_2",
       "categorySubName": "🇩🇪 Bundesliga 2 (Német 2.)"
+    },
+    {
+      "id": "16_detroittampabay_2026-11-22_amrkzsgyztese_detroit",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Detroit - Tampa Bay",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-22T19:00:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "Detroit",
+      "odds": 1.42,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-22T09:42:35.606Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_buffalomiami_2026-11-22_touchdownokszma5555_kevesebbmint55",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "Buffalo - Miami",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-22T19:00:00+01:00",
+      "marketName": "Touchdown-ok száma 5,5 (5.5)",
+      "outcomeName": "Kevesebb, mint 5,5",
+      "odds": 1.52,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-22T09:42:35.606Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_nygiantsjacksonville_2026-11-22_1x2_jacksonville",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": null,
+      "eventName": "NY Giants - Jacksonville",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-22T22:25:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Jacksonville",
+      "odds": 1.41,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-22T09:42:35.606Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     }
   ],
   "history": [
@@ -7042,7 +7108,10 @@
     "1_cottbusherthabsc_2026-11-22_1x2_herthabsc",
     "1_kaiserslauterndynamodresden_2026-11-22_1x2_kaiserslautern",
     "1_kaiserslauterndynamodresden_2026-11-22_mindktcsapatszerezglt_igen",
-    "1_kaiserslauterndynamodresden_2026-11-22_hazaicsapatnyerlegalbbegyflidt_igen"
+    "1_kaiserslauterndynamodresden_2026-11-22_hazaicsapatnyerlegalbbegyflidt_igen",
+    "16_detroittampabay_2026-11-22_amrkzsgyztese_detroit",
+    "16_buffalomiami_2026-11-22_touchdownokszma5555_kevesebbmint55",
+    "16_nygiantsjacksonville_2026-11-22_1x2_jacksonville"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
