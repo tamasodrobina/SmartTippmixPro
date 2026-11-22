@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-22T17:18:02.058Z",
+  "updatedAt": "2026-11-22T17:27:40.665Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 222,
+      "totalChecked": 223,
       "won": 145,
-      "lost": 77,
+      "lost": 78,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 92,
+          "totalChecked": 93,
           "won": 66,
-          "lost": 26,
-          "winRate": 72
+          "lost": 27,
+          "winRate": 71
         },
         "medium": {
           "totalChecked": 122,
@@ -675,31 +675,32 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_utaaradcsunivcraiova_2026-11-22_zsiaihendikep125125_utaarad125",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "UTA Arad - CS Univ. Craiova",
-      "competitionName": "Románia - Román bajnokság",
       "eventDate": "2026-11-22T16:30:00+01:00",
+      "competitionName": "Románia - Román bajnokság",
       "marketName": "Ázsiai Hendikep 1,25 (1.25)",
       "outcomeName": "UTA Arad +1,25",
       "odds": 1.4,
       "riskCategory": "low",
       "riskScore": 2,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T14:27:33.441Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "2-6",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-22T17:27:40.665Z",
+      "status": "lost",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_román_bajnokság",
       "categorySubName": "Román bajnokság"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_spgijonlaspalmas_2026-11-22_zsiaiglszm33_kevesebbmint3",
       "sportId": 1,
