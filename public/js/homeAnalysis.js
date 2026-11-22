@@ -379,7 +379,7 @@ export function initHomeAnalysisControls() {
         dom.autocompleteDropdown.querySelectorAll('.autocomplete-item').forEach(btn => {
           btn.addEventListener('click', () => {
             dom.customMatchInput.value = btn.dataset.eventName;
-            state.selectedAutocompleteEventId = Number(btn.dataset.eventId);
+            state.selectedAutocompleteEventId = String(btn.dataset.eventId || '');
             dom.clearCustomInputBtn.classList.remove('hidden');
             dom.autocompleteDropdown.classList.add('hidden');
           });

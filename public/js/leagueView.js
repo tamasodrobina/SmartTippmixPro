@@ -357,9 +357,9 @@ export function renderLeagueMatchRows(matches) {
 
   document.querySelectorAll('.open-detailed-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const eventId = Number(btn.dataset.eventId);
+      const eventId = String(btn.dataset.eventId || '');
       const eventName = btn.dataset.eventName;
-      const matchObj = state.currentLeagueMatches.find(m => m.eventId === eventId);
+      const matchObj = state.currentLeagueMatches.find(m => String(m.eventId) === eventId);
       openDetailedModal(eventId, eventName, matchObj);
     });
   });

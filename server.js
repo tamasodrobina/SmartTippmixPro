@@ -211,7 +211,8 @@ function enforceTipRiskFilter(tips = [], riskFilter = 'all') {
 function snapTipsToOfficialMarkets(tips = [], enrichedEvents = []) {
   if (!Array.isArray(tips) || !Array.isArray(enrichedEvents) || enrichedEvents.length === 0) return;
   const norm = s => String(s || '').toLowerCase().replace(/[^a-z0-9\u00C0-\u017F]/g, '');
-  const baseType = m => String(m || '').split('(')[0].replace(/[0-9,.\-+]+/g, '').trim().toLowerCase();
+  const stripPeriod = s => String(s || '').replace(/\s*-\s*(rendes játékidő|hosszabbítással)$/i, '').trim();
+  const baseType = m => stripPeriod(String(m || '').split('(')[0]).replace(/[0-9,.\-+]+/g, '').trim().toLowerCase();
 
   for (const t of tips) {
     if (!t || !t.marketName || !t.outcomeName) continue;
@@ -222,7 +223,10 @@ function snapTipsToOfficialMarkets(tips = [], enrichedEvents = []) {
     if (pool.length === 0) continue;
 
     // 1. Pontos egyezés (piac + kimenetel)
-    const exact = pool.find(m => norm(m.marketName) === norm(t.marketName) && norm(m.outcomeName) === norm(t.outcomeName));
+    const exact = pool.find(m =>
+      (norm(m.marketName) === norm(t.marketName) || norm(stripPeriod(m.marketName)) === norm(stripPeriod(t.marketName))) &&
+      norm(m.outcomeName) === norm(t.outcomeName)
+    );
     if (exact) {
       t.marketName = exact.marketName;
       t.outcomeName = exact.outcomeName;
@@ -230,7 +234,7 @@ function snapTipsToOfficialMarkets(tips = [], enrichedEvents = []) {
       continue;
     }
 
-    // 2. Ha a piactípus egyezik (pl. "Büntetőlap-szám"), és a kimenetel (pl. "Több, mint 3,5") pontosan szerepel egy másik határértékű piacon
+    // 2. Ha a piactípus egyezik (pl. "Büntetőlap-szám" vagy játékos piac), és a kimenetel pontosan szerepel
     const tBase = baseType(t.marketName);
     const byOutcomeAndBase = pool.find(m => baseType(m.marketName) === tBase && norm(m.outcomeName) === norm(t.outcomeName));
     if (byOutcomeAndBase) {
@@ -240,11 +244,14 @@ function snapTipsToOfficialMarkets(tips = [], enrichedEvents = []) {
       continue;
     }
 
-    // 3. Ha a piacnév pontosan egyezik (pl. "Büntetőlap-szám 4,5 (4.5)"), és a kimenetel "Több, mint..." vagy "Kevesebb, mint..."
+    // 3. Ha a piacnév pontosan egyezik, és a kimenetel "Több, mint..." vagy "Kevesebb, mint..." (vagy "Játékos: Több, mint...")
     const outLower = String(t.outcomeName).toLowerCase();
-    if (outLower.startsWith('több, mint') || outLower.startsWith('kevesebb, mint')) {
-      const dir = outLower.startsWith('több, mint') ? 'több, mint' : 'kevesebb, mint';
-      const byMarketAndDir = pool.find(m => norm(m.marketName) === norm(t.marketName) && String(m.outcomeName).toLowerCase().startsWith(dir));
+    if (outLower.includes('több, mint') || outLower.includes('kevesebb, mint')) {
+      const dir = outLower.includes('több, mint') ? 'több, mint' : 'kevesebb, mint';
+      const byMarketAndDir = pool.find(m =>
+        (norm(m.marketName) === norm(t.marketName) || norm(stripPeriod(m.marketName)) === norm(stripPeriod(t.marketName))) &&
+        String(m.outcomeName).toLowerCase().includes(dir)
+      );
       if (byMarketAndDir) {
         t.marketName = byMarketAndDir.marketName;
         t.outcomeName = byMarketAndDir.outcomeName;
@@ -374,8 +381,12 @@ function buildNoMarketsDiagnostics(enrichedEvents = [], minOdds = 1.30, maxOdds 
 }
 
 // ============================================================================
-// 4. TIPPMIX / TIPPMIXPRO ADATLEKÉRŐ
+// 4. TIPPMIXPRO WAMP v2 WEBSOCKET MOTOR (ELSŐDLEGES) + TIPPMIX FALLBACK
 // ============================================================================
+
+const TIPPMIXPRO_WS_URL = 'wss://sportsapi.tippmixpro.hu/v2';
+const TIPPMIXPRO_REALM = 'www.tippmixpro.hu';
+const TIPPMIXPRO_OPERATOR_ID = '2901';
 
 const TIPPMIX_SEARCH_URL = 'https://api.tippmix.hu/tippmix/search';
 const TIPPMIX_EVENT_URL = 'https://api.tippmix.hu/tippmix/event';
@@ -389,27 +400,292 @@ const TIPPMIX_HEADERS = {
   'Referer': 'https://www.tippmix.hu/'
 };
 
+// TippmixPro (EveryMatrix) sportId <-> Belső sportId leképezés:
+// TippmixPro: '1' = Labdarúgás, '3' = Tenisz, '5' = Amerikai futball
+// Belső rendszer: 1 = Labdarúgás (Foci), 5 = Tenisz, 16 = Amerikai futball (NFL)
+function mapProSportIdToInternal(proSportId) {
+  const s = String(proSportId);
+  if (s === '1') return { sportId: 1, sportName: 'Labdarúgás' };
+  if (s === '3') return { sportId: 5, sportName: 'Tenisz' };
+  if (s === '5') return { sportId: 16, sportName: 'Amerikai futball' };
+  return null;
+}
+
+function normalizeMatchLookupKey(name = '') {
+  return String(name || '').toLowerCase().replace(/[^a-z0-9\u00C0-\u017F]/g, '');
+}
+
+// Multiplexelt WAMP v2 lekérdező: egyetlen WebSocket kapcsolaton párhuzamosan kér le több topicot (~0.3–0.8 mp)
+async function callTippmixProWampTopics(topics = [], timeoutMs = 8500) {
+  if (!Array.isArray(topics) || topics.length === 0) return new Map();
+
+  return new Promise((resolve) => {
+    const results = new Map();
+    let settled = false;
+    let ws = null;
+
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      try {
+        if (ws && ws.readyState <= 1) ws.close();
+      } catch (_) {}
+      resolve(results);
+    };
+
+    const timer = setTimeout(finish, timeoutMs);
+
+    try {
+      ws = new WebSocket(TIPPMIXPRO_WS_URL, 'wamp.2.json');
+    } catch (_) {
+      finish();
+      return;
+    }
+
+    let pendingCount = topics.length;
+
+    ws.onopen = () => {
+      try {
+        ws.send(JSON.stringify([1, TIPPMIXPRO_REALM, { roles: { caller: {}, subscriber: {} } }]));
+      } catch (_) {
+        finish();
+      }
+    };
+
+    ws.onmessage = (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        const msgType = msg[0];
+
+        // 2 = WELCOME -> elküldjük az összes CALL (48) kérést párhuzamosan
+        if (msgType === 2) {
+          topics.forEach((topic, idx) => {
+            const callId = idx + 1;
+            ws.send(JSON.stringify([48, callId, {}, '/sports#initialDump', [], { topic }]));
+          });
+          return;
+        }
+
+        // 50 = RESULT ([50, callId, details, args, kwargs])
+        if (msgType === 50) {
+          const callId = msg[1];
+          const topic = topics[callId - 1];
+          const payload = msg[4] || (Array.isArray(msg[3]) ? msg[3][0] : null);
+          if (topic && payload) {
+            results.set(topic, payload);
+          }
+          pendingCount--;
+          if (pendingCount <= 0) finish();
+          return;
+        }
+
+        // 8 = ERROR ([8, 48, callId, details, errorUri, ...])
+        if (msgType === 8) {
+          pendingCount--;
+          if (pendingCount <= 0) finish();
+        }
+      } catch (_) {}
+    };
+
+    ws.onerror = () => finish();
+    ws.onclose = () => finish();
+  });
+}
+
+// TippmixPro WAMP MATCH rekord átalakítása a rendszer egységes esemény formátumára
+function transformTippmixProMatchRecord(m) {
+  if (!m || m._type !== 'MATCH' || !m.id) return null;
+  const mappedSport = mapProSportIdToInternal(m.sportId);
+  if (!mappedSport) return null;
+
+  let cleanName = String(m.name || m.shortName || '').trim();
+  // Ha "CsapatA-CsapatB" formában van szóköz nélkül, de nem kötőjeles csapatnév, egységesítjük "CsapatA - CsapatB"-re
+  if (!cleanName.includes(' - ') && m.homeParticipantName && m.awayParticipantName) {
+    cleanName = `${m.homeParticipantName} - ${m.awayParticipantName}`;
+  }
+
+  const startMs = Number(m.startTime) || Date.now();
+  const eventDateIso = new Date(startMs).toISOString();
+
+  return {
+    eventId: String(m.id),
+    tippmixProId: String(m.id),
+    sportId: mappedSport.sportId,
+    sportName: mappedSport.sportName,
+    competitionGroupName: m.venueName || m.categoryName || m.shortVenueName || '',
+    competitionName: m.shortParentName || m.parentName || '',
+    eventName: cleanName,
+    homeParticipantName: m.homeParticipantName || '',
+    awayParticipantName: m.awayParticipantName || '',
+    eventDate: eventDateIso,
+    isLive: Boolean(m.statusId === '2'),
+    totalMarketCount: Number(m.numberOfMarkets) || 0,
+    totalBettingOffers: Number(m.numberOfBettingOffers) || 0,
+    source: 'tippmixpro',
+    markets: []
+  };
+}
+
+// TippmixPro /:matchId/match-odds WAMP válasz átalakítása a rendszer egységes piac+kimenetel listájává
+function parseTippmixProMatchOddsRecords(records = [], fallbackEvent = null) {
+  if (!Array.isArray(records) || records.length === 0) return null;
+
+  let matchRecord = null;
+  const marketsMap = new Map();
+  const outcomesMap = new Map();
+  const offersByOutcomeId = new Map();
+  const outcomeIdsByMarketId = new Map();
+
+  for (const r of records) {
+    if (!r || !r._type) continue;
+    if (r._type === 'MATCH') {
+      matchRecord = r;
+    } else if (r._type === 'MARKET') {
+      if (!r.isClosed && r.isAvailable !== false) {
+        marketsMap.set(r.id, r);
+      }
+    } else if (r._type === 'OUTCOME') {
+      outcomesMap.set(r.id, r);
+    } else if (r._type === 'BETTING_OFFER') {
+      const oddsVal = Number(r.odds);
+      if (r.isAvailable !== false && oddsVal > 1.0) {
+        offersByOutcomeId.set(r.outcomeId, r);
+      }
+    } else if (r._type === 'MARKET_OUTCOME_RELATION') {
+      if (!outcomeIdsByMarketId.has(r.marketId)) {
+        outcomeIdsByMarketId.set(r.marketId, []);
+      }
+      outcomeIdsByMarketId.get(r.marketId).push(r.outcomeId);
+    }
+  }
+
+  const builtMarkets = [];
+  for (const [mId, m] of marketsMap.entries()) {
+    const outIds = outcomeIdsByMarketId.get(mId) || [];
+    if (outIds.length === 0) continue;
+
+    const builtOutcomes = [];
+    for (const oId of outIds) {
+      const o = outcomesMap.get(oId);
+      const bo = offersByOutcomeId.get(oId);
+      if (!o || !bo) continue;
+
+      const outName = String(o.translatedName || o.shortTranslatedName || o.typeName || '').trim();
+      if (!outName) continue;
+
+      builtOutcomes.push({
+        outcomeId: String(o.id),
+        outcomeName: outName,
+        fixedOdds: Number(bo.odds)
+      });
+    }
+
+    if (builtOutcomes.length > 0) {
+      // A m.name tartalmazza a pontos határértéket is (pl. "Gólszám 2.5 - Rendes játékidő" vagy "Colston Loveland elkapott yard-jainak száma 50.5 - Hosszabbítással")
+      const fullMarketName = String(m.name || m.displayName || m.bettingTypeName || 'Piac').trim();
+      builtMarkets.push({
+        marketId: String(m.id),
+        marketName: fullMarketName,
+        eventPartName: m.eventPartName || '',
+        outcomes: builtOutcomes
+      });
+    }
+  }
+
+  const baseEvent = matchRecord
+    ? transformTippmixProMatchRecord(matchRecord)
+    : (fallbackEvent ? { ...fallbackEvent } : { eventId: '' });
+
+  return {
+    ...baseEvent,
+    totalMarketCount: Math.max(baseEvent?.totalMarketCount || 0, builtMarkets.length),
+    markets: builtMarkets
+  };
+}
+
 async function fetchTippmixCatalog(forceRefresh = false) {
   const now = Date.now();
   if (!forceRefresh && catalogCache.events.length > 0 && now - catalogCache.timestamp < CATALOG_CACHE_TTL_MS) {
     return catalogCache;
   }
 
-  const response = await fetch(TIPPMIX_SEARCH_URL, {
-    method: 'POST',
-    headers: TIPPMIX_HEADERS,
-    body: JSON.stringify({ hitsPerPage: 1500, page: 1 })
-  });
+  // 1. ELSŐDLEGES FORRÁS: TippmixPro WAMP v2 WebSocket (Labdarúgás='1', Tenisz='3', Amerikai futball='5')
+  const op = TIPPMIXPRO_OPERATOR_ID;
+  const wampTopics = [
+    // Labdarúgás (Foci): Top 200 népszerű + 0-48 órás időszeletek
+    `/sports/${op}/hu/popular-matches-aggregator/1/200/no-odds`,
+    `/sports/${op}/hu/next-matches-aggregator-main/1/0-6/200/1`,
+    `/sports/${op}/hu/next-matches-aggregator-main/1/6-12/200/1`,
+    `/sports/${op}/hu/next-matches-aggregator-main/1/12-24/200/1`,
+    `/sports/${op}/hu/next-matches-aggregator-main/1/24-48/200/1`,
+    // Tenisz: Top 200 népszerű + 0-48 órás időszeletek
+    `/sports/${op}/hu/popular-matches-aggregator/3/200/no-odds`,
+    `/sports/${op}/hu/next-matches-aggregator-main/3/0-24/200/1`,
+    `/sports/${op}/hu/next-matches-aggregator-main/3/24-48/200/1`,
+    // Amerikai futball (NFL): Top 200 népszerű + 0-48 órás időszelet
+    `/sports/${op}/hu/popular-matches-aggregator/5/200/no-odds`,
+    `/sports/${op}/hu/next-matches-aggregator-main/5/0-48/200/1`
+  ];
 
-  if (!response.ok) {
-    throw new Error(`Tippmix API hiba: HTTP ${response.status}`);
+  // Párhuzamosan elindítjuk a TippmixPro WAMP lekérést és a másodlagos api.tippmix.hu keresést (tartalék és kiegészítő meccsekhez)
+  const [wampMap, legacyRes] = await Promise.all([
+    callTippmixProWampTopics(wampTopics, 8000),
+    fetch(TIPPMIX_SEARCH_URL, {
+      method: 'POST',
+      headers: TIPPMIX_HEADERS,
+      body: JSON.stringify({ hitsPerPage: 1500, page: 1 })
+    }).then(r => (r.ok ? r.json() : null)).catch(() => null)
+  ]);
+
+  const proEventsById = new Map();
+  const proEventsByLookupKey = new Map();
+
+  for (const payload of wampMap.values()) {
+    const records = Array.isArray(payload?.records) ? payload.records : [];
+    for (const rec of records) {
+      if (rec?._type === 'MATCH') {
+        const ev = transformTippmixProMatchRecord(rec);
+        if (ev && ALLOWED_SPORT_IDS.has(Number(ev.sportId))) {
+          const existing = proEventsById.get(ev.eventId);
+          if (!existing || (ev.totalMarketCount || 0) >= (existing.totalMarketCount || 0)) {
+            proEventsById.set(ev.eventId, ev);
+          }
+          const lookupKey = `${ev.sportId}_${normalizeMatchLookupKey(ev.eventName)}`;
+          proEventsByLookupKey.set(lookupKey, ev);
+        }
+      }
+    }
   }
 
-  const json = await response.json();
-  const rawEvents = json?.data?.events || [];
+  // Kiegészítjük a másodlagos api.tippmix.hu katalógusból azokkal a mérkőzésekkel, amik esetleg nem voltak a WAMP szeletekben,
+  // illetve összekapcsoljuk a legacyTippmixId-t a TippmixPro eseményekkel.
+  const rawLegacyEvents = legacyRes?.data?.events || [];
+  const legacyFiltered = rawLegacyEvents.filter(ev => ev && ALLOWED_SPORT_IDS.has(Number(ev.sportId)));
 
-  // SZIGORÚ SZŰRÉS: Kizárólag Foci (1), Tenisz (5), NFL (16)
-  const events = rawEvents.filter(ev => ev && ALLOWED_SPORT_IDS.has(Number(ev.sportId)));
+  for (const legEv of legacyFiltered) {
+    const lookupKey = `${Number(legEv.sportId)}_${normalizeMatchLookupKey(legEv.eventName)}`;
+    const matchedPro = proEventsByLookupKey.get(lookupKey);
+    if (matchedPro) {
+      matchedPro.legacyEventId = legEv.eventId;
+      if (!matchedPro.betradarId && legEv.betradarId) matchedPro.betradarId = legEv.betradarId;
+    } else {
+      const legIdStr = String(legEv.eventId);
+      if (!proEventsById.has(legIdStr)) {
+        proEventsById.set(legIdStr, {
+          ...legEv,
+          eventId: legIdStr,
+          legacyEventId: legEv.eventId,
+          source: 'tippmix_legacy'
+        });
+      }
+    }
+  }
+
+  const events = Array.from(proEventsById.values());
+  if (events.length === 0) {
+    throw new Error('Nem sikerült elérni sem a TippmixPro, sem a Tippmix szerverét.');
+  }
 
   const nowMs = now;
   const max24hMs = nowMs + 24 * 60 * 60 * 1000;
@@ -451,40 +727,73 @@ async function fetchTippmixCatalog(forceRefresh = false) {
 }
 
 async function fetchEventDetails(eventId, forceRefresh = false) {
-  const key = Number(eventId);
+  const key = String(eventId || '').trim();
+  if (!key) return null;
+
   const now = Date.now();
   const cached = eventMarketCache.get(key);
   if (!forceRefresh && cached && now - cached.timestamp < EVENT_MARKET_CACHE_TTL_MS) {
     return cached.data;
   }
 
-  try {
-    const response = await fetch(TIPPMIX_EVENT_URL, {
-      method: 'POST',
-      headers: TIPPMIX_HEADERS,
-      body: JSON.stringify({ eventId: key })
-    });
-    if (!response.ok) return null;
-    const json = await response.json();
-    const eventObj = Array.isArray(json?.data) ? json.data[0] : json?.data;
-    if (eventObj) {
-      eventMarketCache.set(key, { timestamp: now, data: eventObj });
-    }
-    return eventObj || null;
-  } catch (_) {
-    return null;
+  // Megnézzük, hogy a katalógusban van-e hozzá TippmixPro 18-jegyű azonosító
+  const catalogEv = catalogCache.events.find(
+    e => String(e.eventId) === key || String(e.tippmixProId) === key || String(e.legacyEventId) === key
+  );
+  const proId = catalogEv?.tippmixProId || (key.length >= 15 ? key : null);
+
+  // 1. ELSŐDLEGES: TippmixPro WAMP v2 /:matchId/match-odds (200–1250 piac + Játékosok / Player Props!)
+  if (proId) {
+    try {
+      const topic = `/sports/${TIPPMIXPRO_OPERATOR_ID}/hu/${proId}/match-odds`;
+      const wampRes = await callTippmixProWampTopics([topic], 7500);
+      const payload = wampRes.get(topic);
+      if (payload && Array.isArray(payload.records) && payload.records.length > 0) {
+        const parsedEvent = parseTippmixProMatchOddsRecords(payload.records, catalogEv);
+        if (parsedEvent && parsedEvent.markets && parsedEvent.markets.length > 0) {
+          eventMarketCache.set(key, { timestamp: now, data: parsedEvent });
+          if (proId !== key) {
+            eventMarketCache.set(String(proId), { timestamp: now, data: parsedEvent });
+          }
+          return parsedEvent;
+        }
+      }
+    } catch (_) {}
   }
+
+  // 2. MÁSODLAGOS (FALLBACK): api.tippmix.hu/tippmix/event
+  const legacyId = catalogEv?.legacyEventId || (key.length < 15 ? Number(key) : null);
+  if (legacyId) {
+    try {
+      const response = await fetch(TIPPMIX_EVENT_URL, {
+        method: 'POST',
+        headers: TIPPMIX_HEADERS,
+        body: JSON.stringify({ eventId: Number(legacyId) })
+      });
+      if (!response.ok) return null;
+      const json = await response.json();
+      const eventObj = Array.isArray(json?.data) ? json.data[0] : json?.data;
+      if (eventObj) {
+        eventMarketCache.set(key, { timestamp: now, data: eventObj });
+      }
+      return eventObj || null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  return null;
 }
 
 // ============================================================================
 // PIACI KATEGÓRIÁK, PRIORITÁSOK ÉS TELJES KÍNÁLAT KEZELÉSE
 // ============================================================================
 
-// Piac kategória felismerése minden lehetséges fogadási típushoz
+// Piac kategória felismerése minden lehetséges TippmixPro fogadási típushoz (beleértve az NFL és Foci Játékos-speciális piacokat is!)
 function getMarketCategory(marketName = '') {
   const name = marketName.toLowerCase();
 
-  // 1. Góllövő / Gólszerző / Játékos statisztikák / Touchdown
+  // 1. Góllövő / Gólszerző / NFL & Foci Játékos statisztikák (Player Props: Touchdown, Yard, Elkapás, Passz, Interception, Lövés, Játékos szabálytalanság)
   if (
     name.includes('gólszerző') ||
     name.includes('góllövő') ||
@@ -493,8 +802,20 @@ function getMarketCategory(marketName = '') {
     name.includes('játékos') ||
     name.includes('touchdown') ||
     name.includes('passzolt') ||
+    name.includes('sikeres passzok') ||
+    name.includes('interception') ||
     name.includes('yard') ||
+    name.includes('elkapás') ||
+    name.includes('reception') ||
+    name.includes('rushing') ||
+    name.includes('receiving') ||
+    name.includes('passing') ||
+    name.includes('futási kísérlet') ||
+    name.includes('elkövetett szabálytalanság') ||
+    name.includes('kaput eltaláló') ||
+    name.includes('gólpassz') ||
     name.includes('első gól') ||
+    name.includes('utolsó gól') ||
     name.includes('ki szerzi') ||
     name.includes('melyik játékos')
   ) {
@@ -516,7 +837,7 @@ function getMarketCategory(marketName = '') {
   if (
     name.includes('11-es') ||
     name.includes('tizenegyes') ||
-    name.includes('büntető') ||
+    (name.includes('büntető') && !name.includes('büntetőlap')) ||
     name.includes('lesz 11') ||
     name.includes('lesz büntető') ||
     name.includes('büntetőrúgás') ||
@@ -542,26 +863,27 @@ function getMarketCategory(marketName = '') {
   }
 
   // 6. Fő piacok (1X2, Győztes)
+  const cleanMain = name.replace(/\s*-\s*(rendes játékidő|hosszabbítással)$/i, '').trim();
   if (
-    name === '1x2' ||
-    name.includes('mérkőzés győztese') ||
-    name.includes('ki nyeri') ||
-    name === 'győztes'
+    cleanMain === '1x2' ||
+    cleanMain.includes('mérkőzés győztese') ||
+    cleanMain === 'ki nyeri?' ||
+    cleanMain === 'győztes'
   ) {
     return 'MAIN_1X2';
   }
 
   // 7. Kétesély, DNB
-  if (name === 'kétesély' || name.includes('döntetlennél a tét visszajár')) {
+  if (cleanMain === 'kétesély' || name.includes('döntetlennél a tét visszajár')) {
     return 'MAIN_CHANCE';
   }
 
-  // 8. Mindkét csapat szerez gólt
-  if (name.includes('mindkét csapat szerez gólt') || name.includes('btts')) {
+  // 8. Mindkét csapat szerez gólt / pontot
+  if (name.includes('mindkét csapat szerez gólt') || name.includes('mindkét csapat szerez pontot') || name.includes('btts')) {
     return 'BTTS';
   }
 
-  // 9. Gólszámok, Pontszámok, Szettszámok, Játékszámok
+  // 9. Gólszámok, Pontszámok, Szettszámok, Játékszámok, Mezőnygólok
   if (
     name.includes('gólszám') ||
     name.includes('pontszám') ||
@@ -590,13 +912,18 @@ function getMarketCategory(marketName = '') {
     return 'PERIODS';
   }
 
-  // 12. Különleges csapatspecifikus és mérkőzés piacok
+  // 12. Különleges csapatspecifikus és mérkőzés-statisztikai piacok (Szabálytalanságok száma, Lesszám, Safety, stb.)
   if (
+    name.includes('szabálytalanságok száma') ||
+    name.includes('lesszám') ||
+    name.includes('safety') ||
+    name.includes('hosszabbítás') ||
     name.includes('kapott gól nélkül') ||
     name.includes('tisztán tartott') ||
     name.includes('nyer legalább egy') ||
     name.includes('különbség') ||
     name.includes('első 10 perc') ||
+    name.includes('perc előtt') ||
     name.includes('tie-break') ||
     name.includes('pontos eredmény') ||
     name.includes('pontos végeredmény')
@@ -727,10 +1054,57 @@ function extractTargetOddsMarkets(markets = [], minOdds = 1.30, maxOdds = 2.00, 
   return selected;
 }
 
+// Kötegelt előtöltő: több mérkőzés összes piacát egyetlen multiplexelt WAMP WebSocket kapcsolaton kéri le (~0.6–0.9 mp)
+async function prefetchTippmixProEventsBatch(eventsList = [], forceRefresh = false) {
+  if (!Array.isArray(eventsList) || eventsList.length === 0) return;
+  const now = Date.now();
+  const topicsToFetch = [];
+  const topicToMeta = new Map();
+
+  for (const ev of eventsList) {
+    if (!ev) continue;
+    const key = String(ev.eventId || '').trim();
+    if (!key) continue;
+
+    if (!forceRefresh) {
+      const cached = eventMarketCache.get(key);
+      if (cached && now - cached.timestamp < EVENT_MARKET_CACHE_TTL_MS) continue;
+    }
+
+    const proId = ev.tippmixProId || (key.length >= 15 ? key : null);
+    if (!proId) continue;
+
+    const topic = `/sports/${TIPPMIXPRO_OPERATOR_ID}/hu/${proId}/match-odds`;
+    if (!topicToMeta.has(topic)) {
+      topicsToFetch.push(topic);
+      topicToMeta.set(topic, { key, proId, ev });
+    }
+  }
+
+  if (topicsToFetch.length === 0) return;
+
+  try {
+    const wampRes = await callTippmixProWampTopics(topicsToFetch, 9000);
+    for (const [topic, payload] of wampRes.entries()) {
+      const meta = topicToMeta.get(topic);
+      if (!meta || !payload || !Array.isArray(payload.records) || payload.records.length === 0) continue;
+      const parsedEvent = parseTippmixProMatchOddsRecords(payload.records, meta.ev);
+      if (parsedEvent && parsedEvent.markets && parsedEvent.markets.length > 0) {
+        eventMarketCache.set(meta.key, { timestamp: now, data: parsedEvent });
+        if (String(meta.proId) !== meta.key) {
+          eventMarketCache.set(String(meta.proId), { timestamp: now, data: parsedEvent });
+        }
+      }
+    }
+  } catch (_) {}
+}
+
 async function enrichCandidateEvents(candidateEvents, minOdds = 1.30, maxOdds = 2.00, forceRefresh = false, maxOptionsPerEvent = 25) {
+  await prefetchTippmixProEventsBatch(candidateEvents, forceRefresh);
+
   const detailedResults = await Promise.all(
     candidateEvents.map(async (ev) => {
-      const detailed = await fetchEventDetails(ev.eventId, forceRefresh);
+      const detailed = await fetchEventDetails(ev.eventId, false);
       const allMarkets = detailed?.markets?.length ? detailed.markets : (ev.markets || []);
       let filteredOptions = extractTargetOddsMarkets(allMarkets, minOdds, maxOdds, maxOptionsPerEvent);
       // Ha nincs egyetlen piac sem a szűk sávban, enyhe fallback sávval kinyerjük, hogy ne vesszen el a meccs
@@ -1094,10 +1468,29 @@ async function fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl) {
   if (Array.isArray(ev.allMarketsList) && ev.allMarketsList.length > 0) {
     const playerMarkets = ev.allMarketsList.filter(m => {
       const mn = (m.marketName || '').toLowerCase();
-      return mn.includes('gólszerző') || mn.includes('touchdown') || mn.includes('passzolt yard') || mn.includes('futott yard') || mn.includes('elkapott yard');
+      return (
+        mn.includes('gólszerző') ||
+        mn.includes('szerez gólt') ||
+        mn.includes('touchdown') ||
+        mn.includes('yard') ||
+        mn.includes('elkapás') ||
+        mn.includes('reception') ||
+        mn.includes('sikeres passzok') ||
+        mn.includes('interception') ||
+        mn.includes('futási kísérlet') ||
+        mn.includes('elkövetett szabálytalanság')
+      );
     });
     if (playerMarkets.length > 0) {
-      const samplePlayers = [...new Set(playerMarkets.slice(0, 14).map(m => `${m.outcomeName} (${m.marketName}: ${m.odds})`))];
+      const sampleList = [];
+      for (const pm of playerMarkets.slice(0, 18)) {
+        if (pm.outcomeName) {
+          sampleList.push(`${pm.outcomeName} (${pm.marketName}: ${pm.odds})`);
+        } else if (Array.isArray(pm.outcomes) && pm.outcomes[0]) {
+          sampleList.push(`${pm.outcomes[0].outcomeName} (${pm.marketName}: ${pm.outcomes[0].fixedOdds})`);
+        }
+      }
+      const samplePlayers = [...new Set(sampleList)].slice(0, 16);
       if (samplePlayers.length > 0) {
         lines.push(`   🎯 [TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK A MAI MECCSRE (Kik szerepelnek a mai keretben)]: ${samplePlayers.join(', ')}`);
       }
@@ -1713,10 +2106,13 @@ app.post('/api/matches/by-competitions', async (req, res) => {
     // Limitáljuk a túlterhelés elkerülésére (pl. max 30 mérkőzés)
     const targetEvents = matchedEvents.slice(0, 30);
 
+    // Egyetlen WAMP WebSocket kapcsolaton előtöltjük az összes mérkőzés részletes TippmixPro piacait
+    await prefetchTippmixProEventsBatch(targetEvents, Boolean(req.body.forceRefresh));
+
     // Minden mérkőzéshez lekérjük a részletes piacokat és kiszámítjuk a TOP 2 TIPPEKET
     const enrichedMatches = await Promise.all(
       targetEvents.map(async (ev) => {
-        const detailed = await fetchEventDetails(ev.eventId);
+        const detailed = await fetchEventDetails(ev.eventId, false);
         const allMarkets = detailed?.markets?.length ? detailed.markets : (ev.markets || []);
 
         // 1. Megpróbáljuk kinyerni a felhasználó odds sávjából a piacokat
@@ -1899,7 +2295,7 @@ app.post('/api/analyze/interval', async (req, res) => {
     }
 
     const enrichedEvents = topCandidates.length > 0
-      ? await enrichCandidateEvents(topCandidates, minOdds, maxOdds, forceRefresh, 25)
+      ? await enrichCandidateEvents(topCandidates, minOdds, maxOdds, forceRefresh, 35)
       : [];
 
     const riskConflictCheck = evaluateRiskAndOddsConflict(riskFilter, minOdds, maxOdds);
@@ -1958,7 +2354,7 @@ app.post('/api/analyze/interval', async (req, res) => {
 
     let matchesContextBlock = '';
     if (enrichedEvents.length > 0) {
-      matchesContextBlock = `A KÖVETKEZŐ ${hours} ÓRÁBAN ELÉRHETŐ TIPPMIXPRO MÉRKŐZÉSEK ÉS SOKSZÍNŰ ${minOdds.toFixed(2)}-${maxOdds.toFixed(2)} KÖZÖTTI PIACOK (1X2, GÓLSZÁM, MINDKÉT CSAPAT GÓL, GÓLLÖVŐ, KIÁLLÍTÁS, 11-ES, SZÖGLETEK, LAPOK, FÉLIDŐK, HENDIKEPEK):\n` +
+      matchesContextBlock = `A KÖVETKEZŐ ${hours} ÓRÁBAN ELÉRHETŐ TIPPMIXPRO MÉRKŐZÉSEK ÉS SOKSZÍNŰ ${minOdds.toFixed(2)}-${maxOdds.toFixed(2)} KÖZÖTTI PIACOK (FŐ PIACOK, GÓLSZÁM/PONTSZÁM, MINDKÉT CSAPAT GÓL, JÁTÉKOS-SPECIÁLIS PIACOK: YARDOK, ELKAPÁSOK, TOUCHDOWN, GÓLSZERZŐ, SZABÁLYTALANSÁGOK, LESEK, SZÖGLETEK, LAPOK, FÉLIDŐK/NEGYEDEK, HENDIKEPEK):\n` +
         enrichedEvents.map((ev, idx) => {
           const marketsStr = ev.availableTargetMarkets
             .map(m => `   - Piac: "${m.marketName}" | Tipp: "${m.outcomeName}" | Odds: ${m.odds.toFixed(2)}`)
@@ -1981,8 +2377,10 @@ KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
    - Ezért a \`"tips"\` tömbben **KÖTELEZŐEN PONTOSAN ${expectedTipsCount} DARAB** különböző tippet kell visszaadnod (\`rank: 1\`-től \`rank: ${expectedTipsCount}\`-ig)! **SZIGORÚAN TILOS 3 tippnél megállni, ha a kért darabszám ${expectedTipsCount}!**
 2. **SZIGORÚAN VALÓDI MÉRKŐZÉSEK ÉS PIACOK**:
    - KIZÁRÓLAG a fenti "KÖVETKEZŐ ${hours} ÓRÁBAN ELÉRHETŐ TIPPMIXPRO MÉRKŐZÉSEK" listában szereplő mérkőzésekből és opciókból választhatsz tippet! Szigorúan tilos kitalálni bármilyen más meccset vagy oddsot!
-3. **PIACI SOKSZÍNŰSÉG ÉS SPECIÁLIS PIACOK BEVONÁSA**:
-   - Válogass bátran és változatosan a mérkőzések összes elérhető piaca közül: fő piacok (1X2, A mérkőzés győztese, Kétesély, DNB), Gólszám/Pontszám Alatt-Felett, valamint **speciális piacok** (NFL-nél: **Touchdown-ok száma 3,5 / 4,5 / 5,5**, **Mezőnygólok száma 2,5 / 3,5 / 4,5**, **Hazai/Vendégcsapat pontszáma**, **Hendikep**, **1. félidő piacok**; Focinál: **Mindkét csapat szerez gólt**, **Szögletszám**, **Büntetőlap-szám**, **Gólszerző**, **Csapat gólszám**, **Hendikep**)!
+3. **PIACI SOKSZÍNŰSÉG, JÁTÉKOS- ÉS SPECIÁLIS TIPPMIXPRO PIACOK BEVONÁSA**:
+   - Válogass bátran és változatosan a mérkőzések összes elérhető TippmixPro piaca közül: fő piacok (1X2, Ki nyeri?, Kétesély, DNB), Gólszám/Pontszám Alatt-Felett, valamint **játékos- és speciális piacok**:
+     * **NFL-nél**: Játékos elkapott (receiving) yardok, futott (rushing) yardok, elkapások (receptions) száma, leghosszabb elkapás, irányító (QB) passzolt touchdownok / sikeres passzok / Interceptionök száma, Szerez touchdown-t?, Csapat touchdown-ok száma, Mezőnygólok száma, Csapat pontszám, Negyedek / Félidők, Ázsiai hendikep!
+     * **Focinál**: Mindkét csapat szerez gólt (BTTS), Szögletszám (6.5–14.5), Büntetőlap-szám (1.5–8.5) és csapat büntetőlapok, Szabálytalanságok száma, Lesszám, Játékos gólszerzés (Szerez gólt?), Játékos által elkövetett szabálytalanságok száma, Csapat gólszám, Hendikep!
    - Ha több tippet (${expectedTipsCount} db) kér a felhasználó, oszd el őket a különböző mérkőzések és különböző piactípusok között (egy mérkőzésről szükség esetén akár 2 különböző piaci tipp is választható, ha kevesebb a meccs, mint a kért tippszám).
 4. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
    - Minden mérkőzésnél vizsgáld meg a lenti **HIVATALOS ESPN SÉRÜLTJELENTÉS**, a **TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK** és a **FRISS NEMZETKÖZI SZAKCIKKEK** alapján a **biztosan hiányzó (Injured Reserve / Out / eltiltott) vagy kérdéses (Questionable) kulcsjátékosokat**:
@@ -2094,7 +2492,7 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
 app.post('/api/analyze/custom', async (req, res) => {
   try {
     const query = (req.body.query || '').toString().trim();
-    const eventId = req.body.eventId ? Number(req.body.eventId) : null;
+    const eventId = req.body.eventId ? String(req.body.eventId).trim() : null;
     const rawMinOdds = Math.max(1.01, Math.min(20.0, Number(req.body.minOdds) || 1.30));
     const rawMaxOdds = Math.max(1.05, Math.min(50.0, Number(req.body.maxOdds) || 2.00));
     const minOdds = Math.min(rawMinOdds, rawMaxOdds);
@@ -2115,7 +2513,9 @@ app.post('/api/analyze/custom', async (req, res) => {
     let matchedEvents = [];
 
     if (eventId) {
-      let found = catalog.events.find(e => Number(e.eventId) === eventId);
+      let found = catalog.events.find(
+        e => String(e.eventId) === eventId || String(e.tippmixProId) === eventId || String(e.legacyEventId) === eventId
+      );
       if (!found) {
         const detailed = await fetchEventDetails(eventId, forceRefresh);
         if (detailed) found = detailed;
@@ -2183,7 +2583,7 @@ app.post('/api/analyze/custom', async (req, res) => {
     }
 
     const enrichedEvents = matchedEvents.length > 0
-      ? await enrichCandidateEvents(matchedEvents, minOdds, maxOdds, forceRefresh, 80)
+      ? await enrichCandidateEvents(matchedEvents, minOdds, maxOdds, forceRefresh, 90)
       : [];
 
     // 1. Ellenőrzés: Már elkezdődött a mérkőzés vagy lezárultak a piacai?
@@ -2285,9 +2685,9 @@ A felhasználó az alábbi konkrét mérkőzés mélyreható szakmai elemzését
 ${riskFilterInstruction}
 
 KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG ÉS PIACI SOKSZÍNŰSÉG):
-1. **MINDEN ELÉRHETŐ FOGADÁSI PIAC ÉS LEHETŐSÉG ÁTTEKINTÉSE**:
-   - A mérkőzéshez lent megadott TippmixPro kínálat a teljes odds-sávot tartalmazza: 1X2, Kétesély, Gólszám/Pontszám, Mindkét csapat gólt szerez, Góllövő / Gólszerző / Touchdown-ok száma, Mezőnygólok száma, Csapat pontszám/gólszám, Kiállítás / Piros lap, 11-es / Büntető, Szögletek, Lapok, Félidők, Hendikepek stb.!
-   - Bátran és nyitottan válassz speciális piacokat is (pl. NFL-nél Touchdown-ok száma, Mezőnygólok száma, Csapat pontszám, Hendikep, 1. félidő; Focinál gólszerző, lapok, szöglet, 11-es/büntető, kiállítás, félidő), amennyiben a statisztikák, a forma vagy a bírói adatok alapján az képviseli a legnagyobb valószínűséget és értéket!
+1. **MINDEN ELÉRHETŐ TIPPMIXPRO FOGADÁSI PIAC ÉS JÁTÉKOS-OPCIÓ ÁTTEKINTÉSE**:
+   - A mérkőzéshez lent megadott TippmixPro kínálat a teljes odds-sávot tartalmazza: 1X2, Ki nyeri?, Kétesély, Gólszám/Pontszám, Mindkét csapat gólt szerez, Játékos-speciális piacok (NFL-nél: Játékos elkapott/futott yardok, elkapások száma, leghosszabb elkapás, irányító passzolt TD-k / sikeres passzok / Interceptionök, Touchdown-szerzők; Focinál: Gólszerző / Szerez gólt?, Játékos elkövetett szabálytalanságok száma), Csapat touchdown-ok / mezőnygólok száma, Csapat pontszám/gólszám, Szabálytalanságok száma, Lesszám, Kiállítás / Piros lap, 11-es / Büntető, Szögletek (6.5–14.5), Büntetőlapok (1.5–8.5), Félidők / Negyedek, Hendikepek stb.!
+   - Bátran és nyitottan válassz játékos- és speciális piacokat is (pl. NFL-nél játékos futott/elkapott yard, elkapásszám, QB passzok, Touchdown-ok száma, Mezőnygólok száma, Csapat pontszám, Hendikep, Negyedek/1. félidő; Focinál gólszerző, játékos szabálytalanságok, szabálytalanságok száma, lesszám, lapok, szöglet, 11-es/büntető, félidő), amennyiben a statisztikák, a forma vagy a bírói adatok alapján az képviseli a legnagyobb valószínűséget és értéket!
 2. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
    - Vizsgáld meg a lenti **HIVATALOS ESPN SÉRÜLTJELENTÉS**, a **TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK** és a **FRISS NEMZETKÖZI SZAKCIKKEK** alapján a **biztosan hiányzó (Injured Reserve / Out / eltiltott) vagy kérdéses (Questionable) kulcsjátékosokat** és várható kezdőcsapatokat:
    - **Gólerős támadó / Házi gólkirály / Kezdő QB / Irányító hiánya:** Ha egy csapat kezdő irányítója (QB, pl. Injured Reserve státuszban), legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá játékos-tippet adni, és csökkentsd a csapat pont-/gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under, a csereirányító/futójáték sajátosságai vagy az ellenfél hendikepje).

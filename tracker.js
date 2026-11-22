@@ -1233,9 +1233,170 @@ export function resetTracker() {
   return state;
 }
 
-// 6. Eredmény-ellenőrző háttérmotor (Hivatalos Tippmix API + Kötegelt Gemini Fallback)
+// 6. Eredmény-ellenőrző háttérmotor (Hivatalos TippmixPro API + Hivatalos Tippmix API + Kötegelt Gemini Fallback)
+const TIPPMIXPRO_RESULTS_BASE = 'https://sports-api.glastcoper.com/historical-results/api/v1/results-page';
+const TIPPMIXPRO_OPERATOR_ID = '2901';
 const TIPPMIX_RESULTS_URL = 'https://api.tippmix.hu/v2/tippmix/results';
+
 const resultsCache = new Map(); // key: `${sportId}_${date}`, val: { data, ts }
+const proResultsCache = new Map(); // key: `pro_${proSportId}_${date}`, val: { data, ts }
+const proMatchDetailsCache = new Map(); // key: `pro_detail_${matchId}`, val: { data, ts }
+
+function mapInternalSportToProSportId(sportId = 1) {
+  const s = Number(sportId);
+  if (s === 5) return '3';  // Tenisz
+  if (s === 16) return '5'; // Amerikai futball (NFL)
+  return '1';               // Labdarúgás (Foci)
+}
+
+export async function fetchTippmixProOfficialResults(sportId = 1, dateStr) {
+  const proSportId = mapInternalSportToProSportId(sportId);
+  const dateKey = String(dateStr || new Date().toISOString().slice(0, 10)).slice(0, 10);
+  const cacheKey = `pro_${proSportId}_${dateKey}`;
+  const now = Date.now();
+
+  if (proResultsCache.has(cacheKey)) {
+    const cached = proResultsCache.get(cacheKey);
+    if (now - cached.ts < 5 * 60 * 1000) {
+      return cached.data;
+    }
+  }
+
+  try {
+    const res = await fetch(`${TIPPMIXPRO_RESULTS_BASE}/matches`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-OperatorId': TIPPMIXPRO_OPERATOR_ID,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+      },
+      body: JSON.stringify({
+        sportId: proSportId,
+        lang: 'hu',
+        startDate: dateKey,
+        endDate: dateKey,
+        eventsLimit: 200,
+        offset: 0,
+        deviceName: 'small'
+      })
+    });
+
+    if (!res.ok) return [];
+    const json = await res.json();
+    const list = Array.isArray(json?.response) ? json.response : [];
+    proResultsCache.set(cacheKey, { data: list, ts: now });
+    return list;
+  } catch (err) {
+    console.warn(`⚠️ TippmixPro results lekérési hiba (${sportId}, ${dateKey}):`, err.message);
+    return [];
+  }
+}
+
+export async function fetchTippmixProMatchDetails(matchId) {
+  const mId = String(matchId || '').trim();
+  if (!mId) return null;
+  const now = Date.now();
+
+  if (proMatchDetailsCache.has(mId)) {
+    const cached = proMatchDetailsCache.get(mId);
+    if (now - cached.ts < 15 * 60 * 1000) {
+      return cached.data;
+    }
+  }
+
+  try {
+    const res = await fetch(`${TIPPMIXPRO_RESULTS_BASE}/match-details`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-OperatorId': TIPPMIXPRO_OPERATOR_ID,
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+      },
+      body: JSON.stringify({
+        matchId: mId,
+        lang: 'hu',
+        deviceName: 'extended'
+      })
+    });
+
+    if (!res.ok) return null;
+    const json = await res.json();
+    const resp = json?.response;
+    if (!resp || !Array.isArray(resp.outcomeEntities)) return null;
+
+    // Összeépítjük a lezárt piacokat és kimeneteleket (statusId: 2 = Nyertes, 3 = Vesztes, 8 = Törölve/Void)
+    const outcomesById = new Map();
+    for (const o of resp.outcomeEntities) {
+      if (!o || !o.id) continue;
+      let result = null;
+      const stName = String(o.statusName || '').toLowerCase();
+      if (o.statusId === 2 || stName === 'nyertes' || stName === 'winner') result = 'winner';
+      else if (o.statusId === 3 || stName === 'vesztes' || stName === 'loser') result = 'loser';
+      else if (o.statusId === 8 || stName === 'törölve' || stName === 'void') result = 'void';
+
+      outcomesById.set(String(o.id), {
+        id: String(o.id),
+        name: String(o.translatedName || o.shortTranslatedName || o.typeName || '').trim(),
+        paramFloat1: o.paramFloat1,
+        result
+      });
+    }
+
+    const outIdsByMarket = new Map();
+    for (const rel of (resp.marketOutcomeRelationEntities || [])) {
+      if (!rel || !rel.marketId || !rel.outcomeId) continue;
+      const mKey = String(rel.marketId);
+      if (!outIdsByMarket.has(mKey)) outIdsByMarket.set(mKey, []);
+      outIdsByMarket.get(mKey).push(String(rel.outcomeId));
+    }
+
+    const markets = [];
+    const seenMarkets = new Set();
+    for (const grp of (resp.marketGroupsWithMarkets || [])) {
+      for (const m of (grp?.marketEntities || [])) {
+        if (!m || !m.id || seenMarkets.has(String(m.id))) continue;
+        seenMarkets.add(String(m.id));
+        const oIds = outIdsByMarket.get(String(m.id)) || [];
+        const mOutcomes = oIds.map(id => outcomesById.get(id)).filter(Boolean);
+        if (mOutcomes.length > 0) {
+          markets.push({
+            id: String(m.id),
+            name: String(m.displayName || m.name || m.bettingTypeName || '').trim(),
+            rawName: String(m.name || '').trim(),
+            outcomes: mOutcomes
+          });
+        }
+      }
+    }
+
+    let fulltimeScore = null;
+    const scores = Array.isArray(resp.eventPartScoreEntities) ? resp.eventPartScoreEntities : [];
+    const mainScore = scores.find(s =>
+      s.eventInfoTypeName === 'Score' &&
+      (s.eventPartId === 3 || s.eventPartId === 30 || /rendes|hosszabbítással|ordinary/i.test(s.eventPartName || ''))
+    ) || scores.find(s => s.eventInfoTypeName === 'Score');
+
+    if (mainScore && typeof mainScore.homeScore !== 'undefined') {
+      fulltimeScore = {
+        participant1Score: mainScore.homeScore,
+        participant2Score: mainScore.awayScore
+      };
+    }
+
+    const formatted = {
+      id: mId,
+      name: resp.match?.name || '',
+      fulltimeScore,
+      markets
+    };
+
+    proMatchDetailsCache.set(mId, { data: formatted, ts: now });
+    return formatted;
+  } catch (err) {
+    console.warn(`⚠️ TippmixPro match-details hiba (${mId}):`, err.message);
+    return null;
+  }
+}
 
 export async function fetchTippmixOfficialResults(sportId = 1, dateStr) {
   const dateKey = String(dateStr || new Date().toISOString().slice(0, 10)).slice(0, 10);
@@ -1393,15 +1554,83 @@ export async function evaluatePendingTips(fetchEventDetailsFn, callGeminiFn) {
 
     const unverifiedTips = [];
 
-    // 2. LÉPÉS: HIVATALOS TIPPMIX EREDMÉNYEK (0 AI token, automatikus winner/loser/void)
+    // 2. LÉPÉS: HIVATALOS TIPPMIXPRO & TIPPMIX EREDMÉNYEK (0 AI token, automatikus winner/loser/void, beleértve a Játékos-piacokat is!)
     const norm = s => String(s || '').toLowerCase().replace(/[^a-z0-9\u00C0-\u017F]/g, '');
-    const cleanMarket = m => String(m || '').split('(')[0].trim().toLowerCase();
+    const stripPeriod = s => String(s || '').replace(/\s*-\s*(rendes játékidő|hosszabbítással)$/i, '').trim();
+    const cleanMarket = m => stripPeriod(String(m || '').split('(')[0]).trim().toLowerCase();
     const baseMarketType = m => cleanMarket(m).replace(/[0-9,.\-+]+/g, '').replace(/\s+/g, ' ').trim();
+
+    const tryMatchMarketAndOutcome = (matchedEv, tip) => {
+      if (!matchedEv || !Array.isArray(matchedEv.markets)) return null;
+
+      let market = matchedEv.markets.find(m =>
+        cleanMarket(m.name) === cleanMarket(tip.marketName) ||
+        norm(m.name) === norm(tip.marketName) ||
+        (m.rawName && (cleanMarket(m.rawName) === cleanMarket(tip.marketName) || norm(m.rawName) === norm(tip.marketName)))
+      );
+
+      let outcome = null;
+      if (market && Array.isArray(market.outcomes)) {
+        outcome = market.outcomes.find(o => norm(o.name) === norm(tip.outcomeName));
+      }
+
+      // Fallback A: Ha a piactípus egyezik (pl. TippmixPro-n a lezárt piac neve "Gólszám - Rendes játékidő" vagy "Büntetőlap-szám",
+      // a tippben pedig "Gólszám 2.5 - Rendes játékidő" vagy "Alvin Kamara elkapott yard-jainak száma 13.5"),
+      // megkeressük ugyanazon alaptípusú piacon a pontos kimenetelt (pl. "Több, mint 2.5" vagy "Alvin Kamara: Több, mint 13.5")!
+      if (!outcome) {
+        const targetBase = baseMarketType(tip.marketName);
+        const sameTypeMarketWithOutcome = matchedEv.markets.find(m =>
+          (baseMarketType(m.name) === targetBase || (m.rawName && baseMarketType(m.rawName) === targetBase)) &&
+          Array.isArray(m.outcomes) &&
+          m.outcomes.some(o => norm(o.name) === norm(tip.outcomeName))
+        );
+        if (sameTypeMarketWithOutcome) {
+          market = sameTypeMarketWithOutcome;
+          outcome = sameTypeMarketWithOutcome.outcomes.find(o => norm(o.name) === norm(tip.outcomeName));
+        }
+      }
+
+      // Fallback B: Ha a kimenetel egyedi játékos-kimenetel (pl. "Alvin Kamara: Több, mint 13.5" vagy "Odunze Rome: Több, mint 3.5"),
+      // és pontosan egyezik egy lezárt kimenetellel ugyanabban a periódusban
+      if (!outcome && String(tip.outcomeName || '').includes(':')) {
+        for (const m of matchedEv.markets) {
+          if (!Array.isArray(m.outcomes)) continue;
+          const foundOut = m.outcomes.find(o => norm(o.name) === norm(tip.outcomeName));
+          if (foundOut) {
+            market = m;
+            outcome = foundOut;
+            break;
+          }
+        }
+      }
+
+      // Fallback C: Ha a piac pontosan megvan (határértékkel együtt), és a kimenetel "Több, mint..." vagy "Kevesebb, mint..."
+      if (!outcome && market && Array.isArray(market.outcomes) && market.outcomes.length === 2) {
+        const outLower = String(tip.outcomeName || '').toLowerCase();
+        if (outLower.startsWith('több, mint') || outLower.startsWith('kevesebb, mint')) {
+          const dirPrefix = outLower.startsWith('több, mint') ? 'több, mint' : 'kevesebb, mint';
+          outcome = market.outcomes.find(o => String(o.name || '').toLowerCase().startsWith(dirPrefix));
+        }
+      }
+
+      if (outcome && (outcome.result === 'winner' || outcome.result === 'loser' || outcome.result === 'void')) {
+        let score = null;
+        if (matchedEv.fulltimeScore && typeof matchedEv.fulltimeScore.participant1Score !== 'undefined') {
+          score = `${matchedEv.fulltimeScore.participant1Score}-${matchedEv.fulltimeScore.participant2Score}`;
+        }
+        return {
+          won: outcome.result === 'winner',
+          isVoid: outcome.result === 'void',
+          score
+        };
+      }
+      return null;
+    };
 
     for (const tip of readyTips) {
       let verified = false;
       const dateKey = String(tip.eventDate || new Date().toISOString().slice(0, 10)).slice(0, 10);
-      
+
       const datesToTry = [dateKey];
       try {
         const dObj = new Date(dateKey);
@@ -1410,68 +1639,56 @@ export async function evaluatePendingTips(fetchEventDetailsFn, callGeminiFn) {
         datesToTry.push(prev, next);
       } catch (_) {}
 
+      // 2A. Elsődleges: Hivatalos TippmixPro Historical Results API (5000+ kiértékelt kimenetel/meccs, játékos-piacokkal!)
+      if (tip.eventId && String(tip.eventId).length >= 15) {
+        const proDetails = await fetchTippmixProMatchDetails(String(tip.eventId));
+        const evalRes = tryMatchMarketAndOutcome(proDetails, tip);
+        if (evalRes) {
+          applyEvaluationResult(tip, { ...evalRes, method: 'tippmixpro_official' });
+          statsChanged = true;
+          verified = true;
+        }
+      }
+
+      for (const d of datesToTry) {
+        if (verified) break;
+        const proList = await fetchTippmixProOfficialResults(tip.sportId, d);
+        if (Array.isArray(proList) && proList.length > 0) {
+          const matchedProSummary = proList.find(item => {
+            const me = item?.matchEntity;
+            if (!me) return false;
+            if (tip.eventId && String(me.id) === String(tip.eventId)) return true;
+            return norm(me.name) === norm(tip.eventName);
+          });
+          if (matchedProSummary?.matchEntity?.id) {
+            const proDetails = await fetchTippmixProMatchDetails(matchedProSummary.matchEntity.id);
+            const evalRes = tryMatchMarketAndOutcome(proDetails, tip);
+            if (evalRes) {
+              applyEvaluationResult(tip, { ...evalRes, method: 'tippmixpro_official' });
+              statsChanged = true;
+              verified = true;
+              break;
+            }
+          }
+        }
+      }
+
+      // 2B. Másodlagos (Fallback): Hivatalos api.tippmix.hu/v2/tippmix/results
       for (const d of datesToTry) {
         if (verified) break;
         const events = await fetchTippmixOfficialResults(tip.sportId, d);
         if (!Array.isArray(events) || events.length === 0) continue;
 
-        const matchedEv = events.find(e => 
-          (tip.eventId && Number(e.id) === Number(tip.eventId)) ||
+        const matchedEv = events.find(e =>
+          (tip.eventId && String(e.id) === String(tip.eventId)) ||
           norm(e.name) === norm(tip.eventName)
         );
 
-        if (matchedEv && Array.isArray(matchedEv.markets)) {
-          let market = matchedEv.markets.find(m => 
-            cleanMarket(m.name) === cleanMarket(tip.marketName) ||
-            norm(m.name) === norm(tip.marketName)
-          );
-
-          let outcome = null;
-          if (market && Array.isArray(market.outcomes)) {
-            outcome = market.outcomes.find(o => norm(o.name) === norm(tip.outcomeName));
-          }
-
-          // Fallback A: Ha az AI a piac nevében és a kimenetelben eltérő határértéket írt (pl. "Büntetőlap-szám 4,5" + "Több, mint 3,5"),
-          // megkeressük ugyanazon piactípuson belül a pontos kimenetelt (pl. "Büntetőlap-szám 3,5" -> "Több, mint 3,5")!
-          if (!outcome) {
-            const targetBase = baseMarketType(tip.marketName);
-            const sameTypeMarketWithOutcome = matchedEv.markets.find(m =>
-              baseMarketType(m.name) === targetBase &&
-              Array.isArray(m.outcomes) &&
-              m.outcomes.some(o => norm(o.name) === norm(tip.outcomeName))
-            );
-            if (sameTypeMarketWithOutcome) {
-              market = sameTypeMarketWithOutcome;
-              outcome = sameTypeMarketWithOutcome.outcomes.find(o => norm(o.name) === norm(tip.outcomeName));
-              tip.marketName = sameTypeMarketWithOutcome.name;
-            }
-          }
-
-          // Fallback B: Ha a piac pontosan megvan (pl. "Büntetőlap-szám 4,5"), és a kimenetel "Több, mint..." vagy "Kevesebb, mint...",
-          // az irány ("több, mint" / "kevesebb, mint") alapján párosítjuk a piac kimenetelével
-          if (!outcome && market && Array.isArray(market.outcomes)) {
-            const outLower = String(tip.outcomeName || '').toLowerCase();
-            if (outLower.startsWith('több, mint') || outLower.startsWith('kevesebb, mint')) {
-              const dirPrefix = outLower.startsWith('több, mint') ? 'több, mint' : 'kevesebb, mint';
-              outcome = market.outcomes.find(o => String(o.name || '').toLowerCase().startsWith(dirPrefix));
-              if (outcome) tip.outcomeName = outcome.name;
-            }
-          }
-
-          if (outcome && (outcome.result === 'winner' || outcome.result === 'loser' || outcome.result === 'void')) {
-            let score = null;
-            if (matchedEv.fulltimeScore && typeof matchedEv.fulltimeScore.participant1Score !== 'undefined') {
-              score = `${matchedEv.fulltimeScore.participant1Score}-${matchedEv.fulltimeScore.participant2Score}`;
-            }
-            applyEvaluationResult(tip, {
-              won: outcome.result === 'winner',
-              isVoid: outcome.result === 'void',
-              score,
-              method: 'tippmix_official'
-            });
-            statsChanged = true;
-            verified = true;
-          }
+        const evalRes = tryMatchMarketAndOutcome(matchedEv, tip);
+        if (evalRes) {
+          applyEvaluationResult(tip, { ...evalRes, method: 'tippmix_official' });
+          statsChanged = true;
+          verified = true;
         }
       }
 
