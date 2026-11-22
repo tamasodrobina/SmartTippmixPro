@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T11:24:01.769Z",
+  "updatedAt": "2026-11-22T11:26:59.038Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -719,6 +719,72 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "1_liverpoolmanchesterutd_2026-11-22_1x2_liverpool",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5611434",
+      "eventName": "Liverpool - Manchester Utd.",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-22T17:30:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Liverpool",
+      "odds": 1.65,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:26:59.038Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
+    },
+    {
+      "id": "1_liverpoolmanchesterutd_2026-11-22_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5611434",
+      "eventName": "Liverpool - Manchester Utd.",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-22T17:30:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.5,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:26:59.038Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
+    },
+    {
+      "id": "1_liverpoolmanchesterutd_2026-11-22_bntetlapszm4545_tbbmint45",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5611434",
+      "eventName": "Liverpool - Manchester Utd.",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-22T17:30:00+01:00",
+      "marketName": "Büntetőlap-szám 4,5 (4.5)",
+      "outcomeName": "Több, mint 4,5",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:26:59.038Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
     }
   ],
   "history": [
@@ -7410,7 +7476,10 @@
     "16_detroittampabay_2026-11-22_hendikep3535_detroit35",
     "16_chicagoneworleans_2026-11-22_flidvgeredmny_chicagochicago",
     "16_chicagoneworleans_2026-11-22_pontszm465465_tbbmint465",
-    "16_chicagoneworleans_2026-11-22_hendikep9595_chicago95"
+    "16_chicagoneworleans_2026-11-22_hendikep9595_chicago95",
+    "1_liverpoolmanchesterutd_2026-11-22_1x2_liverpool",
+    "1_liverpoolmanchesterutd_2026-11-22_mindktcsapatszerezglt_igen",
+    "1_liverpoolmanchesterutd_2026-11-22_bntetlapszm4545_tbbmint45"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
