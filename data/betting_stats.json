@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-22T11:31:52.860Z",
+  "updatedAt": "2026-11-22T13:27:23.062Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 206,
+      "totalChecked": 207,
       "won": 132,
-      "lost": 74,
+      "lost": 75,
       "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 83,
+          "totalChecked": 84,
           "won": 59,
-          "lost": 24,
-          "winRate": 71
+          "lost": 25,
+          "winRate": 70
         },
         "medium": {
           "totalChecked": 115,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_juventusvenezia_2026-11-22_lesz11es_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Juventus - Venezia",
-      "competitionName": "Olaszország - Olasz A",
-      "eventDate": "2026-11-22T12:30:00+01:00",
-      "marketName": "Lesz 11-es?",
-      "outcomeName": "Nem",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T10:52:07.349Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_olasz_a",
-      "categorySubName": "Olasz A"
-    },
     {
       "id": "1_sassuologenoa_2026-11-22_bntetlapszm4545_kevesebbmint45",
       "sportId": 1,
@@ -832,6 +810,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_juventusvenezia_2026-11-22_lesz11es_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Juventus - Venezia",
+      "eventDate": "2026-11-22T12:30:00+01:00",
+      "competitionName": "Olaszország - Olasz A",
+      "marketName": "Lesz 11-es?",
+      "outcomeName": "Nem",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "4-0",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-22T13:27:23.062Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_a",
+      "categorySubName": "Olasz A"
+    },
     {
       "id": "1_napolitorino_2026-11-21_hazaicsapatglszm1515_tbbmint15",
       "sportId": 1,
