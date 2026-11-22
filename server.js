@@ -150,7 +150,7 @@ setInterval(cleanExpiredCaches, 5 * 60 * 1000).unref();
 
 function createAnalysisFingerprint({ mode, sportId, minOdds, maxOdds, tipsCount, riskFilter = 'all', eventIds = [], customQuery = '' }) {
   const raw = JSON.stringify({
-    v: 'v3_risk',
+    v: 'v4_exact_count',
     mode,
     sportId,
     minOdds: Number(minOdds).toFixed(2),
@@ -1205,9 +1205,9 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
 
   if (eventsList && eventsList.length > 0) {
     const isSingleDeepMatch = eventsList.length === 1;
-    const topToSearch = eventsList.slice(0, 5);
+    const topToSearch = eventsList.slice(0, Math.min(12, eventsList.length));
 
-    for (const ev of topToSearch) {
+    const perEventBlocks = await Promise.all(topToSearch.map(async (ev, idx) => {
       const sportIdNum = Number(ev.sportId);
       const isFootball = sportIdNum === 1 || ev.sportName?.toLowerCase().includes('foci') || ev.sportName?.toLowerCase().includes('labdarúgás');
       const isNfl = sportIdNum === 16 || ev.sportName?.toLowerCase().includes('nfl') || ev.sportName?.toLowerCase().includes('amerikai');
@@ -1215,45 +1215,54 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
       const parsedTeams = parseMatchTeams(ev.eventName, isNfl);
       const enMatch = parsedTeams.englishMatchup;
 
-      // 1. Általános előrejelzés, forma és fogadási tippek (angolra fordított csapatnevekkel!)
-      const qMain = `${enMatch} preview prediction betting tips stats`;
+      // Minden meccshez lekérjük a memóriában gyorsítótárazott hivatalos ESPN sérültjelentést és statisztikai vezetőket
+      const espnPromise = fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl);
 
-      // 2. Célzott SÉRÜLTEK, ELTILTOTTAK, HIÁNYZÓK és VÁRHATÓ KEZDŐCSAPATOK
-      let qInjuries = '';
-      if (isFootball) {
-        qInjuries = `${enMatch} team news injuries suspensions predicted lineup`;
-      } else if (isNfl) {
-        qInjuries = `${enMatch} injury report out questionable quarterback starters`;
+      // A részletes RSS hírcikk-keresést az első 6 meccsre teljes mélységben, a többire célzottan futtatjuk párhuzamosan
+      const rssSearches = [];
+      if (idx < 6) {
+        const qMain = `${enMatch} preview prediction betting tips stats`;
+        let qInjuries = '';
+        if (isFootball) {
+          qInjuries = `${enMatch} team news injuries suspensions predicted lineup`;
+        } else if (isNfl) {
+          qInjuries = `${enMatch} injury report out questionable quarterback starters`;
+        } else {
+          qInjuries = `${enMatch} tennis preview injury form head to head`;
+        }
+
+        let qTeamSpecific = '';
+        if (isNfl && parsedTeams.homeEn && parsedTeams.awayEn) {
+          qTeamSpecific = `${parsedTeams.homeEn} ${parsedTeams.awayEn} quarterback injury report lineup`;
+        } else if (isFootball && parsedTeams.homeEn && parsedTeams.awayEn) {
+          qTeamSpecific = `${parsedTeams.homeEn} vs ${parsedTeams.awayEn} starting XI lineup key players`;
+        } else {
+          qTeamSpecific = `${enMatch} key players stats`;
+        }
+
+        rssSearches.push(
+          searchLiveNewsRssCached(qMain, 5, 10),
+          searchLiveNewsRssCached(qInjuries, 5, 10),
+          searchLiveNewsRssCached(qTeamSpecific, 4, 14)
+        );
+
+        if (isSingleDeepMatch && isFootball) {
+          rssSearches.push(
+            searchLiveNewsRssCached(`${enMatch} SportsMole WhoScored lineup injuries prediction`, 4, 10)
+          );
+        }
       } else {
-        qInjuries = `${enMatch} tennis preview injury form head to head`;
-      }
-
-      // 3. Csapatonkénti célzott sérült és kulcsjátékos keresés
-      let qTeamSpecific = '';
-      if (isNfl && parsedTeams.homeEn && parsedTeams.awayEn) {
-        qTeamSpecific = `${parsedTeams.homeEn} ${parsedTeams.awayEn} quarterback injury report lineup`;
-      } else if (isFootball && parsedTeams.homeEn && parsedTeams.awayEn) {
-        qTeamSpecific = `${parsedTeams.homeEn} vs ${parsedTeams.awayEn} starting XI lineup key players`;
-      } else {
-        qTeamSpecific = `${enMatch} key players stats`;
-      }
-
-      const searches = [
-        fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl),
-        searchLiveNewsRssCached(qMain, 6, 10),
-        searchLiveNewsRssCached(qInjuries, 6, 10),
-        searchLiveNewsRssCached(qTeamSpecific, 5, 14)
-      ];
-
-      if (isSingleDeepMatch && isFootball) {
-        searches.push(
-          searchLiveNewsRssCached(`${enMatch} SportsMole WhoScored lineup injuries prediction`, 4, 10)
+        rssSearches.push(
+          searchLiveNewsRssCached(`${enMatch} injury report prediction lineup`, 4, 10)
         );
       }
 
-      const [espnIntel, ...rssResults] = await Promise.all(searches);
-      const combined = dedupeAndCollect(rssResults.flat());
+      const [espnIntel, ...rssResults] = await Promise.all([espnPromise, ...rssSearches]);
+      return { ev, enMatch, espnIntel, rssFlat: rssResults.flat() };
+    }));
 
+    for (const { ev, enMatch, espnIntel, rssFlat } of perEventBlocks) {
+      const combined = dedupeAndCollect(rssFlat);
       if (espnIntel?.sources?.length > 0) {
         allWebSources.push(...espnIntel.sources);
       }
@@ -1385,6 +1394,7 @@ async function callGeminiWithSearch({ apiKey, prompt, precollectedSources = [] }
         ],
         generationConfig: {
           temperature: 0.25,
+          maxOutputTokens: 8192,
           responseMimeType: 'application/json'
         }
       };
@@ -1958,26 +1968,29 @@ app.post('/api/analyze/interval', async (req, res) => {
     }
 
     const riskFilterInstruction = getRiskFilterPromptBlock(riskFilter, minOdds, maxOdds);
+    const expectedTipsCount = Math.min(tipsCount, totalAvailableMarkets);
 
     const prompt = `Te egy profi sportfogadási és statisztikai elemző vagy (kiemelt szakterületeid: Labdarúgás, Tenisz, Amerikai futball / NFL).
-A felhasználó a következő ${hours} órában keresi a **legfeljebb ${tipsCount} LEGVALÓSZÍNŰBB fogadási tippet**, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**.
+A felhasználó a következő ${hours} órában keresi a **TOP ${expectedTipsCount} DARAB LEGVALÓSZÍNŰBB fogadási tippet**, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**.
 Kiválasztott sportág: ${selectedSportMeta ? selectedSportMeta.name : 'Foci, Tenisz vagy NFL'}.
 ${riskFilterInstruction}
 
 KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
-1. **SZIGORÚAN VALÓDI MÉRKŐZÉSEK ÉS PIACOK**:
+1. **PONTOS DARABSZÁM KÖVETELMÉNY (KÖTELEZŐ PONTOSAN ${expectedTipsCount} DB TIPP!)**:
+   - A lenti TippmixPro kínálatban összesen **${enrichedEvents.length} mérkőzés** és **${totalAvailableMarkets} darab** (${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} közötti) fogadható opció áll rendelkezésre.
+   - Ezért a \`"tips"\` tömbben **KÖTELEZŐEN PONTOSAN ${expectedTipsCount} DARAB** különböző tippet kell visszaadnod (\`rank: 1\`-től \`rank: ${expectedTipsCount}\`-ig)! **SZIGORÚAN TILOS 3 tippnél megállni, ha a kért darabszám ${expectedTipsCount}!**
+2. **SZIGORÚAN VALÓDI MÉRKŐZÉSEK ÉS PIACOK**:
    - KIZÁRÓLAG a fenti "KÖVETKEZŐ ${hours} ÓRÁBAN ELÉRHETŐ TIPPMIXPRO MÉRKŐZÉSEK" listában szereplő mérkőzésekből és opciókból választhatsz tippet! Szigorúan tilos kitalálni bármilyen más meccset vagy oddsot!
-2. **KEVÉS MÉRKŐZÉS VAGY KEVÉS OPCIÓ KEZELÉSE**:
-   - Ha a következő ${hours} órában kevés mérkőzés érhető el (pl. csak 1-2 meccs), akkor a megadott valós mérkőzések KÜLÖNBÖZŐ PIACAI közül válassz (pl. 1X2 kimenetel, gólszám, lapok, szöglet, büntető, gólszerző, hendikep).
-   - Amennyiben nincs elegendő kimagasló fogadási érték a kínálatban, adj vissza KEVESEBB (akár csak 1 vagy 2) prémium tippet a kért ${tipsCount} helyett, de SOHA NE találj ki fantom mérkőzést!
-3. **PIACI SOKSZÍNŰSÉG**: A kínálatban mindenféle piac elérhető (1X2, Gólszám/Pontszám, Mindkét csapat szerez gólt, Gólszerző/Touchdown, Kiállítás, 11-es/Büntető, Szögletek, Lapok, Hendikep, Félidők). A fenti valós listában szereplő opciókból válogass!
+3. **PIACI SOKSZÍNŰSÉG ÉS SPECIÁLIS PIACOK BEVONÁSA**:
+   - Válogass bátran és változatosan a mérkőzések összes elérhető piaca közül: fő piacok (1X2, A mérkőzés győztese, Kétesély, DNB), Gólszám/Pontszám Alatt-Felett, valamint **speciális piacok** (NFL-nél: **Touchdown-ok száma 3,5 / 4,5 / 5,5**, **Mezőnygólok száma 2,5 / 3,5 / 4,5**, **Hazai/Vendégcsapat pontszáma**, **Hendikep**, **1. félidő piacok**; Focinál: **Mindkét csapat szerez gólt**, **Szögletszám**, **Büntetőlap-szám**, **Gólszerző**, **Csapat gólszám**, **Hendikep**)!
+   - Ha több tippet (${expectedTipsCount} db) kér a felhasználó, oszd el őket a különböző mérkőzések és különböző piactípusok között (egy mérkőzésről szükség esetén akár 2 különböző piaci tipp is választható, ha kevesebb a meccs, mint a kért tippszám).
 4. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
    - Minden mérkőzésnél vizsgáld meg a lenti **HIVATALOS ESPN SÉRÜLTJELENTÉS**, a **TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK** és a **FRISS NEMZETKÖZI SZAKCIKKEK** alapján a **biztosan hiányzó (Injured Reserve / Out / eltiltott) vagy kérdéses (Questionable) kulcsjátékosokat**:
    - **Gólerős támadó / Házi gólkirály / Kezdő QB / Irányító hiánya:** Ha egy csapat kezdő irányítója (QB, pl. Injured Reserve státuszban), legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá játékos-tippet adni, és csökkentsd a csapat pont-/gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under, a csereirányító/futójáték sajátosságai vagy az ellenfél hendikepje).
    - **Magas átlagosztályzatú vezérvédő vagy 1. számú kapus hiánya:** Ha a védelem legstabilabb belső védője/safety-je vagy a kezdőkapus hiányzik, jelentősen nő a kapott gól/pont esélye — ilyenkor felértékelődik a **Mindkét csapat szerez gólt (BTTS - Igen)**, a **Gólszám 2,5 felett**, vagy az ellenfél gólszerzési piaca!
    - **SZIGORÚ HALLUCINÁCIÓ-TILALOM A SÉRÜLTEKNÉL:** SOHA ne írj általános töltelékszöveget (pl. TILOS olyat írni, hogy "Nincsenek váratlan kulcs-sérülések" vagy "a megszokott kezdőcsapat lép pályára")! A "detailedReasoning.injuriesAndLineup" mezőben KIZÁRÓLAG konkrét, névvel és poszttal megnevezett sérült/hiányzó játékosokat (pl. "Lamar Jackson (QB - Injured Reserve), Jaylinn Hawkins (S - Out)...") és azok hatását írd le! Ha nincs konkrétan ismert sérült kulcsjátékos a megadott adatokban, a "detailedReasoning.injuriesAndLineup" mező KÖTELEZŐEN üres string "" legyen!
 5. **RELEVANCIA-SZABÁLY**: Nem kell feleslegesen kiemelni a bírót, a lapokat vagy a szögleteket, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. bíró szigora lapos/11-es/kiállítás tippnél, szögletstatisztika sarokrúgás tippnél)! Csak releváns tényezőket említs!
-6. Legfeljebb ${tipsCount} prémium tippet adj vissza a fentiek szerint, szakmai indoklással és kockázati besorolással!
+6. **PONTOSAN ${expectedTipsCount} DARAB** prémium tippet adj vissza a fentiek szerint, szakmai indoklással és kockázati besorolással!
 
 ${matchesContextBlock}
 
@@ -2028,7 +2041,11 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
     const returnedTips = Array.isArray(aiResult.data?.tips) ? aiResult.data.tips : [];
     let fewerTipsReason = null;
     if (returnedTips.length > 0 && returnedTips.length < tipsCount) {
-      fewerTipsReason = `A kért ${tipsCount} tipp helyett ${returnedTips.length} tipp jelenik meg, mert a megadott feltételeknek (Következő ${hours} óra • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds${riskFilter !== 'all' ? ` • ${riskConflictCheck.currentRiskLabel}` : ''} • ${windowEvents.length} elérhető mérkőzés) összesen ez a(z) ${returnedTips.length} opció felelt meg.`;
+      if (totalAvailableMarkets < tipsCount) {
+        fewerTipsReason = `A kért ${tipsCount} tipp helyett ${returnedTips.length} tipp jelenik meg, mert a megadott szigorú feltételeknek (Következő ${hours} óra • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds${riskFilter !== 'all' ? ` • ${riskConflictCheck.currentRiskLabel}` : ''}) összesen ${totalAvailableMarkets} piaci opció felelt meg.`;
+      } else {
+        fewerTipsReason = `A kért ${tipsCount} tipp helyett az AI a(z) ${returnedTips.length} legkiemelkedőbb, legmagasabb értékű tippet emelte ki a kínálatból (Következő ${hours} óra • ${minOdds.toFixed(2)}–${maxOdds.toFixed(2)} odds${riskFilter !== 'all' ? ` • ${riskConflictCheck.currentRiskLabel}` : ''}).`;
+      }
     }
 
     const responsePayload = {
@@ -2261,15 +2278,16 @@ app.post('/api/analyze/custom', async (req, res) => {
     }
 
     const riskFilterInstruction = getRiskFilterPromptBlock(riskFilter, minOdds, maxOdds);
+    const expectedCustomTipsCount = Math.min(tipsCount, totalAvailableTargetMarkets);
 
     const prompt = `Te egy kiemelkedő felkészültségű sportfogadási szakértő és statisztikai elemző vagy (Labdarúgás, Tenisz, Amerikai futball / NFL).
-A felhasználó az alábbi konkrét mérkőzés mélyreható szakmai elemzését kéri: "${query}".
+A felhasználó az alábbi konkrét mérkőzés mélyreható szakmai elemzését és a **TOP ${expectedCustomTipsCount} DARAB LEGVALÓSZÍNŰBB TIPPJÉT** kéri: "${query}".
 ${riskFilterInstruction}
 
 KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG ÉS PIACI SOKSZÍNŰSÉG):
 1. **MINDEN ELÉRHETŐ FOGADÁSI PIAC ÉS LEHETŐSÉG ÁTTEKINTÉSE**:
-   - A mérkőzéshez lent megadott TippmixPro kínálat a teljes odds-sávot tartalmazza: 1X2, Kétesély, Gólszám/Pontszám, Mindkét csapat gólt szerez, Góllövő / Gólszerző / Touchdown, Kiállítás / Piros lap, 11-es / Büntető, Szögletek, Lapok, Félidők, Hendikepek stb.!
-   - Bátran és nyitottan válassz speciális piacokat is (pl. gólszerző, lapok, szöglet, 11-es/büntető, kiállítás, félidő), amennyiben a statisztikák, a forma vagy a bírói adatok alapján az képviseli a legnagyobb valószínűséget és értéket!
+   - A mérkőzéshez lent megadott TippmixPro kínálat a teljes odds-sávot tartalmazza: 1X2, Kétesély, Gólszám/Pontszám, Mindkét csapat gólt szerez, Góllövő / Gólszerző / Touchdown-ok száma, Mezőnygólok száma, Csapat pontszám/gólszám, Kiállítás / Piros lap, 11-es / Büntető, Szögletek, Lapok, Félidők, Hendikepek stb.!
+   - Bátran és nyitottan válassz speciális piacokat is (pl. NFL-nél Touchdown-ok száma, Mezőnygólok száma, Csapat pontszám, Hendikep, 1. félidő; Focinál gólszerző, lapok, szöglet, 11-es/büntető, kiállítás, félidő), amennyiben a statisztikák, a forma vagy a bírói adatok alapján az képviseli a legnagyobb valószínűséget és értéket!
 2. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
    - Vizsgáld meg a lenti **HIVATALOS ESPN SÉRÜLTJELENTÉS**, a **TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK** és a **FRISS NEMZETKÖZI SZAKCIKKEK** alapján a **biztosan hiányzó (Injured Reserve / Out / eltiltott) vagy kérdéses (Questionable) kulcsjátékosokat** és várható kezdőcsapatokat:
    - **Gólerős támadó / Házi gólkirály / Kezdő QB / Irányító hiánya:** Ha egy csapat kezdő irányítója (QB, pl. Injured Reserve státuszban), legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá játékos-tippet adni, és csökkentsd a csapat pont-/gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under, a csereirányító/futójáték sajátosságai vagy az ellenfél hendikepje).
@@ -2278,8 +2296,8 @@ KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG ÉS PIACI SOKSZÍNŰSÉG):
 3. **RELEVANCIA-SZABÁLY**:
    - Nem kell külön kiemelni a játékvezetőt, sem a szögleteket vagy lapokat, KIVÉVE, HA AZ VALÓBAN RELEVÁNS a választott tipp szempontjából (pl. ha lap/szöglet/11-es/kiállítás piacon van a tipp, vagy a bíró személye közvetlenül befolyásolja az adott piacot)!
    - Minden információt CSAK AKKOR adj a részletes leírásba, ha azok közvetlenül relevánsak a tippek szempontjából.
-4. **TOP 3 LEGVALÓSZÍNŰBB TIPP (KÜLÖNBÖZŐ PIACI TÍPUSOKBÓL)**:
-   - Válassz ki pontosan **3 darab különböző piacú és jellegű tippet** a mérkőzésre, amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**!
+4. **PONTOSAN ${expectedCustomTipsCount} DARAB LEGVALÓSZÍNŰBB TIPP (KÜLÖNBÖZŐ PIACI TÍPUSOKBÓL)**:
+   - Válassz ki **KÖTELEZŐEN PONTOSAN ${expectedCustomTipsCount} darab különböző piacú és jellegű tippet** a mérkőzésre (\`rank: 1\`-től \`rank: ${expectedCustomTipsCount}\`-ig), amelyek szorzója **SZIGORÚAN ${minOdds.toFixed(2)} és ${maxOdds.toFixed(2)} közé esik**!
    - Ha a fenti TippmixPro adatokban szerepelnek opciók, KÖTELEZŐEN az ott lévő valós piacneveket és oddsokat válaszd ki!
 5. **KOCKÁZATI ÉRTÉKELÉS (1-10)**:
    - Részletesen indokold meg a kockázat mértékét és a váratlan forgatókönyveket (beleértve a kulcshiányzók hatását is)!
