@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-22T18:27:48.066Z",
+  "updatedAt": "2026-11-22T18:58:49.272Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 227,
-      "won": 147,
+      "totalChecked": 228,
+      "won": 148,
       "lost": 80,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 95,
-          "won": 66,
+          "totalChecked": 96,
+          "won": 67,
           "lost": 29,
-          "winRate": 69
+          "winRate": 70
         },
         "medium": {
           "totalChecked": 124,
@@ -501,28 +501,6 @@
       "categorySubName": "USA - NFL"
     },
     {
-      "id": "1_milanfrosinone_2026-11-22_lesz11es_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Milan - Frosinone",
-      "competitionName": "Olaszország - Olasz A",
-      "eventDate": "2026-11-22T18:00:00+01:00",
-      "marketName": "Lesz 11-es?",
-      "outcomeName": "Nem",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T14:27:33.441Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_olasz_a",
-      "categorySubName": "Olasz A"
-    },
-    {
       "id": "1_atalantainternazionale_2026-11-22_1x2_internazionale",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -590,6 +568,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_milanfrosinone_2026-11-22_lesz11es_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Milan - Frosinone",
+      "eventDate": "2026-11-22T18:00:00+01:00",
+      "competitionName": "Olaszország - Olasz A",
+      "marketName": "Lesz 11-es?",
+      "outcomeName": "Nem",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "5-1",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-22T18:58:49.272Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_olasz_a",
+      "categorySubName": "Olasz A"
+    },
     {
       "id": "1_liverpoolmanchesterutd_2026-11-22_szgletszm9595_tbbmint95",
       "sportId": 1,
