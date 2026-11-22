@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-22T17:27:40.665Z",
+  "updatedAt": "2026-11-22T17:48:54.458Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 223,
+      "totalChecked": 224,
       "won": 145,
-      "lost": 78,
+      "lost": 79,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 93,
+          "totalChecked": 94,
           "won": 66,
-          "lost": 27,
-          "winRate": 71
+          "lost": 28,
+          "winRate": 70
         },
         "medium": {
           "totalChecked": 122,
@@ -633,28 +633,6 @@
       "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
     },
     {
-      "id": "1_goaheadeaglesfsittard_2026-11-22_hazaicsapatnyerlegalbbegyflidt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Go Ahead Eagles - F. Sittard",
-      "competitionName": "Hollandia - Holland bajnokság",
-      "eventDate": "2026-11-22T16:45:00+01:00",
-      "marketName": "Hazai csapat nyer legalább egy félidőt?",
-      "outcomeName": "Igen",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T14:27:33.441Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_holland_bajnokság",
-      "categorySubName": "Holland bajnokság"
-    },
-    {
       "id": "1_athlticoprremo_2026-11-22_mindktflidbenkevesebbmint15gllesz15_nem",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -678,6 +656,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_goaheadeaglesfsittard_2026-11-22_hazaicsapatnyerlegalbbegyflidt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Go Ahead Eagles - F. Sittard",
+      "eventDate": "2026-11-22T16:45:00+01:00",
+      "competitionName": "Hollandia - Holland bajnokság",
+      "marketName": "Hazai csapat nyer legalább egy félidőt?",
+      "outcomeName": "Igen",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-22T17:48:54.458Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_holland_bajnokság",
+      "categorySubName": "Holland bajnokság"
+    },
     {
       "id": "1_utaaradcsunivcraiova_2026-11-22_zsiaihendikep125125_utaarad125",
       "sportId": 1,
