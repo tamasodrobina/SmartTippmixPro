@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-22T16:27:35.759Z",
+  "updatedAt": "2026-11-22T16:58:29.762Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 219,
-      "won": 143,
-      "lost": 76,
+      "totalChecked": 221,
+      "won": 144,
+      "lost": 77,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 89,
-          "won": 64,
-          "lost": 25,
-          "winRate": 72
+          "totalChecked": 91,
+          "won": 65,
+          "lost": 26,
+          "winRate": 71
         },
         "medium": {
           "totalChecked": 122,
@@ -633,28 +633,6 @@
       "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
     },
     {
-      "id": "1_nyregyhzadvsc_2026-11-22_dntetlenvagymindktcsapatszerezglt_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Nyíregyháza - DVSC",
-      "competitionName": "Magyarország - NB I",
-      "eventDate": "2026-11-22T16:00:00+01:00",
-      "marketName": "Döntetlen vagy mindkét csapat szerez gólt",
-      "outcomeName": "Igen",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T14:27:33.441Z",
-      "status": "pending",
-      "categoryGroupKey": "hun_1",
-      "categoryGroupName": "Magyar NB I & Magyar Kupa",
-      "categorySubKey": "hun_1",
-      "categorySubName": "NB I"
-    },
-    {
       "id": "1_goaheadeaglesfsittard_2026-11-22_hazaicsapatnyerlegalbbegyflidt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -697,28 +675,6 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    },
-    {
-      "id": "1_panetolikoszvolosznfc_2026-11-22_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Panetolikosz - Volosz NFC",
-      "competitionName": "Görögország - Görög bajnokság",
-      "eventDate": "2026-11-22T16:00:00+01:00",
-      "marketName": "Hazai csapat kapott gól nélkül játssza le a mérkőzést",
-      "outcomeName": "Nem",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T14:27:33.441Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_görög_bajnokság",
-      "categorySubName": "Görög bajnokság"
     },
     {
       "id": "1_spgijonlaspalmas_2026-11-22_zsiaiglszm33_kevesebbmint3",
@@ -766,6 +722,52 @@
     }
   ],
   "history": [
+    {
+      "id": "1_panetolikoszvolosznfc_2026-11-22_hazaicsapatkapottglnlkljtsszaleamrkzst_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Panetolikosz - Volosz NFC",
+      "eventDate": "2026-11-22T16:00:00+01:00",
+      "competitionName": "Görögország - Görög bajnokság",
+      "marketName": "Hazai csapat kapott gól nélkül játssza le a mérkőzést",
+      "outcomeName": "Nem",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-22T16:58:29.762Z",
+      "status": "lost",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_görög_bajnokság",
+      "categorySubName": "Görög bajnokság"
+    },
+    {
+      "id": "1_nyregyhzadvsc_2026-11-22_dntetlenvagymindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Nyíregyháza - DVSC",
+      "eventDate": "2026-11-22T16:00:00+01:00",
+      "competitionName": "Magyarország - NB I",
+      "marketName": "Döntetlen vagy mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-6",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-22T16:57:33.365Z",
+      "status": "won",
+      "categoryGroupKey": "hun_1",
+      "categoryGroupName": "Magyar NB I & Magyar Kupa",
+      "categorySubKey": "hun_1",
+      "categorySubName": "NB I"
+    },
     {
       "id": "1_fckosiceskalica_2026-11-22_zsiaihendikep175175_skalica175",
       "sportId": 1,
