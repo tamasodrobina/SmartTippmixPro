@@ -150,7 +150,7 @@ setInterval(cleanExpiredCaches, 5 * 60 * 1000).unref();
 
 function createAnalysisFingerprint({ mode, sportId, minOdds, maxOdds, tipsCount, riskFilter = 'all', eventIds = [], customQuery = '' }) {
   const raw = JSON.stringify({
-    v: 'v4_exact_count',
+    v: 'v5_deep_special_stats',
     mode,
     sportId,
     minOdds: Number(minOdds).toFixed(2),
@@ -1337,6 +1337,287 @@ async function fetchJsonWithTimeout(url, timeoutMs = 6000) {
   }
 }
 
+// Segédfüggvény: TippmixPro speciális piacok, játékos-határok és fő egyensúlyi vonalak (Main Lines) kinyerése
+function extractSpecialMarketBenchmarks(ev) {
+  const markets = Array.isArray(ev?.allMarketsList) ? ev.allMarketsList : [];
+  if (markets.length === 0) return [];
+
+  // Egységesítjük a piacokat { marketName, outcomes: [{ outcomeName, odds }] } formára
+  const normalizedMarkets = [];
+  for (const m of markets) {
+    if (!m || !m.marketName) continue;
+    if (Array.isArray(m.outcomes) && m.outcomes.length > 0) {
+      normalizedMarkets.push({
+        marketName: m.marketName,
+        outcomes: m.outcomes.map(o => ({
+          outcomeName: o.outcomeName,
+          odds: Number(o.fixedOdds || o.odds || 0)
+        })).filter(o => o.odds > 1.0)
+      });
+    } else if (m.outcomeName && Number(m.odds) > 1.0) {
+      normalizedMarkets.push({
+        marketName: m.marketName,
+        outcomes: [{ outcomeName: m.outcomeName, odds: Number(m.odds) }]
+      });
+    }
+  }
+
+  const lines = [];
+
+  // 1. Legesélyesebb Gólszerzők / Touchdown-szerzők (legalacsonyabb szorzójú Top 10 játékos)
+  const scorerCandidates = [];
+  for (const m of normalizedMarkets) {
+    const mn = m.marketName.toLowerCase();
+    const isMainScorerMarket =
+      (mn.includes('szerez gólt?') && mn.includes('rendes játékidő') && !mn.includes('csodacser')) ||
+      (mn.includes('szerez touchdown-t?') && mn.includes('hosszabbítással')) ||
+      mn === 'gólszerző' ||
+      mn.includes('bármikor gólt szerez');
+    if (isMainScorerMarket) {
+      for (const o of m.outcomes) {
+        const on = String(o.outcomeName || '');
+        if (!/nem\b|nincs\b/i.test(on) && o.odds >= 1.20 && o.odds <= 9.50) {
+          scorerCandidates.push({ player: on, market: m.marketName, odds: o.odds });
+        }
+      }
+    }
+  }
+  scorerCandidates.sort((a, b) => a.odds - b.odds);
+  if (scorerCandidates.length > 0) {
+    const topScorersStr = scorerCandidates
+      .slice(0, 10)
+      .map(s => `${s.player} (${s.odds.toFixed(2)})`)
+      .join(', ');
+    lines.push(`   🥅 [TIPPMIXPRO LEGESÉLYESEBB GÓLSZERZŐK / TOUCHDOWN-SZERZŐK (Legalacsonyabb szorzók)]: ${topScorersStr}`);
+  }
+
+  // 2. Játékos Speciális Határértékek (NFL Yardok, Elkapások, QB Passzok/TD/INT; Foci Játékos Szabálytalanságok, Lövések)
+  const playerPropLines = [];
+  for (const m of normalizedMarkets) {
+    const mn = m.marketName.toLowerCase();
+    const isPlayerStatProp =
+      mn.includes('yard-jainak száma') ||
+      mn.includes('elkapásainak száma') ||
+      mn.includes('leghosszabb elkapása') ||
+      mn.includes('futási kísérleteinek száma') ||
+      mn.includes('passzolt (passing) touchdown') ||
+      mn.includes('sikeres passzok száma') ||
+      mn.includes('interception-ök száma') ||
+      mn.includes('elkövetett szabálytalanságok száma') ||
+      (mn.includes('kaput eltaláló') && !mn.includes('melyik csapat'));
+    if (isPlayerStatProp && m.outcomes.length > 0) {
+      const outSummary = m.outcomes
+        .slice(0, 2)
+        .map(o => `${o.outcomeName} @ ${o.odds.toFixed(2)}`)
+        .join(' / ');
+      playerPropLines.push(`${m.marketName}: [${outSummary}]`);
+    }
+  }
+  if (playerPropLines.length > 0) {
+    lines.push(`   🏃 [TIPPMIXPRO JÁTÉKOS-SPECIÁLIS HATÁRÉRTÉKEK (Player Props – ${playerPropLines.length} piac)]: ${playerPropLines.slice(0, 16).join(' | ')}`);
+  }
+
+  // 3. Fő Egyensúlyi Határértékek (Main Lines: Büntetőlapok, Szögletek, Szabálytalanságok, Lesek, 11-es, Mezőnygólok, Touchdownok)
+  const findBalancedMainLine = (filterFn) => {
+    let best = null;
+    let bestScore = 999;
+    for (const m of normalizedMarkets) {
+      if (!filterFn(m.marketName.toLowerCase())) continue;
+      if (m.outcomes.length < 2) continue;
+      const avgDist = m.outcomes.reduce((acc, o) => acc + Math.abs(o.odds - 1.85), 0) / m.outcomes.length;
+      if (avgDist < bestScore) {
+        bestScore = avgDist;
+        best = m;
+      }
+    }
+    if (!best) return null;
+    const outs = best.outcomes.map(o => `${o.outcomeName}: ${o.odds.toFixed(2)}`).join(', ');
+    return `${best.marketName} (${outs})`;
+  };
+
+  const mainBenchmarks = [];
+  const mainCards = findBalancedMainLine(mn => mn.startsWith('büntetőlap-szám') && mn.includes('rendes játékidő') && !mn.includes('hendikep'));
+  if (mainCards) mainBenchmarks.push(`Fő Büntetőlap-határ: ${mainCards}`);
+
+  const mainCorners = findBalancedMainLine(mn => mn.startsWith('szögletszám') && mn.includes('rendes játékidő') && !mn.includes('hendikep'));
+  if (mainCorners) mainBenchmarks.push(`Fő Szöglet-határ: ${mainCorners}`);
+
+  const mainFouls = findBalancedMainLine(mn => mn.startsWith('szabálytalanságok száma') && mn.includes('rendes játékidő'));
+  if (mainFouls) mainBenchmarks.push(`Fő Szabálytalanság-határ: ${mainFouls}`);
+
+  const mainOffsides = findBalancedMainLine(mn => mn.startsWith('lesszám') && mn.includes('rendes játékidő'));
+  if (mainOffsides) mainBenchmarks.push(`Fő Les-határ: ${mainOffsides}`);
+
+  const penaltyMarket = normalizedMarkets.find(m => m.marketName.toLowerCase().includes('lesz 11-es?'));
+  if (penaltyMarket) {
+    mainBenchmarks.push(`Lesz 11-es (Büntető)?: ${penaltyMarket.outcomes.map(o => `${o.outcomeName} @ ${o.odds.toFixed(2)}`).join(' / ')}`);
+  }
+
+  const mainTds = findBalancedMainLine(mn => mn.startsWith('touchdown-ok száma') && mn.includes('hosszabbítással'));
+  if (mainTds) mainBenchmarks.push(`Fő Touchdown-határ: ${mainTds}`);
+
+  const mainFgs = findBalancedMainLine(mn => mn.startsWith('mezőnygólok száma') && mn.includes('hosszabbítással'));
+  if (mainFgs) mainBenchmarks.push(`Fő Mezőnygól-határ: ${mainFgs}`);
+
+  if (mainBenchmarks.length > 0) {
+    lines.push(`   ⚖️ [TIPPMIXPRO FŐ STATISZTIKAI HATÁRÉRTÉKEK (Bookmaker Main Lines)]: ${mainBenchmarks.join(' | ')}`);
+  }
+
+  return lines;
+}
+
+// Segédfüggvény: Utolsó 3 lezárt focimeccs jegyzőkönyvéből (ESPN Summary) kiszámolja a csapat valós sárga lap, szöglet, szabálytalanság, les, 11-es és játékos-szabálytalanság profilját
+async function computeSoccerRecentSpecialStats(lastFiveGames = [], now = Date.now()) {
+  const specialLines = [];
+  if (!Array.isArray(lastFiveGames) || lastFiveGames.length === 0) return specialLines;
+
+  for (const teamBlock of lastFiveGames) {
+    const teamName = teamBlock?.team?.displayName || '';
+    const teamId = String(teamBlock?.team?.id || '');
+    const recentEvents = (teamBlock?.events || []).slice(0, 3);
+    if (!teamName || recentEvents.length === 0) continue;
+
+    const pastSummaries = await Promise.all(
+      recentEvents.map(async (pe) => {
+        if (!pe?.id) return null;
+        const cacheKey = `soc_past_${pe.id}`;
+        let cached = espnCache.summaries.get(cacheKey);
+        if (!cached || now - cached.timestamp > 60 * 60 * 1000) {
+          const fetched = await fetchJsonWithTimeout(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/summary?event=${pe.id}`, 4500);
+          if (fetched) {
+            cached = { timestamp: now, data: fetched };
+            espnCache.summaries.set(cacheKey, cached);
+          }
+        }
+        return cached?.data || null;
+      })
+    );
+
+    let gamesCount = 0;
+    let ownYellow = 0, matchYellow = 0;
+    let ownRed = 0, matchRed = 0;
+    let ownCorners = 0, matchCorners = 0;
+    let ownFouls = 0, matchFouls = 0;
+    let ownOffsides = 0, matchOffsides = 0;
+    let ownShots = 0, ownSot = 0;
+    let ownPenTaken = 0, oppPenTaken = 0;
+
+    const playerFoulsMap = new Map(); // name -> { fouls, yellows, shots, sot, goals }
+
+    for (const ps of pastSummaries) {
+      if (!ps || !Array.isArray(ps.boxscore?.teams) || ps.boxscore.teams.length < 2) continue;
+      const ownTeamBox = ps.boxscore.teams.find(
+        tb => String(tb.team?.id) === teamId || (tb.team?.displayName || '').toLowerCase() === teamName.toLowerCase()
+      );
+      const oppTeamBox = ps.boxscore.teams.find(tb => tb !== ownTeamBox);
+      if (!ownTeamBox || !oppTeamBox) continue;
+
+      const getStat = (box, statName) => {
+        const found = (box.statistics || []).find(s => s.name === statName);
+        return found ? (Number(found.displayValue) || 0) : 0;
+      };
+
+      gamesCount++;
+      const oy = getStat(ownTeamBox, 'yellowCards');
+      const opy = getStat(oppTeamBox, 'yellowCards');
+      ownYellow += oy;
+      matchYellow += (oy + opy);
+
+      const or = getStat(ownTeamBox, 'redCards');
+      const opr = getStat(oppTeamBox, 'redCards');
+      ownRed += or;
+      matchRed += (or + opr);
+
+      const oc = getStat(ownTeamBox, 'wonCorners');
+      const opc = getStat(oppTeamBox, 'wonCorners');
+      ownCorners += oc;
+      matchCorners += (oc + opc);
+
+      const ofl = getStat(ownTeamBox, 'foulsCommitted');
+      const opfl = getStat(oppTeamBox, 'foulsCommitted');
+      ownFouls += ofl;
+      matchFouls += (ofl + opfl);
+
+      const oof = getStat(ownTeamBox, 'offsides');
+      const opof = getStat(oppTeamBox, 'offsides');
+      ownOffsides += oof;
+      matchOffsides += (oof + opof);
+
+      ownShots += getStat(ownTeamBox, 'totalShots');
+      ownSot += getStat(ownTeamBox, 'shotsOnTarget');
+
+      ownPenTaken += getStat(ownTeamBox, 'penaltyKickShots');
+      oppPenTaken += getStat(oppTeamBox, 'penaltyKickShots');
+
+      // Játékosok szabálytalanságai, sárga lapjai és lövései a keretből (rosters)
+      const ownRoster = (ps.rosters || []).find(
+        r => String(r.team?.id) === teamId || (r.team?.displayName || '').toLowerCase() === teamName.toLowerCase()
+      );
+      if (ownRoster && Array.isArray(ownRoster.roster)) {
+        for (const entry of ownRoster.roster) {
+          const pName = entry?.athlete?.displayName;
+          if (!pName || !Array.isArray(entry.stats)) continue;
+          const pStat = (n) => {
+            const st = entry.stats.find(s => s.name === n);
+            return st ? (Number(st.value ?? st.displayValue) || 0) : 0;
+          };
+          const fc = pStat('foulsCommitted');
+          const yc = pStat('yellowCards');
+          const sh = pStat('totalShots');
+          const sog = pStat('shotsOnTarget');
+          const gl = pStat('totalGoals');
+          if (fc > 0 || yc > 0 || sh > 0 || gl > 0) {
+            const cur = playerFoulsMap.get(pName) || { fouls: 0, yellows: 0, shots: 0, sot: 0, goals: 0 };
+            cur.fouls += fc;
+            cur.yellows += yc;
+            cur.shots += sh;
+            cur.sot += sog;
+            cur.goals += gl;
+            playerFoulsMap.set(pName, cur);
+          }
+        }
+      }
+    }
+
+    if (gamesCount > 0) {
+      const avg = (v) => (v / gamesCount).toFixed(1);
+      specialLines.push(
+        `      • ${teamName} (utolsó ${gamesCount} tétmeccs valós átlaga): ` +
+        `Sárga lap: saját ${avg(ownYellow)}/meccs (meccs össz-lap: ${avg(matchYellow)}/meccs, Piros lap: ${ownRed}/${matchRed} db) | ` +
+        `Szöglet: saját ${avg(ownCorners)}/meccs (meccs össz-szöglet: ${avg(matchCorners)}/meccs) | ` +
+        `Szabálytalanság: saját ${avg(ownFouls)}/meccs (meccs össz-szabálytalanság: ${avg(matchFouls)}/meccs) | ` +
+        `Les: saját ${avg(ownOffsides)}/meccs (össz: ${avg(matchOffsides)}) | ` +
+        `Kapura lövés: ${avg(ownShots)}/meccs (${avg(ownSot)} kaput találó) | ` +
+        `11-esek (Büntetők az utolsó ${gamesCount} meccsen): ${ownPenTaken} kiharcolt / ${oppPenTaken} összehozott (ellenfélnek megítélt) 11-es`
+      );
+
+      // Top szabálytalankodó / lapgyűjtő játékosok
+      const topFoulers = [...playerFoulsMap.entries()]
+        .filter(([, st]) => st.fouls >= 2 || st.yellows >= 1)
+        .sort((a, b) => (b[1].fouls * 2 + b[1].yellows * 3) - (a[1].fouls * 2 + a[1].yellows * 3))
+        .slice(0, 5)
+        .map(([name, st]) => `${name} (${st.fouls} szabálytalanság, ${st.yellows} sárga lap)`);
+
+      if (topFoulers.length > 0) {
+        specialLines.push(`        ↳ 🟨 ${teamName} legtöbbet szabálytalankodó / lapveszélyes játékosai (utolsó ${gamesCount} meccs): ${topFoulers.join(', ')}`);
+      }
+
+      // Top lövő / gólerős játékosok az utolsó meccseken
+      const topShooters = [...playerFoulsMap.entries()]
+        .filter(([, st]) => st.shots >= 3 || st.goals >= 1)
+        .sort((a, b) => (b[1].goals * 4 + b[1].sot * 2 + b[1].shots) - (a[1].goals * 4 + a[1].sot * 2 + a[1].shots))
+        .slice(0, 5)
+        .map(([name, st]) => `${name} (${st.shots} lövés, ${st.sot} kaput találó, ${st.goals} gól)`);
+
+      if (topShooters.length > 0) {
+        specialLines.push(`        ↳ 🎯 ${teamName} legaktívabb kapura lövői (utolsó ${gamesCount} meccs): ${topShooters.join(', ')}`);
+      }
+    }
+  }
+
+  return specialLines;
+}
+
 async function fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl) {
   const now = Date.now();
   const lines = [];
@@ -1364,7 +1645,6 @@ async function fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl) {
         });
 
         if (foundTeam && Array.isArray(foundTeam.injuries)) {
-          // Fontos sérültek: Injured Reserve, Out, Doubtful, Questionable + kulcsposztok (QB, RB, WR, TE, CB, S, LB, DE, OT)
           const relevantInjuries = foundTeam.injuries.filter(inj => {
             const st = (inj.status || '').toLowerCase();
             const pos = (inj.athlete?.position?.abbreviation || '').toUpperCase();
@@ -1396,14 +1676,63 @@ async function fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl) {
       if (matchedSb) {
         const comp = matchedSb.competitions?.[0];
         if (comp?.competitors) {
-          lines.push(`   🏈 [ESPN NFL CSAPAT STATISZTIKÁK ÉS VEZÉRJÁTÉKOSOK – ${matchedSb.name}]:`);
+          lines.push(`   🏈 [ESPN NFL CSAPAT MÉRLEG ÉS VEZÉRJÁTÉKOSOK – ${matchedSb.name}]:`);
           for (const c of comp.competitors) {
             const tName = c.team?.displayName || '';
             const rec = c.records?.[0]?.summary || '';
             const leaders = (c.leaders || [])
               .map(l => `${l.displayName}: ${l.leaders?.[0]?.athlete?.displayName || ''} (${l.leaders?.[0]?.displayValue || ''})`)
               .join('; ');
-            lines.push(`      - ${tName} (Mérleg: ${rec}) | Aktuális statisztikai vezetők: ${leaders}`);
+            lines.push(`      - ${tName} (Mérleg: ${rec}) | Vezetők: ${leaders}`);
+          }
+        }
+
+        // Mély NFL Matchup Summary lekérése (Támadó vs Védő yard/pont átlagok, részletes Játékos statisztikák, Predictor)
+        if (matchedSb.id) {
+          const nflSumKey = `nfl_sum_${matchedSb.id}`;
+          let nflSumCached = espnCache.summaries.get(nflSumKey);
+          if (!nflSumCached || now - nflSumCached.timestamp > 20 * 60 * 1000) {
+            const fetchedNflSum = await fetchJsonWithTimeout(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=${matchedSb.id}`);
+            if (fetchedNflSum) {
+              nflSumCached = { timestamp: now, data: fetchedNflSum };
+              espnCache.summaries.set(nflSumKey, nflSumCached);
+            }
+          }
+          const nflSum = nflSumCached?.data;
+          if (nflSum) {
+            if (Array.isArray(nflSum.boxscore?.teams) && nflSum.boxscore.teams.length > 0) {
+              lines.push(`   📊 [ESPN NFL TÁMADÓ vs VÉDŐ YARD- ÉS PONT-PROFIL (Player Props & Totals elemzéshez)]:`);
+              for (const tb of nflSum.boxscore.teams) {
+                const tName = tb.team?.displayName || '';
+                const stStr = (tb.statistics || [])
+                  .map(s => `${s.label || s.name}: ${s.displayValue}`)
+                  .join(' | ');
+                if (stStr) lines.push(`      - ${tName}: ${stStr}`);
+              }
+            }
+            if (Array.isArray(nflSum.leaders) && nflSum.leaders.length > 0) {
+              lines.push(`   🌟 [ESPN NFL JÁTÉKOS SZEZON-STATISZTIKÁK (Passzolt/Futott/Elkapott yardok, TD-k, Sacks, Tackles)]:`);
+              for (const tl of nflSum.leaders) {
+                const tName = tl.team?.displayName || '';
+                const catsStr = (tl.leaders || [])
+                  .map(c => {
+                    const pList = (c.leaders || [])
+                      .slice(0, 3)
+                      .map(p => `${p.athlete?.displayName || ''} (${p.displayValue || ''})`)
+                      .join(', ');
+                    return pList ? `${c.displayName}: ${pList}` : '';
+                  })
+                  .filter(Boolean)
+                  .join(' | ');
+                if (catsStr) lines.push(`      - ${tName}: ${catsStr}`);
+              }
+            }
+            if (nflSum.predictor?.homeTeam && nflSum.predictor?.awayTeam) {
+              lines.push(
+                `   📈 [ESPN FPI GYŐZELMI MODEL]: Hazai esély: ${nflSum.predictor.homeTeam.gameProjection || '?'}% | Vendég esély: ${nflSum.predictor.awayTeam.gameProjection || '?'}%`
+              );
+            }
+            sources.push({ title: `ESPN NFL Game Center & Player Stats – ${matchedSb.name}`, url: `https://www.espn.com/nfl/game/_/gameId/${matchedSb.id}` });
           }
         }
       }
@@ -1434,19 +1763,36 @@ async function fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl) {
 
         const sum = summaryData?.data;
         if (sum) {
+          // 1. Kijelölt Játékvezető (Bíró), ha az ESPN gameInfo-ban már szerepel
+          const officials = sum.gameInfo?.officials;
+          if (Array.isArray(officials) && officials.length > 0) {
+            const refNames = officials.map(o => `${o.displayName || o.fullName} (${o.position?.displayName || 'Referee'})`).join(', ');
+            lines.push(`   👨‍⚖️ [HIVATALOS JÁTÉKVEZETŐ (BÍRÓ)]: ${refNames}`);
+          }
+
+          // 2. Top 3 játékos kategóriánként (Gólszerzők, Gólpasszok, Összes kapura lövés, Passzok, Védések)
           if (Array.isArray(sum.leaders) && sum.leaders.length > 0) {
-            lines.push(`   ⚽ [ESPN HIVATALOS CSAPAT KULCSJÁTÉKOSOK & GÓLSZERZŐK – ${matchedSb.name}]:`);
+            lines.push(`   ⚽ [ESPN SZEZON GÓLSZERZŐK, KAPURA LÖVŐK & KULCSJÁTÉKOSOK (Top 3 / kategória) – ${matchedSb.name}]:`);
             for (const tl of sum.leaders) {
               const tName = tl.team?.displayName || '';
               const lStr = (tl.leaders || [])
-                .map(x => `${x.displayName}: ${x.leaders?.[0]?.athlete?.displayName || ''} (${x.leaders?.[0]?.displayValue || ''})`)
+                .map(x => {
+                  const top3 = (x.leaders || [])
+                    .slice(0, 3)
+                    .map(p => `${p.athlete?.displayName || ''} [${p.displayValue || ''}]`)
+                    .filter(Boolean)
+                    .join(', ');
+                  return top3 ? `${x.displayName}: ${top3}` : '';
+                })
                 .filter(Boolean)
                 .join(' | ');
               if (lStr) lines.push(`      - ${tName}: ${lStr}`);
             }
           }
+
+          // 3. Utolsó 5 mérkőzés eredmény-forma + Utolsó 3 mérkőzés jegyzőkönyveiből számított VALÓS Sárga lap, Szöglet, Szabálytalanság, Les, 11-es és Játékos-szabálytalanság statisztika!
           if (Array.isArray(sum.lastFiveGames) && sum.lastFiveGames.length > 0) {
-            lines.push(`   📈 [UTOLSÓ 5 MÉRKŐZÉS FORMA – ${matchedSb.name}]:`);
+            lines.push(`   📈 [UTOLSÓ 5 MÉRKŐZÉS EREDMÉNY-FORMA – ${matchedSb.name}]:`);
             for (const g of sum.lastFiveGames) {
               const tName = g.team?.displayName || '';
               const evStr = (g.events || [])
@@ -1455,8 +1801,14 @@ async function fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl) {
                 .join(', ');
               if (evStr) lines.push(`      - ${tName}: ${evStr}`);
             }
+
+            const recentSpecialStats = await computeSoccerRecentSpecialStats(sum.lastFiveGames, now);
+            if (recentSpecialStats.length > 0) {
+              lines.push(`   🟨🚩 [CSAPATOK VALÓS SÁRGA LAP, SZÖGLET, SZABÁLYTALANSÁG, LES, 11-ES ÉS JÁTÉKOS-PROFILJA (Hivatalos meccsjegyzőkönyvekből)]:`);
+              lines.push(...recentSpecialStats);
+            }
           }
-          sources.push({ title: `ESPN Match Center – ${matchedSb.name}`, url: `https://www.espn.com/soccer/match/_/gameId/${matchedSb.id}` });
+          sources.push({ title: `ESPN Match Center & Official Boxscore Stats – ${matchedSb.name}`, url: `https://www.espn.com/soccer/match/_/gameId/${matchedSb.id}` });
         }
       }
     }
@@ -1464,37 +1816,10 @@ async function fetchEspnMatchIntelligence(ev, parsedTeams, isFootball, isNfl) {
     // ignore ESPN fallback errors
   }
 
-  // TippmixPro aktív játékos-piacok kivonatolása (kik azok a játékosok, akikre a TippmixPro ma ténylegesen kínál oddsot)
-  if (Array.isArray(ev.allMarketsList) && ev.allMarketsList.length > 0) {
-    const playerMarkets = ev.allMarketsList.filter(m => {
-      const mn = (m.marketName || '').toLowerCase();
-      return (
-        mn.includes('gólszerző') ||
-        mn.includes('szerez gólt') ||
-        mn.includes('touchdown') ||
-        mn.includes('yard') ||
-        mn.includes('elkapás') ||
-        mn.includes('reception') ||
-        mn.includes('sikeres passzok') ||
-        mn.includes('interception') ||
-        mn.includes('futási kísérlet') ||
-        mn.includes('elkövetett szabálytalanság')
-      );
-    });
-    if (playerMarkets.length > 0) {
-      const sampleList = [];
-      for (const pm of playerMarkets.slice(0, 18)) {
-        if (pm.outcomeName) {
-          sampleList.push(`${pm.outcomeName} (${pm.marketName}: ${pm.odds})`);
-        } else if (Array.isArray(pm.outcomes) && pm.outcomes[0]) {
-          sampleList.push(`${pm.outcomes[0].outcomeName} (${pm.marketName}: ${pm.outcomes[0].fixedOdds})`);
-        }
-      }
-      const samplePlayers = [...new Set(sampleList)].slice(0, 16);
-      if (samplePlayers.length > 0) {
-        lines.push(`   🎯 [TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK A MAI MECCSRE (Kik szerepelnek a mai keretben)]: ${samplePlayers.join(', ')}`);
-      }
-    }
+  // TippmixPro speciális piacok, legesélyesebb gólszerzők/TD-szerzők, játékos-határok és fő egyensúlyi vonalak (Main Lines) hozzáfűzése
+  const specialBenchmarks = extractSpecialMarketBenchmarks(ev);
+  if (specialBenchmarks.length > 0) {
+    lines.push(...specialBenchmarks);
   }
 
   return { lines, sources };
@@ -1625,23 +1950,28 @@ async function gatherWebResearchForMatches(eventsList, customQuery = '') {
         }
 
         let qTeamSpecific = '';
+        let qSpecialMarkets = '';
         if (isNfl && parsedTeams.homeEn && parsedTeams.awayEn) {
           qTeamSpecific = `${parsedTeams.homeEn} ${parsedTeams.awayEn} quarterback injury report lineup`;
+          qSpecialMarkets = `${enMatch} player props projections touchdown scorer receiving rushing yards`;
         } else if (isFootball && parsedTeams.homeEn && parsedTeams.awayEn) {
-          qTeamSpecific = `${parsedTeams.homeEn} vs ${parsedTeams.awayEn} starting XI lineup key players`;
+          qTeamSpecific = `${parsedTeams.homeEn} vs ${parsedTeams.awayEn} starting XI lineup key players goalscorer`;
+          qSpecialMarkets = `${enMatch} referee yellow cards penalty corners fouls stats`;
         } else {
           qTeamSpecific = `${enMatch} key players stats`;
+          qSpecialMarkets = `${enMatch} head to head stats tiebreak`;
         }
 
         rssSearches.push(
           searchLiveNewsRssCached(qMain, 5, 10),
           searchLiveNewsRssCached(qInjuries, 5, 10),
-          searchLiveNewsRssCached(qTeamSpecific, 4, 14)
+          searchLiveNewsRssCached(qTeamSpecific, 4, 14),
+          searchLiveNewsRssCached(qSpecialMarkets, 4, 14)
         );
 
         if (isSingleDeepMatch && isFootball) {
           rssSearches.push(
-            searchLiveNewsRssCached(`${enMatch} SportsMole WhoScored lineup injuries prediction`, 4, 10)
+            searchLiveNewsRssCached(`${enMatch} SportsMole WhoScored lineup referee cards corners prediction`, 4, 10)
           );
         }
       } else {
@@ -2377,10 +2707,10 @@ KÜLÖNLEGES SZAKMAI KÖVETELMÉNYEK:
    - Ezért a \`"tips"\` tömbben **KÖTELEZŐEN PONTOSAN ${expectedTipsCount} DARAB** különböző tippet kell visszaadnod (\`rank: 1\`-től \`rank: ${expectedTipsCount}\`-ig)! **SZIGORÚAN TILOS 3 tippnél megállni, ha a kért darabszám ${expectedTipsCount}!**
 2. **SZIGORÚAN VALÓDI MÉRKŐZÉSEK ÉS PIACOK**:
    - KIZÁRÓLAG a fenti "KÖVETKEZŐ ${hours} ÓRÁBAN ELÉRHETŐ TIPPMIXPRO MÉRKŐZÉSEK" listában szereplő mérkőzésekből és opciókból választhatsz tippet! Szigorúan tilos kitalálni bármilyen más meccset vagy oddsot!
-3. **PIACI SOKSZÍNŰSÉG, JÁTÉKOS- ÉS SPECIÁLIS TIPPMIXPRO PIACOK BEVONÁSA**:
-   - Válogass bátran és változatosan a mérkőzések összes elérhető TippmixPro piaca közül: fő piacok (1X2, Ki nyeri?, Kétesély, DNB), Gólszám/Pontszám Alatt-Felett, valamint **játékos- és speciális piacok**:
-     * **NFL-nél**: Játékos elkapott (receiving) yardok, futott (rushing) yardok, elkapások (receptions) száma, leghosszabb elkapás, irányító (QB) passzolt touchdownok / sikeres passzok / Interceptionök száma, Szerez touchdown-t?, Csapat touchdown-ok száma, Mezőnygólok száma, Csapat pontszám, Negyedek / Félidők, Ázsiai hendikep!
-     * **Focinál**: Mindkét csapat szerez gólt (BTTS), Szögletszám (6.5–14.5), Büntetőlap-szám (1.5–8.5) és csapat büntetőlapok, Szabálytalanságok száma, Lesszám, Játékos gólszerzés (Szerez gólt?), Játékos által elkövetett szabálytalanságok száma, Csapat gólszám, Hendikep!
+3. **PIACI SOKSZÍNŰSÉG, JÁTÉKOS- ÉS SPECIÁLIS TIPPMIXPRO PIACOK TÉNYALAPÚ BEVONÁSA**:
+   - Válogass bátran és változatosan a mérkőzések összes elérhető TippmixPro piaca közül: fő piacok (1X2, Ki nyeri?, Kétesély, DNB), Gólszám/Pontszám Alatt-Felett, valamint **játékos- és speciális piacok**, és vesd össze őket a lenti **VALÓS STATISZTIKAI PROFILLAL**:
+     * **NFL-nél**: Játékos elkapott (receiving) yardok, futott (rushing) yardok, elkapások (receptions) száma, leghosszabb elkapás, irányító (QB) passzolt touchdownok / sikeres passzok / Interceptionök száma, Szerez touchdown-t?, Csapat touchdown-ok száma, Mezőnygólok száma, Csapat pontszám, Negyedek / Félidők, Ázsiai hendikep! Vesd össze a játékos szezonbeli átlagát (CAR, REC, YDS, TD) az ellenfél védelmének engedett passzolt/futott yardjaival (Pass Yards Allowed / Rush Yards Allowed) és a TippmixPro fő határértékével!
+     * **Focinál**: Mindkét csapat szerez gólt (BTTS), Szögletszám (6.5–14.5), Büntetőlap-szám (1.5–8.5) és csapat büntetőlapok, Szabálytalanságok száma, Lesszám, 11-es (Büntető), Játékos gólszerzés (Szerez gólt?), Játékos által elkövetett szabálytalanságok száma, Csapat gólszám, Hendikep! Vesd össze a lenti **utolsó meccses valós sárga lap, szöglet, szabálytalanság, les és 11-es (kiharcolt/összehozott) átlagokat**, a **legtöbbet szabálytalankodó / legtöbbet kapura lövő játékosok adatait**, valamint a **játékvezető (bíró) szigorát** a TippmixPro fő egyensúlyi határértékével (Bookmaker Main Lines)!
    - Ha több tippet (${expectedTipsCount} db) kér a felhasználó, oszd el őket a különböző mérkőzések és különböző piactípusok között (egy mérkőzésről szükség esetén akár 2 különböző piaci tipp is választható, ha kevesebb a meccs, mint a kért tippszám).
 4. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
    - Minden mérkőzésnél vizsgáld meg a lenti **HIVATALOS ESPN SÉRÜLTJELENTÉS**, a **TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK** és a **FRISS NEMZETKÖZI SZAKCIKKEK** alapján a **biztosan hiányzó (Injured Reserve / Out / eltiltott) vagy kérdéses (Questionable) kulcsjátékosokat**:
@@ -2685,9 +3015,12 @@ A felhasználó az alábbi konkrét mérkőzés mélyreható szakmai elemzését
 ${riskFilterInstruction}
 
 KÖTELEZŐ ELEMZÉSI SZEMPONTOK (SZAKMAI MÉLYSÉG ÉS PIACI SOKSZÍNŰSÉG):
-1. **MINDEN ELÉRHETŐ TIPPMIXPRO FOGADÁSI PIAC ÉS JÁTÉKOS-OPCIÓ ÁTTEKINTÉSE**:
+1. **MINDEN ELÉRHETŐ TIPPMIXPRO FOGADÁSI PIAC, JÁTÉKOS-OPCIÓ ÉS SPECIÁLIS STATISZTIKA ÁTTEKINTÉSE**:
    - A mérkőzéshez lent megadott TippmixPro kínálat a teljes odds-sávot tartalmazza: 1X2, Ki nyeri?, Kétesély, Gólszám/Pontszám, Mindkét csapat gólt szerez, Játékos-speciális piacok (NFL-nél: Játékos elkapott/futott yardok, elkapások száma, leghosszabb elkapás, irányító passzolt TD-k / sikeres passzok / Interceptionök, Touchdown-szerzők; Focinál: Gólszerző / Szerez gólt?, Játékos elkövetett szabálytalanságok száma), Csapat touchdown-ok / mezőnygólok száma, Csapat pontszám/gólszám, Szabálytalanságok száma, Lesszám, Kiállítás / Piros lap, 11-es / Büntető, Szögletek (6.5–14.5), Büntetőlapok (1.5–8.5), Félidők / Negyedek, Hendikepek stb.!
-   - Bátran és nyitottan válassz játékos- és speciális piacokat is (pl. NFL-nél játékos futott/elkapott yard, elkapásszám, QB passzok, Touchdown-ok száma, Mezőnygólok száma, Csapat pontszám, Hendikep, Negyedek/1. félidő; Focinál gólszerző, játékos szabálytalanságok, szabálytalanságok száma, lesszám, lapok, szöglet, 11-es/büntető, félidő), amennyiben a statisztikák, a forma vagy a bírói adatok alapján az képviseli a legnagyobb valószínűséget és értéket!
+   - **TÉNYALAPÚ SPECIÁLIS PIAC ELEMZÉS**:
+     * **Gólszerző / Touchdown / Játékos Yard & Lövés tippeknél:** Használd a lenti ESPN szezonbeli gól-, gólpassz- és kapura lövés vezetőket (Goals, Assists, Total Shots), az utolsó meccsek legaktívabb lövőit, illetve NFL-nél a játékosok szezonbeli CAR / REC / YDS / TD mutatóit összevetve az ellenfél védelmének engedett passzolt/futott yardjaival (Pass Yards Allowed / Rush Yards Allowed) és a TippmixPro játékos-határértékeivel!
+     * **Büntetőlap / Sárga lap / Szabálytalanság / Játékos szabálytalanság tippeknél:** Használd a lenti hivatalos meccsjegyzőkönyvekből számított **valós sárga lap, piros lap és szabálytalanság átlagokat**, a **legtöbbet szabálytalankodó / lapveszélyes játékosok listáját**, a **játékvezető (bíró) szigorát** és a TippmixPro fő határértékét (Fő Büntetőlap-határ / Fő Szabálytalanság-határ)!
+     * **Szöglet, Les és 11-es (Büntető) tippeknél:** Használd a két csapat utolsó meccseinek **valós szöglet- és les-átlagát**, a **kiharcolt és összehozott 11-esek számát**, valamint a bíró büntető-hajlamát!
 2. **SÉRÜLTEK, ELTILTOTTAK ÉS KULCSJÁTÉKOSOK POSZT SZERINTI SÚLYOZÁSA (KIEMELTEN FONTOS!)**:
    - Vizsgáld meg a lenti **HIVATALOS ESPN SÉRÜLTJELENTÉS**, a **TIPPMIXPRO AKTÍV JÁTÉKOS PIACOK** és a **FRISS NEMZETKÖZI SZAKCIKKEK** alapján a **biztosan hiányzó (Injured Reserve / Out / eltiltott) vagy kérdéses (Questionable) kulcsjátékosokat** és várható kezdőcsapatokat:
    - **Gólerős támadó / Házi gólkirály / Kezdő QB / Irányító hiánya:** Ha egy csapat kezdő irányítója (QB, pl. Injured Reserve státuszban), legtöbb gólt szerző csatára vagy legmagasabb osztályzatú támadója nem lép pályára, SZIGORÚAN TILOS rá játékos-tippet adni, és csökkentsd a csapat pont-/gólvárakozását (kerüld a csapat merész Over vagy sima győzelem tippjét, helyette előnyben részesítendő a Kétesély, DNB, Under, a csereirányító/futójáték sajátosságai vagy az ellenfél hendikepje).
