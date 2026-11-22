@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T11:27:16.545Z",
+  "updatedAt": "2026-11-22T11:31:44.779Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_barcelonavillarreal_2026-11-22_1flid1x2_barcelona",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Barcelona - Villarreal",
-      "competitionName": "Spanyolország - Spanyol bajnokság",
-      "eventDate": "2026-11-22T14:00:00+01:00",
-      "marketName": "1. félidő - 1X2",
-      "outcomeName": "Barcelona",
-      "odds": 1.43,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T10:52:07.349Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_1",
-      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
-      "categorySubKey": "esp_1",
-      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
-    },
     {
       "id": "1_juventusvenezia_2026-11-22_lesz11es_nem",
       "sportId": 1,
@@ -785,6 +763,72 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_premier_liga",
       "categorySubName": "Premier Liga"
+    },
+    {
+      "id": "1_barcelonavillarreal_2026-11-22_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5586822",
+      "eventName": "Barcelona - Villarreal",
+      "competitionName": "Spanyol bajnokság",
+      "eventDate": "2026-11-22T14:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.42,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:31:44.779Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
+    },
+    {
+      "id": "1_barcelonavillarreal_2026-11-22_szgletszm105105_tbbmint105",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5586822",
+      "eventName": "Barcelona - Villarreal",
+      "competitionName": "Spanyol bajnokság",
+      "eventDate": "2026-11-22T14:00:00+01:00",
+      "marketName": "Szögletszám 10,5 (10.5)",
+      "outcomeName": "Több, mint 10,5",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:31:44.779Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
+    },
+    {
+      "id": "1_barcelonavillarreal_2026-11-22_bntetlapszm3535_tbbmint35",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5586822",
+      "eventName": "Barcelona - Villarreal",
+      "competitionName": "Spanyol bajnokság",
+      "eventDate": "2026-11-22T14:00:00+01:00",
+      "marketName": "Büntetőlap-szám 3,5 (3.5)",
+      "outcomeName": "Több, mint 3,5",
+      "odds": 1.65,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-22T11:31:44.779Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
     }
   ],
   "history": [
@@ -7448,7 +7492,6 @@
     "1_mnchengladbachdortmund_2026-11-21_1x2_dortmund",
     "1_mnchengladbachdortmund_2026-11-21_glszm2525_tbbmint25",
     "1_mnchengladbachdortmund_2026-11-21_kezdknthnygltszerez_guirassyserhou1",
-    "1_barcelonavillarreal_2026-11-22_1flid1x2_barcelona",
     "1_juventusvenezia_2026-11-22_lesz11es_nem",
     "1_sassuologenoa_2026-11-22_bntetlapszm4545_kevesebbmint45",
     "1_bolognaudinese_2026-11-22_1flidbntetlapszm1515_kevesebbmint15",
@@ -7479,7 +7522,10 @@
     "16_chicagoneworleans_2026-11-22_hendikep9595_chicago95",
     "1_liverpoolmanchesterutd_2026-11-22_1x2_liverpool",
     "1_liverpoolmanchesterutd_2026-11-22_mindktcsapatszerezglt_igen",
-    "1_liverpoolmanchesterutd_2026-11-22_szgletszm9595_tbbmint95"
+    "1_liverpoolmanchesterutd_2026-11-22_szgletszm9595_tbbmint95",
+    "1_barcelonavillarreal_2026-11-22_mindktcsapatszerezglt_igen",
+    "1_barcelonavillarreal_2026-11-22_szgletszm105105_tbbmint105",
+    "1_barcelonavillarreal_2026-11-22_bntetlapszm3535_tbbmint35"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -7552,6 +7598,7 @@
     "1_chicagoneworleans_2026-11-22_hendikep9595_chicago95",
     "16_chicagoneworleans_2026-11-22_touchdownokszma4545_tbbmint45",
     "16_chicagoneworleans_2026-11-22_meznyglokszma2525_tbbmint25",
-    "1_liverpoolmanchesterutd_2026-11-22_bntetlapszm4545_tbbmint45"
+    "1_liverpoolmanchesterutd_2026-11-22_bntetlapszm4545_tbbmint45",
+    "1_barcelonavillarreal_2026-11-22_1flid1x2_barcelona"
   ]
 }
