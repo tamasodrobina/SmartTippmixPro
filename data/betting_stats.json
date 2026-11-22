@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-22T14:59:23.664Z",
+  "updatedAt": "2026-11-22T15:08:12.771Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 210,
-      "won": 134,
+      "totalChecked": 211,
+      "won": 135,
       "lost": 76,
       "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 84,
-          "won": 59,
+          "totalChecked": 85,
+          "won": 60,
           "lost": 25,
-          "winRate": 70
+          "winRate": 71
         },
         "medium": {
           "totalChecked": 118,
@@ -939,31 +939,32 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_román_bajnokság",
       "categorySubName": "Román bajnokság"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_barcelonavillarreal_2026-11-22_mindktcsapatszerezgltglszm2525_igenstbbmint25",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": "5586822",
       "eventName": "Barcelona - Villarreal",
-      "competitionName": "Spanyolország - Spanyol bajnokság",
       "eventDate": "2026-11-22T14:00:00+01:00",
+      "competitionName": "Spanyolország - Spanyol bajnokság",
       "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
       "outcomeName": "Igen és több, mint 2,5",
       "odds": 1.41,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-22T11:31:52.860Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "3-2",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-22T15:08:12.771Z",
+      "status": "won",
       "categoryGroupKey": "top5_1",
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
       "categorySubKey": "esp_1",
       "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_barcelonavillarreal_2026-11-22_bntetlapszm3535_tbbmint35",
       "sportId": 1,
