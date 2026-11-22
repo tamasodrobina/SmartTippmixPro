@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-22T21:57:56.457Z",
+  "updatedAt": "2026-11-22T22:07:45.077Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 230,
-      "won": 149,
+      "totalChecked": 231,
+      "won": 150,
       "lost": 81,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 98,
-          "won": 68,
+          "totalChecked": 99,
+          "won": 69,
           "lost": 30,
-          "winRate": 69
+          "winRate": 70
         },
         "medium": {
           "totalChecked": 124,
@@ -169,31 +169,32 @@
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_athlticoprremo_2026-11-22_mindktflidbenkevesebbmint15gllesz15_nem",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "Athlético PR - Remo",
-      "competitionName": "Brazília - Brazil bajnokság",
       "eventDate": "2026-11-22T20:00:00+01:00",
+      "competitionName": "Brazília - Brazil bajnokság",
       "marketName": "Mindkét félidőben kevesebb, mint 1,5 gól lesz? (1.5)",
       "outcomeName": "Nem",
       "odds": 1.4,
       "riskCategory": "low",
       "riskScore": 2,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T14:27:33.441Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "4-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-22T22:07:45.077Z",
+      "status": "won",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_getafeatlmadrid_2026-11-22_melyikcsapatszerziaz1glt1_atlmadrid",
       "sportId": 1,
