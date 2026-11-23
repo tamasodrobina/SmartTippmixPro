@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T00:37:21.567Z",
+  "updatedAt": "2026-11-23T00:57:38.865Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,16 +55,16 @@
       }
     },
     "nfl": {
-      "totalChecked": 41,
+      "totalChecked": 43,
       "won": 24,
-      "lost": 17,
-      "winRate": 59,
+      "lost": 19,
+      "winRate": 56,
       "byRisk": {
         "low": {
-          "totalChecked": 10,
+          "totalChecked": 12,
           "won": 5,
-          "lost": 5,
-          "winRate": 50
+          "lost": 7,
+          "winRate": 42
         },
         "medium": {
           "totalChecked": 31,
@@ -82,50 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "16_nygiantsjacksonville_2026-11-22_1x2_jacksonville",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "NY Giants - Jacksonville",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-22T22:25:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Jacksonville",
-      "odds": 1.41,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T10:54:32.566Z",
-      "status": "pending",
-      "categoryGroupKey": "nfl_main",
-      "categoryGroupName": "NFL",
-      "categorySubKey": "nfl_main",
-      "categorySubName": "USA - NFL"
-    },
-    {
-      "id": "16_denverlasvegas_2026-11-22_meznyglokszma2525_tbbmint25",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "Denver - Las Vegas",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-22T22:25:00+01:00",
-      "marketName": "Mezőnygólok száma 2,5 (2.5)",
-      "outcomeName": "Több, mint 2,5",
-      "odds": 1.44,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T10:54:32.566Z",
-      "status": "pending",
-      "categoryGroupKey": "nfl_main",
-      "categoryGroupName": "NFL",
-      "categorySubKey": "nfl_main",
-      "categorySubName": "USA - NFL"
-    },
     {
       "id": "16_sanfranciscominnesota_2026-11-23_amrkzsgyztese_sanfrancisco",
       "sportId": 16,
@@ -150,6 +106,52 @@
     }
   ],
   "history": [
+    {
+      "id": "16_denverlasvegas_2026-11-22_meznyglokszma2525_tbbmint25",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventName": "Denver - Las Vegas",
+      "eventDate": "2026-11-22T22:25:00+01:00",
+      "competitionName": "USA - NFL",
+      "marketName": "Mezőnygólok száma 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.44,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "38-24",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-23T00:57:38.865Z",
+      "status": "lost",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_nygiantsjacksonville_2026-11-22_1x2_jacksonville",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventName": "NY Giants - Jacksonville",
+      "eventDate": "2026-11-22T22:25:00+01:00",
+      "competitionName": "USA - NFL",
+      "marketName": "1X2",
+      "outcomeName": "Jacksonville",
+      "odds": 1.41,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "23-18",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-23T00:57:21.158Z",
+      "status": "lost",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
     {
       "id": "16_lachargersnyjets_2026-11-22_amrkzsgyztese_lachargers",
       "sportId": 16,
