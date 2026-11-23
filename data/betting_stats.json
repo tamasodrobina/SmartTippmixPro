@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T22:07:45.077Z",
+  "updatedAt": "2026-11-23T00:37:21.567Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,10 +55,10 @@
       }
     },
     "nfl": {
-      "totalChecked": 40,
+      "totalChecked": 41,
       "won": 24,
-      "lost": 16,
-      "winRate": 60,
+      "lost": 17,
+      "winRate": 59,
       "byRisk": {
         "low": {
           "totalChecked": 10,
@@ -67,10 +67,10 @@
           "winRate": 50
         },
         "medium": {
-          "totalChecked": 30,
+          "totalChecked": 31,
           "won": 19,
-          "lost": 11,
-          "winRate": 63
+          "lost": 12,
+          "winRate": 61
         },
         "high": {
           "totalChecked": 0,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "16_lachargersnyjets_2026-11-22_amrkzsgyztese_lachargers",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
-      "eventName": "LA Chargers - NY Jets",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-22T22:05:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "LA Chargers",
-      "odds": 1.5,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T10:54:32.566Z",
-      "status": "pending",
-      "categoryGroupKey": "nfl_main",
-      "categoryGroupName": "NFL",
-      "categorySubKey": "nfl_main",
-      "categorySubName": "USA - NFL"
-    },
     {
       "id": "16_nygiantsjacksonville_2026-11-22_1x2_jacksonville",
       "sportId": 16,
@@ -172,6 +150,29 @@
     }
   ],
   "history": [
+    {
+      "id": "16_lachargersnyjets_2026-11-22_amrkzsgyztese_lachargers",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventName": "LA Chargers - NY Jets",
+      "eventDate": "2026-11-22T22:05:00+01:00",
+      "competitionName": "USA - NFL",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "LA Chargers",
+      "odds": 1.5,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "24-27",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-23T00:37:21.567Z",
+      "status": "lost",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
     {
       "id": "1_athlticoprremo_2026-11-22_mindktflidbenkevesebbmint15gllesz15_nem",
       "sportId": 1,
