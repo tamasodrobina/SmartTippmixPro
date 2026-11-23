@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T13:24:32.511Z",
+  "updatedAt": "2026-11-23T14:04:13.001Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -191,31 +191,32 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_görög_2_",
       "categorySubName": "Görög 2."
-    },
+    }
+  ],
+  "history": [
     {
       "id": "1_lnzcserkaszipolisszjazsitomir_2026-11-23_dntetlennlattvisszajr_polisszjazsitomir",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
       "eventName": "LNZ Cserkaszi - Polisszja Zsitomir",
-      "competitionName": "Ukrajna - Ukrán bajnokság",
       "eventDate": "2026-11-23T12:00:00+01:00",
+      "competitionName": "Ukrajna - Ukrán bajnokság",
       "marketName": "Döntetlennél a tét visszajár",
       "outcomeName": "Polisszja Zsitomir",
       "odds": 1.39,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-23T08:39:56.400Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "1-1",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-23T14:04:13.001Z",
+      "status": "void",
       "categoryGroupKey": "other",
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_ukrán_bajnokság",
       "categorySubName": "Ukrán bajnokság"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_csernomorecodesszaepiszentrkamjanecpodilszkij_2026-11-23_glszm2525_kevesebbmint25",
       "sportId": 1,
