@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T00:57:38.865Z",
+  "updatedAt": "2026-11-23T04:57:26.160Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,16 +55,16 @@
       }
     },
     "nfl": {
-      "totalChecked": 43,
-      "won": 24,
+      "totalChecked": 44,
+      "won": 25,
       "lost": 19,
-      "winRate": 56,
+      "winRate": 57,
       "byRisk": {
         "low": {
-          "totalChecked": 12,
-          "won": 5,
+          "totalChecked": 13,
+          "won": 6,
           "lost": 7,
-          "winRate": 42
+          "winRate": 46
         },
         "medium": {
           "totalChecked": 31,
@@ -81,31 +81,31 @@
       }
     }
   },
-  "pendingTips": [
+  "pendingTips": [],
+  "history": [
     {
       "id": "16_sanfranciscominnesota_2026-11-23_amrkzsgyztese_sanfrancisco",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": null,
       "eventName": "San Francisco - Minnesota",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-23T02:20:00+01:00",
+      "competitionName": "USA - NFL",
       "marketName": "A mérkőzés győztese",
       "outcomeName": "San Francisco",
       "odds": 1.49,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-22T10:54:32.566Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "35-10",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-23T04:57:26.160Z",
+      "status": "won",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "16_denverlasvegas_2026-11-22_meznyglokszma2525_tbbmint25",
       "sportId": 16,
