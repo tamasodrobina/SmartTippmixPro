@@ -708,17 +708,18 @@ export const ELITE_FOOTBALL_GROUP_KEYS = new Set(['top5_1', 'ucl', 'uel_uecl']);
 
 export function classifyMarketBucket(marketName, sportId) {
   const m = String(marketName || '').toLowerCase();
-  if (Number(sportId) === 5 && (m.includes('játszma') || m.includes('játékszám') || m.includes('szett'))) {
-    return { key: 'tennis_sets_games', name: 'Tenisz Játszma / Játékszám', icon: '🎾' };
+  const sId = Number(sportId) || 1;
+  if (sId === 5 && (m.includes('játszma') || m.includes('játékszám') || m.includes('szett'))) {
+    return { key: 'tennis_sets_games', name: 'Tenisz Játszma / Játékszám', shortName: 'játszma / játékszám', icon: '🎾' };
   }
   if (m.includes('büntetőlap') || m.includes('sárga lap') || m.includes('kiállítás')) {
-    return { key: 'cards', name: 'Büntetőlapok / Sárga lapok', icon: '🟨' };
+    return { key: 'cards', name: 'Büntetőlapok / Sárga lapok', shortName: 'büntetőlapok', icon: '🟨' };
   }
   if (m.includes('szöglet')) {
-    return { key: 'corners', name: 'Szögletszám / Szögletek', icon: '🚩' };
+    return { key: 'corners', name: 'Szögletszám / Szögletek', shortName: 'szögletszám', icon: '🚩' };
   }
   if (m.includes('mindkét csapat')) {
-    return { key: 'btts', name: 'Mindkét csapat szerez gólt (BTTS)', icon: '⚽' };
+    return { key: 'btts', name: 'Mindkét csapat szerez gólt (BTTS)', shortName: 'mindkét csapat gól', icon: '⚽' };
   }
   if (
     m.includes('touchdown') ||
@@ -736,19 +737,19 @@ export function classifyMarketBucket(marketName, sportId) {
     m.includes('lesszám') ||
     m.includes('11-es')
   ) {
-    return { key: 'player_special', name: 'Játékos & Speciális (TD / Yard / Góllövő / 11-es)', icon: '🎯' };
+    return { key: 'player_special', name: 'Játékos & Speciális (TD / Yard / Góllövő / 11-es)', shortName: 'játékos / speciális', icon: '🎯' };
   }
   if (m.includes('hendikep')) {
-    return { key: 'handicap', name: 'Hendikep / Ázsiai hendikep', icon: '⚖️' };
+    return { key: 'handicap', name: 'Hendikep / Ázsiai hendikep', shortName: 'hendikep', icon: '⚖️' };
   }
   if (m.includes('gólszám') || m.includes('pontszám')) {
-    return { key: 'over_under', name: 'Gólszám / Pontszám (Alatt/Felett)', icon: '📊' };
+    return { key: 'over_under', name: 'Gólszám / Pontszám (Alatt/Felett)', shortName: sId === 16 ? 'pontszám' : 'gólszám', icon: '📊' };
   }
   if (m.includes('kétesély')) {
-    return { key: 'double_chance', name: 'Kétesély (1X / X2 / 12)', icon: '🛡️' };
+    return { key: 'double_chance', name: 'Kétesély (1X / X2 / 12)', shortName: 'kétesély', icon: '🛡️' };
   }
   if (m.includes('tét visszajár')) {
-    return { key: 'dnb', name: 'Döntetlennél a tét visszajár (DNB)', icon: '🔄' };
+    return { key: 'dnb', name: 'Döntetlennél a tét visszajár (DNB)', shortName: 'tét visszajár (DNB)', icon: '🔄' };
   }
   if (
     m === '1x2' ||
@@ -757,12 +758,12 @@ export function classifyMarketBucket(marketName, sportId) {
     m.includes('mérkőzés győztese') ||
     m.startsWith('ki nyeri')
   ) {
-    return { key: '1x2', name: '1X2 / Mérkőzés győztese', icon: '🏆' };
+    return { key: '1x2', name: '1X2 / Mérkőzés győztese', shortName: sId === 1 ? '1X2' : 'mérkőzés győztese', icon: '🏆' };
   }
-  if (Number(sportId) === 5) {
-    return { key: 'tennis_sets_games', name: 'Tenisz Játszma / Játékszám', icon: '🎾' };
+  if (sId === 5) {
+    return { key: 'tennis_sets_games', name: 'Tenisz Játszma / Játékszám', shortName: 'játszma / játékszám', icon: '🎾' };
   }
-  return { key: 'other_market', name: 'Egyéb speciális piacok', icon: '✨' };
+  return { key: 'other_market', name: 'Egyéb speciális piacok', shortName: 'speciális', icon: '✨' };
 }
 
 export function getInsightSectionMeta(tipOrItem = {}, fallbackContext = {}) {
@@ -799,14 +800,14 @@ export function getInsightSectionMeta(tipOrItem = {}, fallbackContext = {}) {
     return {
       sectionKey: 'football_elite',
       sportId: 1,
-      shortGroupLabel: 'Top5/BL/EL/KL',
+      shortGroupLabel: 'Top liga',
       groupFullLabel: '⚽ Foci – Top 5 Liga / BL / EL / KL'
     };
   }
   return {
     sectionKey: 'football_other',
     sportId: 1,
-    shortGroupLabel: 'Többi Foci liga',
+    shortGroupLabel: 'Többi foci liga',
     groupFullLabel: '⚽ Foci – Többi bajnokság & kupa'
   };
 }
@@ -1132,7 +1133,7 @@ export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuilt
   const secSummary = sec?.summary || { totalChecked: 0, won: 0, winRate: 0 };
   const marketInSec = (sec?.byMarketType || []).find(m => m.key === mBucket.key);
 
-  // 1. Ha ebben a csoportban (pl. Top5/BL/EL/KL vagy Többi Foci vagy NFL vagy Tenisz) az adott piactípusra már van kiértékelt tipp:
+  // 1. Ha ebben a csoportban (pl. Top liga vagy Többi foci liga vagy NFL vagy Tenisz) az adott piactípusra már van kiértékelt tipp:
   if (marketInSec && marketInSec.totalChecked > 0) {
     return {
       sectionKey: secMeta.sectionKey,
@@ -1140,16 +1141,17 @@ export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuilt
       groupFullLabel: secMeta.groupFullLabel,
       marketKey: mBucket.key,
       marketName: mBucket.name,
+      marketShortName: mBucket.shortName,
       winRate: marketInSec.winRate,
       won: marketInSec.won,
       totalChecked: marketInSec.totalChecked,
       scope: 'market_in_group',
-      shortText: `${secMeta.shortGroupLabel}: ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked})`,
+      shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} • ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked})`,
       tooltip: `${secMeta.groupFullLabel} • ${mBucket.name} piacon eddigi találati arány: ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked} nyert)`
     };
   }
 
-  // 2. Ha az adott piactípusban még nincs lezárt minta ebben az alcsoportban, de magában a csoportban (pl. Top5/BL/EL/KL összesen) már van:
+  // 2. Ha az adott piactípusban még nincs lezárt minta ebben az alcsoportban, de magában a csoportban már van:
   if (secSummary.totalChecked > 0) {
     return {
       sectionKey: secMeta.sectionKey,
@@ -1157,11 +1159,12 @@ export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuilt
       groupFullLabel: secMeta.groupFullLabel,
       marketKey: mBucket.key,
       marketName: mBucket.name,
+      marketShortName: mBucket.shortName,
       winRate: secSummary.winRate,
       won: secSummary.won,
       totalChecked: secSummary.totalChecked,
       scope: 'group_overall',
-      shortText: `${secMeta.shortGroupLabel}: ${secSummary.winRate}% (${secSummary.won}/${secSummary.totalChecked})`,
+      shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} • ${secSummary.winRate}% (${secSummary.won}/${secSummary.totalChecked})`,
       tooltip: `${secMeta.groupFullLabel} kategóriában eddigi összesített találati arány: ${secSummary.winRate}% (${secSummary.won}/${secSummary.totalChecked} nyert)`
     };
   }
@@ -1172,11 +1175,12 @@ export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuilt
     groupFullLabel: secMeta.groupFullLabel,
     marketKey: mBucket.key,
     marketName: mBucket.name,
+    marketShortName: mBucket.shortName,
     winRate: null,
     won: 0,
     totalChecked: 0,
     scope: 'none',
-    shortText: `${secMeta.shortGroupLabel}: Új piac`,
+    shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} (új)`,
     tooltip: `${secMeta.groupFullLabel} • ${mBucket.name}: még nincs lezárt múltbeli minta`
   };
 }

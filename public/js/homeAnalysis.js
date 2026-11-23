@@ -192,9 +192,12 @@ export function renderAnalysisResults(payload, metaLabel) {
               <span>${escapeHtml(tip.competitionName || '')}</span>
             </span>
           </div>
-          <span class="text-xs text-slate-400 bg-slate-900 px-2 py-0.5 rounded-lg border border-slate-800">
-            🕒 ${escapeHtml(timeFormatted)}
-          </span>
+          <div class="flex flex-wrap items-center gap-2">
+            ${renderTipHistoricalBadgeHtml(tip, { sportName: tip.sportName, competitionName: tip.competitionName, eventName: tip.eventName }, false)}
+            <span class="text-xs text-slate-400 bg-slate-900 px-2 py-0.5 rounded-lg border border-slate-800">
+              🕒 ${escapeHtml(timeFormatted)}
+            </span>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
@@ -213,11 +216,8 @@ export function renderAnalysisResults(payload, metaLabel) {
               <span class="text-sm font-black text-emerald-400 block truncate mt-0.5">${escapeHtml(tip.outcomeName)}</span>
               <span class="text-[11px] text-slate-400 mt-0.5 block">Esély: <strong class="text-white">${prob}%</strong></span>
             </div>
-            <div class="shrink-0 flex flex-col items-end gap-1">
-              ${renderTipHistoricalBadgeHtml(tip, { sportName: tip.sportName, competitionName: tip.competitionName, eventName: tip.eventName }, false)}
-              <div class="px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-lg leading-none">
-                ${Number(tip.odds).toFixed(2)}
-              </div>
+            <div class="shrink-0 px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-lg leading-none">
+              ${Number(tip.odds).toFixed(2)}
             </div>
           </div>
         </div>

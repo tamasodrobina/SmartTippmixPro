@@ -4,12 +4,21 @@
 
 import { state, LS_PENDING_KEY } from './state.js';
 
-function classifyClientMarketBucketKey(marketName = '', sportId = 1) {
+function classifyClientMarketBucket(marketName = '', sportId = 1) {
   const m = String(marketName || '').toLowerCase();
-  if (Number(sportId) === 5 && (m.includes('játszma') || m.includes('játékszám') || m.includes('szett'))) return 'tennis_sets_games';
-  if (m.includes('büntetőlap') || m.includes('sárga lap') || m.includes('kiállítás')) return 'cards';
-  if (m.includes('szöglet')) return 'corners';
-  if (m.includes('mindkét csapat')) return 'btts';
+  const sId = Number(sportId) || 1;
+  if (sId === 5 && (m.includes('játszma') || m.includes('játékszám') || m.includes('szett'))) {
+    return { key: 'tennis_sets_games', shortName: 'játszma / játékszám' };
+  }
+  if (m.includes('büntetőlap') || m.includes('sárga lap') || m.includes('kiállítás')) {
+    return { key: 'cards', shortName: 'büntetőlapok' };
+  }
+  if (m.includes('szöglet')) {
+    return { key: 'corners', shortName: 'szögletszám' };
+  }
+  if (m.includes('mindkét csapat')) {
+    return { key: 'btts', shortName: 'mindkét csapat gól' };
+  }
   if (
     m.includes('touchdown') ||
     m.includes('mezőnygól') ||
@@ -25,14 +34,28 @@ function classifyClientMarketBucketKey(marketName = '', sportId = 1) {
     m.includes('szabálytalanság') ||
     m.includes('lesszám') ||
     m.includes('11-es')
-  ) return 'player_special';
-  if (m.includes('hendikep')) return 'handicap';
-  if (m.includes('gólszám') || m.includes('pontszám')) return 'over_under';
-  if (m.includes('kétesély')) return 'double_chance';
-  if (m.includes('tét visszajár')) return 'dnb';
-  if (m === '1x2' || m.startsWith('1x2') || m.includes('1. félidő - 1x2') || m.includes('mérkőzés győztese') || m.startsWith('ki nyeri')) return '1x2';
-  if (Number(sportId) === 5) return 'tennis_sets_games';
-  return 'other_market';
+  ) {
+    return { key: 'player_special', shortName: 'játékos / speciális' };
+  }
+  if (m.includes('hendikep')) {
+    return { key: 'handicap', shortName: 'hendikep' };
+  }
+  if (m.includes('gólszám') || m.includes('pontszám')) {
+    return { key: 'over_under', shortName: sId === 16 ? 'pontszám' : 'gólszám' };
+  }
+  if (m.includes('kétesély')) {
+    return { key: 'double_chance', shortName: 'kétesély' };
+  }
+  if (m.includes('tét visszajár')) {
+    return { key: 'dnb', shortName: 'tét visszajár (DNB)' };
+  }
+  if (m === '1x2' || m.startsWith('1x2') || m.includes('1. félidő - 1x2') || m.includes('mérkőzés győztese') || m.startsWith('ki nyeri')) {
+    return { key: '1x2', shortName: sId === 1 ? '1X2' : 'mérkőzés győztese' };
+  }
+  if (sId === 5) {
+    return { key: 'tennis_sets_games', shortName: 'játszma / játékszám' };
+  }
+  return { key: 'other_market', shortName: 'speciális' };
 }
 
 function detectClientSectionMeta(tip = {}, fallbackContext = {}) {
@@ -61,29 +84,40 @@ function detectClientSectionMeta(tip = {}, fallbackContext = {}) {
   );
 
   if (!isWomen && (isUefaClub || isTop5)) {
-    return { sectionKey: 'football_elite', sportId: 1, shortGroupLabel: 'Top5/BL/EL/KL', groupFullLabel: '⚽ Foci – Top 5 Liga / BL / EL / KL' };
+    return { sectionKey: 'football_elite', sportId: 1, shortGroupLabel: 'Top liga', groupFullLabel: '⚽ Foci – Top 5 Liga / BL / EL / KL' };
   }
-  return { sectionKey: 'football_other', sportId: 1, shortGroupLabel: 'Többi Foci liga', groupFullLabel: '⚽ Foci – Többi bajnokság & kupa' };
+  return { sectionKey: 'football_other', sportId: 1, shortGroupLabel: 'Többi foci liga', groupFullLabel: '⚽ Foci – Többi bajnokság & kupa' };
 }
 
 export function getTipHistoricalAccuracyInfo(tip = {}, fallbackContext = {}) {
-  if (tip?.historicalAccuracy && tip.historicalAccuracy.shortText) {
-    return tip.historicalAccuracy;
-  }
   const secMeta = detectClientSectionMeta(tip, fallbackContext);
-  const mKey = classifyClientMarketBucketKey(tip.marketName || '', secMeta.sportId);
+  const mBucket = classifyClientMarketBucket(tip.marketName || tip.market || '', secMeta.sportId);
+
+  if (tip?.historicalAccuracy && tip.historicalAccuracy.winRate !== undefined && tip.historicalAccuracy.winRate !== null) {
+    const ha = tip.historicalAccuracy;
+    const grp = ha.groupShortLabel === 'Top5/BL/EL/KL' ? 'Top liga'
+      : ha.groupShortLabel === 'Többi Foci liga' ? 'Többi foci liga'
+      : (ha.groupShortLabel || secMeta.shortGroupLabel);
+    const mShort = ha.marketShortName || mBucket.shortName;
+    return {
+      ...ha,
+      shortText: `${grp}: ${mShort} • ${ha.winRate}% (${ha.won}/${ha.totalChecked})`
+    };
+  }
+
   const sections = state.latestExtraInsightsData?.sections;
   const sec = sections?.[secMeta.sectionKey];
   if (sec) {
-    const mNode = (sec.byMarketType || []).find(m => m.key === mKey);
+    const mNode = (sec.byMarketType || []).find(m => m.key === mBucket.key);
     if (mNode && mNode.totalChecked > 0) {
       return {
         sectionKey: secMeta.sectionKey,
         groupShortLabel: secMeta.shortGroupLabel,
+        marketShortName: mBucket.shortName,
         winRate: mNode.winRate,
         won: mNode.won,
         totalChecked: mNode.totalChecked,
-        shortText: `${secMeta.shortGroupLabel}: ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked})`,
+        shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} • ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked})`,
         tooltip: `${secMeta.groupFullLabel} • ${mNode.name} piacon eddigi találati arány: ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked} nyert)`
       };
     }
@@ -91,10 +125,11 @@ export function getTipHistoricalAccuracyInfo(tip = {}, fallbackContext = {}) {
       return {
         sectionKey: secMeta.sectionKey,
         groupShortLabel: secMeta.shortGroupLabel,
+        marketShortName: mBucket.shortName,
         winRate: sec.summary.winRate,
         won: sec.summary.won,
         totalChecked: sec.summary.totalChecked,
-        shortText: `${secMeta.shortGroupLabel}: ${sec.summary.winRate}% (${sec.summary.won}/${sec.summary.totalChecked})`,
+        shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} • ${sec.summary.winRate}% (${sec.summary.won}/${sec.summary.totalChecked})`,
         tooltip: `${secMeta.groupFullLabel} kategóriában eddigi összesített találati arány: ${sec.summary.winRate}% (${sec.summary.won}/${sec.summary.totalChecked} nyert)`
       };
     }

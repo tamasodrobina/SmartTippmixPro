@@ -307,14 +307,16 @@ export function renderLeagueMatchRows(matches) {
     if (tips.length > 0) {
       const mCompFull = m.competitionGroupName ? `${m.competitionGroupName} - ${m.competitionName}` : (m.competitionName || '');
       tipsHtml = tips.map(t => `
-        <div class="flex-1 min-w-[140px] bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-500/60 rounded-xl p-2 sm:p-2.5 flex items-center justify-between gap-2 transition">
-          <div class="min-w-0">
-            <span class="block text-[10px] uppercase font-bold text-slate-400 truncate">${escapeHtml(t.marketName)}</span>
-            <span class="block text-xs font-black text-emerald-400 truncate mt-0.5">${escapeHtml(t.outcomeName)}</span>
-          </div>
-          <div class="shrink-0 flex flex-col items-end gap-1">
+        <div class="flex-1 min-w-[160px] bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-500/60 rounded-xl p-2 sm:p-2.5 flex flex-col justify-between gap-1.5 transition">
+          <div class="flex items-center justify-between gap-1">
             ${renderTipHistoricalBadgeHtml(t, { sportId: m.sportId, competitionName: mCompFull, eventName: m.eventName }, true)}
-            <span class="inline-flex items-center justify-center px-2 py-1 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs shadow-sm leading-none">
+          </div>
+          <div class="flex items-center justify-between gap-2">
+            <div class="min-w-0 flex-1">
+              <span class="block text-[10px] uppercase font-bold text-slate-400 truncate">${escapeHtml(t.marketName)}</span>
+              <span class="block text-xs font-black text-emerald-400 truncate mt-0.5">${escapeHtml(t.outcomeName)}</span>
+            </div>
+            <span class="shrink-0 inline-flex items-center justify-center px-2 py-1 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs shadow-sm leading-none">
               ${Number(t.odds).toFixed(2)}
             </span>
           </div>
@@ -481,19 +483,17 @@ export function renderModalContent(result = {}, fullPayload = {}) {
             </span>
             <span class="text-xs text-slate-300 font-semibold">${escapeHtml(t.marketName)}</span>
           </div>
-          <div class="flex items-center gap-2.5">
+          <div class="flex flex-wrap items-center gap-2">
+            ${renderTipHistoricalBadgeHtml(t, {
+              sportId: state.currentModalMatchObj?.sportId,
+              sportName: t.sportName || state.currentModalMatchObj?.sportName,
+              competitionName: t.competitionName || (state.currentModalMatchObj ? `${state.currentModalMatchObj.competitionGroupName || ''} - ${state.currentModalMatchObj.competitionName || ''}` : ''),
+              eventName: t.eventName || state.currentModalEventName
+            }, false)}
             <span class="text-xs text-slate-400 font-medium">Esély: <strong class="text-white">${prob}%</strong></span>
-            <div class="flex flex-col items-end gap-1">
-              ${renderTipHistoricalBadgeHtml(t, {
-                sportId: state.currentModalMatchObj?.sportId,
-                sportName: t.sportName || state.currentModalMatchObj?.sportName,
-                competitionName: t.competitionName || (state.currentModalMatchObj ? `${state.currentModalMatchObj.competitionGroupName || ''} - ${state.currentModalMatchObj.competitionName || ''}` : ''),
-                eventName: t.eventName || state.currentModalEventName
-              }, false)}
-              <span class="px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950 font-black text-sm leading-none">
-                ${Number(t.odds).toFixed(2)}
-              </span>
-            </div>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950 font-black text-sm leading-none">
+              ${Number(t.odds).toFixed(2)}
+            </span>
           </div>
         </div>
 

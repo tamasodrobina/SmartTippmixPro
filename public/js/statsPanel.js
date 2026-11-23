@@ -363,7 +363,7 @@ export function renderSportCategoriesAccordion(sportId, sportKey, categoriesList
 
 export function renderExtraInsightsPanel(extraInsights) {
   if (!dom.extraInsightsPanel || !extraInsights) return;
-  const ov = extraInsights.overall || { totalChecked: 0, won: 0, lost: 0, winRate: 0, profitUnits: 0, netUnits: 0, roiPercent: 0, roi: 0, avgWinOdds: 0 };
+  const ov = extraInsights.overall || { totalChecked: 0, won: 0, lost: 0, winRate: 0, avgWinOdds: 0 };
   const sections = extraInsights.sections || {};
   const sectionOrder = Array.isArray(extraInsights.sectionOrder)
     ? extraInsights.sectionOrder
@@ -376,15 +376,8 @@ export function renderExtraInsightsPanel(extraInsights) {
   const renderSectionBlockHtml = (secKey) => {
     const sec = sections[secKey];
     if (!sec) return '';
-    const sum = sec.summary || { totalChecked: 0, won: 0, lost: 0, winRate: 0, profitUnits: 0, netUnits: 0, roiPercent: 0, roi: 0, avgWinOdds: 0, pendingCount: 0 };
+    const sum = sec.summary || { totalChecked: 0, won: 0, lost: 0, winRate: 0, avgWinOdds: 0, pendingCount: 0 };
     const markets = Array.isArray(sec.byMarketType) ? sec.byMarketType : [];
-
-    const sProfit = Number(sum.profitUnits ?? sum.netUnits ?? 0);
-    const sRoi = Number(sum.roiPercent ?? sum.roi ?? 0);
-    const profitSign = sProfit > 0 ? '+' : '';
-    const profitColor = sProfit >= 0 ? 'text-emerald-400' : 'text-rose-400';
-    const roiSign = sRoi > 0 ? '+' : '';
-    const roiColor = sRoi >= 0 ? 'text-emerald-400' : 'text-rose-400';
 
     const accentMap = {
       emerald: {
@@ -415,24 +408,18 @@ export function renderExtraInsightsPanel(extraInsights) {
     const ac = accentMap[sec.accent] || accentMap.emerald;
 
     const marketCardsHtml = markets.map(m => {
-      const mProfit = Number(m.profitUnits ?? m.netUnits ?? 0);
-      const mRoi = Number(m.roiPercent ?? m.roi ?? 0);
-      const pSign = mProfit > 0 ? '+' : '';
-      const pColor = mProfit >= 0 ? 'text-emerald-400' : 'text-rose-400';
-      const rSign = mRoi > 0 ? '+' : '';
-      const rColor = mRoi >= 0 ? 'text-emerald-400' : 'text-rose-400';
       const rateDisplay = m.totalChecked > 0 ? `${m.winRate}%` : '--%';
       return `
         <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900/90 border border-slate-800/90 flex items-center justify-between gap-2.5">
           <div class="min-w-0">
             <div class="text-xs font-bold text-white truncate">${m.icon || '📊'} ${escapeHtml(m.name)}</div>
             <div class="text-[10px] text-slate-400 mt-0.5">
-              Találat: <strong class="text-slate-200">${m.won}/${m.totalChecked}</strong>${m.pendingCount > 0 ? ` <span class="text-amber-300">(${m.pendingCount} vár)</span>` : ''} &bull; Egyenleg: <strong class="${pColor}">${pSign}${mProfit.toFixed(2)} e.</strong>
+              Találat: <strong class="text-slate-200">${m.won}/${m.totalChecked} nyert</strong>${m.pendingCount > 0 ? ` <span class="text-amber-300">(${m.pendingCount} vár)</span>` : ''}
             </div>
           </div>
           <div class="text-right shrink-0">
             <span class="text-sm font-black text-emerald-400 block leading-tight">${rateDisplay}</span>
-            <span class="block text-[10px] ${rColor} font-bold leading-tight mt-0.5" title="Tőkearányos megtérülés (haszonkulcs) az adott piacon">ROI: ${rSign}${mRoi.toFixed(1)}%</span>
+            <span class="block text-[10px] text-slate-400 font-semibold leading-tight mt-0.5">(${m.won}/${m.totalChecked})</span>
           </div>
         </div>
       `;
@@ -452,34 +439,26 @@ export function renderExtraInsightsPanel(extraInsights) {
           <div class="flex items-center gap-2 shrink-0">
             ${sum.pendingCount > 0 ? `<span class="px-2 py-0.5 rounded-md bg-amber-950/70 border border-amber-500/40 text-amber-300 text-[10px] font-bold">${sum.pendingCount} vár</span>` : ''}
             <span class="px-2.5 py-1 rounded-lg border ${ac.badge} text-xs font-black">
-              ${winRateText} (${sum.won}/${sum.totalChecked})
+              ${winRateText} (${sum.won}/${sum.totalChecked} nyert)
             </span>
           </div>
         </div>
 
         <div class="p-3 sm:p-4 space-y-3">
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          <div class="grid grid-cols-2 gap-2 text-xs">
             <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Kiértékelt Tippek</span>
-              <span class="text-sm sm:text-base font-black text-white mt-0.5 block">${winRateText} <span class="text-[11px] font-semibold text-slate-400">(${sum.won}/${sum.totalChecked})</span></span>
-            </div>
-            <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800" title="Ha minden tippre ebben a kategóriában 1 egységet tettél volna fel">
-              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Tiszta Profit (1 e./tipp)</span>
-              <span class="text-sm sm:text-base font-black ${profitColor} mt-0.5 block">${profitSign}${sProfit.toFixed(2)} egység</span>
-            </div>
-            <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800" title="Tőkearányos megtérülés ebben a kategóriában">
-              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Megtérülés (ROI)</span>
-              <span class="text-sm sm:text-base font-black ${roiColor} mt-0.5 block">${roiSign}${sRoi.toFixed(1)}%</span>
+              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Kiértékelt Tippek Találati Aránya</span>
+              <span class="text-sm sm:text-base font-black text-white mt-0.5 block">${winRateText} <span class="text-[11px] font-semibold text-slate-400">(${sum.won}/${sum.totalChecked} nyert)</span></span>
             </div>
             <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Átlagos Nyertes Odds</span>
+              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Átlagos Nyertes Szorzó</span>
               <span class="text-sm sm:text-base font-black text-amber-300 mt-0.5 block">${Number(sum.avgWinOdds || 0).toFixed(2)}x</span>
             </div>
           </div>
 
           <div class="space-y-1.5">
             <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block px-0.5">
-              Fogadási Piacok Szerinti Bontás (${escapeHtml(sec.shortTitle || sec.title)})
+              Fogadási Piacok Szerinti Találati Arány (${escapeHtml(sec.shortTitle || sec.title)})
             </span>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
               ${marketCardsHtml || '<div class="text-xs text-slate-500 italic p-2">Ebben a kategóriában még nincs kiértékelt piaci adat.</div>'}
@@ -515,19 +494,12 @@ export function renderExtraInsightsPanel(extraInsights) {
     `;
   }).join('');
 
-  const ovProfit = Number(ov.profitUnits ?? ov.netUnits ?? 0);
-  const ovRoi = Number(ov.roiPercent ?? ov.roi ?? 0);
-  const ovPSign = ovProfit > 0 ? '+' : '';
-  const ovPColor = ovProfit >= 0 ? 'text-emerald-400' : 'text-rose-400';
-  const ovRSign = ovRoi > 0 ? '+' : '';
-  const ovRColor = ovRoi >= 0 ? 'text-emerald-400' : 'text-rose-400';
-
   dom.extraInsightsPanel.innerHTML = `
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
       <div class="flex items-center gap-2 min-w-0 flex-wrap">
-        <span class="text-xs sm:text-sm font-black text-indigo-300">📊 Érdekességek &amp; Extra Statisztikák (1 egység / tipp alapon)</span>
+        <span class="text-xs sm:text-sm font-black text-indigo-300">📊 Érdekességek &amp; Extra Statisztikák (Fogadási piacok szerint)</span>
         <span class="text-[11px] text-slate-400">
-          (Összesített: <strong class="text-white">${ov.winRate}% • ${ov.won}/${ov.totalChecked}</strong> &bull; Profit: <strong class="${ovPColor}">${ovPSign}${ovProfit.toFixed(2)} e.</strong> &bull; ROI: <strong class="${ovRColor}">${ovRSign}${ovRoi.toFixed(1)}%</strong>)
+          (Összesített: <strong class="text-white">${ov.winRate}% • ${ov.won}/${ov.totalChecked} nyert</strong> &bull; Átlagos nyertes odds: <strong class="text-amber-300">${Number(ov.avgWinOdds || 0).toFixed(2)}x</strong>)
         </span>
       </div>
       <button type="button" id="closeExtraInsightsBtn"
