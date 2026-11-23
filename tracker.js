@@ -704,15 +704,111 @@ function enrichAllStateTips() {
   return changed;
 }
 
-function classifyMarketBucket(marketName, sportId) {
+export const ELITE_FOOTBALL_GROUP_KEYS = new Set(['top5_1', 'ucl', 'uel_uecl']);
+
+export function classifyMarketBucket(marketName, sportId) {
   const m = String(marketName || '').toLowerCase();
-  if (m === '1x2' || m.includes('mérkőzés győztese')) return { key: '1x2', name: '1X2 / Mérkőzés győztese', icon: '🏆' };
-  if (m.includes('kétesély')) return { key: 'double_chance', name: 'Kétesély (1X / X2 / 12)', icon: '🛡️' };
-  if (m.includes('tét visszajár')) return { key: 'dnb', name: 'Döntetlennél a tét visszajár (DNB)', icon: '🔄' };
-  if (m.includes('mindkét csapat')) return { key: 'btts', name: 'Mindkét csapat szerez gólt (BTTS)', icon: '⚽' };
-  if (m.includes('gólszám') || m.includes('pontszám')) return { key: 'over_under', name: 'Gólszám / Pontszám (Alatt/Felett)', icon: '📊' };
-  if (sportId === 5 || m.includes('játszma') || m.includes('játékszám')) return { key: 'tennis_sets_games', name: 'Tenisz Játszma / Játékszám', icon: '🎾' };
-  return { key: 'other_market', name: 'Egyéb speciális piacok', icon: '🎯' };
+  if (Number(sportId) === 5 && (m.includes('játszma') || m.includes('játékszám') || m.includes('szett'))) {
+    return { key: 'tennis_sets_games', name: 'Tenisz Játszma / Játékszám', icon: '🎾' };
+  }
+  if (m.includes('büntetőlap') || m.includes('sárga lap') || m.includes('kiállítás')) {
+    return { key: 'cards', name: 'Büntetőlapok / Sárga lapok', icon: '🟨' };
+  }
+  if (m.includes('szöglet')) {
+    return { key: 'corners', name: 'Szögletszám / Szögletek', icon: '🚩' };
+  }
+  if (m.includes('mindkét csapat')) {
+    return { key: 'btts', name: 'Mindkét csapat szerez gólt (BTTS)', icon: '⚽' };
+  }
+  if (
+    m.includes('touchdown') ||
+    m.includes('mezőnygól') ||
+    m.includes('yard') ||
+    m.includes('elkapás') ||
+    m.includes('reception') ||
+    m.includes('passzolt') ||
+    m.includes('sikeres passzok') ||
+    m.includes('interception') ||
+    m.includes('gólszerző') ||
+    m.includes('góllövő') ||
+    m.includes('szerez gólt') ||
+    m.includes('szabálytalanság') ||
+    m.includes('lesszám') ||
+    m.includes('11-es')
+  ) {
+    return { key: 'player_special', name: 'Játékos & Speciális (TD / Yard / Góllövő / 11-es)', icon: '🎯' };
+  }
+  if (m.includes('hendikep')) {
+    return { key: 'handicap', name: 'Hendikep / Ázsiai hendikep', icon: '⚖️' };
+  }
+  if (m.includes('gólszám') || m.includes('pontszám')) {
+    return { key: 'over_under', name: 'Gólszám / Pontszám (Alatt/Felett)', icon: '📊' };
+  }
+  if (m.includes('kétesély')) {
+    return { key: 'double_chance', name: 'Kétesély (1X / X2 / 12)', icon: '🛡️' };
+  }
+  if (m.includes('tét visszajár')) {
+    return { key: 'dnb', name: 'Döntetlennél a tét visszajár (DNB)', icon: '🔄' };
+  }
+  if (
+    m === '1x2' ||
+    m.startsWith('1x2') ||
+    m.includes('1. félidő - 1x2') ||
+    m.includes('mérkőzés győztese') ||
+    m.startsWith('ki nyeri')
+  ) {
+    return { key: '1x2', name: '1X2 / Mérkőzés győztese', icon: '🏆' };
+  }
+  if (Number(sportId) === 5) {
+    return { key: 'tennis_sets_games', name: 'Tenisz Játszma / Játékszám', icon: '🎾' };
+  }
+  return { key: 'other_market', name: 'Egyéb speciális piacok', icon: '✨' };
+}
+
+export function getInsightSectionMeta(tipOrItem = {}, fallbackContext = {}) {
+  const rawSport = tipOrItem.sportId || tipOrItem.sportName || fallbackContext.sportId || fallbackContext.sportName || 1;
+  const sportId = normalizeSportId(rawSport) || 1;
+
+  if (sportId === 16) {
+    return {
+      sectionKey: 'nfl',
+      sportId: 16,
+      shortGroupLabel: 'NFL',
+      groupFullLabel: '🏈 Amerikai futball (NFL)'
+    };
+  }
+  if (sportId === 5) {
+    return {
+      sectionKey: 'tennis',
+      sportId: 5,
+      shortGroupLabel: 'Tenisz',
+      groupFullLabel: '🎾 Tenisz'
+    };
+  }
+
+  // Foci: 2 fő csoportra bontva -> 1) Top 5 Liga / BL / EL / KL  vs.  2) Többi bajnokság
+  const compName = tipOrItem.competitionName || fallbackContext.competitionName || '';
+  const evName = tipOrItem.eventName || fallbackContext.eventName || '';
+  const gKey = tipOrItem.categoryGroupKey || classifyTipCategory({
+    sportId: 1,
+    competitionName: compName,
+    eventName: evName
+  }).groupKey;
+
+  if (ELITE_FOOTBALL_GROUP_KEYS.has(gKey)) {
+    return {
+      sectionKey: 'football_elite',
+      sportId: 1,
+      shortGroupLabel: 'Top5/BL/EL/KL',
+      groupFullLabel: '⚽ Foci – Top 5 Liga / BL / EL / KL'
+    };
+  }
+  return {
+    sectionKey: 'football_other',
+    sportId: 1,
+    shortGroupLabel: 'Többi Foci liga',
+    groupFullLabel: '⚽ Foci – Többi bajnokság & kupa'
+  };
 }
 
 function createEmptyNodeStats(meta = {}) {
@@ -879,21 +975,73 @@ export function buildCategoriesAndInsights() {
   const footballCategories = buildSportHierarchy(1, FOOTBALL_CATEGORY_SCHEMA);
   const tennisCategories = buildSportHierarchy(5, TENNIS_CATEGORY_SCHEMA);
 
-  // Extra Insights (Profit / ROI & Piacok)
+  // Extra Insights (Külön szeparálva: 1. Foci Top5/BL/EL/KL, 2. Foci Többi, 3. NFL, 4. Tenisz)
   const overallNode = createEmptyNodeStats({ key: 'overall', name: 'Összesített' });
   const sportNodes = {
     football: createEmptyNodeStats({ key: 'football', name: 'Labdarúgás (Foci)' }),
     tennis: createEmptyNodeStats({ key: 'tennis', name: 'Tenisz' }),
     nfl: createEmptyNodeStats({ key: 'nfl', name: 'Amerikai futball (NFL)' })
   };
+
+  const sectionDefs = [
+    {
+      key: 'football_elite',
+      icon: '👑',
+      title: '⚽ Labdarúgás – Top 5 Liga / BL / EL / KL',
+      shortTitle: 'Top5 / BL / EL / KL',
+      subtitle: 'Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Bajnokok Ligája, Európa Liga, Konferencia Liga',
+      accent: 'emerald'
+    },
+    {
+      key: 'football_other',
+      icon: '⚽',
+      title: '⚽ Labdarúgás – Többi bajnokság & kupa',
+      shortTitle: 'Többi Foci liga',
+      subtitle: 'Magyar NB I & NB II, Top 5 másodosztály, Válogatott mérkőzések, Női foci és egyéb nemzetközi ligák',
+      accent: 'teal'
+    },
+    {
+      key: 'nfl',
+      icon: '🏈',
+      title: '🏈 Amerikai futball (NFL)',
+      shortTitle: 'NFL',
+      subtitle: 'NFL mérkőzések, csapat- és játékos-speciális piacok',
+      accent: 'amber'
+    },
+    {
+      key: 'tennis',
+      icon: '🎾',
+      title: '🎾 Tenisz (ATP / WTA / Challenger / ITF)',
+      shortTitle: 'Tenisz',
+      subtitle: 'Grand Slam, ATP, WTA, Challenger és ITF tornák',
+      accent: 'sky'
+    }
+  ];
+
+  const sections = {};
+  const sectionMarketMaps = {};
+  const sectionWinOddsTracker = {};
+
+  for (const def of sectionDefs) {
+    sections[def.key] = {
+      ...def,
+      summary: createEmptyNodeStats({ key: def.key, name: def.title }),
+      byMarketType: []
+    };
+    sectionMarketMaps[def.key] = new Map();
+    sectionWinOddsTracker[def.key] = { sum: 0, count: 0 };
+  }
+
   const marketMap = new Map();
   let wonOddsSum = 0;
   let wonOddsCount = 0;
 
   for (const h of state.history || []) {
     addHistoryItemToNode(overallNode, h);
-    if (h.won && h.status !== 'void' && Number(h.odds) > 1) {
-      wonOddsSum += Number(h.odds);
+    const hOdds = Number(h.odds) || 0;
+    const isWonValid = Boolean(h.won && h.status !== 'void' && hOdds > 1);
+    if (isWonValid) {
+      wonOddsSum += hOdds;
       wonOddsCount++;
     }
 
@@ -907,6 +1055,22 @@ export function buildCategoriesAndInsights() {
       marketMap.set(mBucket.key, createEmptyNodeStats(mBucket));
     }
     addHistoryItemToNode(marketMap.get(mBucket.key), h);
+
+    // Külön szeparált szekció (football_elite, football_other, nfl, tennis) frissítése
+    const secMeta = getInsightSectionMeta(h);
+    const secKey = secMeta.sectionKey;
+    if (sections[secKey]) {
+      addHistoryItemToNode(sections[secKey].summary, h);
+      if (isWonValid) {
+        sectionWinOddsTracker[secKey].sum += hOdds;
+        sectionWinOddsTracker[secKey].count++;
+      }
+      const sMktMap = sectionMarketMaps[secKey];
+      if (!sMktMap.has(mBucket.key)) {
+        sMktMap.set(mBucket.key, createEmptyNodeStats(mBucket));
+      }
+      addHistoryItemToNode(sMktMap.get(mBucket.key), h);
+    }
   }
 
   for (const p of state.pendingTips || []) {
@@ -915,9 +1079,30 @@ export function buildCategoriesAndInsights() {
     if (sId === 1) addPendingItemToNode(sportNodes.football, p);
     else if (sId === 5) addPendingItemToNode(sportNodes.tennis, p);
     else if (sId === 16) addPendingItemToNode(sportNodes.nfl, p);
+
+    const secMeta = getInsightSectionMeta(p);
+    const secKey = secMeta.sectionKey;
+    if (sections[secKey]) {
+      addPendingItemToNode(sections[secKey].summary, p);
+      const mBucket = classifyMarketBucket(p.marketName, sId);
+      const sMktMap = sectionMarketMaps[secKey];
+      if (!sMktMap.has(mBucket.key)) {
+        sMktMap.set(mBucket.key, createEmptyNodeStats(mBucket));
+      }
+      addPendingItemToNode(sMktMap.get(mBucket.key), p);
+    }
   }
 
   overallNode.avgWinOdds = wonOddsCount > 0 ? Number((wonOddsSum / wonOddsCount).toFixed(2)) : 0;
+
+  for (const def of sectionDefs) {
+    const sec = sections[def.key];
+    const tr = sectionWinOddsTracker[def.key];
+    sec.summary.avgWinOdds = tr.count > 0 ? Number((tr.sum / tr.count).toFixed(2)) : 0;
+    sec.byMarketType = Array.from(sectionMarketMaps[def.key].values())
+      .filter(m => m.totalChecked > 0 || m.pendingCount > 0)
+      .sort((a, b) => b.totalChecked - a.totalChecked);
+  }
 
   const byMarketType = Array.from(marketMap.values()).sort((a, b) => b.totalChecked - a.totalChecked);
 
@@ -929,9 +1114,81 @@ export function buildCategoriesAndInsights() {
     extraInsights: {
       overall: overallNode,
       bySport: sportNodes,
-      byMarketType
+      byMarketType,
+      sectionOrder: sectionDefs.map(d => d.key),
+      sections
     }
   };
+}
+
+// Kiszámolja egy adott tipphez (sportág + Foci Top5/BL/EL/KL vs. Többi csoport + piactípus alapján),
+// hogy eddig hány %-os találati aránnyal jött be!
+export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuiltInsights = null) {
+  const insights = prebuiltInsights || buildCategoriesAndInsights().extraInsights;
+  const secMeta = getInsightSectionMeta(tip, fallbackContext);
+  const mBucket = classifyMarketBucket(tip.marketName || tip.market || '', secMeta.sportId);
+
+  const sec = insights?.sections?.[secMeta.sectionKey];
+  const secSummary = sec?.summary || { totalChecked: 0, won: 0, winRate: 0 };
+  const marketInSec = (sec?.byMarketType || []).find(m => m.key === mBucket.key);
+
+  // 1. Ha ebben a csoportban (pl. Top5/BL/EL/KL vagy Többi Foci vagy NFL vagy Tenisz) az adott piactípusra már van kiértékelt tipp:
+  if (marketInSec && marketInSec.totalChecked > 0) {
+    return {
+      sectionKey: secMeta.sectionKey,
+      groupShortLabel: secMeta.shortGroupLabel,
+      groupFullLabel: secMeta.groupFullLabel,
+      marketKey: mBucket.key,
+      marketName: mBucket.name,
+      winRate: marketInSec.winRate,
+      won: marketInSec.won,
+      totalChecked: marketInSec.totalChecked,
+      scope: 'market_in_group',
+      shortText: `${secMeta.shortGroupLabel}: ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked})`,
+      tooltip: `${secMeta.groupFullLabel} • ${mBucket.name} piacon eddigi találati arány: ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked} nyert)`
+    };
+  }
+
+  // 2. Ha az adott piactípusban még nincs lezárt minta ebben az alcsoportban, de magában a csoportban (pl. Top5/BL/EL/KL összesen) már van:
+  if (secSummary.totalChecked > 0) {
+    return {
+      sectionKey: secMeta.sectionKey,
+      groupShortLabel: secMeta.shortGroupLabel,
+      groupFullLabel: secMeta.groupFullLabel,
+      marketKey: mBucket.key,
+      marketName: mBucket.name,
+      winRate: secSummary.winRate,
+      won: secSummary.won,
+      totalChecked: secSummary.totalChecked,
+      scope: 'group_overall',
+      shortText: `${secMeta.shortGroupLabel}: ${secSummary.winRate}% (${secSummary.won}/${secSummary.totalChecked})`,
+      tooltip: `${secMeta.groupFullLabel} kategóriában eddigi összesített találati arány: ${secSummary.winRate}% (${secSummary.won}/${secSummary.totalChecked} nyert)`
+    };
+  }
+
+  return {
+    sectionKey: secMeta.sectionKey,
+    groupShortLabel: secMeta.shortGroupLabel,
+    groupFullLabel: secMeta.groupFullLabel,
+    marketKey: mBucket.key,
+    marketName: mBucket.name,
+    winRate: null,
+    won: 0,
+    totalChecked: 0,
+    scope: 'none',
+    shortText: `${secMeta.shortGroupLabel}: Új piac`,
+    tooltip: `${secMeta.groupFullLabel} • ${mBucket.name}: még nincs lezárt múltbeli minta`
+  };
+}
+
+export function attachHistoricalAccuracyToTips(tips = [], fallbackContext = {}) {
+  if (!Array.isArray(tips) || tips.length === 0) return tips;
+  const insights = buildCategoriesAndInsights().extraInsights;
+  for (const t of tips) {
+    if (!t) continue;
+    t.historicalAccuracy = getTipHistoricalHitRate(t, fallbackContext, insights);
+  }
+  return tips;
 }
 
 // 4. Új tipp felvétele a várólistába (duplikáció szűréssel)

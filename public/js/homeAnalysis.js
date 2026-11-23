@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { state, dom } from './state.js';
-import { escapeHtml, formatHungarianDate, getSportIcon, getRiskFilterShortLabel, getRiskVisuals, parseJsonResponse, saveQueriedTipsLocally } from './utils.js';
+import { escapeHtml, formatHungarianDate, getSportIcon, getRiskFilterShortLabel, getRiskVisuals, parseJsonResponse, saveQueriedTipsLocally, renderTipHistoricalBadgeHtml } from './utils.js';
 import { getFilterSettings, buildEmptyStateDiagnosticHtml, bindQuickFixButtons } from './filters.js';
 import { loadBettingStats } from './statsPanel.js';
 
@@ -213,8 +213,11 @@ export function renderAnalysisResults(payload, metaLabel) {
               <span class="text-sm font-black text-emerald-400 block truncate mt-0.5">${escapeHtml(tip.outcomeName)}</span>
               <span class="text-[11px] text-slate-400 mt-0.5 block">Esély: <strong class="text-white">${prob}%</strong></span>
             </div>
-            <div class="shrink-0 px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-lg">
-              ${Number(tip.odds).toFixed(2)}
+            <div class="shrink-0 flex flex-col items-end gap-1">
+              ${renderTipHistoricalBadgeHtml(tip, { sportName: tip.sportName, competitionName: tip.competitionName, eventName: tip.eventName }, false)}
+              <div class="px-3 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-lg leading-none">
+                ${Number(tip.odds).toFixed(2)}
+              </div>
             </div>
           </div>
         </div>

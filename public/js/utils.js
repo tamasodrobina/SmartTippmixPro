@@ -2,7 +2,126 @@
 // SmartTippmixPro - Segédfüggvények, Formázók és Helyi Mentés (Utils)
 // ============================================================================
 
-import { LS_PENDING_KEY } from './state.js';
+import { state, LS_PENDING_KEY } from './state.js';
+
+function classifyClientMarketBucketKey(marketName = '', sportId = 1) {
+  const m = String(marketName || '').toLowerCase();
+  if (Number(sportId) === 5 && (m.includes('játszma') || m.includes('játékszám') || m.includes('szett'))) return 'tennis_sets_games';
+  if (m.includes('büntetőlap') || m.includes('sárga lap') || m.includes('kiállítás')) return 'cards';
+  if (m.includes('szöglet')) return 'corners';
+  if (m.includes('mindkét csapat')) return 'btts';
+  if (
+    m.includes('touchdown') ||
+    m.includes('mezőnygól') ||
+    m.includes('yard') ||
+    m.includes('elkapás') ||
+    m.includes('reception') ||
+    m.includes('passzolt') ||
+    m.includes('sikeres passzok') ||
+    m.includes('interception') ||
+    m.includes('gólszerző') ||
+    m.includes('góllövő') ||
+    m.includes('szerez gólt') ||
+    m.includes('szabálytalanság') ||
+    m.includes('lesszám') ||
+    m.includes('11-es')
+  ) return 'player_special';
+  if (m.includes('hendikep')) return 'handicap';
+  if (m.includes('gólszám') || m.includes('pontszám')) return 'over_under';
+  if (m.includes('kétesély')) return 'double_chance';
+  if (m.includes('tét visszajár')) return 'dnb';
+  if (m === '1x2' || m.startsWith('1x2') || m.includes('1. félidő - 1x2') || m.includes('mérkőzés győztese') || m.startsWith('ki nyeri')) return '1x2';
+  if (Number(sportId) === 5) return 'tennis_sets_games';
+  return 'other_market';
+}
+
+function detectClientSectionMeta(tip = {}, fallbackContext = {}) {
+  const sRaw = String(tip.sportId || tip.sportName || fallbackContext.sportId || fallbackContext.sportName || '1').toLowerCase();
+  if (sRaw === '16' || sRaw.includes('nfl') || sRaw.includes('amerikai')) {
+    return { sectionKey: 'nfl', sportId: 16, shortGroupLabel: 'NFL', groupFullLabel: '🏈 Amerikai futball (NFL)' };
+  }
+  if (sRaw === '5' || sRaw.includes('tenisz') || sRaw.includes('tennis')) {
+    return { sectionKey: 'tennis', sportId: 5, shortGroupLabel: 'Tenisz', groupFullLabel: '🎾 Tenisz' };
+  }
+
+  const comp = String(tip.competitionName || fallbackContext.competitionName || '').toLowerCase();
+  const isWomen = /női|\bnoi\b|women|femenin|frauen|femminil/i.test(comp);
+  const isLowerOrCup = /(\b[2345]\.|championship|serie b|la liga 2|laliga 2|bundesliga 2|2\. bundesliga|ligue 2|kupa|cup|pokal|coppa|coupe|copa|supercup|szuperkupa)/i.test(comp);
+  const isUefaClub =
+    ((comp.includes('bajnokok ligája') || comp.includes('champions league') || /\bbl\b/.test(comp)) && !comp.includes('ázsia') && !comp.includes('afrika')) ||
+    comp.includes('európa liga') || comp.includes('európa-liga') || comp.includes('europa league') ||
+    comp.includes('konferencia liga') || comp.includes('konferencia-liga') || comp.includes('conference league') ||
+    /\b(el|kl)\b/.test(comp);
+  const isTop5 = !isLowerOrCup && !isWomen && (
+    ((comp.includes('angol bajnokság') || comp.includes('premier league')) && !comp.includes('skót')) ||
+    comp.includes('spanyol bajnokság') || comp.includes('laliga') || comp.includes('la liga') ||
+    ((comp.includes('olasz bajnokság') || comp.includes('serie a')) && !comp.includes('brazil')) ||
+    ((comp.includes('német bajnokság') || comp.includes('bundesliga')) && !comp.includes('osztrák')) ||
+    comp.includes('francia bajnokság') || comp.includes('ligue 1')
+  );
+
+  if (!isWomen && (isUefaClub || isTop5)) {
+    return { sectionKey: 'football_elite', sportId: 1, shortGroupLabel: 'Top5/BL/EL/KL', groupFullLabel: '⚽ Foci – Top 5 Liga / BL / EL / KL' };
+  }
+  return { sectionKey: 'football_other', sportId: 1, shortGroupLabel: 'Többi Foci liga', groupFullLabel: '⚽ Foci – Többi bajnokság & kupa' };
+}
+
+export function getTipHistoricalAccuracyInfo(tip = {}, fallbackContext = {}) {
+  if (tip?.historicalAccuracy && tip.historicalAccuracy.shortText) {
+    return tip.historicalAccuracy;
+  }
+  const secMeta = detectClientSectionMeta(tip, fallbackContext);
+  const mKey = classifyClientMarketBucketKey(tip.marketName || '', secMeta.sportId);
+  const sections = state.latestExtraInsightsData?.sections;
+  const sec = sections?.[secMeta.sectionKey];
+  if (sec) {
+    const mNode = (sec.byMarketType || []).find(m => m.key === mKey);
+    if (mNode && mNode.totalChecked > 0) {
+      return {
+        sectionKey: secMeta.sectionKey,
+        groupShortLabel: secMeta.shortGroupLabel,
+        winRate: mNode.winRate,
+        won: mNode.won,
+        totalChecked: mNode.totalChecked,
+        shortText: `${secMeta.shortGroupLabel}: ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked})`,
+        tooltip: `${secMeta.groupFullLabel} • ${mNode.name} piacon eddigi találati arány: ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked} nyert)`
+      };
+    }
+    if (sec.summary && sec.summary.totalChecked > 0) {
+      return {
+        sectionKey: secMeta.sectionKey,
+        groupShortLabel: secMeta.shortGroupLabel,
+        winRate: sec.summary.winRate,
+        won: sec.summary.won,
+        totalChecked: sec.summary.totalChecked,
+        shortText: `${secMeta.shortGroupLabel}: ${sec.summary.winRate}% (${sec.summary.won}/${sec.summary.totalChecked})`,
+        tooltip: `${secMeta.groupFullLabel} kategóriában eddigi összesített találati arány: ${sec.summary.winRate}% (${sec.summary.won}/${sec.summary.totalChecked} nyert)`
+      };
+    }
+  }
+  return null;
+}
+
+export function renderTipHistoricalBadgeHtml(tip = {}, fallbackContext = {}, isCompact = false) {
+  const info = getTipHistoricalAccuracyInfo(tip, fallbackContext);
+  if (!info || !info.shortText) return '';
+
+  const isElite = info.sectionKey === 'football_elite';
+  const colorCls = isElite
+    ? 'bg-emerald-950/85 border-emerald-400/45 text-emerald-200'
+    : 'bg-indigo-950/85 border-indigo-400/45 text-indigo-200';
+  const sizeCls = isCompact
+    ? 'px-1.5 py-0.5 text-[9px]'
+    : 'px-2 py-0.5 text-[10px]';
+
+  return `
+    <span class="inline-flex items-center gap-1 rounded-md border ${colorCls} ${sizeCls} font-extrabold leading-tight whitespace-nowrap shadow-sm"
+      title="${escapeHtml(info.tooltip || info.shortText)}">
+      <span>🎯</span>
+      <span>${escapeHtml(info.shortText)}</span>
+    </span>
+  `;
+}
 
 export function escapeHtml(str = '') {
   return String(str)

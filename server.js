@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { initTracker, recordTip, recordTipsBatch, evaluatePendingTips, getStats, resetTracker, getHistory, recordEvaluatedTip } from './tracker.js';
+import { initTracker, recordTip, recordTipsBatch, evaluatePendingTips, getStats, resetTracker, getHistory, recordEvaluatedTip, attachHistoricalAccuracyToTips } from './tracker.js';
 
 dotenv.config();
 
@@ -2482,6 +2482,20 @@ app.post('/api/matches/by-competitions', async (req, res) => {
           }
         }
 
+        const builtTop2 = attachHistoricalAccuracyToTips(
+          top2.map(t => ({
+            marketName: t.marketName,
+            outcomeName: t.outcomeName,
+            odds: t.odds
+          })),
+          {
+            sportId: ev.sportId,
+            sportName: ev.sportName,
+            competitionName: `${ev.competitionGroupName || ''} - ${ev.competitionName || ''}`.trim(),
+            eventName: ev.eventName
+          }
+        );
+
         return {
           eventId: ev.eventId,
           sportId: ev.sportId,
@@ -2491,11 +2505,7 @@ app.post('/api/matches/by-competitions', async (req, res) => {
           eventName: ev.eventName,
           eventDate: ev.eventDate,
           totalMarketCount: ev.totalMarketCount || allMarkets.length,
-          top2Tips: top2.map(t => ({
-            marketName: t.marketName,
-            outcomeName: t.outcomeName,
-            odds: t.odds
-          }))
+          top2Tips: builtTop2
         };
       })
     );
@@ -2617,6 +2627,7 @@ app.post('/api/analyze/interval', async (req, res) => {
     if (!forceRefresh && cachedAnalysis && Date.now() - cachedAnalysis.timestamp < AI_ANALYSIS_CACHE_TTL_MS) {
       const cachedTips = cachedAnalysis.payload?.result?.tips;
       if (Array.isArray(cachedTips) && cachedTips.length > 0) {
+        attachHistoricalAccuracyToTips(cachedTips, { sportId });
         return res.json({
           ...cachedAnalysis.payload,
           fromCache: true
@@ -2764,6 +2775,7 @@ Kizárólag egy érvényes JSON objektummal válaszolj az alábbi formában:
     if (Array.isArray(aiResult.data?.tips)) {
       snapTipsToOfficialMarkets(aiResult.data.tips, enrichedEvents);
       enforceTipRiskFilter(aiResult.data.tips, riskFilter);
+      attachHistoricalAccuracyToTips(aiResult.data.tips, { sportId });
     }
 
     const returnedTips = Array.isArray(aiResult.data?.tips) ? aiResult.data.tips : [];
@@ -2905,6 +2917,13 @@ app.post('/api/analyze/custom', async (req, res) => {
     if (!forceRefresh && cachedAnalysis && Date.now() - cachedAnalysis.timestamp < AI_ANALYSIS_CACHE_TTL_MS) {
       const cachedTips = cachedAnalysis.payload?.result?.tips;
       if (Array.isArray(cachedTips) && cachedTips.length > 0) {
+        const refEv = matchedEvents[0] || {};
+        attachHistoricalAccuracyToTips(cachedTips, {
+          sportId: refEv.sportId,
+          sportName: refEv.sportName,
+          competitionName: `${refEv.competitionGroupName || ''} - ${refEv.competitionName || ''}`.trim(),
+          eventName: refEv.eventName || query
+        });
         return res.json({
           ...cachedAnalysis.payload,
           fromCache: true
@@ -3079,6 +3098,13 @@ VÁLASZ FORMÁTUMA (Kizárólag érvényes JSON, magyarul):
     if (Array.isArray(aiResult.data?.tips)) {
       snapTipsToOfficialMarkets(aiResult.data.tips, enrichedEvents);
       enforceTipRiskFilter(aiResult.data.tips, riskFilter);
+      const refEv = matchedEvents[0] || {};
+      attachHistoricalAccuracyToTips(aiResult.data.tips, {
+        sportId: refEv.sportId,
+        sportName: refEv.sportName,
+        competitionName: `${refEv.competitionGroupName || ''} - ${refEv.competitionName || ''}`.trim(),
+        eventName: refEv.eventName || query
+      });
     }
 
     const returnedTips = Array.isArray(aiResult.data?.tips) ? aiResult.data.tips : [];
