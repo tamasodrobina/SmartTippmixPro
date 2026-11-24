@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-24T19:51:29.118Z",
+  "updatedAt": "2026-11-24T20:29:06.618Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 238,
-      "won": 154,
+      "totalChecked": 239,
+      "won": 155,
       "lost": 84,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 102,
-          "won": 70,
+          "totalChecked": 103,
+          "won": 71,
           "lost": 32,
           "winRate": 69
         },
@@ -235,28 +235,6 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_brazil_bajnokság",
       "categorySubName": "Brazil bajnokság"
-    },
-    {
-      "id": "1_alnassralsadd_2026-11-24_hazaicsapatszerezgltmindktflidben_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Al-Nassr - Al-Sadd",
-      "competitionName": "Nemzetközi klubcsapatok - Ázsiai BL, Nyugati csoport",
-      "eventDate": "2026-11-24T19:15:00+01:00",
-      "marketName": "Hazai csapat szerez gólt mindkét félidőben?",
-      "outcomeName": "Igen",
-      "odds": 1.49,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-24T17:36:56.321Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_ázsiai_bl_nyugati_csoport",
-      "categorySubName": "Ázsiai BL, Nyugati csoport"
     },
     {
       "id": "1_realmadridpsv_2026-11-24_mindktcsapatszerezglt_igen",
@@ -524,6 +502,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_alnassralsadd_2026-11-24_hazaicsapatszerezgltmindktflidben_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Al-Nassr - Al-Sadd",
+      "eventDate": "2026-11-24T19:15:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - Ázsiai BL, Nyugati csoport",
+      "marketName": "Hazai csapat szerez gólt mindkét félidőben?",
+      "outcomeName": "Igen",
+      "odds": 1.49,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "2-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-24T20:29:06.618Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_ázsiai_bl_nyugati_csoport",
+      "categorySubName": "Ázsiai BL, Nyugati csoport"
+    },
     {
       "id": "1_bodglimtlask_2026-11-24_zsiaihendikep125125_bodglimt125",
       "sportId": 1,
