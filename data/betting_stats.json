@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T19:01:39.824Z",
+  "updatedAt": "2026-11-24T19:01:59.728Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -467,11 +467,11 @@
       "marketName": "Ázsiai Hendikep 2,5 (2.5)",
       "outcomeName": "Barcelona -2,5",
       "odds": 1.54,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T19:01:39.824Z",
+      "addedAt": "2026-11-24T19:01:59.728Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -490,10 +490,10 @@
       "outcomeName": "Barcelona -3,5",
       "odds": 1.67,
       "riskCategory": "medium",
-      "riskScore": 4,
+      "riskScore": 5,
       "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T19:01:39.824Z",
+      "addedAt": "2026-11-24T19:01:59.728Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -501,21 +501,21 @@
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
-      "id": "1_sabahmasazirbarcelona_2026-11-25_1flidvendgcsapatglszm1515_tbbmint15",
+      "id": "1_sabahmasazirbarcelona_2026-11-25_bntetlapszm3535_kevesebbmint35",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5598304",
       "eventName": "Sabah Masazir - Barcelona",
       "competitionName": "Nemzetközi klubcsapatok - BL",
       "eventDate": "2026-11-25T18:45:00+01:00",
-      "marketName": "1. félidő - Vendégcsapat - Gólszám 1,5 (1.5)",
-      "outcomeName": "Több, mint 1,5",
-      "odds": 1.65,
+      "marketName": "Büntetőlap-szám 3,5 (3.5)",
+      "outcomeName": "Kevesebb, mint 3,5",
+      "odds": 1.61,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T19:01:39.824Z",
+      "addedAt": "2026-11-24T19:01:59.728Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -8475,7 +8475,7 @@
     "1_arsenaldortmund_2026-11-24_mindktcsapatszerezglt_igen",
     "1_sabahmasazirbarcelona_2026-11-25_zsiaihendikep2525_barcelona25",
     "1_sabahmasazirbarcelona_2026-11-25_szglethendikep3535_barcelona35",
-    "1_sabahmasazirbarcelona_2026-11-25_1flidvendgcsapatglszm1515_tbbmint15"
+    "1_sabahmasazirbarcelona_2026-11-25_bntetlapszm3535_kevesebbmint35"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -8568,6 +8568,7 @@
     "1_realmadridpsv_2026-11-24_nyertesklnbsg_hazaicsapat2nltbbgllalnyer",
     "1_realmadridpsv_2026-11-24_szglethendikep2525_realmadrid25",
     "1_arsenaldortmund_2026-11-24_hazaicsapatkapottglnlkljtsszaleamrkzst_igen",
-    "1_arsenaldortmund_2026-11-24_szgletszm8585_tbbmint85"
+    "1_arsenaldortmund_2026-11-24_szgletszm8585_tbbmint85",
+    "1_sabahmasazirbarcelona_2026-11-25_1flidvendgcsapatglszm1515_tbbmint15"
   ]
 }
