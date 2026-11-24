@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T18:44:29.711Z",
+  "updatedAt": "2026-11-24T18:49:18.497Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -405,7 +405,7 @@
       "riskScore": 3,
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T18:44:29.711Z",
+      "addedAt": "2026-11-24T18:49:18.497Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -424,10 +424,10 @@
       "outcomeName": "Több, mint 2,5",
       "odds": 1.46,
       "riskCategory": "low",
-      "riskScore": 3,
+      "riskScore": 2,
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T18:44:29.711Z",
+      "addedAt": "2026-11-24T18:49:18.497Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -435,21 +435,21 @@
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
-      "id": "1_arsenaldortmund_2026-11-24_szgletszm8585_tbbmint85",
+      "id": "1_arsenaldortmund_2026-11-24_mindktcsapatszerezglt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5597924",
       "eventName": "Arsenal - Dortmund",
       "competitionName": "Nemzetközi klubcsapatok - BL",
       "eventDate": "2026-11-24T21:00:00+01:00",
-      "marketName": "Szögletszám 8,5 (8.5)",
-      "outcomeName": "Több, mint 8,5",
-      "odds": 1.6,
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.76,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T18:44:29.711Z",
+      "addedAt": "2026-11-24T18:49:18.497Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -8406,7 +8406,7 @@
     "1_realmadridpsv_2026-11-24_melyikcsapatkaptbbbntetlapot_psv",
     "1_arsenaldortmund_2026-11-24_1x2_arsenal",
     "1_arsenaldortmund_2026-11-24_bntetlapszm2525_tbbmint25",
-    "1_arsenaldortmund_2026-11-24_szgletszm8585_tbbmint85"
+    "1_arsenaldortmund_2026-11-24_mindktcsapatszerezglt_igen"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -8498,6 +8498,7 @@
     "1_bodglimtlask_2026-11-24_ktesly_dntetlenvagylask",
     "1_realmadridpsv_2026-11-24_nyertesklnbsg_hazaicsapat2nltbbgllalnyer",
     "1_realmadridpsv_2026-11-24_szglethendikep2525_realmadrid25",
-    "1_arsenaldortmund_2026-11-24_hazaicsapatkapottglnlkljtsszaleamrkzst_igen"
+    "1_arsenaldortmund_2026-11-24_hazaicsapatkapottglnlkljtsszaleamrkzst_igen",
+    "1_arsenaldortmund_2026-11-24_szgletszm8585_tbbmint85"
   ]
 }
