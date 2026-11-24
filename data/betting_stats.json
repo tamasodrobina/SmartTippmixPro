@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T19:06:50.658Z",
+  "updatedAt": "2026-11-24T19:06:56.134Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -515,7 +515,7 @@
       "riskScore": 3,
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T19:06:50.658Z",
+      "addedAt": "2026-11-24T19:06:56.134Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -523,21 +523,21 @@
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
-      "id": "1_rbleipziglens_2026-11-24_kaputeltallglszerzsiksrletekszma105105_tbbmint105",
+      "id": "1_rbleipziglens_2026-11-24_1x2glszm1515_hazaistbb",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5597926",
       "eventName": "RB Leipzig - Lens",
       "competitionName": "Nemzetközi klubcsapatok - BL",
       "eventDate": "2026-11-24T21:00:00+01:00",
-      "marketName": "Kaput eltaláló gólszerzési kísérletek száma 10,5 (10.5)",
-      "outcomeName": "Több, mint 10,5",
-      "odds": 1.65,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
+      "marketName": "1X2 + Gólszám 1,5 (1.5)",
+      "outcomeName": "Hazai és több",
+      "odds": 1.35,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T19:06:50.658Z",
+      "addedAt": "2026-11-24T19:06:56.134Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -545,21 +545,21 @@
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
-      "id": "1_rbleipziglens_2026-11-24_szablytalansgokszma215215_tbbmint215",
+      "id": "1_rbleipziglens_2026-11-24_szgletszm9595_tbbmint95",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5597926",
       "eventName": "RB Leipzig - Lens",
       "competitionName": "Nemzetközi klubcsapatok - BL",
       "eventDate": "2026-11-24T21:00:00+01:00",
-      "marketName": "Szabálytalanságok száma 21,5 (21.5)",
-      "outcomeName": "Több, mint 21,5",
-      "odds": 1.6,
+      "marketName": "Szögletszám 9,5 (9.5)",
+      "outcomeName": "Több, mint 9,5",
+      "odds": 1.64,
       "riskCategory": "medium",
-      "riskScore": 4,
+      "riskScore": 5,
       "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T19:06:50.658Z",
+      "addedAt": "2026-11-24T19:06:56.134Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -8520,8 +8520,8 @@
     "1_sabahmasazirbarcelona_2026-11-25_szglethendikep3535_barcelona35",
     "1_sabahmasazirbarcelona_2026-11-25_bntetlapszm3535_kevesebbmint35",
     "1_rbleipziglens_2026-11-24_mindktcsapatszerezglt_igen",
-    "1_rbleipziglens_2026-11-24_kaputeltallglszerzsiksrletekszma105105_tbbmint105",
-    "1_rbleipziglens_2026-11-24_szablytalansgokszma215215_tbbmint215"
+    "1_rbleipziglens_2026-11-24_1x2glszm1515_hazaistbb",
+    "1_rbleipziglens_2026-11-24_szgletszm9595_tbbmint95"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -8616,6 +8616,8 @@
     "1_arsenaldortmund_2026-11-24_hazaicsapatkapottglnlkljtsszaleamrkzst_igen",
     "1_arsenaldortmund_2026-11-24_szgletszm8585_tbbmint85",
     "1_sabahmasazirbarcelona_2026-11-25_1flidvendgcsapatglszm1515_tbbmint15",
-    "1_rbleipziglens_2026-11-24_mindktcsapatszerezglt_nem"
+    "1_rbleipziglens_2026-11-24_mindktcsapatszerezglt_nem",
+    "1_rbleipziglens_2026-11-24_kaputeltallglszerzsiksrletekszma105105_tbbmint105",
+    "1_rbleipziglens_2026-11-24_szablytalansgokszma215215_tbbmint215"
   ]
 }
