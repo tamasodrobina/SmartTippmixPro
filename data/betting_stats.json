@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T15:04:15.207Z",
+  "updatedAt": "2026-11-24T04:54:18.711Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,22 +55,22 @@
       }
     },
     "nfl": {
-      "totalChecked": 44,
+      "totalChecked": 47,
       "won": 25,
-      "lost": 19,
-      "winRate": 57,
+      "lost": 22,
+      "winRate": 53,
       "byRisk": {
         "low": {
-          "totalChecked": 13,
+          "totalChecked": 14,
           "won": 6,
-          "lost": 7,
-          "winRate": 46
+          "lost": 8,
+          "winRate": 43
         },
         "medium": {
-          "totalChecked": 31,
+          "totalChecked": 33,
           "won": 19,
-          "lost": 12,
-          "winRate": 61
+          "lost": 14,
+          "winRate": 58
         },
         "high": {
           "totalChecked": 0,
@@ -81,24 +81,26 @@
       }
     }
   },
-  "pendingTips": [
+  "pendingTips": [],
+  "history": [
     {
-      "id": "16_washingtoncincinnati_2026-11-24_pontszm525525_tbbmint525",
+      "id": "16_washingtoncincinnati_2026-11-24_touchdownokszma5555_tbbmint55",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5597871",
       "eventName": "Washington - Cincinnati",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-24T02:15:00+01:00",
-      "marketName": "Pontszám 52,5 (52.5)",
-      "outcomeName": "Több, mint 52,5",
-      "odds": 1.62,
+      "competitionName": "USA - NFL",
+      "marketName": "Touchdown-ok száma 5,5 (5.5)",
+      "outcomeName": "Több, mint 5,5",
+      "odds": 1.44,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-23T08:35:02.577Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "22-20",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-24T04:54:18.711Z",
+      "status": "lost",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
@@ -108,48 +110,48 @@
       "id": "16_washingtoncincinnati_2026-11-24_amrkzsgyztese_cincinnati",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5597871",
       "eventName": "Washington - Cincinnati",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-24T02:15:00+01:00",
+      "competitionName": "USA - NFL",
       "marketName": "A mérkőzés győztese",
       "outcomeName": "Cincinnati",
       "odds": 1.3,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-23T08:35:02.577Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "22-20",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-24T04:54:18.508Z",
+      "status": "lost",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
     },
     {
-      "id": "16_washingtoncincinnati_2026-11-24_touchdownokszma5555_tbbmint55",
+      "id": "16_washingtoncincinnati_2026-11-24_pontszm525525_tbbmint525",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5597871",
       "eventName": "Washington - Cincinnati",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-24T02:15:00+01:00",
-      "marketName": "Touchdown-ok száma 5,5 (5.5)",
-      "outcomeName": "Több, mint 5,5",
-      "odds": 1.44,
+      "competitionName": "USA - NFL",
+      "marketName": "Pontszám 52,5 (52.5)",
+      "outcomeName": "Több, mint 52,5",
+      "odds": 1.62,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-23T08:35:02.577Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "22-20",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-24T04:54:17.907Z",
+      "status": "lost",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_paok2nikivolosz_2026-11-23_1x2_nikivolosz",
       "sportId": 1,
