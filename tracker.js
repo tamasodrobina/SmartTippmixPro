@@ -1122,19 +1122,28 @@ export function buildCategoriesAndInsights() {
   };
 }
 
-// Kiszámolja egy adott tipphez (sportág + Foci Top5/BL/EL/KL vs. Többi csoport + piactípus alapján),
+// Kiszámolja egy adott tipphez (sportág + Foci Top5/BL/EL/KL vs. Többi csoport + piactípus + kockázati szint alapján),
 // hogy eddig hány %-os találati aránnyal jött be!
 export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuiltInsights = null) {
   const insights = prebuiltInsights || buildCategoriesAndInsights().extraInsights;
   const secMeta = getInsightSectionMeta(tip, fallbackContext);
   const mBucket = classifyMarketBucket(tip.marketName || tip.market || '', secMeta.sportId);
+  const riskInfo = determineRiskCategory(tip);
+  const riskCat = riskInfo.category || 'medium'; // 'low' | 'medium' | 'high'
+  const riskLabel = riskInfo.label || (riskCat === 'low' ? 'Alacsony' : riskCat === 'high' ? 'Magas' : 'Közepes');
 
   const sec = insights?.sections?.[secMeta.sectionKey];
-  const secSummary = sec?.summary || { totalChecked: 0, won: 0, winRate: 0 };
+  const secSummary = sec?.summary || { totalChecked: 0, won: 0, winRate: 0, byRisk: {} };
   const marketInSec = (sec?.byMarketType || []).find(m => m.key === mBucket.key);
 
-  // 1. Ha ebben a csoportban (pl. Top liga vagy Többi foci liga vagy NFL vagy Tenisz) az adott piactípusra már van kiértékelt tipp:
-  if (marketInSec && marketInSec.totalChecked > 0) {
+  const rMkt = marketInSec?.byRisk?.[riskCat] || { totalChecked: 0, won: 0, winRate: 0, pendingCount: 0 };
+  const rSec = secSummary?.byRisk?.[riskCat] || { totalChecked: 0, won: 0, winRate: 0, pendingCount: 0 };
+
+  // 1. Ha ebben a csoportban az adott piactípuson ÉS az adott kockázati szinten már van kiértékelt tipp:
+  if (rMkt.totalChecked > 0) {
+    const otherRisksNote = marketInSec && marketInSec.totalChecked > rMkt.totalChecked
+      ? ` (Összes kockázati szinten ezen a piacon: ${marketInSec.winRate}% • ${marketInSec.won}/${marketInSec.totalChecked})`
+      : '';
     return {
       sectionKey: secMeta.sectionKey,
       groupShortLabel: secMeta.shortGroupLabel,
@@ -1142,17 +1151,22 @@ export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuilt
       marketKey: mBucket.key,
       marketName: mBucket.name,
       marketShortName: mBucket.shortName,
-      winRate: marketInSec.winRate,
-      won: marketInSec.won,
-      totalChecked: marketInSec.totalChecked,
-      scope: 'market_in_group',
-      shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} • ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked})`,
-      tooltip: `${secMeta.groupFullLabel} • ${mBucket.name} piacon eddigi találati arány: ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked} nyert)`
+      riskCategory: riskCat,
+      riskLabel,
+      winRate: rMkt.winRate,
+      won: rMkt.won,
+      totalChecked: rMkt.totalChecked,
+      scope: 'market_and_risk_in_group',
+      shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} (${riskLabel}) • ${rMkt.winRate}% (${rMkt.won}/${rMkt.totalChecked})`,
+      tooltip: `${secMeta.groupFullLabel} • ${mBucket.name} piacon ${riskLabel} kockázati szinten eddigi találati arány: ${rMkt.winRate}% (${rMkt.won}/${rMkt.totalChecked} nyert)${otherRisksNote}`
     };
   }
 
-  // 2. Ha az adott piactípusban még nincs lezárt minta ebben az alcsoportban, de magában a csoportban már van:
-  if (secSummary.totalChecked > 0) {
+  // 2. Ha ezen a piacon ezen a kockázati szinten még nincs lezárt tipp (0/0), de a kategóriában (pl. Többi foci liga) ezen a kockázati szinten már van:
+  if (rSec.totalChecked > 0) {
+    const otherRisksNote = marketInSec && marketInSec.totalChecked > 0
+      ? ` Más kockázati szinteken a(z) ${mBucket.name} piacon: ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked}).`
+      : '';
     return {
       sectionKey: secMeta.sectionKey,
       groupShortLabel: secMeta.shortGroupLabel,
@@ -1160,15 +1174,24 @@ export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuilt
       marketKey: mBucket.key,
       marketName: mBucket.name,
       marketShortName: mBucket.shortName,
-      winRate: secSummary.winRate,
-      won: secSummary.won,
-      totalChecked: secSummary.totalChecked,
-      scope: 'group_overall',
-      shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} • ${secSummary.winRate}% (${secSummary.won}/${secSummary.totalChecked})`,
-      tooltip: `${secMeta.groupFullLabel} kategóriában eddigi összesített találati arány: ${secSummary.winRate}% (${secSummary.won}/${secSummary.totalChecked} nyert)`
+      riskCategory: riskCat,
+      riskLabel,
+      winRate: null,
+      won: 0,
+      totalChecked: 0,
+      groupRiskWinRate: rSec.winRate,
+      groupRiskWon: rSec.won,
+      groupRiskTotal: rSec.totalChecked,
+      scope: 'risk_in_group',
+      shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} (${riskLabel}) • 0/0 (${riskLabel} össz: ${rSec.winRate}%)`,
+      tooltip: `${secMeta.groupFullLabel} • ${mBucket.name} piacon ${riskLabel} kockázati szinten még nincs lezárt tipp (0/0). A kategóriában az összes ${riskLabel} kockázatú tipp találati aránya: ${rSec.winRate}% (${rSec.won}/${rSec.totalChecked} nyert).${otherRisksNote}`
     };
   }
 
+  // 3. Ha ebben a kategóriában ezen a kockázati szinten még egyetlen lezárt tipp sincs (0/0):
+  const otherRisksNote = marketInSec && marketInSec.totalChecked > 0
+    ? ` Más kockázati szinteken ezen a piacon eddig: ${marketInSec.winRate}% (${marketInSec.won}/${marketInSec.totalChecked} nyert).`
+    : '';
   return {
     sectionKey: secMeta.sectionKey,
     groupShortLabel: secMeta.shortGroupLabel,
@@ -1176,12 +1199,14 @@ export function getTipHistoricalHitRate(tip = {}, fallbackContext = {}, prebuilt
     marketKey: mBucket.key,
     marketName: mBucket.name,
     marketShortName: mBucket.shortName,
+    riskCategory: riskCat,
+    riskLabel,
     winRate: null,
     won: 0,
     totalChecked: 0,
     scope: 'none',
-    shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} (új)`,
-    tooltip: `${secMeta.groupFullLabel} • ${mBucket.name}: még nincs lezárt múltbeli minta`
+    shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} (${riskLabel}) • 0/0 (új)`,
+    tooltip: `${secMeta.groupFullLabel} • ${mBucket.name} piacon ${riskLabel} kockázati szinten még nincs lezárt múltbeli minta (0/0).${otherRisksNote}`
   };
 }
 

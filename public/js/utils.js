@@ -89,51 +89,106 @@ function detectClientSectionMeta(tip = {}, fallbackContext = {}) {
   return { sectionKey: 'football_other', sportId: 1, shortGroupLabel: 'Többi foci liga', groupFullLabel: '⚽ Foci – Többi bajnokság & kupa' };
 }
 
+function detectClientRiskInfo(tip = {}) {
+  const risk = tip.riskAssessment || {};
+  const score = Number(risk.score || tip.riskScore || 0);
+  if (score > 0) {
+    if (score <= 3) return { category: 'low', label: 'Alacsony' };
+    if (score <= 6) return { category: 'medium', label: 'Közepes' };
+    return { category: 'high', label: 'Magas' };
+  }
+  const level = String(risk.level || tip.riskLevel || tip.riskCategory || '').toLowerCase();
+  if (level === 'low' || (level.includes('alacsony') && !level.includes('közepes'))) {
+    return { category: 'low', label: 'Alacsony' };
+  }
+  if (level === 'high' || level.includes('magas')) {
+    return { category: 'high', label: 'Magas' };
+  }
+  if (level === 'medium' || level.includes('közepes')) {
+    return { category: 'medium', label: 'Közepes' };
+  }
+  const odds = Number(tip.odds) || 1.6;
+  if (odds <= 1.45) return { category: 'low', label: 'Alacsony' };
+  if (odds <= 1.75) return { category: 'medium', label: 'Közepes' };
+  return { category: 'high', label: 'Magas' };
+}
+
 export function getTipHistoricalAccuracyInfo(tip = {}, fallbackContext = {}) {
   const secMeta = detectClientSectionMeta(tip, fallbackContext);
   const mBucket = classifyClientMarketBucket(tip.marketName || tip.market || '', secMeta.sportId);
+  const riskInfo = detectClientRiskInfo(tip);
+  const riskCat = riskInfo.category;
+  const riskLabel = riskInfo.label;
 
-  if (tip?.historicalAccuracy && tip.historicalAccuracy.winRate !== undefined && tip.historicalAccuracy.winRate !== null) {
-    const ha = tip.historicalAccuracy;
-    const grp = ha.groupShortLabel === 'Top5/BL/EL/KL' ? 'Top liga'
-      : ha.groupShortLabel === 'Többi Foci liga' ? 'Többi foci liga'
-      : (ha.groupShortLabel || secMeta.shortGroupLabel);
-    const mShort = ha.marketShortName || mBucket.shortName;
-    return {
-      ...ha,
-      shortText: `${grp}: ${mShort} • ${ha.winRate}% (${ha.won}/${ha.totalChecked})`
-    };
-  }
-
+  // 1. Ha a kliens oldalon már be van töltve a legfrissebb extraInsights, abból pontosan (kockázati szint szerint szeparálva) számolunk:
   const sections = state.latestExtraInsightsData?.sections;
   const sec = sections?.[secMeta.sectionKey];
   if (sec) {
     const mNode = (sec.byMarketType || []).find(m => m.key === mBucket.key);
-    if (mNode && mNode.totalChecked > 0) {
+    const rMkt = mNode?.byRisk?.[riskCat];
+    const rSec = sec.summary?.byRisk?.[riskCat];
+
+    if (rMkt && rMkt.totalChecked > 0) {
+      const otherRisksNote = mNode && mNode.totalChecked > rMkt.totalChecked
+        ? ` (Összes kockázati szinten ezen a piacon: ${mNode.winRate}% • ${mNode.won}/${mNode.totalChecked})`
+        : '';
       return {
         sectionKey: secMeta.sectionKey,
         groupShortLabel: secMeta.shortGroupLabel,
         marketShortName: mBucket.shortName,
-        winRate: mNode.winRate,
-        won: mNode.won,
-        totalChecked: mNode.totalChecked,
-        shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} • ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked})`,
-        tooltip: `${secMeta.groupFullLabel} • ${mNode.name} piacon eddigi találati arány: ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked} nyert)`
+        riskCategory: riskCat,
+        riskLabel,
+        winRate: rMkt.winRate,
+        won: rMkt.won,
+        totalChecked: rMkt.totalChecked,
+        scope: 'market_and_risk_in_group',
+        shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} (${riskLabel}) • ${rMkt.winRate}% (${rMkt.won}/${rMkt.totalChecked})`,
+        tooltip: `${secMeta.groupFullLabel} • ${mNode.name} piacon ${riskLabel} kockázati szinten eddigi találati arány: ${rMkt.winRate}% (${rMkt.won}/${rMkt.totalChecked} nyert)${otherRisksNote}`
       };
     }
-    if (sec.summary && sec.summary.totalChecked > 0) {
+
+    if (rSec && rSec.totalChecked > 0) {
+      const otherRisksNote = mNode && mNode.totalChecked > 0
+        ? ` Más kockázati szinteken a(z) ${mNode.name} piacon: ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked}).`
+        : '';
       return {
         sectionKey: secMeta.sectionKey,
         groupShortLabel: secMeta.shortGroupLabel,
         marketShortName: mBucket.shortName,
-        winRate: sec.summary.winRate,
-        won: sec.summary.won,
-        totalChecked: sec.summary.totalChecked,
-        shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} • ${sec.summary.winRate}% (${sec.summary.won}/${sec.summary.totalChecked})`,
-        tooltip: `${secMeta.groupFullLabel} kategóriában eddigi összesített találati arány: ${sec.summary.winRate}% (${sec.summary.won}/${sec.summary.totalChecked} nyert)`
+        riskCategory: riskCat,
+        riskLabel,
+        winRate: null,
+        won: 0,
+        totalChecked: 0,
+        scope: 'risk_in_group',
+        shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} (${riskLabel}) • 0/0 (${riskLabel} össz: ${rSec.winRate}%)`,
+        tooltip: `${secMeta.groupFullLabel} • ${mNode?.name || mBucket.shortName} piacon ${riskLabel} kockázati szinten még nincs lezárt tipp (0/0). A kategóriában az összes ${riskLabel} kockázatú tipp találati aránya: ${rSec.winRate}% (${rSec.won}/${rSec.totalChecked} nyert).${otherRisksNote}`
       };
     }
+
+    const otherRisksNote = mNode && mNode.totalChecked > 0
+      ? ` Más kockázati szinteken ezen a piacon eddig: ${mNode.winRate}% (${mNode.won}/${mNode.totalChecked} nyert).`
+      : '';
+    return {
+      sectionKey: secMeta.sectionKey,
+      groupShortLabel: secMeta.shortGroupLabel,
+      marketShortName: mBucket.shortName,
+      riskCategory: riskCat,
+      riskLabel,
+      winRate: null,
+      won: 0,
+      totalChecked: 0,
+      scope: 'none',
+      shortText: `${secMeta.shortGroupLabel}: ${mBucket.shortName} (${riskLabel}) • 0/0 (új)`,
+      tooltip: `${secMeta.groupFullLabel} • ${mNode?.name || mBucket.shortName} piacon ${riskLabel} kockázati szinten még nincs lezárt múltbeli minta (0/0).${otherRisksNote}`
+    };
   }
+
+  // 2. Fallback: a szerver által a tippbe csomagolt historicalAccuracy objektum
+  if (tip?.historicalAccuracy && tip.historicalAccuracy.shortText) {
+    return tip.historicalAccuracy;
+  }
+
   return null;
 }
 
@@ -141,10 +196,15 @@ export function renderTipHistoricalBadgeHtml(tip = {}, fallbackContext = {}, isC
   const info = getTipHistoricalAccuracyInfo(tip, fallbackContext);
   if (!info || !info.shortText) return '';
 
-  const isElite = info.sectionKey === 'football_elite';
-  const colorCls = isElite
-    ? 'bg-emerald-950/85 border-emerald-400/45 text-emerald-200'
-    : 'bg-indigo-950/85 border-indigo-400/45 text-indigo-200';
+  let colorCls = 'bg-indigo-950/85 border-indigo-400/45 text-indigo-200';
+  if (info.riskCategory === 'low') {
+    colorCls = 'bg-emerald-950/85 border-emerald-400/45 text-emerald-200';
+  } else if (info.riskCategory === 'medium') {
+    colorCls = 'bg-amber-950/85 border-amber-400/45 text-amber-200';
+  } else if (info.riskCategory === 'high') {
+    colorCls = 'bg-rose-950/85 border-rose-400/45 text-rose-200';
+  }
+
   const sizeCls = isCompact
     ? 'px-1.5 py-0.5 text-[9px]'
     : 'px-2 py-0.5 text-[10px]';

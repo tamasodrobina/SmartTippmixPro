@@ -409,23 +409,52 @@ export function renderExtraInsightsPanel(extraInsights) {
 
     const marketCardsHtml = markets.map(m => {
       const rateDisplay = m.totalChecked > 0 ? `${m.winRate}%` : '--%';
+      const mLow = m.byRisk?.low || { totalChecked: 0, won: 0, winRate: 0 };
+      const mMed = m.byRisk?.medium || { totalChecked: 0, won: 0, winRate: 0 };
+      const mHigh = m.byRisk?.high || { totalChecked: 0, won: 0, winRate: 0 };
+      const lowTxt = mLow.totalChecked > 0 ? `${mLow.winRate}% (${mLow.won}/${mLow.totalChecked})` : `0/0`;
+      const medTxt = mMed.totalChecked > 0 ? `${mMed.winRate}% (${mMed.won}/${mMed.totalChecked})` : `0/0`;
+      const highTxt = mHigh.totalChecked > 0 ? `${mHigh.winRate}% (${mHigh.won}/${mHigh.totalChecked})` : `0/0`;
+
       return `
-        <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900/90 border border-slate-800/90 flex items-center justify-between gap-2.5">
-          <div class="min-w-0">
-            <div class="text-xs font-bold text-white truncate">${m.icon || '📊'} ${escapeHtml(m.name)}</div>
-            <div class="text-[10px] text-slate-400 mt-0.5">
-              Találat: <strong class="text-slate-200">${m.won}/${m.totalChecked} nyert</strong>${m.pendingCount > 0 ? ` <span class="text-amber-300">(${m.pendingCount} vár)</span>` : ''}
+        <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900/90 border border-slate-800/90 space-y-2">
+          <div class="flex items-center justify-between gap-2.5">
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-white truncate">${m.icon || '📊'} ${escapeHtml(m.name)}</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">
+                Összesen: <strong class="text-slate-200">${m.won}/${m.totalChecked} nyert</strong>${m.pendingCount > 0 ? ` <span class="text-amber-300">(${m.pendingCount} vár)</span>` : ''}
+              </div>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="text-sm font-black text-emerald-400 block leading-tight">${rateDisplay}</span>
+              <span class="block text-[10px] text-slate-400 font-semibold leading-tight mt-0.5">(${m.won}/${m.totalChecked})</span>
             </div>
           </div>
-          <div class="text-right shrink-0">
-            <span class="text-sm font-black text-emerald-400 block leading-tight">${rateDisplay}</span>
-            <span class="block text-[10px] text-slate-400 font-semibold leading-tight mt-0.5">(${m.won}/${m.totalChecked})</span>
+          <div class="grid grid-cols-3 gap-1 pt-1.5 border-t border-slate-800/80 text-center">
+            <div class="px-1 py-1 rounded bg-emerald-950/35 border border-emerald-800/40">
+              <span class="block text-[9px] font-bold uppercase text-emerald-400 leading-none">Alacsony</span>
+              <span class="block text-[10px] font-extrabold text-white mt-0.5 leading-tight">${lowTxt}</span>
+            </div>
+            <div class="px-1 py-1 rounded bg-amber-950/35 border border-amber-800/40">
+              <span class="block text-[9px] font-bold uppercase text-amber-400 leading-none">Közepes</span>
+              <span class="block text-[10px] font-extrabold text-white mt-0.5 leading-tight">${medTxt}</span>
+            </div>
+            <div class="px-1 py-1 rounded bg-rose-950/35 border border-rose-800/40">
+              <span class="block text-[9px] font-bold uppercase text-rose-400 leading-none">Magas</span>
+              <span class="block text-[10px] font-extrabold text-white mt-0.5 leading-tight">${highTxt}</span>
+            </div>
           </div>
         </div>
       `;
     }).join('');
 
     const winRateText = sum.totalChecked > 0 ? `${sum.winRate}%` : '--%';
+    const sLow = sum.byRisk?.low || { totalChecked: 0, won: 0, winRate: 0 };
+    const sMed = sum.byRisk?.medium || { totalChecked: 0, won: 0, winRate: 0 };
+    const sHigh = sum.byRisk?.high || { totalChecked: 0, won: 0, winRate: 0 };
+    const sLowTxt = sLow.totalChecked > 0 ? `${sLow.winRate}% (${sLow.won}/${sLow.totalChecked})` : `--% (0/0)`;
+    const sMedTxt = sMed.totalChecked > 0 ? `${sMed.winRate}% (${sMed.won}/${sMed.totalChecked})` : `--% (0/0)`;
+    const sHighTxt = sHigh.totalChecked > 0 ? `${sHigh.winRate}% (${sHigh.won}/${sHigh.totalChecked})` : `--% (0/0)`;
 
     return `
       <div class="rounded-2xl bg-slate-950/95 border ${ac.border} overflow-hidden shadow-lg">
@@ -445,20 +474,32 @@ export function renderExtraInsightsPanel(extraInsights) {
         </div>
 
         <div class="p-3 sm:p-4 space-y-3">
-          <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
             <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Kiértékelt Tippek Találati Aránya</span>
-              <span class="text-sm sm:text-base font-black text-white mt-0.5 block">${winRateText} <span class="text-[11px] font-semibold text-slate-400">(${sum.won}/${sum.totalChecked} nyert)</span></span>
+              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Összesített Találat</span>
+              <span class="text-sm sm:text-base font-black text-white mt-0.5 block">${winRateText} <span class="text-[11px] font-semibold text-slate-400">(${sum.won}/${sum.totalChecked})</span></span>
             </div>
-            <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Átlagos Nyertes Szorzó</span>
+            <div class="p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-800/50">
+              <span class="text-[10px] text-emerald-400 uppercase font-bold block truncate">🟢 Alacsony kockázat</span>
+              <span class="text-sm sm:text-base font-black text-white mt-0.5 block">${sLowTxt}</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-amber-950/30 border border-amber-800/50">
+              <span class="text-[10px] text-amber-400 uppercase font-bold block truncate">🟡 Közepes kockázat</span>
+              <span class="text-sm sm:text-base font-black text-white mt-0.5 block">${sMedTxt}</span>
+            </div>
+            <div class="p-2.5 rounded-xl bg-rose-950/30 border border-rose-800/50">
+              <span class="text-[10px] text-rose-400 uppercase font-bold block truncate">🔴 Magas kockázat</span>
+              <span class="text-sm sm:text-base font-black text-white mt-0.5 block">${sHighTxt}</span>
+            </div>
+            <div class="col-span-2 sm:col-span-1 p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block truncate">Átl. Nyertes Odds</span>
               <span class="text-sm sm:text-base font-black text-amber-300 mt-0.5 block">${Number(sum.avgWinOdds || 0).toFixed(2)}x</span>
             </div>
           </div>
 
           <div class="space-y-1.5">
             <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block px-0.5">
-              Fogadási Piacok Szerinti Találati Arány (${escapeHtml(sec.shortTitle || sec.title)})
+              Fogadási Piacok &amp; Kockázati Szintek Szerinti Találati Arány (${escapeHtml(sec.shortTitle || sec.title)})
             </span>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
               ${marketCardsHtml || '<div class="text-xs text-slate-500 italic p-2">Ebben a kategóriában még nincs kiértékelt piaci adat.</div>'}
