@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T18:41:50.602Z",
+  "updatedAt": "2026-11-24T18:42:22.687Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -361,7 +361,7 @@
       "riskScore": 3,
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T18:41:50.602Z",
+      "addedAt": "2026-11-24T18:42:22.687Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -369,21 +369,21 @@
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
-      "id": "1_realmadridpsv_2026-11-24_szglethendikep2525_realmadrid25",
+      "id": "1_realmadridpsv_2026-11-24_szgletszm9595_tbbmint95",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5597923",
       "eventName": "Real Madrid - PSV",
       "competitionName": "Nemzetközi klubcsapatok - BL",
       "eventDate": "2026-11-24T21:00:00+01:00",
-      "marketName": "Szöglet hendikep -2,5 (-2.5)",
-      "outcomeName": "Real Madrid -2,5",
-      "odds": 1.57,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
+      "marketName": "Szögletszám 9,5 (9.5)",
+      "outcomeName": "Több, mint 9,5",
+      "odds": 1.54,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T18:41:50.602Z",
+      "addedAt": "2026-11-24T18:42:22.687Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -405,7 +405,7 @@
       "riskScore": 4,
       "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-24T18:41:50.602Z",
+      "addedAt": "2026-11-24T18:42:22.687Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -8359,7 +8359,7 @@
     "1_bodglimtlask_2026-11-24_zsiaihendikep125125_bodglimt125",
     "1_alnassralsadd_2026-11-24_hazaicsapatszerezgltmindktflidben_igen",
     "1_realmadridpsv_2026-11-24_mindktcsapatszerezglt_igen",
-    "1_realmadridpsv_2026-11-24_szglethendikep2525_realmadrid25",
+    "1_realmadridpsv_2026-11-24_szgletszm9595_tbbmint95",
     "1_realmadridpsv_2026-11-24_melyikcsapatkaptbbbntetlapot_psv"
   ],
   "replacedTipIds": [
@@ -8451,6 +8451,7 @@
     "1_chapecoensepalmeirassp_2026-11-24_vendgcsapatkapottglnlkljtsszaleamrkzst_nem",
     "1_galatasarayastonvilla_2026-11-24_1x2_astonvilla",
     "1_bodglimtlask_2026-11-24_ktesly_dntetlenvagylask",
-    "1_realmadridpsv_2026-11-24_nyertesklnbsg_hazaicsapat2nltbbgllalnyer"
+    "1_realmadridpsv_2026-11-24_nyertesklnbsg_hazaicsapat2nltbbgllalnyer",
+    "1_realmadridpsv_2026-11-24_szglethendikep2525_realmadrid25"
   ]
 }
