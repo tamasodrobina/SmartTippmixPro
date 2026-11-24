@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-24T08:10:06.207Z",
+  "updatedAt": "2026-11-24T11:59:05.119Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 234,
-      "won": 153,
+      "totalChecked": 235,
+      "won": 154,
       "lost": 81,
-      "winRate": 65,
+      "winRate": 66,
       "byRisk": {
         "low": {
-          "totalChecked": 99,
-          "won": 69,
+          "totalChecked": 100,
+          "won": 70,
           "lost": 30,
           "winRate": 70
         },
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_daejeoncitizenbeijingguoan_2026-11-24_1x2_daejeoncitizen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Daejeon Citizen - Beijing Guoan",
-      "competitionName": "Nemzetközi klubcsapatok - Ázsiai BL, Keleti csoport",
-      "eventDate": "2026-11-24T11:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Daejeon Citizen",
-      "odds": 1.32,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-24T08:04:57.699Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_ázsiai_bl_keleti_csoport",
-      "categorySubName": "Ázsiai BL, Keleti csoport"
-    },
     {
       "id": "1_ratchaburijohordt_2026-11-24_1x2_johordt",
       "sportId": 1,
@@ -392,6 +370,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_daejeoncitizenbeijingguoan_2026-11-24_1x2_daejeoncitizen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Daejeon Citizen - Beijing Guoan",
+      "eventDate": "2026-11-24T11:00:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - Ázsiai BL, Keleti csoport",
+      "marketName": "1X2",
+      "outcomeName": "Daejeon Citizen",
+      "odds": 1.32,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "3-2",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-24T11:59:05.118Z",
+      "status": "won",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_ázsiai_bl_keleti_csoport",
+      "categorySubName": "Ázsiai BL, Keleti csoport"
+    },
     {
       "id": "16_washingtoncincinnati_2026-11-24_touchdownokszma5555_tbbmint55",
       "sportId": 16,
