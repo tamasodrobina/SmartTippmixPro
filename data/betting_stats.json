@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-24T20:29:06.618Z",
+  "updatedAt": "2026-11-24T21:00:21.521Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 239,
-      "won": 155,
+      "totalChecked": 241,
+      "won": 157,
       "lost": 84,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 103,
-          "won": 71,
+          "totalChecked": 105,
+          "won": 73,
           "lost": 32,
-          "winRate": 69
+          "winRate": 70
         },
         "medium": {
           "totalChecked": 128,
@@ -82,50 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_palermosdtirol_2026-11-24_1x2_palermo",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Palermo - Südtirol",
-      "competitionName": "Olaszország - Olasz B",
-      "eventDate": "2026-11-24T20:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Palermo",
-      "odds": 1.45,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-24T08:04:57.699Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "ita_2",
-      "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
-    },
-    {
-      "id": "1_vicenzacarrarese_2026-11-24_1flidglszm055_tbbmint05",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Vicenza - Carrarese",
-      "competitionName": "Olaszország - Olasz B",
-      "eventDate": "2026-11-24T20:00:00+01:00",
-      "marketName": "1. félidő - Gólszám 0,5 (.5)",
-      "outcomeName": "Több, mint 0,5",
-      "odds": 1.37,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-24T08:04:57.699Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "ita_2",
-      "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
-    },
     {
       "id": "1_comoaekathn_2026-11-24_hazaicsapatkapottglnlkljtsszaleamrkzst_igen",
       "sportId": 1,
@@ -502,6 +458,52 @@
     }
   ],
   "history": [
+    {
+      "id": "1_vicenzacarrarese_2026-11-24_1flidglszm055_tbbmint05",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Vicenza - Carrarese",
+      "eventDate": "2026-11-24T20:00:00+01:00",
+      "competitionName": "Olaszország - Olasz B",
+      "marketName": "1. félidő - Gólszám 0,5 (.5)",
+      "outcomeName": "Több, mint 0,5",
+      "odds": 1.37,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-24T21:00:21.521Z",
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "ita_2",
+      "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
+    },
+    {
+      "id": "1_palermosdtirol_2026-11-24_1x2_palermo",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Palermo - Südtirol",
+      "eventDate": "2026-11-24T20:00:00+01:00",
+      "competitionName": "Olaszország - Olasz B",
+      "marketName": "1X2",
+      "outcomeName": "Palermo",
+      "odds": 1.45,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "4-1",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-24T20:59:37.517Z",
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "ita_2",
+      "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
+    },
     {
       "id": "1_alnassralsadd_2026-11-24_hazaicsapatszerezgltmindktflidben_igen",
       "sportId": 1,
