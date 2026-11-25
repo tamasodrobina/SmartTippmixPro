@@ -1,24 +1,24 @@
 {
-  "updatedAt": "2026-11-25T19:23:05.599Z",
+  "updatedAt": "2026-11-25T19:51:14.917Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 255,
-      "won": 165,
-      "lost": 90,
+      "totalChecked": 257,
+      "won": 166,
+      "lost": 91,
       "winRate": 65,
       "byRisk": {
         "low": {
-          "totalChecked": 111,
-          "won": 76,
+          "totalChecked": 112,
+          "won": 77,
           "lost": 35,
-          "winRate": 68
+          "winRate": 69
         },
         "medium": {
-          "totalChecked": 131,
+          "totalChecked": 132,
           "won": 82,
-          "lost": 49,
-          "winRate": 63
+          "lost": 50,
+          "winRate": 62
         },
         "high": {
           "totalChecked": 13,
@@ -103,50 +103,6 @@
       "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
       "categorySubKey": "ita_2",
       "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
-    },
-    {
-      "id": "1_sabahmasazirbarcelona_2026-11-25_melyikcsapatkaptbbbntetlapot_sabahmasazir",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Sabah Masazir - Barcelona",
-      "competitionName": "Nemzetközi klubcsapatok - BL",
-      "eventDate": "2026-11-25T18:45:00+01:00",
-      "marketName": "Melyik csapat kap több büntetőlapot?",
-      "outcomeName": "Sabah Masazir",
-      "odds": 1.5,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-25T15:16:16.644Z",
-      "status": "pending",
-      "categoryGroupKey": "ucl",
-      "categoryGroupName": "Bajnokok Ligája (BL)",
-      "categorySubKey": "ucl",
-      "categorySubName": "🌟 Bajnokok Ligája (BL)"
-    },
-    {
-      "id": "1_slaviaprahavillarreal_2026-11-25_leszglazels30percben0002959_igen",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Slavia Praha - Villarreal",
-      "competitionName": "Nemzetközi klubcsapatok - BL",
-      "eventDate": "2026-11-25T18:45:00+01:00",
-      "marketName": "Lesz gól az első 30 percben (0:00-29:59)?",
-      "outcomeName": "Igen",
-      "odds": 1.6,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-25T15:16:16.644Z",
-      "status": "pending",
-      "categoryGroupKey": "ucl",
-      "categoryGroupName": "Bajnokok Ligája (BL)",
-      "categorySubKey": "ucl",
-      "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
       "id": "1_sahtardoneckfenerbahce_2026-11-25_mindktcsapatszerezglt_igen",
@@ -942,6 +898,52 @@
     }
   ],
   "history": [
+    {
+      "id": "1_slaviaprahavillarreal_2026-11-25_leszglazels30percben0002959_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Slavia Praha - Villarreal",
+      "eventDate": "2026-11-25T18:45:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - BL",
+      "marketName": "Lesz gól az első 30 percben (0:00-29:59)?",
+      "outcomeName": "Igen",
+      "odds": 1.6,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": null,
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-25T19:51:14.917Z",
+      "status": "lost",
+      "categoryGroupKey": "ucl",
+      "categoryGroupName": "Bajnokok Ligája (BL)",
+      "categorySubKey": "ucl",
+      "categorySubName": "🌟 Bajnokok Ligája (BL)"
+    },
+    {
+      "id": "1_sabahmasazirbarcelona_2026-11-25_melyikcsapatkaptbbbntetlapot_sabahmasazir",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Sabah Masazir - Barcelona",
+      "eventDate": "2026-11-25T18:45:00+01:00",
+      "competitionName": "Nemzetközi klubcsapatok - BL",
+      "marketName": "Melyik csapat kap több büntetőlapot?",
+      "outcomeName": "Sabah Masazir",
+      "odds": 1.5,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "1-4",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-25T19:50:41.922Z",
+      "status": "won",
+      "categoryGroupKey": "ucl",
+      "categoryGroupName": "Bajnokok Ligája (BL)",
+      "categorySubKey": "ucl",
+      "categorySubName": "🌟 Bajnokok Ligája (BL)"
+    },
     {
       "id": "1_chapecoensepalmeirassp_2026-11-24_1x2_palmeirassp",
       "sportId": 1,
