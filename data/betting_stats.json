@@ -1,18 +1,18 @@
 {
-  "updatedAt": "2026-11-25T19:51:14.917Z",
+  "updatedAt": "2026-11-25T19:59:07.127Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 257,
+      "totalChecked": 258,
       "won": 166,
-      "lost": 91,
-      "winRate": 65,
+      "lost": 92,
+      "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 112,
+          "totalChecked": 113,
           "won": 77,
-          "lost": 35,
-          "winRate": 69
+          "lost": 36,
+          "winRate": 68
         },
         "medium": {
           "totalChecked": 132,
@@ -82,28 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_cremoneseavellino_2026-11-25_dntetlennlattvisszajr_cremonese",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Cremonese - Avellino",
-      "competitionName": "Olaszország - Olasz B",
-      "eventDate": "2026-11-25T19:00:00+01:00",
-      "marketName": "Döntetlennél a tét visszajár",
-      "outcomeName": "Cremonese",
-      "odds": 1.4,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-25T15:05:17.717Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "ita_2",
-      "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
-    },
     {
       "id": "1_sahtardoneckfenerbahce_2026-11-25_mindktcsapatszerezglt_igen",
       "sportId": 1,
@@ -898,6 +876,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_cremoneseavellino_2026-11-25_dntetlennlattvisszajr_cremonese",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Cremonese - Avellino",
+      "eventDate": "2026-11-25T19:00:00+01:00",
+      "competitionName": "Olaszország - Olasz B",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Cremonese",
+      "odds": 1.4,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": false,
+      "finalScore": "0-1",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-25T19:59:07.127Z",
+      "status": "lost",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "ita_2",
+      "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
+    },
     {
       "id": "1_slaviaprahavillarreal_2026-11-25_leszglazels30percben0002959_igen",
       "sportId": 1,
