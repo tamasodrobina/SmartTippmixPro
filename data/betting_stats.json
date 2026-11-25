@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:22:54.253Z",
+  "updatedAt": "2026-11-25T19:23:05.599Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -875,6 +875,28 @@
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
+      "id": "1_fcbrugesliverpool_2026-11-25_1x2_liverpool",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5598481",
+      "eventName": "FC Bruges - Liverpool",
+      "competitionName": "Nemzetközi klubcsapatok - BL",
+      "eventDate": "2026-11-25T21:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Liverpool",
+      "odds": 1.57,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-25T19:23:05.599Z",
+      "status": "pending",
+      "categoryGroupKey": "ucl",
+      "categoryGroupName": "Bajnokok Ligája (BL)",
+      "categorySubKey": "ucl",
+      "categorySubName": "🌟 Bajnokok Ligája (BL)"
+    },
+    {
       "id": "1_fcbrugesliverpool_2026-11-25_mindktcsapatszerezgltglszm2525_igenstbbmint25",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -889,7 +911,7 @@
       "riskScore": 3,
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-25T19:22:54.253Z",
+      "addedAt": "2026-11-25T19:23:05.599Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -897,43 +919,21 @@
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
-      "id": "1_fcbrugesliverpool_2026-11-25_vendgcsapatglszm1515_tbbmint15",
+      "id": "1_fcbrugesliverpool_2026-11-25_szglethendikep055_liverpool05",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5598481",
       "eventName": "FC Bruges - Liverpool",
       "competitionName": "Nemzetközi klubcsapatok - BL",
       "eventDate": "2026-11-25T21:00:00+01:00",
-      "marketName": "Vendégcsapat - Gólszám 1,5 (1.5)",
-      "outcomeName": "Több, mint 1,5",
-      "odds": 1.32,
-      "riskCategory": "low",
-      "riskScore": 2,
-      "riskLevel": "Alacsony",
+      "marketName": "Szöglet hendikep 0,5 (.5)",
+      "outcomeName": "Liverpool -0,5",
+      "odds": 1.55,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-25T19:22:54.253Z",
-      "status": "pending",
-      "categoryGroupKey": "ucl",
-      "categoryGroupName": "Bajnokok Ligája (BL)",
-      "categorySubKey": "ucl",
-      "categorySubName": "🌟 Bajnokok Ligája (BL)"
-    },
-    {
-      "id": "1_fcbrugesliverpool_2026-11-25_szgletszm8585_tbbmint85",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": "5598481",
-      "eventName": "FC Bruges - Liverpool",
-      "competitionName": "Nemzetközi klubcsapatok - BL",
-      "eventDate": "2026-11-25T21:00:00+01:00",
-      "marketName": "Szögletszám 8,5 (8.5)",
-      "outcomeName": "Több, mint 8,5",
-      "odds": 1.41,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-25T19:22:54.253Z",
+      "addedAt": "2026-11-25T19:23:05.599Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -9366,9 +9366,9 @@
     "1_parissgroma_2026-11-25_mindktcsapatszerezglt_igen",
     "1_parissgroma_2026-11-25_szgletszm8585_tbbmint85",
     "1_parissgroma_2026-11-25_hazaicsapatkaputeltallglszerzsiksrletekszma7575_tbbmint75",
+    "1_fcbrugesliverpool_2026-11-25_1x2_liverpool",
     "1_fcbrugesliverpool_2026-11-25_mindktcsapatszerezgltglszm2525_igenstbbmint25",
-    "1_fcbrugesliverpool_2026-11-25_vendgcsapatglszm1515_tbbmint15",
-    "1_fcbrugesliverpool_2026-11-25_szgletszm8585_tbbmint85"
+    "1_fcbrugesliverpool_2026-11-25_szglethendikep055_liverpool05"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -9482,6 +9482,7 @@
     "1_parissgroma_2026-11-25_1x2_parissg",
     "1_parissgroma_2026-11-25_melyikcsapatszerezglt_mindkett",
     "1_parissgroma_2026-11-25_glszm2525_tbbmint25",
-    "1_fcbrugesliverpool_2026-11-25_1x2_liverpool"
+    "1_fcbrugesliverpool_2026-11-25_vendgcsapatglszm1515_tbbmint15",
+    "1_fcbrugesliverpool_2026-11-25_szgletszm8585_tbbmint85"
   ]
 }
