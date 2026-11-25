@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T15:25:22.737Z",
+  "updatedAt": "2026-11-25T15:26:47.600Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -741,6 +741,72 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_angol_liga_bajnokság",
       "categorySubName": "Angol Liga bajnokság"
+    },
+    {
+      "id": "16_laramsgreenbay_2026-11-26_amrkzsgyztese_larams",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5183416",
+      "eventName": "LA Rams - Green Bay",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-26T02:00:00+01:00",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "LA Rams",
+      "odds": 1.63,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-25T15:26:47.600Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_laramsgreenbay_2026-11-26_pontszm435435_tbbmint435",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5183416",
+      "eventName": "LA Rams - Green Bay",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-26T02:00:00+01:00",
+      "marketName": "Pontszám 43,5 (43.5)",
+      "outcomeName": "Több, mint 43,5",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-25T15:26:47.600Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_laramsgreenbay_2026-11-26_hendikep2525_larams25",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5183416",
+      "eventName": "LA Rams - Green Bay",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-26T02:00:00+01:00",
+      "marketName": "Hendikep -2,5 (-2.5)",
+      "outcomeName": "LA Rams -2,5",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-25T15:26:47.600Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     }
   ],
   "history": [
@@ -9161,7 +9227,10 @@
     "1_burnleybirmingham_2026-11-25_2flidvendgcsapatglszm055_tbbmint05",
     "1_burnleybirmingham_2026-11-25_2flidhazaicsapatglszm055_tbbmint05",
     "1_burnleybirmingham_2026-11-25_melyikflidbenlesztbbgl_2flidben",
-    "1_burnleybirmingham_2026-11-25_vendgcsapatglszm1515_kevesebbmint15"
+    "1_burnleybirmingham_2026-11-25_vendgcsapatglszm1515_kevesebbmint15",
+    "16_laramsgreenbay_2026-11-26_amrkzsgyztese_larams",
+    "16_laramsgreenbay_2026-11-26_pontszm435435_tbbmint435",
+    "16_laramsgreenbay_2026-11-26_hendikep2525_larams25"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
