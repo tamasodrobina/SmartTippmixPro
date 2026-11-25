@@ -1,16 +1,16 @@
 {
-  "updatedAt": "2026-11-25T19:59:07.127Z",
+  "updatedAt": "2026-11-25T20:59:40.517Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 258,
-      "won": 166,
+      "totalChecked": 259,
+      "won": 167,
       "lost": 92,
       "winRate": 64,
       "byRisk": {
         "low": {
-          "totalChecked": 113,
-          "won": 77,
+          "totalChecked": 114,
+          "won": 78,
           "lost": 36,
           "winRate": 68
         },
@@ -147,28 +147,6 @@
       "categoryGroupName": "Bajnokok Ligája (BL)",
       "categorySubKey": "ucl",
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
-    },
-    {
-      "id": "1_mantovaarezzo_2026-11-25_1x2_mantova",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": null,
-      "eventName": "Mantova - Arezzo",
-      "competitionName": "Olaszország - Olasz B",
-      "eventDate": "2026-11-25T20:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Mantova",
-      "odds": 1.55,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-25T15:16:16.644Z",
-      "status": "pending",
-      "categoryGroupKey": "top5_2",
-      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
-      "categorySubKey": "ita_2",
-      "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
     },
     {
       "id": "1_sportingcpmanchesterutd_2026-11-25_dntetlennlattvisszajr_sportingcp",
@@ -876,6 +854,29 @@
     }
   ],
   "history": [
+    {
+      "id": "1_mantovaarezzo_2026-11-25_1x2_mantova",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventName": "Mantova - Arezzo",
+      "eventDate": "2026-11-25T20:00:00+01:00",
+      "competitionName": "Olaszország - Olasz B",
+      "marketName": "1X2",
+      "outcomeName": "Mantova",
+      "odds": 1.55,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "won": true,
+      "finalScore": "3-0",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-25T20:59:40.517Z",
+      "status": "won",
+      "categoryGroupKey": "top5_2",
+      "categoryGroupName": "Top 5 Bajnokság (2. osztály)",
+      "categorySubKey": "ita_2",
+      "categorySubName": "🇮🇹 Serie B (Olasz 2.)"
+    },
     {
       "id": "1_cremoneseavellino_2026-11-25_dntetlennlattvisszajr_cremonese",
       "sportId": 1,
