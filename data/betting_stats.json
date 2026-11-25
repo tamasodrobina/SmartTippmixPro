@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T19:19:26.573Z",
+  "updatedAt": "2026-11-25T19:19:37.534Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -787,28 +787,6 @@
       "categorySubName": "USA - NFL"
     },
     {
-      "id": "1_internazionalevfbstuttgart_2026-11-25_1x2_internazionale",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": "5593374",
-      "eventName": "Internazionale - VfB Stuttgart",
-      "competitionName": "Nemzetközi klubcsapatok - BL",
-      "eventDate": "2026-11-25T21:00:00+01:00",
-      "marketName": "1X2",
-      "outcomeName": "Internazionale",
-      "odds": 1.34,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-25T19:19:26.573Z",
-      "status": "pending",
-      "categoryGroupKey": "ucl",
-      "categoryGroupName": "Bajnokok Ligája (BL)",
-      "categorySubKey": "ucl",
-      "categorySubName": "🌟 Bajnokok Ligája (BL)"
-    },
-    {
       "id": "1_internazionalevfbstuttgart_2026-11-25_mindktcsapatszerezglt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -819,11 +797,11 @@
       "marketName": "Mindkét csapat szerez gólt",
       "outcomeName": "Igen",
       "odds": 1.35,
-      "riskCategory": "medium",
-      "riskScore": 4,
-      "riskLevel": "Közepes",
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-25T19:19:26.573Z",
+      "addedAt": "2026-11-25T19:19:37.534Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -831,21 +809,43 @@
       "categorySubName": "🌟 Bajnokok Ligája (BL)"
     },
     {
-      "id": "1_internazionalevfbstuttgart_2026-11-25_szgletszm8585_tbbmint85",
+      "id": "1_internazionalevfbstuttgart_2026-11-25_szgletszm9595_tbbmint95",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5593374",
       "eventName": "Internazionale - VfB Stuttgart",
       "competitionName": "Nemzetközi klubcsapatok - BL",
       "eventDate": "2026-11-25T21:00:00+01:00",
-      "marketName": "Szögletszám 8,5 (8.5)",
-      "outcomeName": "Több, mint 8,5",
-      "odds": 1.49,
+      "marketName": "Szögletszám 9,5 (9.5)",
+      "outcomeName": "Több, mint 9,5",
+      "odds": 1.8,
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-25T19:19:26.573Z",
+      "addedAt": "2026-11-25T19:19:37.534Z",
+      "status": "pending",
+      "categoryGroupKey": "ucl",
+      "categoryGroupName": "Bajnokok Ligája (BL)",
+      "categorySubKey": "ucl",
+      "categorySubName": "🌟 Bajnokok Ligája (BL)"
+    },
+    {
+      "id": "1_internazionalevfbstuttgart_2026-11-25_1x2glszm1515_hazaistbb",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5593374",
+      "eventName": "Internazionale - VfB Stuttgart",
+      "competitionName": "Nemzetközi klubcsapatok - BL",
+      "eventDate": "2026-11-25T21:00:00+01:00",
+      "marketName": "1X2 + Gólszám 1,5 (1.5)",
+      "outcomeName": "Hazai és több",
+      "odds": 1.38,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-25T19:19:37.534Z",
       "status": "pending",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -9274,9 +9274,9 @@
     "16_laramsgreenbay_2026-11-26_amrkzsgyztese_larams",
     "16_laramsgreenbay_2026-11-26_pontszm435435_tbbmint435",
     "16_laramsgreenbay_2026-11-26_hendikep2525_larams25",
-    "1_internazionalevfbstuttgart_2026-11-25_1x2_internazionale",
     "1_internazionalevfbstuttgart_2026-11-25_mindktcsapatszerezglt_igen",
-    "1_internazionalevfbstuttgart_2026-11-25_szgletszm8585_tbbmint85"
+    "1_internazionalevfbstuttgart_2026-11-25_szgletszm9595_tbbmint95",
+    "1_internazionalevfbstuttgart_2026-11-25_1x2glszm1515_hazaistbb"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -9384,6 +9384,8 @@
     "1_slaviaprahavillarreal_2026-11-25_dntetlennlattvisszajr_villarreal",
     "1_internazionalevfbstuttgart_2026-11-25_hazaicsapatszgletszm5555_tbbmint55",
     "1_internazionalevfbstuttgart_2026-11-25_melyikcsapatvgezeltbbszgletet_internazionale",
-    "1_internazionalevfbstuttgart_2026-11-25_kaputeltallglszerzsiksrletekszma115115_tbbmint115"
+    "1_internazionalevfbstuttgart_2026-11-25_kaputeltallglszerzsiksrletekszma115115_tbbmint115",
+    "1_internazionalevfbstuttgart_2026-11-25_1x2_internazionale",
+    "1_internazionalevfbstuttgart_2026-11-25_szgletszm8585_tbbmint85"
   ]
 }
