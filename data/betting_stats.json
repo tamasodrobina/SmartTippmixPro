@@ -1,22 +1,22 @@
 {
-  "updatedAt": "2026-11-26T04:30:55.878Z",
+  "updatedAt": "2026-11-26T10:44:42.139Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
-      "totalChecked": 278,
-      "won": 175,
-      "lost": 103,
+      "totalChecked": 276,
+      "won": 174,
+      "lost": 102,
       "winRate": 63,
       "byRisk": {
         "low": {
-          "totalChecked": 121,
+          "totalChecked": 120,
           "won": 80,
-          "lost": 41,
-          "winRate": 66
+          "lost": 40,
+          "winRate": 67
         },
         "medium": {
-          "totalChecked": 144,
-          "won": 88,
+          "totalChecked": 143,
+          "won": 87,
           "lost": 56,
           "winRate": 61
         },
@@ -81,7 +81,74 @@
       }
     }
   },
-  "pendingTips": [],
+  "pendingTips": [
+    {
+      "id": "16_detroitchicago_2026-11-26_pontszm535535_tbbmint535",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5187081",
+      "eventName": "Detroit - Chicago",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-26T19:00:00+01:00",
+      "marketName": "Pontszám 53,5 (53.5)",
+      "outcomeName": "Több, mint 53,5",
+      "odds": 1.62,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-26T10:44:42.139Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_detroitchicago_2026-11-26_hendikep3535_detroit35",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5187081",
+      "eventName": "Detroit - Chicago",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-26T19:00:00+01:00",
+      "marketName": "Hendikep 3,5 (3.5)",
+      "outcomeName": "Detroit +3,5",
+      "odds": 1.55,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-26T10:44:42.139Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_detroitchicago_2026-11-26_meznyglokszma2525_tbbmint25",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5187081",
+      "eventName": "Detroit - Chicago",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-26T19:00:00+01:00",
+      "marketName": "Mezőnygólok száma 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.34,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-26T10:44:42.139Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    }
+  ],
   "history": [
     {
       "id": "16_laramsgreenbay_2026-11-26_hendikep2525_larams25",
@@ -192,29 +259,6 @@
       "finalScore": "2-2",
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-25T22:32:48.861Z",
-      "status": "won",
-      "categoryGroupKey": "ucl",
-      "categoryGroupName": "Bajnokok Ligája (BL)",
-      "categorySubKey": "ucl",
-      "categorySubName": "🌟 Bajnokok Ligája (BL)"
-    },
-    {
-      "id": "1_sportingcpmanchesterutd_2026-11-25_melyikcsapatkaptbbbntetlapot_manchesterutd",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventName": "Sporting CP - Manchester Utd.",
-      "eventDate": "2026-11-25T21:00:00+01:00",
-      "competitionName": "Nemzetközi klubcsapatok - BL",
-      "marketName": "Melyik csapat kap több büntetőlapot?",
-      "outcomeName": "Manchester Utd.",
-      "odds": 1.95,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "won": true,
-      "finalScore": "2-2",
-      "verificationMethod": "tippmix_official",
-      "evaluatedAt": "2026-11-25T22:31:48.145Z",
       "status": "won",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
@@ -446,29 +490,6 @@
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-25T22:04:18.822Z",
       "status": "won",
-      "categoryGroupKey": "ucl",
-      "categoryGroupName": "Bajnokok Ligája (BL)",
-      "categorySubKey": "ucl",
-      "categorySubName": "🌟 Bajnokok Ligája (BL)"
-    },
-    {
-      "id": "1_sportingcpmanchesterutd_2026-11-25_kaputeltallglszerzsiksrletekszma9595_tbbmint95",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventName": "Sporting CP - Manchester Utd.",
-      "eventDate": "2026-11-25T21:00:00+01:00",
-      "competitionName": "Nemzetközi klubcsapatok - BL",
-      "marketName": "Kaput eltaláló gólszerzési kísérletek száma 9,5 (9.5)",
-      "outcomeName": "Több, mint 9,5",
-      "odds": 1.7,
-      "riskCategory": "low",
-      "riskScore": 3,
-      "riskLevel": "Alacsony",
-      "won": false,
-      "finalScore": "2-2",
-      "verificationMethod": "tippmixpro_official",
-      "evaluatedAt": "2026-11-25T22:04:18.517Z",
-      "status": "lost",
       "categoryGroupKey": "ucl",
       "categoryGroupName": "Bajnokok Ligája (BL)",
       "categorySubKey": "ucl",
@@ -9112,7 +9133,10 @@
     "1_parissgroma_2026-11-25_hazaicsapatkaputeltallglszerzsiksrletekszma7575_tbbmint75",
     "1_fcbrugesliverpool_2026-11-25_1x2_liverpool",
     "1_fcbrugesliverpool_2026-11-25_mindktcsapatszerezgltglszm2525_igenstbbmint25",
-    "1_fcbrugesliverpool_2026-11-25_szglethendikep055_liverpool05"
+    "1_fcbrugesliverpool_2026-11-25_szglethendikep055_liverpool05",
+    "16_detroitchicago_2026-11-26_pontszm535535_tbbmint535",
+    "16_detroitchicago_2026-11-26_hendikep3535_detroit35",
+    "16_detroitchicago_2026-11-26_meznyglokszma2525_tbbmint25"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -9240,6 +9264,8 @@
     "1_burnleybirmingham_2026-11-25_vendgcsapatnyerlegalbbegyflidt_igen",
     "1_burnleybirmingham_2026-11-25_glszm2525_tbbmint25",
     "1_burnleybirmingham_2026-11-25_dntetlennlattvisszajr_birmingham",
-    "1_burnleybirmingham_2026-11-25_mindktcsapatszerezglt_igen"
+    "1_burnleybirmingham_2026-11-25_mindktcsapatszerezglt_igen",
+    "1_sportingcpmanchesterutd_2026-11-25_kaputeltallglszerzsiksrletekszma9595_tbbmint95",
+    "1_sportingcpmanchesterutd_2026-11-25_melyikcsapatkaptbbbntetlapot_manchesterutd"
   ]
 }
