@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-25T22:33:31.357Z",
+  "updatedAt": "2026-11-26T04:30:55.878Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,10 +55,10 @@
       }
     },
     "nfl": {
-      "totalChecked": 47,
-      "won": 25,
-      "lost": 22,
-      "winRate": 53,
+      "totalChecked": 50,
+      "won": 26,
+      "lost": 24,
+      "winRate": 52,
       "byRisk": {
         "low": {
           "totalChecked": 14,
@@ -67,10 +67,10 @@
           "winRate": 43
         },
         "medium": {
-          "totalChecked": 33,
-          "won": 19,
-          "lost": 14,
-          "winRate": 58
+          "totalChecked": 36,
+          "won": 20,
+          "lost": 16,
+          "winRate": 56
         },
         "high": {
           "totalChecked": 0,
@@ -81,24 +81,26 @@
       }
     }
   },
-  "pendingTips": [
+  "pendingTips": [],
+  "history": [
     {
-      "id": "16_laramsgreenbay_2026-11-26_amrkzsgyztese_larams",
+      "id": "16_laramsgreenbay_2026-11-26_hendikep2525_larams25",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5183416",
       "eventName": "LA Rams - Green Bay",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-26T02:00:00+01:00",
-      "marketName": "A mérkőzés győztese",
-      "outcomeName": "LA Rams",
-      "odds": 1.63,
+      "competitionName": "USA - NFL",
+      "marketName": "Hendikep -2,5 (-2.5)",
+      "outcomeName": "LA Rams -2,5",
+      "odds": 1.76,
       "riskCategory": "medium",
-      "riskScore": 4,
+      "riskScore": 5,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-25T15:26:47.600Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "20-27",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-26T04:30:55.878Z",
+      "status": "lost",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
@@ -108,48 +110,48 @@
       "id": "16_laramsgreenbay_2026-11-26_pontszm435435_tbbmint435",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5183416",
       "eventName": "LA Rams - Green Bay",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-26T02:00:00+01:00",
+      "competitionName": "USA - NFL",
       "marketName": "Pontszám 43,5 (43.5)",
       "outcomeName": "Több, mint 43,5",
       "odds": 1.76,
       "riskCategory": "medium",
       "riskScore": 5,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-25T15:26:47.600Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "20-27",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-26T04:30:55.878Z",
+      "status": "won",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
     },
     {
-      "id": "16_laramsgreenbay_2026-11-26_hendikep2525_larams25",
+      "id": "16_laramsgreenbay_2026-11-26_amrkzsgyztese_larams",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5183416",
       "eventName": "LA Rams - Green Bay",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-26T02:00:00+01:00",
-      "marketName": "Hendikep -2,5 (-2.5)",
-      "outcomeName": "LA Rams -2,5",
-      "odds": 1.76,
+      "competitionName": "USA - NFL",
+      "marketName": "A mérkőzés győztese",
+      "outcomeName": "LA Rams",
+      "odds": 1.63,
       "riskCategory": "medium",
-      "riskScore": 5,
+      "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-25T15:26:47.600Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "20-27",
+      "verificationMethod": "gemini_search",
+      "evaluatedAt": "2026-11-26T04:30:55.878Z",
+      "status": "lost",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_parissgroma_2026-11-25_hazaicsapatkaputeltallglszerzsiksrletekszma7575_tbbmint75",
       "sportId": 1,
