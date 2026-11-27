@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T11:22:17.584Z",
+  "updatedAt": "2026-11-27T13:58:21.519Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,10 +55,10 @@
       }
     },
     "nfl": {
-      "totalChecked": 56,
-      "won": 29,
+      "totalChecked": 59,
+      "won": 32,
       "lost": 27,
-      "winRate": 52,
+      "winRate": 54,
       "byRisk": {
         "low": {
           "totalChecked": 16,
@@ -67,10 +67,10 @@
           "winRate": 38
         },
         "medium": {
-          "totalChecked": 40,
-          "won": 23,
+          "totalChecked": 43,
+          "won": 26,
           "lost": 17,
-          "winRate": 57
+          "winRate": 60
         },
         "high": {
           "totalChecked": 0,
@@ -82,72 +82,6 @@
     }
   },
   "pendingTips": [
-    {
-      "id": "1_detroitchicago_2026-11-26_pontszm555555_tbbmint555",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": "5187081",
-      "eventName": "Detroit - Chicago",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-26T19:00:00+01:00",
-      "marketName": "Pontszám 55,5 (55.5)",
-      "outcomeName": "Több, mint 55,5",
-      "odds": 1.77,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-26T17:04:02.313Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_nfl",
-      "categorySubName": "NFL"
-    },
-    {
-      "id": "1_detroitchicago_2026-11-26_vendgcsapatpontszm275275_tbbmint275",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": "5187081",
-      "eventName": "Detroit - Chicago",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-26T19:00:00+01:00",
-      "marketName": "Vendégcsapat - Pontszám 27,5 (27.5)",
-      "outcomeName": "Több, mint 27,5",
-      "odds": 1.79,
-      "riskCategory": "medium",
-      "riskScore": 6,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-26T17:04:02.313Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_nfl",
-      "categorySubName": "NFL"
-    },
-    {
-      "id": "1_detroitchicago_2026-11-26_1flidpontszm275275_tbbmint275",
-      "sportId": 1,
-      "sportName": "Labdarúgás (Foci)",
-      "eventId": "5187081",
-      "eventName": "Detroit - Chicago",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-26T19:00:00+01:00",
-      "marketName": "1. félidő - Pontszám 27,5 (27.5)",
-      "outcomeName": "Több, mint 27,5",
-      "odds": 1.79,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-26T17:04:02.313Z",
-      "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_nfl",
-      "categorySubName": "NFL"
-    },
     {
       "id": "1_nottinghamchelsea_2026-11-27_zsiaiglszm33_kevesebbmint3",
       "sportId": 1,
@@ -165,10 +99,10 @@
       "source": "homepage_custom",
       "addedAt": "2026-11-27T11:22:17.584Z",
       "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_nottinghamchelsea_2026-11-27_ktesly_dntetlenvagychelsea",
@@ -187,10 +121,10 @@
       "source": "homepage_custom",
       "addedAt": "2026-11-27T11:22:17.584Z",
       "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35",
@@ -209,13 +143,82 @@
       "source": "homepage_custom",
       "addedAt": "2026-11-27T11:22:17.584Z",
       "status": "pending",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     }
   ],
   "history": [
+    {
+      "id": "16_detroitchicago_2026-11-26_1flidpontszm275275_tbbmint275",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventName": "Detroit - Chicago",
+      "eventDate": "2026-11-26T19:00:00+01:00",
+      "competitionName": "USA - NFL",
+      "marketName": "1. félidő - Pontszám 27,5 (27.5)",
+      "outcomeName": "Több, mint 27,5",
+      "odds": 1.79,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "35-39",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-27T13:58:21.515Z",
+      "status": "won",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_detroitchicago_2026-11-26_vendgcsapatpontszm275275_tbbmint275",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventName": "Detroit - Chicago",
+      "eventDate": "2026-11-26T19:00:00+01:00",
+      "competitionName": "USA - NFL",
+      "marketName": "Vendégcsapat - Pontszám 27,5 (27.5)",
+      "outcomeName": "Több, mint 27,5",
+      "odds": 1.79,
+      "riskCategory": "medium",
+      "riskScore": 6,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "35-39",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-27T13:58:21.496Z",
+      "status": "won",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_detroitchicago_2026-11-26_pontszm555555_tbbmint555",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventName": "Detroit - Chicago",
+      "eventDate": "2026-11-26T19:00:00+01:00",
+      "competitionName": "USA - NFL",
+      "marketName": "Pontszám 55,5 (55.5)",
+      "outcomeName": "Több, mint 55,5",
+      "odds": 1.77,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": true,
+      "finalScore": "35-39",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-27T13:58:21.085Z",
+      "status": "won",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
     {
       "id": "16_buffalokansascity_2026-11-27_hazaicsapatpontszm235235_tbbmint235",
       "sportId": 16,
@@ -2350,10 +2353,10 @@
       "verificationMethod": "tippmixpro_official",
       "evaluatedAt": "2026-11-22T18:27:48.066Z",
       "status": "won",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_liverpoolmanchesterutd_2026-11-22_mindktcsapatszerezglt_igen",
@@ -2373,10 +2376,10 @@
       "verificationMethod": "tippmixpro_official",
       "evaluatedAt": "2026-11-22T18:27:47.860Z",
       "status": "lost",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_liverpoolmanchesterutd_2026-11-22_1x2_liverpool",
@@ -2396,10 +2399,10 @@
       "verificationMethod": "tippmixpro_official",
       "evaluatedAt": "2026-11-22T18:27:47.758Z",
       "status": "won",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_goaheadeaglesfsittard_2026-11-22_hazaicsapatnyerlegalbbegyflidt_igen",
@@ -2580,10 +2583,10 @@
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-22T16:08:29.663Z",
       "status": "won",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_parisfcangers_2026-11-22_bntetlapszm3535_kevesebbmint35",
@@ -2902,10 +2905,10 @@
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-21T19:37:16.172Z",
       "status": "lost",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_newcastlearsenal_2026-11-21_melyikcsapatszerziaz1glt1_arsenal",
@@ -2925,10 +2928,10 @@
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-21T19:27:25.966Z",
       "status": "won",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_newcastlearsenal_2026-11-21_mindktcsapatszerezglt_igen",
@@ -2948,10 +2951,10 @@
       "verificationMethod": "tippmix_official",
       "evaluatedAt": "2026-11-21T19:27:25.965Z",
       "status": "won",
-      "categoryGroupKey": "other",
-      "categoryGroupName": "Egyéb bajnokságok és kupák",
-      "categorySubKey": "oth_premier_liga",
-      "categorySubName": "Premier Liga"
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
       "id": "1_stokebirmingham_2026-11-21_mindktcsapatszerezglt_nem",
@@ -9615,7 +9618,10 @@
     "16_buffalokansascity_2026-11-27_hazaicsapatpontszm235235_tbbmint235",
     "1_nottinghamchelsea_2026-11-27_zsiaiglszm33_kevesebbmint3",
     "1_nottinghamchelsea_2026-11-27_ktesly_dntetlenvagychelsea",
-    "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35"
+    "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35",
+    "16_detroitchicago_2026-11-26_pontszm555555_tbbmint555",
+    "16_detroitchicago_2026-11-26_vendgcsapatpontszm275275_tbbmint275",
+    "16_detroitchicago_2026-11-26_1flidpontszm275275_tbbmint275"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -9758,6 +9764,9 @@
     "16_buffalokansascity_2026-11-27_pontszm435435_tbbmint435",
     "16_buffalokansascity_2026-11-27_meznyglokszma2525_tbbmint25",
     "1_pafoszmidtjylland_2026-11-26_mindktcsapatszerezglt_igen",
-    "1_dinamozgrbleverkusen_2026-11-26_1x2_leverkusen"
+    "1_dinamozgrbleverkusen_2026-11-26_1x2_leverkusen",
+    "1_detroitchicago_2026-11-26_pontszm555555_tbbmint555",
+    "1_detroitchicago_2026-11-26_vendgcsapatpontszm275275_tbbmint275",
+    "1_detroitchicago_2026-11-26_1flidpontszm275275_tbbmint275"
   ]
 }
