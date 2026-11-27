@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T21:57:02.626Z",
+  "updatedAt": "2026-11-27T23:36:42.333Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,22 +55,22 @@
       }
     },
     "nfl": {
-      "totalChecked": 59,
-      "won": 33,
-      "lost": 26,
+      "totalChecked": 62,
+      "won": 35,
+      "lost": 27,
       "winRate": 56,
       "byRisk": {
         "low": {
-          "totalChecked": 16,
-          "won": 6,
+          "totalChecked": 17,
+          "won": 7,
           "lost": 10,
-          "winRate": 38
+          "winRate": 41
         },
         "medium": {
-          "totalChecked": 43,
-          "won": 27,
-          "lost": 16,
-          "winRate": 63
+          "totalChecked": 45,
+          "won": 28,
+          "lost": 17,
+          "winRate": 62
         },
         "high": {
           "totalChecked": 0,
@@ -81,24 +81,26 @@
       }
     }
   },
-  "pendingTips": [
+  "pendingTips": [],
+  "history": [
     {
-      "id": "16_pittsburghdenver_2026-11-27_pontszm365365_tbbmint365",
+      "id": "16_pittsburghdenver_2026-11-27_hazaicsapatpontszm155155_tbbmint155",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5599626",
       "eventName": "Pittsburgh - Denver",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-27T21:00:00+01:00",
-      "marketName": "Pontszám 36,5 (36.5)",
-      "outcomeName": "Több, mint 36,5",
+      "competitionName": "USA - NFL",
+      "marketName": "Hazai csapat - Pontszám 15,5 (15.5)",
+      "outcomeName": "Több, mint 15,5",
       "odds": 1.76,
       "riskCategory": "medium",
-      "riskScore": 5,
+      "riskScore": 4,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-27T19:06:33.321Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "27-5",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-27T23:36:42.332Z",
+      "status": "won",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
@@ -108,48 +110,48 @@
       "id": "16_pittsburghdenver_2026-11-27_hendikep6565_pittsburgh65",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5599626",
       "eventName": "Pittsburgh - Denver",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-27T21:00:00+01:00",
+      "competitionName": "USA - NFL",
       "marketName": "Hendikep 6,5 (6.5)",
       "outcomeName": "Pittsburgh +6,5",
       "odds": 1.65,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-27T19:06:33.321Z",
-      "status": "pending",
+      "won": true,
+      "finalScore": "27-5",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-27T23:36:42.024Z",
+      "status": "won",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
     },
     {
-      "id": "16_pittsburghdenver_2026-11-27_hazaicsapatpontszm155155_tbbmint155",
+      "id": "16_pittsburghdenver_2026-11-27_pontszm365365_tbbmint365",
       "sportId": 16,
       "sportName": "Amerikai futball (NFL)",
-      "eventId": "5599626",
       "eventName": "Pittsburgh - Denver",
-      "competitionName": "USA - NFL",
       "eventDate": "2026-11-27T21:00:00+01:00",
-      "marketName": "Hazai csapat - Pontszám 15,5 (15.5)",
-      "outcomeName": "Több, mint 15,5",
+      "competitionName": "USA - NFL",
+      "marketName": "Pontszám 36,5 (36.5)",
+      "outcomeName": "Több, mint 36,5",
       "odds": 1.76,
       "riskCategory": "medium",
-      "riskScore": 4,
+      "riskScore": 5,
       "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-27T19:06:33.322Z",
-      "status": "pending",
+      "won": false,
+      "finalScore": "27-5",
+      "verificationMethod": "tippmixpro_official",
+      "evaluatedAt": "2026-11-27T23:36:41.225Z",
+      "status": "lost",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
       "categorySubName": "USA - NFL"
-    }
-  ],
-  "history": [
+    },
     {
       "id": "1_nottinghamchelsea_2026-11-27_bntetlapszm4545_kevesebbmint45",
       "sportId": 1,
