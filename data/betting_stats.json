@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T13:58:21.519Z",
+  "updatedAt": "2026-11-27T14:03:49.293Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -147,6 +147,72 @@
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
       "categorySubKey": "eng_1",
       "categorySubName": "🇬🇧 Premier League (Angol 1.)"
+    },
+    {
+      "id": "1_brestparisfc_2026-11-27_dntetlennlattvisszajr_parisfc",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5599437",
+      "eventName": "Brest - Paris FC",
+      "competitionName": "Franciaország - Francia bajnokság",
+      "eventDate": "2026-11-27T20:45:00+01:00",
+      "marketName": "Döntetlennél a tét visszajár",
+      "outcomeName": "Paris FC",
+      "odds": 1.48,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T14:03:49.293Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "fra_1",
+      "categorySubName": "🇫🇷 Ligue 1 (Francia 1.)"
+    },
+    {
+      "id": "1_brestparisfc_2026-11-27_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5599437",
+      "eventName": "Brest - Paris FC",
+      "competitionName": "Franciaország - Francia bajnokság",
+      "eventDate": "2026-11-27T20:45:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.68,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T14:03:49.293Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "fra_1",
+      "categorySubName": "🇫🇷 Ligue 1 (Francia 1.)"
+    },
+    {
+      "id": "1_brestparisfc_2026-11-27_lesz11es_nem",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5599437",
+      "eventName": "Brest - Paris FC",
+      "competitionName": "Franciaország - Francia bajnokság",
+      "eventDate": "2026-11-27T20:45:00+01:00",
+      "marketName": "Lesz 11-es?",
+      "outcomeName": "Nem",
+      "odds": 1.3,
+      "riskCategory": "low",
+      "riskScore": 2,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T14:03:49.293Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "fra_1",
+      "categorySubName": "🇫🇷 Ligue 1 (Francia 1.)"
     }
   ],
   "history": [
@@ -9621,7 +9687,10 @@
     "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35",
     "16_detroitchicago_2026-11-26_pontszm555555_tbbmint555",
     "16_detroitchicago_2026-11-26_vendgcsapatpontszm275275_tbbmint275",
-    "16_detroitchicago_2026-11-26_1flidpontszm275275_tbbmint275"
+    "16_detroitchicago_2026-11-26_1flidpontszm275275_tbbmint275",
+    "1_brestparisfc_2026-11-27_dntetlennlattvisszajr_parisfc",
+    "1_brestparisfc_2026-11-27_mindktcsapatszerezglt_igen",
+    "1_brestparisfc_2026-11-27_lesz11es_nem"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
