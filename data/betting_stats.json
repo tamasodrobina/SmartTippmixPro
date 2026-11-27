@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T04:50:56.031Z",
+  "updatedAt": "2026-11-27T11:22:17.584Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -147,6 +147,72 @@
       "categoryGroupName": "Egyéb bajnokságok és kupák",
       "categorySubKey": "oth_nfl",
       "categorySubName": "NFL"
+    },
+    {
+      "id": "1_nottinghamchelsea_2026-11-27_zsiaiglszm33_kevesebbmint3",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5599428",
+      "eventName": "Nottingham - Chelsea",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-27T21:00:00+01:00",
+      "marketName": "Ázsiai Gólszám 3 (3)",
+      "outcomeName": "Kevesebb, mint 3",
+      "odds": 1.49,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T11:22:17.584Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
+    },
+    {
+      "id": "1_nottinghamchelsea_2026-11-27_ktesly_dntetlenvagychelsea",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5599428",
+      "eventName": "Nottingham - Chelsea",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-27T21:00:00+01:00",
+      "marketName": "Kétesély",
+      "outcomeName": "Döntetlen vagy Chelsea",
+      "odds": 1.43,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T11:22:17.584Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
+    },
+    {
+      "id": "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5599428",
+      "eventName": "Nottingham - Chelsea",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-27T21:00:00+01:00",
+      "marketName": "Büntetőlap-szám 3,5 (3.5)",
+      "outcomeName": "Több, mint 3,5",
+      "odds": 1.43,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T11:22:17.584Z",
+      "status": "pending",
+      "categoryGroupKey": "other",
+      "categoryGroupName": "Egyéb bajnokságok és kupák",
+      "categorySubKey": "oth_premier_liga",
+      "categorySubName": "Premier Liga"
     }
   ],
   "history": [
@@ -9546,7 +9612,10 @@
     "16_dallasphiladelphia_2026-11-26_vendgcsapatpontszm195195_tbbmint195",
     "16_buffalokansascity_2026-11-27_amrkzsgyztese_buffalo",
     "16_buffalokansascity_2026-11-27_pontszm445445_tbbmint445",
-    "16_buffalokansascity_2026-11-27_hazaicsapatpontszm235235_tbbmint235"
+    "16_buffalokansascity_2026-11-27_hazaicsapatpontszm235235_tbbmint235",
+    "1_nottinghamchelsea_2026-11-27_zsiaiglszm33_kevesebbmint3",
+    "1_nottinghamchelsea_2026-11-27_ktesly_dntetlenvagychelsea",
+    "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
