@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T14:03:49.293Z",
+  "updatedAt": "2026-11-27T14:04:28.043Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -56,9 +56,9 @@
     },
     "nfl": {
       "totalChecked": 59,
-      "won": 32,
-      "lost": 27,
-      "winRate": 54,
+      "won": 33,
+      "lost": 26,
+      "winRate": 56,
       "byRisk": {
         "low": {
           "totalChecked": 16,
@@ -68,9 +68,9 @@
         },
         "medium": {
           "totalChecked": 43,
-          "won": 26,
-          "lost": 17,
-          "winRate": 60
+          "won": 27,
+          "lost": 16,
+          "winRate": 63
         },
         "high": {
           "totalChecked": 0,
@@ -689,11 +689,11 @@
       "riskCategory": "medium",
       "riskScore": 5,
       "riskLevel": "Közepes",
-      "won": false,
-      "finalScore": "20-27",
-      "verificationMethod": "gemini_search",
+      "won": true,
+      "finalScore": "26-13",
+      "verificationMethod": "tippmixpro_official",
       "evaluatedAt": "2026-11-26T04:30:55.878Z",
-      "status": "lost",
+      "status": "won",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
@@ -712,11 +712,11 @@
       "riskCategory": "medium",
       "riskScore": 5,
       "riskLevel": "Közepes",
-      "won": true,
-      "finalScore": "20-27",
-      "verificationMethod": "gemini_search",
+      "won": false,
+      "finalScore": "26-13",
+      "verificationMethod": "tippmixpro_official",
       "evaluatedAt": "2026-11-26T04:30:55.878Z",
-      "status": "won",
+      "status": "lost",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",
@@ -735,11 +735,11 @@
       "riskCategory": "medium",
       "riskScore": 4,
       "riskLevel": "Közepes",
-      "won": false,
-      "finalScore": "20-27",
-      "verificationMethod": "gemini_search",
+      "won": true,
+      "finalScore": "26-13",
+      "verificationMethod": "tippmixpro_official",
       "evaluatedAt": "2026-11-26T04:30:55.878Z",
-      "status": "lost",
+      "status": "won",
       "categoryGroupKey": "nfl_main",
       "categoryGroupName": "NFL",
       "categorySubKey": "nfl_main",

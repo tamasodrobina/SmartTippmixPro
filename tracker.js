@@ -2040,12 +2040,16 @@ export async function evaluatePendingTips(fetchEventDetailsFn, callGeminiFn) {
       }
     }
 
-    // 3. Ha maradt ellenőrizendő tipp, és elérhető a Gemini AI:
-    // KÖTEGELT KÉRÉS (Egyszerre több meccs 1 promptban, napi kvóta 500 kérés védelmére)
-    if (unverifiedTips.length > 0 && callGeminiFn && process.env.GEMINI_API_KEY) {
+    // 3. Ha maradt ellenőrizendő tipp, és már legalább 12 óra eltelt a kezdés óta (hogy a hivatalos TippmixPro / Tippmix lezárást megvárjuk, és az AI soha ne tippeljen be félkész/friss meccset):
+    const geminiEligibleTips = unverifiedTips.filter(t => {
+      const evTime = new Date(t.eventDate).getTime();
+      return !isNaN(evTime) && (now - evTime) >= 12 * 3600 * 1000;
+    });
+
+    if (geminiEligibleTips.length > 0 && callGeminiFn && process.env.GEMINI_API_KEY) {
       // Csoportosítás mérkőzés szerint
       const matchMap = new Map();
-      for (const tip of unverifiedTips) {
+      for (const tip of geminiEligibleTips) {
         const key = tip.eventName;
         if (!matchMap.has(key)) matchMap.set(key, []);
         matchMap.get(key).push(tip);
