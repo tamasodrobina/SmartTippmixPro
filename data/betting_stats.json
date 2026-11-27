@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T01:00:43.211Z",
+  "updatedAt": "2026-11-27T01:41:01.974Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -55,10 +55,10 @@
       }
     },
     "nfl": {
-      "totalChecked": 52,
+      "totalChecked": 53,
       "won": 28,
-      "lost": 24,
-      "winRate": 54,
+      "lost": 25,
+      "winRate": 53,
       "byRisk": {
         "low": {
           "totalChecked": 14,
@@ -67,10 +67,10 @@
           "winRate": 43
         },
         "medium": {
-          "totalChecked": 38,
+          "totalChecked": 39,
           "won": 22,
-          "lost": 16,
-          "winRate": 58
+          "lost": 17,
+          "winRate": 56
         },
         "high": {
           "totalChecked": 0,
@@ -149,28 +149,6 @@
       "categorySubName": "USA - NFL"
     },
     {
-      "id": "16_dallasphiladelphia_2026-11-26_hendikep6565_dallas65",
-      "sportId": 16,
-      "sportName": "Amerikai futball (NFL)",
-      "eventId": "5176311",
-      "eventName": "Dallas - Philadelphia",
-      "competitionName": "USA - NFL",
-      "eventDate": "2026-11-26T22:30:00+01:00",
-      "marketName": "Hendikep -6,5 (-6.5)",
-      "outcomeName": "Dallas -6,5",
-      "odds": 1.58,
-      "riskCategory": "medium",
-      "riskScore": 5,
-      "riskLevel": "Közepes",
-      "source": "homepage_custom",
-      "addedAt": "2026-11-26T17:10:39.006Z",
-      "status": "pending",
-      "categoryGroupKey": "nfl_main",
-      "categoryGroupName": "NFL",
-      "categorySubKey": "nfl_main",
-      "categorySubName": "USA - NFL"
-    },
-    {
       "id": "1_detroitchicago_2026-11-26_pontszm555555_tbbmint555",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -238,6 +216,29 @@
     }
   ],
   "history": [
+    {
+      "id": "16_dallasphiladelphia_2026-11-26_hendikep6565_dallas65",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventName": "Dallas - Philadelphia",
+      "eventDate": "2026-11-26T22:30:00+01:00",
+      "competitionName": "USA - NFL",
+      "marketName": "Hendikep -6,5 (-6.5)",
+      "outcomeName": "Dallas -6,5",
+      "odds": 1.58,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "won": false,
+      "finalScore": "38-39",
+      "verificationMethod": "tippmix_official",
+      "evaluatedAt": "2026-11-27T01:40:40.341Z",
+      "status": "lost",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
     {
       "id": "16_dallasphiladelphia_2026-11-26_vendgcsapatpontszm195195_tbbmint195",
       "sportId": 16,
