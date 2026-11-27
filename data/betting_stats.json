@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T19:05:37.119Z",
+  "updatedAt": "2026-11-27T19:06:33.322Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -213,6 +213,72 @@
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
       "categorySubKey": "eng_1",
       "categorySubName": "🇬🇧 Premier League (Angol 1.)"
+    },
+    {
+      "id": "16_pittsburghdenver_2026-11-27_pontszm365365_tbbmint365",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5599626",
+      "eventName": "Pittsburgh - Denver",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-27T21:00:00+01:00",
+      "marketName": "Pontszám 36,5 (36.5)",
+      "outcomeName": "Több, mint 36,5",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 5,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T19:06:33.321Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_pittsburghdenver_2026-11-27_hendikep6565_pittsburgh65",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5599626",
+      "eventName": "Pittsburgh - Denver",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-27T21:00:00+01:00",
+      "marketName": "Hendikep 6,5 (6.5)",
+      "outcomeName": "Pittsburgh +6,5",
+      "odds": 1.65,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T19:06:33.321Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
+    },
+    {
+      "id": "16_pittsburghdenver_2026-11-27_hazaicsapatpontszm155155_tbbmint155",
+      "sportId": 16,
+      "sportName": "Amerikai futball (NFL)",
+      "eventId": "5599626",
+      "eventName": "Pittsburgh - Denver",
+      "competitionName": "USA - NFL",
+      "eventDate": "2026-11-27T21:00:00+01:00",
+      "marketName": "Hazai csapat - Pontszám 15,5 (15.5)",
+      "outcomeName": "Több, mint 15,5",
+      "odds": 1.76,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-27T19:06:33.322Z",
+      "status": "pending",
+      "categoryGroupKey": "nfl_main",
+      "categoryGroupName": "NFL",
+      "categorySubKey": "nfl_main",
+      "categorySubName": "USA - NFL"
     }
   ],
   "history": [
@@ -9690,7 +9756,10 @@
     "1_brestparisfc_2026-11-27_lesz11es_nem",
     "1_nottinghamchelsea_2026-11-27_mindktcsapatszerezglt_igen",
     "1_nottinghamchelsea_2026-11-27_ktesly_dntetlenvagychelsea",
-    "1_nottinghamchelsea_2026-11-27_bntetlapszm4545_kevesebbmint45"
+    "1_nottinghamchelsea_2026-11-27_bntetlapszm4545_kevesebbmint45",
+    "16_pittsburghdenver_2026-11-27_pontszm365365_tbbmint365",
+    "16_pittsburghdenver_2026-11-27_hendikep6565_pittsburgh65",
+    "16_pittsburghdenver_2026-11-27_hazaicsapatpontszm155155_tbbmint155"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
@@ -9840,6 +9909,7 @@
     "1_nottinghamchelsea_2026-11-27_zsiaiglszm33_kevesebbmint3",
     "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35",
     "1_nottinghamchelsea_2026-11-27_glszm2525_kevesebbmint25",
-    "1_nottinghamchelsea_2026-11-27_ktesly_nottinghamvagydntetlen"
+    "1_nottinghamchelsea_2026-11-27_ktesly_nottinghamvagydntetlen",
+    "16_pittsburghdenver_2026-11-27_pontszm385385_kevesebbmint385"
   ]
 }
