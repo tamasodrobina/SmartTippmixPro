@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T19:05:29.521Z",
+  "updatedAt": "2026-11-27T19:05:37.119Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -149,21 +149,21 @@
       "categorySubName": "🇫🇷 Ligue 1 (Francia 1.)"
     },
     {
-      "id": "1_nottinghamchelsea_2026-11-27_glszm2525_kevesebbmint25",
+      "id": "1_nottinghamchelsea_2026-11-27_mindktcsapatszerezglt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5599428",
       "eventName": "Nottingham - Chelsea",
       "competitionName": "Anglia - Premier Liga",
       "eventDate": "2026-11-27T21:00:00+01:00",
-      "marketName": "Gólszám 2,5 (2.5)",
-      "outcomeName": "Kevesebb, mint 2,5",
-      "odds": 1.93,
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.57,
       "riskCategory": "medium",
-      "riskScore": 5,
+      "riskScore": 4,
       "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-27T19:05:29.520Z",
+      "addedAt": "2026-11-27T19:05:37.118Z",
       "status": "pending",
       "categoryGroupKey": "top5_1",
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
@@ -171,7 +171,7 @@
       "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
-      "id": "1_nottinghamchelsea_2026-11-27_ktesly_nottinghamvagydntetlen",
+      "id": "1_nottinghamchelsea_2026-11-27_ktesly_dntetlenvagychelsea",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
       "eventId": "5599428",
@@ -179,13 +179,13 @@
       "competitionName": "Anglia - Premier Liga",
       "eventDate": "2026-11-27T21:00:00+01:00",
       "marketName": "Kétesély",
-      "outcomeName": "Nottingham vagy Döntetlen",
-      "odds": 1.35,
+      "outcomeName": "Döntetlen vagy Chelsea",
+      "odds": 1.4,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
       "source": "homepage_custom",
-      "addedAt": "2026-11-27T19:05:29.520Z",
+      "addedAt": "2026-11-27T19:05:37.119Z",
       "status": "pending",
       "categoryGroupKey": "top5_1",
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
@@ -207,7 +207,7 @@
       "riskScore": 4,
       "riskLevel": "Közepes",
       "source": "homepage_custom",
-      "addedAt": "2026-11-27T19:05:29.520Z",
+      "addedAt": "2026-11-27T19:05:37.119Z",
       "status": "pending",
       "categoryGroupKey": "top5_1",
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
@@ -9688,8 +9688,8 @@
     "1_brestparisfc_2026-11-27_dntetlennlattvisszajr_parisfc",
     "1_brestparisfc_2026-11-27_mindktcsapatszerezglt_igen",
     "1_brestparisfc_2026-11-27_lesz11es_nem",
-    "1_nottinghamchelsea_2026-11-27_glszm2525_kevesebbmint25",
-    "1_nottinghamchelsea_2026-11-27_ktesly_nottinghamvagydntetlen",
+    "1_nottinghamchelsea_2026-11-27_mindktcsapatszerezglt_igen",
+    "1_nottinghamchelsea_2026-11-27_ktesly_dntetlenvagychelsea",
     "1_nottinghamchelsea_2026-11-27_bntetlapszm4545_kevesebbmint45"
   ],
   "replacedTipIds": [
@@ -9838,7 +9838,8 @@
     "1_detroitchicago_2026-11-26_vendgcsapatpontszm275275_tbbmint275",
     "1_detroitchicago_2026-11-26_1flidpontszm275275_tbbmint275",
     "1_nottinghamchelsea_2026-11-27_zsiaiglszm33_kevesebbmint3",
-    "1_nottinghamchelsea_2026-11-27_ktesly_dntetlenvagychelsea",
-    "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35"
+    "1_nottinghamchelsea_2026-11-27_bntetlapszm3535_tbbmint35",
+    "1_nottinghamchelsea_2026-11-27_glszm2525_kevesebbmint25",
+    "1_nottinghamchelsea_2026-11-27_ktesly_nottinghamvagydntetlen"
   ]
 }
