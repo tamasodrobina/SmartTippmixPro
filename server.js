@@ -219,6 +219,15 @@ function snapTipsToOfficialMarkets(tips = [], enrichedEvents = []) {
     const ev = enrichedEvents.find(e => norm(e.eventName) === norm(t.eventName)) || (enrichedEvents.length === 1 ? enrichedEvents[0] : null);
     if (!ev) continue;
 
+    // Mindig átmásoljuk a hivatalos sportágat, azonosítót, bajnokságot és kezdési időpontot az eseményből!
+    if (ev.sportId) t.sportId = ev.sportId;
+    if (ev.sportName) t.sportName = ev.sportName;
+    if (ev.eventId) t.eventId = ev.eventId;
+    if (ev.eventDate) t.eventDate = ev.eventDate;
+    if (ev.competitionName) {
+      t.competitionName = ev.competitionGroupName ? `${ev.competitionGroupName} - ${ev.competitionName}` : ev.competitionName;
+    }
+
     const pool = [...(ev.availableTargetMarkets || []), ...(ev.allMarketsList || [])];
     if (pool.length === 0) continue;
 

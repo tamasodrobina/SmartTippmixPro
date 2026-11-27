@@ -76,9 +76,9 @@ function detectClientSectionMeta(tip = {}, fallbackContext = {}) {
     comp.includes('konferencia liga') || comp.includes('konferencia-liga') || comp.includes('conference league') ||
     /\b(el|kl)\b/.test(comp);
   const isTop5 = !isLowerOrCup && !isWomen && (
-    ((comp.includes('angol bajnokság') || comp.includes('premier league')) && !comp.includes('skót')) ||
+    ((comp.includes('angol bajnokság') || comp.includes('premier league') || comp.includes('anglia - premier liga') || comp.includes('premier liga')) && !comp.includes('skót') && !comp.includes('orosz') && !comp.includes('ukrán') && !comp.includes('kazah') && !comp.includes('izrael') && !comp.includes('egyiptom') && !comp.includes('kanada')) ||
     comp.includes('spanyol bajnokság') || comp.includes('laliga') || comp.includes('la liga') ||
-    ((comp.includes('olasz bajnokság') || comp.includes('serie a')) && !comp.includes('brazil')) ||
+    ((comp.includes('olasz bajnokság') || comp.includes('serie a')) && !comp.includes('brazil') && !comp.includes('ecuador')) ||
     ((comp.includes('német bajnokság') || comp.includes('bundesliga')) && !comp.includes('osztrák')) ||
     comp.includes('francia bajnokság') || comp.includes('ligue 1')
   );

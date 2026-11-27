@@ -124,12 +124,42 @@ export function generateTipId(sportId, eventName, eventDate, marketName, outcome
 }
 
 // Megállapítja a sportág azonosítót (1 = Foci, 5 = Tenisz, 16 = NFL)
-export function normalizeSportId(sportInput) {
-  if (!sportInput) return null;
-  const s = String(sportInput).toLowerCase();
-  if (s === '1' || s.includes('foci') || s.includes('labdarúg') || s.includes('football') || s.includes('soccer')) return 1;
-  if (s === '5' || s.includes('tenisz') || s.includes('tennis') || s.includes('atp') || s.includes('wta') || s.includes('challenger')) return 5;
-  if (s === '16' || s.includes('nfl') || s.includes('amerikai futball') || s.includes('amerikai foci')) return 16;
+// FONTOS: Az NFL / Amerikai foci ellenőrzése megelőzi a sima "foci"/"football" keresést!
+export function normalizeSportId(sportInput, competitionInput = '') {
+  const s = String(sportInput || '').toLowerCase().trim();
+  const c = String(competitionInput || '').toLowerCase().trim();
+
+  if (
+    s === '16' ||
+    s.includes('nfl') ||
+    s.includes('amerikai') ||
+    s.includes('american') ||
+    c.includes('nfl') ||
+    c.includes('amerikai futball') ||
+    c.includes('super bowl')
+  ) {
+    return 16;
+  }
+
+  if (
+    s === '5' ||
+    s.includes('tenisz') ||
+    s.includes('tennis') ||
+    s.includes('atp') ||
+    s.includes('wta') ||
+    s.includes('challenger') ||
+    s.includes('itf') ||
+    c.includes('atp') ||
+    c.includes('wta') ||
+    c.includes('challenger') ||
+    c.includes('grand slam')
+  ) {
+    return 5;
+  }
+
+  if (s === '1' || s.includes('foci') || s.includes('labdarúg') || s.includes('football') || s.includes('soccer')) {
+    return 1;
+  }
   return null;
 }
 
@@ -303,12 +333,13 @@ export function cleanSubLeagueName(rawComp, sportId = 1) {
 }
 
 export function classifyTipCategory(tip) {
-  const sportId = Number(tip?.sportId || (tip?.sportName?.includes('Tenisz') ? 5 : (tip?.sportName?.includes('NFL') || tip?.sportName?.includes('futball') ? 16 : 1)));
+  const detectedSport = normalizeSportId(tip?.sportName || tip?.sportId, tip?.competitionName);
+  const sportId = Number(detectedSport || tip?.sportId || 1);
   const rawComp = String(tip?.competitionName || '').trim();
   const comp = rawComp.toLowerCase();
   const ev = String(tip?.eventName || '').toLowerCase();
 
-  if (sportId === 16) {
+  if (sportId === 16 || /\bnfl\b/i.test(rawComp)) {
     return {
       groupKey: 'nfl_main',
       groupName: 'NFL',
@@ -511,7 +542,10 @@ export function classifyTipCategory(tip) {
   // 7. Top 5 Bajnokság – 1. osztály
   const isLowerOrCup = /(\b[2345]\.|alacsony|amatőr|tartalék|ifjúsági|olasz c|liga 3|national|kupa|cup|pokal|coppa|coupe|copa|supercup|szuperkupa)/i.test(comp);
   if (!isLowerOrCup) {
-    if ((comp.includes('angol bajnokság') || comp.includes('premier league')) && !comp.includes('skót') && !comp.includes('orosz') && !comp.includes('izrael') && !comp.includes('egyiptom') && !comp.includes('kanada')) {
+    if (
+      (comp.includes('angol bajnokság') || comp.includes('premier league') || comp.includes('anglia - premier liga') || comp.includes('premier liga')) &&
+      !comp.includes('skót') && !comp.includes('orosz') && !comp.includes('ukrán') && !comp.includes('kazah') && !comp.includes('izrael') && !comp.includes('egyiptom') && !comp.includes('kanada') && !comp.includes('bosnyák') && !comp.includes('feröer') && !comp.includes('azeri') && !comp.includes('örmény')
+    ) {
       return {
         groupKey: 'top5_1',
         groupName: 'Top 5 Bajnokság (1. osztály)',
@@ -566,6 +600,24 @@ export function classifyTipCategory(tip) {
 
 export function enrichTipWithCategory(tip) {
   if (!tip) return tip;
+  // Auto-javítás, ha egy NFL vagy Tenisz tipp korábban hibásan Foci (sportId: 1) címkét kapott (pl. "Amerikai foci" vagy "USA - NFL" miatt)
+  const trueSportId = normalizeSportId(tip.sportName || tip.sportId, tip.competitionName);
+  if (trueSportId && Number(tip.sportId) !== trueSportId) {
+    const oldId = tip.id;
+    tip.sportId = trueSportId;
+    if (trueSportId === 16) tip.sportName = 'Amerikai futball (NFL)';
+    else if (trueSportId === 5) tip.sportName = 'Tenisz';
+    else if (trueSportId === 1) tip.sportName = 'Labdarúgás (Foci)';
+    if (tip.eventName && tip.marketName && tip.outcomeName) {
+      const newId = generateTipId(trueSportId, tip.eventName, tip.eventDate, tip.marketName, tip.outcomeName);
+      tip.id = newId;
+      if (oldId && oldId !== newId) {
+        if (!Array.isArray(state.replacedTipIds)) state.replacedTipIds = [];
+        if (!state.replacedTipIds.includes(oldId)) state.replacedTipIds.push(oldId);
+        if (Array.isArray(state.seenTipIds) && !state.seenTipIds.includes(newId)) state.seenTipIds.push(newId);
+      }
+    }
+  }
   const cat = classifyTipCategory(tip);
   tip.categoryGroupKey = cat.groupKey;
   tip.categoryGroupName = cat.groupName;
@@ -1224,7 +1276,7 @@ export function attachHistoricalAccuracyToTips(tips = [], fallbackContext = {}) 
 export function recordTip(tip, source = 'manual', skipSave = false) {
   if (!tip) return false;
 
-  const sportId = normalizeSportId(tip.sportId || tip.sportName);
+  const sportId = normalizeSportId(tip.sportId || tip.sportName, tip.competitionName);
   if (!sportId) return false; // Kizárólag Foci (1), Tenisz (5), NFL (16) kerül tárolásra!
 
   const eventName = tip.eventName || tip.matchName || '';
@@ -1237,11 +1289,16 @@ export function recordTip(tip, source = 'manual', skipSave = false) {
 
   const tipId = generateTipId(sportId, eventName, eventDate, marketName, outcomeName);
 
-  // Ha kliens-szinkronból jön egy már felülírt/lecserélt régi tipp, vagy olyan meccsre, aminek már van frissebb elemzése a szerveren, ignoráljuk!
+  // Ha kliens-szinkronból jön egy már felülírt/lecserélt régi tipp, vagy olyan meccsre, amely már ki van értékelve a history-ban / van frissebb elemzése, ignoráljuk!
   if (source === 'client_sync') {
     if (Array.isArray(state.replacedTipIds) && state.replacedTipIds.includes(tipId)) return false;
+    if (tip.id && Array.isArray(state.replacedTipIds) && state.replacedTipIds.includes(tip.id)) return false;
     const mKey = normalizeMatchKey(eventName);
+    const datePrefix = String(eventDate || '').slice(0, 10);
     if (mKey && state.pendingTips.some(t => normalizeMatchKey(t.eventName) === mKey)) return false;
+    if (mKey && Array.isArray(state.history) && state.history.some(h => normalizeMatchKey(h.eventName) === mKey && (!datePrefix || String(h.eventDate || '').slice(0, 10) === datePrefix))) {
+      return false;
+    }
   }
 
   // DUPLIKÁCIÓ SZŰRÉS: Ha már szerepel a várólistában vagy korábban már ellenőriztük, ignoráljuk!
