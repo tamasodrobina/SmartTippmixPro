@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T23:36:42.333Z",
+  "updatedAt": "2026-11-28T10:28:51.258Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -81,7 +81,74 @@
       }
     }
   },
-  "pendingTips": [],
+  "pendingTips": [
+    {
+      "id": "1_hamburgbayernmnchen_2026-11-28_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5600174",
+      "eventName": "Hamburg - Bayern München",
+      "competitionName": "Németország - Bundesliga 1.",
+      "eventDate": "2026-11-28T15:30:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt + Gólszám 2,5 (2.5)",
+      "outcomeName": "Igen és több, mint 2,5",
+      "odds": 1.7,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-28T10:28:51.258Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "ger_1",
+      "categorySubName": "🇩🇪 Bundesliga (Német 1.)"
+    },
+    {
+      "id": "1_manchesterutdbrentford_2026-11-28_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5600136",
+      "eventName": "Manchester Utd. - Brentford",
+      "competitionName": "Anglia - Premier Liga",
+      "eventDate": "2026-11-28T16:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.45,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-28T10:28:51.258Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "eng_1",
+      "categorySubName": "🇬🇧 Premier League (Angol 1.)"
+    },
+    {
+      "id": "1_betisrayovallecano_2026-11-28_mindktcsapatszerezglt_igen",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5602212",
+      "eventName": "Betis - Rayo Vallecano",
+      "competitionName": "Spanyolország - Spanyol bajnokság",
+      "eventDate": "2026-11-28T14:00:00+01:00",
+      "marketName": "Mindkét csapat szerez gólt",
+      "outcomeName": "Igen",
+      "odds": 1.59,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_interval",
+      "addedAt": "2026-11-28T10:28:51.258Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
+    }
+  ],
   "history": [
     {
       "id": "16_pittsburghdenver_2026-11-27_hazaicsapatpontszm155155_tbbmint155",
@@ -9767,7 +9834,10 @@
     "1_nottinghamchelsea_2026-11-27_bntetlapszm4545_kevesebbmint45",
     "16_pittsburghdenver_2026-11-27_pontszm365365_tbbmint365",
     "16_pittsburghdenver_2026-11-27_hendikep6565_pittsburgh65",
-    "16_pittsburghdenver_2026-11-27_hazaicsapatpontszm155155_tbbmint155"
+    "16_pittsburghdenver_2026-11-27_hazaicsapatpontszm155155_tbbmint155",
+    "1_hamburgbayernmnchen_2026-11-28_mindktcsapatszerezgltglszm2525_igenstbbmint25",
+    "1_manchesterutdbrentford_2026-11-28_mindktcsapatszerezglt_igen",
+    "1_betisrayovallecano_2026-11-28_mindktcsapatszerezglt_igen"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
