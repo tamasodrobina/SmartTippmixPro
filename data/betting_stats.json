@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-28T10:28:51.258Z",
+  "updatedAt": "2026-11-28T11:04:16.653Z",
   "resetAt": "2026-11-09T15:14:53.293Z",
   "stats": {
     "football": {
@@ -127,6 +127,28 @@
       "categorySubName": "🇬🇧 Premier League (Angol 1.)"
     },
     {
+      "id": "1_betisrayovallecano_2026-11-28_1x2_betis",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5602212",
+      "eventName": "Betis - Rayo Vallecano",
+      "competitionName": "Spanyolország - Spanyol bajnokság",
+      "eventDate": "2026-11-28T14:00:00+01:00",
+      "marketName": "1X2",
+      "outcomeName": "Betis",
+      "odds": 1.5,
+      "riskCategory": "low",
+      "riskScore": 3,
+      "riskLevel": "Alacsony",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-28T11:04:16.653Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
+    },
+    {
       "id": "1_betisrayovallecano_2026-11-28_mindktcsapatszerezglt_igen",
       "sportId": 1,
       "sportName": "Labdarúgás (Foci)",
@@ -137,11 +159,33 @@
       "marketName": "Mindkét csapat szerez gólt",
       "outcomeName": "Igen",
       "odds": 1.59,
+      "riskCategory": "medium",
+      "riskScore": 4,
+      "riskLevel": "Közepes",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-28T11:04:16.653Z",
+      "status": "pending",
+      "categoryGroupKey": "top5_1",
+      "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
+      "categorySubKey": "esp_1",
+      "categorySubName": "🇪🇸 La Liga (Spanyol 1.)"
+    },
+    {
+      "id": "1_betisrayovallecano_2026-11-28_glszm2525_tbbmint25",
+      "sportId": 1,
+      "sportName": "Labdarúgás (Foci)",
+      "eventId": "5602212",
+      "eventName": "Betis - Rayo Vallecano",
+      "competitionName": "Spanyolország - Spanyol bajnokság",
+      "eventDate": "2026-11-28T14:00:00+01:00",
+      "marketName": "Gólszám 2,5 (2.5)",
+      "outcomeName": "Több, mint 2,5",
+      "odds": 1.48,
       "riskCategory": "low",
       "riskScore": 3,
       "riskLevel": "Alacsony",
-      "source": "homepage_interval",
-      "addedAt": "2026-11-28T10:28:51.258Z",
+      "source": "homepage_custom",
+      "addedAt": "2026-11-28T11:04:16.653Z",
       "status": "pending",
       "categoryGroupKey": "top5_1",
       "categoryGroupName": "Top 5 Bajnokság (1. osztály)",
@@ -9837,7 +9881,9 @@
     "16_pittsburghdenver_2026-11-27_hazaicsapatpontszm155155_tbbmint155",
     "1_hamburgbayernmnchen_2026-11-28_mindktcsapatszerezgltglszm2525_igenstbbmint25",
     "1_manchesterutdbrentford_2026-11-28_mindktcsapatszerezglt_igen",
-    "1_betisrayovallecano_2026-11-28_mindktcsapatszerezglt_igen"
+    "1_betisrayovallecano_2026-11-28_1x2_betis",
+    "1_betisrayovallecano_2026-11-28_mindktcsapatszerezglt_igen",
+    "1_betisrayovallecano_2026-11-28_glszm2525_tbbmint25"
   ],
   "replacedTipIds": [
     "1_nmetorszghollandia_2026-11-16_mindktcsapatszerezgltglszm2525_igenstbbmint25",
